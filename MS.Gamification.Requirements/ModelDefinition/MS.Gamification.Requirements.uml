@@ -1,0 +1,716 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel"
+  dslVersion="1.0.0.0"
+  Id="77532fbc-51a7-4baf-ab56-fdfb2915e25b"
+  name="MS.Gamification.Requirements" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <actor
+        Id="f280bac9-2439-4f6d-a624-afffce4fff25"
+        name="Administrator"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="8160414c-91eb-4138-8356-8df3f8c69230"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="Log in as admin"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="5ba0e481-3533-43c9-9e0b-8ec16e35d7ee"
+              LastKnownName="Log in as admin"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3404079f-5eb6-4069-a29b-1f762f95cd4e"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0cbe1f06-db0d-4c22-b904-61a34e256294"
+                  name="Log in as admin"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a2f8148d-c71e-4249-99f6-45fa758a5b12"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="Administer challenges"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="0d251251-3228-473d-9acc-6b1dedabcee1"
+              LastKnownName="Administer challenges"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="60cd8389-cc32-4858-a28a-cfc5cb39c1d8"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="776e320f-8258-4d22-b294-fe7b7220188c"
+                  name="Administer challenges"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="bd9e316b-e2dd-44e6-a33c-7d5581142f57"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="View all profile pages"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="2fe1d2ce-bd94-43f4-af3d-1f51ebc754f3"
+              LastKnownName="View all profile pages"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a37d20e0-9ef8-4597-bb91-cbb0db699e19"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="63a41bc6-16c8-4569-9eea-d935aa2e9e9d"
+                  name="View all profile pages"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a987397b-cbcb-4185-ba43-e41865e4b800"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="Administer Users"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="65966e5a-f51a-442b-9234-a675a8e337c1"
+              LastKnownName="Administer Users"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d6bb5f92-56ce-4916-aa0f-1a7f09059722"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d4822a4e-a584-44fd-86e4-432e712c6afa"
+                  name="Administer Users"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="20188cdf-2fdd-4270-afcf-5573a5052d42"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="Sign off observations"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="c66fedbe-ac3d-49b7-92a5-431e0c761c27"
+              LastKnownName="Sign off observations"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="21c5a0d4-622d-49b7-afb1-87a63f2f1210"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3b15ff0e-4047-49a0-9b6c-faaa756501bc"
+                  name="Sign off observations"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="2ac14995-0346-4a54-98e3-882968452ec8"
+            isDerived="false"
+            sourceEndRoleName="Administrator"
+            targetEndRoleName="Log in"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="dd51756e-16e0-429d-8d40-b05e2d9ec9f0"
+              LastKnownName="Log in"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="96ecc7ad-11bf-4bed-a12d-2f705575fdf6"
+                  name="Administrator"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="cddb7fac-a6f1-4f39-856b-c483dac41eb4"
+                  name="Log in"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="e88f0ba4-1637-4d1f-ab56-c3170522b34b"
+        name="Logged-in  User"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="b0f8ebf3-86c0-4592-9ca1-febccbbe8494"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="Log in as user"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="dd51756e-16e0-429d-8d40-b05e2d9ec9f0"
+              LastKnownName="Log in"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3648a278-211a-4a90-8052-ac0a1e315616"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="df97b0ad-826d-4af0-b154-78a5e5378c75"
+                  name="Log in as user"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="f9fdee11-e29d-4476-9b48-f0bfcdd752d3"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="Record observations"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="9962ecb5-5333-4b87-92f3-8218a43edfd3"
+              LastKnownName="Record observations"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="700cb314-4d10-4783-8553-23ee9d5d0d97"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="42ca00ca-607a-4447-a814-0444c0be69cd"
+                  name="Record observations"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="e3a1ae16-2024-4705-9caa-29cd90d6416f"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="View available challenges"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="0e298f0a-cd8a-4a53-842a-719d8a796431"
+              LastKnownName="View available challenges"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f856a6fc-f196-4d6a-8e1f-3f3f139d1db1"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="782737ac-48d8-4709-a524-e059de4e64ea"
+                  name="View available challenges"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="f0f8bb46-c9de-492f-bfdc-7e083ff4808d"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="View own profile page"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="b1c9369c-eb51-4955-9efd-7e3a86917f83"
+              LastKnownName="View own profile page"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3db884ea-5fb3-4a1a-923c-24fb922673cd"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d337cd80-83d7-4f1e-bbff-74897dd6e32e"
+                  name="View own profile page"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="84447974-55c6-42d3-8b92-c05c3d102141"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="Follow other users"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="aa4f592b-1d91-426a-822f-4f1e607fc815"
+              LastKnownName="Follow other users"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6d2cbce9-0d36-4d6e-b938-a5952918e70f"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c7fb840c-875e-4e34-916a-1f35b7b5552a"
+                  name="Follow other users"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="0d99a0d9-ea29-4ac1-a189-2f59c2ec1418"
+            isDerived="false"
+            sourceEndRoleName="Logged-in  User"
+            targetEndRoleName="Post to Facebook"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="3687094b-2f7e-4d2c-9ece-a1f85ad57fd9"
+              LastKnownName="Post to Facebook"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6b47b5f8-52ac-42ef-96f8-0e3b65b6a602"
+                  name="Logged-in  User"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ad82b95e-5217-48b9-83d8-102b7133bf87"
+                  name="Post to Facebook"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="5ba0e481-3533-43c9-9e0b-8ec16e35d7ee"
+        name="Log in as admin"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="2fe1d2ce-bd94-43f4-af3d-1f51ebc754f3"
+        name="View all profile pages"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="b1c9369c-eb51-4955-9efd-7e3a86917f83"
+        name="View own profile page"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="dd51756e-16e0-429d-8d40-b05e2d9ec9f0"
+        name="Log in"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="04a9d409-46f5-4cc4-aa62-f0a822be408c"
+        name="View available challenges"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="0d251251-3228-473d-9acc-6b1dedabcee1"
+        name="Administer challenges"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="9962ecb5-5333-4b87-92f3-8218a43edfd3"
+        name="Record observations"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="c66fedbe-ac3d-49b7-92a5-431e0c761c27"
+        name="Sign off observations"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="76e93570-362b-448f-842e-d466a7e3c8ec"
+        name="Anonymous user"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="b184657d-6e23-4793-af18-c2f5d513f55b"
+            isDerived="false"
+            sourceEndRoleName="Anonymous user"
+            targetEndRoleName="Register"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="434568b6-83bf-45a0-9c0a-64eb939e69d5"
+              LastKnownName="Register"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="83327798-3e40-4aff-b884-fa6f0c8fbf9f"
+                  name="Anonymous user"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="49bc77fd-2d0e-4c3e-8cf0-b998dcc97347"
+                  name="Register"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="fb3ef01a-22ea-429d-9e45-17780e7fee09"
+            isDerived="false"
+            sourceEndRoleName="Anonymous user"
+            targetEndRoleName="View landing page"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="90c7ef10-c520-4ee7-97e2-aea92882b8c7"
+              LastKnownName="View landing page"
+              LastKnownLocation="MS.Gamification.Requirements.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f8163969-391f-470d-81bc-050757f5991c"
+                  name="Anonymous user"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="0eda5d4d-da84-4bb9-b7a7-74a44052eb29"
+                  name="View landing page"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="434568b6-83bf-45a0-9c0a-64eb939e69d5"
+        name="Register"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="90c7ef10-c520-4ee7-97e2-aea92882b8c7"
+        name="View landing page"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="aa4f592b-1d91-426a-822f-4f1e607fc815"
+        name="Follow other users"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="3687094b-2f7e-4d2c-9ece-a1f85ad57fd9"
+        name="Post to Facebook"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="0e298f0a-cd8a-4a53-842a-719d8a796431"
+        name="View available challenges"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="65966e5a-f51a-442b-9234-a675a8e337c1"
+        name="Administer Users"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

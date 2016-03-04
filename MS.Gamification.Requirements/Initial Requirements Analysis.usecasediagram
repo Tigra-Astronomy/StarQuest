@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="4b281710-5b2f-49bc-bbd6-099cf3726bcf" name="Initial Requirements" linkedPackageId="7ebda36e-009d-4e8f-ac91-e406cc42c489" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="f58e7b7b-d8c2-4f1a-8ebe-978495eb6e23">
+      <profileInstance Id="29aff81c-9f55-4e75-afbb-1accf7c05d60" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="09b4693f-0690-4591-b439-3678a3c9a3c4">
+      <profileInstance Id="70211498-35fc-4e87-897e-7d9a6ce0a378" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="9b22a485-61b9-4df0-a7de-c70599f5344b" name="Administrator" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f280bac9-2439-4f6d-a624-afffce4fff25" />
+        <targetEnds>
+          <association Id="04ba9e84-4491-4270-9229-2bb4c83c6059" isDerived="false" sourceEndRoleName="Administrator" targetEndRoleName="Administer challenges" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="bb23c6fa-d56f-46d8-b86d-a7a23ebe412f" LastKnownName="Administer challenges" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="cdd25691-126c-4ade-8c2c-a2daf542fb61" name="Administrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="60cd8389-cc32-4858-a28a-cfc5cb39c1d8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e92a4d98-a8d6-4768-9eb9-79a06d1321e5" name="Administer challenges" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="776e320f-8258-4d22-b294-fe7b7220188c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a2f8148d-c71e-4249-99f6-45fa758a5b12" />
+          </association>
+          <association Id="8c861aba-bad9-4e9c-ac14-6aa69909064b" isDerived="false" sourceEndRoleName="Administrator" targetEndRoleName="View all profile pages" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="93ecdd4b-2e9c-4f3d-8c13-2ee308c546d6" LastKnownName="View all profile pages" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="d6094830-59b7-41fb-9d9a-91bbf35b869c" name="Administrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a37d20e0-9ef8-4597-bb91-cbb0db699e19" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="20c023f9-300e-46e6-bc95-446201b4fc39" name="View all profile pages" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="63a41bc6-16c8-4569-9eea-d935aa2e9e9d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="bd9e316b-e2dd-44e6-a33c-7d5581142f57" />
+          </association>
+          <association Id="c81a6bcd-90eb-46cf-b670-22d9ccc5c2c5" isDerived="false" sourceEndRoleName="Administrator" targetEndRoleName="Administer Users" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="05e95bc7-fa5f-4216-b2b5-5fa286334add" LastKnownName="Administer Users" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="298fe4db-3cd2-4e2e-809f-6098cd53088b" name="Administrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d6bb5f92-56ce-4916-aa0f-1a7f09059722" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="84dda130-8d70-4b60-b600-3feeca613499" name="Administer Users" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d4822a4e-a584-44fd-86e4-432e712c6afa" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a987397b-cbcb-4185-ba43-e41865e4b800" />
+          </association>
+          <association Id="c647a0ab-882c-4860-81a5-f100fde3d520" isDerived="false" sourceEndRoleName="Administrator" targetEndRoleName="Sign off observations" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="bf2681e3-4f3e-4dfa-a7f5-fca8524500c8" LastKnownName="Sign off observations" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7c406513-fccd-48a4-9704-95ecabc4078f" name="Administrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="21c5a0d4-622d-49b7-afb1-87a63f2f1210" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="74c27e31-b7cf-46b7-b6b6-a7c49bbc3224" name="Sign off observations" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="3b15ff0e-4047-49a0-9b6c-faaa756501bc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="20188cdf-2fdd-4270-afcf-5573a5052d42" />
+          </association>
+          <association Id="c8048faf-5b6c-4859-8c6a-652b1123ee83" isDerived="false" sourceEndRoleName="Administrator" targetEndRoleName="Log in" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="8ad61fc0-e5c3-4185-8bca-e956b2b2dd1a" LastKnownName="Log in" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="82adac1c-5bfa-4fee-9975-a2bd73666489" name="Administrator" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="96ecc7ad-11bf-4bed-a12d-2f705575fdf6" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6f7642a2-5c08-4db3-bedb-448b019dc5fc" name="Log in" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="cddb7fac-a6f1-4f39-856b-c483dac41eb4" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2ac14995-0346-4a54-98e3-882968452ec8" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="750a5fce-2cda-438d-bb19-5afb614ea351" name="Logged-in  User" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e88f0ba4-1637-4d1f-ab56-c3170522b34b" />
+        <targetEnds>
+          <association Id="00394efe-609a-4358-b9c2-c87b790b66de" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="Log in as user" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="8ad61fc0-e5c3-4185-8bca-e956b2b2dd1a" LastKnownName="Log in" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1037340c-aa4a-41f4-8a9c-d7e61f037fd7" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="3648a278-211a-4a90-8052-ac0a1e315616" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2da773f4-c5d1-4b6a-9de3-a5890d2b8e54" name="Log in as user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="df97b0ad-826d-4af0-b154-78a5e5378c75" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b0f8ebf3-86c0-4592-9ca1-febccbbe8494" />
+          </association>
+          <association Id="b258b262-f08b-4626-9a72-51675c9a6679" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="Record observations" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="a8b6cc0d-e7b6-450b-a055-8a8e6df992f5" LastKnownName="Record observations" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="cb1b834e-0b44-43dc-8d1e-82561ab4bcc6" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="700cb314-4d10-4783-8553-23ee9d5d0d97" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3f9e7346-881d-41ca-a6bb-21a197ea103f" name="Record observations" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="42ca00ca-607a-4447-a814-0444c0be69cd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f9fdee11-e29d-4476-9b48-f0bfcdd752d3" />
+          </association>
+          <association Id="99d240a5-eb11-4f55-92c6-05e2dfd9790c" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="View available challenges" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="0b56dc16-ce9a-4ed3-b4ff-d8fe6433492e" LastKnownName="View available challenges" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="11dd0646-b473-48ea-9a57-07bb5633d506" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f856a6fc-f196-4d6a-8e1f-3f3f139d1db1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c4bf5176-4827-474b-ac4f-39e22269f4df" name="View available challenges" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="782737ac-48d8-4709-a524-e059de4e64ea" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="e3a1ae16-2024-4705-9caa-29cd90d6416f" />
+          </association>
+          <association Id="6244ce03-2355-4d28-a236-7af3b21b5567" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="View own profile page" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="1ed10716-94b5-4eae-903c-43be07e39530" LastKnownName="View own profile page" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e9a084ed-2389-43e7-b087-41a95d1c9c41" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="3db884ea-5fb3-4a1a-923c-24fb922673cd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="195f2c9e-1a26-4181-a7c1-d55217d04428" name="View own profile page" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d337cd80-83d7-4f1e-bbff-74897dd6e32e" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f0f8bb46-c9de-492f-bfdc-7e083ff4808d" />
+          </association>
+          <association Id="c4e4228d-e378-4360-aa94-93111d3c56f3" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="Follow other users" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="36a46a71-d00a-495e-9169-3c5c6bcb0c91" LastKnownName="Follow other users" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="44cfd3f3-ace6-489f-93de-a1964a026b12" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6d2cbce9-0d36-4d6e-b938-a5952918e70f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="348b8e99-768d-4165-88ae-accea0e66971" name="Follow other users" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="c7fb840c-875e-4e34-916a-1f35b7b5552a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="84447974-55c6-42d3-8b92-c05c3d102141" />
+          </association>
+          <association Id="604630b1-b776-435a-a778-cd4e1eafd130" isDerived="false" sourceEndRoleName="Logged-in  User" targetEndRoleName="Post to Facebook" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="3eb1f8a4-fe71-4cf9-bee0-78e24a9c88af" LastKnownName="Post to Facebook" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="21833704-0786-4d87-b4c7-aa1fce6d7349" name="Logged-in  User" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="6b47b5f8-52ac-42ef-96f8-0e3b65b6a602" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="72a656f6-db76-4d88-85b2-5a90beaa0501" name="Post to Facebook" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="ad82b95e-5217-48b9-83d8-102b7133bf87" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="0d99a0d9-ea29-4ac1-a189-2f59c2ec1418" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="93ecdd4b-2e9c-4f3d-8c13-2ee308c546d6" name="View all profile pages" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2fe1d2ce-bd94-43f4-af3d-1f51ebc754f3" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="1ed10716-94b5-4eae-903c-43be07e39530" name="View own profile page" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b1c9369c-eb51-4955-9efd-7e3a86917f83" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="8ad61fc0-e5c3-4185-8bca-e956b2b2dd1a" name="Log in" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="dd51756e-16e0-429d-8d40-b05e2d9ec9f0" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="bb23c6fa-d56f-46d8-b86d-a7a23ebe412f" name="Administer challenges" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="0d251251-3228-473d-9acc-6b1dedabcee1" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="a8b6cc0d-e7b6-450b-a055-8a8e6df992f5" name="Record observations" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9962ecb5-5333-4b87-92f3-8218a43edfd3" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="bf2681e3-4f3e-4dfa-a7f5-fca8524500c8" name="Sign off observations" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c66fedbe-ac3d-49b7-92a5-431e0c761c27" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="b554f516-b817-4e45-b8b2-a8a80d6eba9e" name="Anonymous user" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="76e93570-362b-448f-842e-d466a7e3c8ec" />
+        <targetEnds>
+          <association Id="efca290a-ab96-4149-ae92-797604c07d73" isDerived="false" sourceEndRoleName="Anonymous user" targetEndRoleName="Register" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="e009d049-b396-44d2-8984-4f1cd43e88c4" LastKnownName="Register" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a9decd6e-73ec-45e9-88ea-d57050c39dc7" name="Anonymous user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="83327798-3e40-4aff-b884-fa6f0c8fbf9f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c9254948-f68a-4229-b621-b674502b7923" name="Register" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="49bc77fd-2d0e-4c3e-8cf0-b998dcc97347" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="b184657d-6e23-4793-af18-c2f5d513f55b" />
+          </association>
+          <association Id="84215b08-d22f-4677-8a0b-706b59f3482c" isDerived="false" sourceEndRoleName="Anonymous user" targetEndRoleName="View landing page" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="fdca1e5a-cfdd-4be8-8e54-c8c80c00b431" LastKnownName="View landing page" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="55455909-b2e3-4179-8982-ed24310d6a75" name="Anonymous user" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f8163969-391f-470d-81bc-050757f5991c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="450335c3-5f27-4d58-af65-52887d3dc209" name="View landing page" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="0eda5d4d-da84-4bb9-b7a7-74a44052eb29" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="fb3ef01a-22ea-429d-9e45-17780e7fee09" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="e009d049-b396-44d2-8984-4f1cd43e88c4" name="Register" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="434568b6-83bf-45a0-9c0a-64eb939e69d5" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="fdca1e5a-cfdd-4be8-8e54-c8c80c00b431" name="View landing page" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="90c7ef10-c520-4ee7-97e2-aea92882b8c7" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="36a46a71-d00a-495e-9169-3c5c6bcb0c91" name="Follow other users" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="aa4f592b-1d91-426a-822f-4f1e607fc815" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="3eb1f8a4-fe71-4cf9-bee0-78e24a9c88af" name="Post to Facebook" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3687094b-2f7e-4d2c-9ece-a1f85ad57fd9" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="0b56dc16-ce9a-4ed3-b4ff-d8fe6433492e" name="View available challenges" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="0e298f0a-cd8a-4a53-842a-719d8a796431" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="05e95bc7-fa5f-4216-b2b5-5fa286334add" name="Administer Users" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="65966e5a-f51a-442b-9234-a675a8e337c1" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="7ebda36e-009d-4e8f-ac91-e406cc42c489" name="MS.Gamification.Requirements">
+    <elementDefinition Id="77532fbc-51a7-4baf-ab56-fdfb2915e25b" />
+  </package>
+</useCaseModelRoot>
