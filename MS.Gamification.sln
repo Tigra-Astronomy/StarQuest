@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "MS.Gamification.Requirements", "MS.Gamification.Requirements\MS.Gamification.Requirements.modelproj", "{EAF0B43D-ABDD-4102-A638-F1303EF029B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS.Gamification", "MS.Gamification\MS.Gamification.csproj", "{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS.Gamification.Tests", "MS.Gamification.Tests\MS.Gamification.Tests.csproj", "{4F644E45-A167-4111-99DE-A20FFA5E8CFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{EAF0B43D-ABDD-4102-A638-F1303EF029B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAF0B43D-ABDD-4102-A638-F1303EF029B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAF0B43D-ABDD-4102-A638-F1303EF029B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F644E45-A167-4111-99DE-A20FFA5E8CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F644E45-A167-4111-99DE-A20FFA5E8CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F644E45-A167-4111-99DE-A20FFA5E8CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F644E45-A167-4111-99DE-A20FFA5E8CFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
