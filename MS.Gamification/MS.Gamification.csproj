@@ -167,9 +167,23 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BusinessLogic\AndSpecification.cs" />
+    <Compile Include="BusinessLogic\CompositeSpecification.cs" />
+    <Compile Include="BusinessLogic\IQuerySpecification.cs" />
+    <Compile Include="BusinessLogic\NotSpecification.cs" />
+    <Compile Include="BusinessLogic\OrSpecification.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\ExampleQuerySpecifications.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />
+    <Compile Include="DataAccess\EntityFramework6\EntityFramework6UnitOfWork.cs" />
+    <Compile Include="DataAccess\EntityFramework6\Repository.cs" />
+    <Compile Include="DataAccess\EntityFramework6\UserRepository.cs" />
+    <Compile Include="DataAccess\IDomainEntity.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
+    <Compile Include="DataAccess\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,6 +203,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="DataAccess\Data Access Patterns.cd" />
+    <Content Include="BusinessLogic\QuerySpecification.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

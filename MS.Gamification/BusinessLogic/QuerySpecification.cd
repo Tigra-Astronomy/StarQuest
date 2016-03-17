@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="This is the Composite Pattern">
+    <Position X="6.15" Y="0.777" Height="0.56" Width="1.238" />
+  </Comment>
+  <Class Name="MS.Gamification.BusinessLogic.CompositeSpecification&lt;TEntity&gt;">
+    <Position X="4" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAACAAAABgAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\CompositeSpecification.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MS.Gamification.BusinessLogic.AndSpecification&lt;TEntity&gt;">
+    <Position X="1.25" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAABAAAAAAAAAgAA=</HashCode>
+      <FileName>BusinessLogic\AndSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MS.Gamification.BusinessLogic.OrSpecification&lt;TEntity&gt;">
+    <Position X="4" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAABAAAAAAAAAgAA=</HashCode>
+      <FileName>BusinessLogic\OrSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MS.Gamification.BusinessLogic.NotSpecification&lt;TEntity&gt;">
+    <Position X="6.75" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\NotSpecification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MS.Gamification.BusinessLogic.IQuerySpecification&lt;TEntity&gt;">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>BusinessLogic\IQuerySpecification.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
