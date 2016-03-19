@@ -17,15 +17,15 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             {
             dbContext = context;
             Users = new UserRepository(dbContext, userManager);
-            Challenges = new ChallengeRepository(dbContext);
+            ChallengesRepository = new ChallengeRepository(dbContext);
             }
 
-        public IRepository<Challenge> Challenges { get; }
+        public IRepository<Challenge> ChallengesRepository { get; }
         public IRepository<ApplicationUser> Users { get; }
 
         public void Commit()
             {
-            throw new NotImplementedException();
+            dbContext.SaveChanges();
             }
 
         public void Cancel()

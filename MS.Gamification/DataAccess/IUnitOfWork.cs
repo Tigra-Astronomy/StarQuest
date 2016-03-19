@@ -9,7 +9,7 @@ namespace MS.Gamification.DataAccess
     {
     public interface IUnitOfWork
         {
-        IRepository<Challenge> Challenges { get; }
+        IRepository<Challenge> ChallengesRepository { get; }
         IRepository<ApplicationUser> Users { get; }
         void Commit();
         void Cancel();

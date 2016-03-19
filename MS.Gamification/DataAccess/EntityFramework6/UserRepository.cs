@@ -17,7 +17,6 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             : base(dbContext)
             {
             this.userManager = userManager;
-            throw new NotImplementedException();
             }
         }
     }

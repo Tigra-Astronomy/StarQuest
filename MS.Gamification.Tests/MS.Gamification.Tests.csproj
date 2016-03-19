@@ -114,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
     <Compile Include="DataAccessSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
