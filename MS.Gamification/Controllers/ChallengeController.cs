@@ -33,10 +33,40 @@ namespace MS.Gamification.Controllers
 
         [HttpPost]
         public ActionResult Create(Challenge model)
-            {
+        {
             uow.ChallengesRepository.Add(model);
             uow.Commit();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost][ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public ActionResult ConfirmDelete(string id)
+        {
+            //add code to show details of item to be removed and confirm deletion button
+            // select item from viewall screen
+            //show details screen = get request to (new) details method
+            //confirm delete - post request to delete method
+            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            if (maybeChallenge.None)
+                {
+                return HttpNotFound();
+                }
+            uow.ChallengesRepository.Remove(maybeChallenge.Single());
+            uow.Commit();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Delete(string id)
+            {
+            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            if (maybeChallenge.None)
+            {
+                return HttpNotFound();
+            }
+            return View(maybeChallenge.Single());
+
+
             }
     }
 }

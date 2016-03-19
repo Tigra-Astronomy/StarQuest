@@ -277,6 +277,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Challenge\Index.cshtml" />
     <Content Include="Views\Challenge\Create.cshtml" />
+    <Content Include="Views\Challenge\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,10 +17,11 @@ namespace MS.Gamification.Tests.Controllers
     {
     /*
     Challenge Controller should:
+    - Only allow administrator access
     - Allow the user to add a new challenge
         + Create action with no parameters should return a view
-        - Create action with completed valid form data
-            - should add a new item to the database
+        + Create action with completed valid form data
+            + should add a new item to the database
             + should redirect to index
         - Create action with invalid data
             - should return the view with errors
@@ -81,22 +82,22 @@ namespace MS.Gamification.Tests.Controllers
     public class when_calling_the_create_action_with_valid_form_data
     {
         Establish context = () =>
-            {
+        {
             fakeData = new List<Challenge>();
             Uow = A.Fake<IUnitOfWork>();
             FakeRepository = A.Fake<IRepository<Challenge>>();
             A.CallTo(() => Uow.ChallengesRepository).Returns(FakeRepository);
 
-                controller = new ChallengeController(Uow);
+            controller = new ChallengeController(Uow);
             ValidChallenge = new Challenge()
-                {
+            {
                 BookSection = "Moon",
                 Points = 1,
                 Category = "Moon",
                 Location = "Moon",
                 Name = "See all the moon phases"
-                };
             };
+        };
         Because of = () => actionResult = controller.Create(ValidChallenge) as RedirectToRouteResult;
         It should_return_redirect_to_index = () => actionResult.RouteValues["Action"].ShouldEqual("Index");
 
@@ -111,4 +112,97 @@ namespace MS.Gamification.Tests.Controllers
         static IUnitOfWork Uow;
         static IRepository<Challenge> FakeRepository;
     }
+
+    [Subject(typeof(ChallengeController), "ConfirmDelete Action")]
+    public class when_calling_the_confirm_delete_action_with_valid_id
+    {
+        Establish context = () =>
+        {
+            NewChallenge1 = new Challenge()
+            {
+                Id = "01",
+                BookSection = "Moon",
+                Points = 1,
+                Category = "Moon",
+                Location = "Moon",
+                Name = "See all the moon phases"
+            };
+
+            NewChallenge2 = new Challenge()
+            {
+                Id = "02",
+                BookSection = "Planets",
+                Points = 3,
+                Category = "Saturn",
+                Location = "Solar System",
+                Name = "See Saturn"
+            };
+
+            fakeData = new List<Challenge> { NewChallenge1, NewChallenge2 };
+            uow = A.Fake<IUnitOfWork>();
+            FakeRepository = A.Fake<IRepository<Challenge>>();
+            A.CallTo(() => uow.ChallengesRepository).Returns(FakeRepository);
+            A.CallTo(() => FakeRepository.GetMaybe("01")).Returns(new Maybe<Challenge>(NewChallenge1));
+            controller = new ChallengeController(uow);
+        };
+        Because of = () => actionResult = controller.ConfirmDelete(NewChallenge1.Id);
+        It should_delete_an_item_from_the_challenges_repository =
+            () => A.CallTo(() => FakeRepository.Remove(NewChallenge1)).MustHaveHappened(Repeated.Exactly.Once);
+        It should_commit_the_transaction = () => A.CallTo(() => uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
+
+        static List<Challenge> fakeData;
+        static ChallengeController controller;
+        static Challenge NewChallenge1;
+        static Challenge NewChallenge2;
+        static IRepository<Challenge> FakeRepository;
+        static IUnitOfWork uow;
+        static ActionResult actionResult;
+    }
+    [Subject(typeof(ChallengeController), "Delete Action")]
+    public class when_calling_the_delete_action_with_a_valid_id
+    {
+        Establish context = () =>
+        {
+            NewChallenge1 = new Challenge()
+            {
+                Id = "01",
+                BookSection = "Moon",
+                Points = 1,
+                Category = "Moon",
+                Location = "Moon",
+                Name = "See all the moon phases"
+            };
+
+            NewChallenge2 = new Challenge()
+            {
+                Id = "02",
+                BookSection = "Planets",
+                Points = 3,
+                Category = "Saturn",
+                Location = "Solar System",
+                Name = "See Saturn"
+            };
+
+            fakeData = new List<Challenge> { NewChallenge1, NewChallenge2 };
+            uow = A.Fake<IUnitOfWork>();
+            FakeRepository = A.Fake<IRepository<Challenge>>();
+            A.CallTo(() => uow.ChallengesRepository).Returns(FakeRepository);
+            A.CallTo(() => FakeRepository.GetMaybe("01")).Returns(new Maybe<Challenge>(NewChallenge1));
+            controller = new ChallengeController(uow);
+        };
+        Because of = () => actionResult = controller.Delete(NewChallenge1.Id) as ViewResult;
+        It should_return_the_delete_view = () => actionResult.ViewName.ShouldEqual(string.Empty);
+
+        It should_populate_the_viewModel_with_the_item_to_be_deleted =
+            () => (actionResult.Model as Challenge).Id.ShouldEqual(NewChallenge1.Id);
+
+        static List<Challenge> fakeData;
+        static ChallengeController controller;
+        static Challenge NewChallenge1;
+        static Challenge NewChallenge2;
+        static IRepository<Challenge> FakeRepository;
+        static IUnitOfWork uow;
+        static ViewResult actionResult;
+    }
 }
+
