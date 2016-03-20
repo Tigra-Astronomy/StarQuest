@@ -3,6 +3,7 @@
 // File: ChallengeControllerSpecs.cs  Created: 2016-03-18@20:07
 // Last modified: 2016-03-18@20:07 by Fern
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,20 +13,21 @@ using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
+using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
     {
     /*
     Challenge Controller should:
     - Only allow administrator access
-    - Allow the user to add a new challenge
+    + Allow the user to add a new challenge
         + Create action with no parameters should return a view
         + Create action with completed valid form data
             + should add a new item to the database
             + should redirect to index
-        - Create action with invalid data
-            - should return the view with errors
-    - Allow the user to delete a challenge
+        + Create action with invalid data
+            + should return the view with errors
+    + Allow the user to delete a challenge
     - Allow the user to update a challenge
     + Show all the challenges
         + It should return a view (the Index view of the Challenge controller)
@@ -204,5 +206,52 @@ namespace MS.Gamification.Tests.Controllers
         static IUnitOfWork uow;
         static ViewResult actionResult;
     }
+
+    [Subject(typeof(ChallengeController), "Create Action POST invalid data")]
+    public class when_calling_the_create_action_with_an_invalid_model
+    {
+        Establish context = () =>
+        {
+            fakeData = new List<Challenge>();
+            Uow = A.Fake<IUnitOfWork>();
+            FakeRepository = A.Fake<IRepository<Challenge>>();
+            A.CallTo(() => Uow.ChallengesRepository).Returns(FakeRepository);
+            controller = new ChallengeController(Uow);
+
+            InvalidChallenge = new Challenge()
+            {
+                BookSection = "Moon",
+                Points = 0,
+                Category = "Moon",
+                Location = "Moon",
+                Name = String.Empty
+            };
+
+            controller.ValidateModel(InvalidChallenge);
+        };
+        Because of = () => actionResult = controller.Create(InvalidChallenge) as ViewResult;
+        It should_have_an_invalid_model_state = () => controller.ModelState.IsValid.ShouldBeFalse();
+        It should_return_the_create_view = () => actionResult.ViewName.ShouldEqual(string.Empty);
+
+        It should_populate_the_viewmodel_with_the_posted_data =
+            () => (actionResult.Model as Challenge).ShouldBeLike(InvalidChallenge);
+
+        It should_raise_an_error_for_name =
+            () => controller.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
+
+        It should_raise_an_error_for_points =
+            () => controller.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
+
+        It should_not_add_an_item_to_the_challenges_repository =
+            () => A.CallTo(() => FakeRepository.Add(A<Challenge>.Ignored)).MustNotHaveHappened();
+
+        static List<Challenge> fakeData;
+        static ChallengeController controller;
+        static ViewResult actionResult;
+        static Challenge InvalidChallenge;
+        static IUnitOfWork Uow;
+        static IRepository<Challenge> FakeRepository;
+    }
+
 }
 

@@ -34,6 +34,11 @@ namespace MS.Gamification.Controllers
         [HttpPost]
         public ActionResult Create(Challenge model)
         {
+            if (!ModelState.IsValid)
+                {
+                return View(model);
+                }
+
             uow.ChallengesRepository.Add(model);
             uow.Commit();
             return RedirectToAction("Index");
