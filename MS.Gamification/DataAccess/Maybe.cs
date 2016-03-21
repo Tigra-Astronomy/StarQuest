@@ -52,7 +52,7 @@ namespace MS.Gamification.DataAccess
         ///   Gets a value indicating whether this <see cref="Maybe{T}" /> is empty (has no value).
         /// </summary>
         /// <value><c>true</c> if none; otherwise, <c>false</c>.</value>
-        public bool None => values == Empty;
+        public bool None => ReferenceEquals(this, Empty) || !values.Any();
 
         /// <summary>
         ///   Returns an enumerator that iterates through the collection.

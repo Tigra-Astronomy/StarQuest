@@ -29,6 +29,10 @@ namespace MS.Gamification.Tests.Controllers
             + should return the view with errors
     + Allow the user to delete a challenge
     - Allow the user to update a challenge
+        + GET with valid id
+        + GET with invalid id
+        - POST with valid data
+        - POST with invalid data
     + Show all the challenges
         + It should return a view (the Index view of the Challenge controller)
         + The view model should contain all the challenges from the database
@@ -251,6 +255,75 @@ namespace MS.Gamification.Tests.Controllers
         static Challenge InvalidChallenge;
         static IUnitOfWork Uow;
         static IRepository<Challenge> FakeRepository;
+    }
+
+    [Subject(typeof(ChallengeController), "Edit Action")]
+    public class when_sendind_a_get_request_to_the_edit_action_with_a_valid_id
+    {
+        Establish context = () =>
+        {
+            Challenge1 = new Challenge()
+            {
+                Id = "01",
+                BookSection = "Moon",
+                Points = 1,
+                Category = "Moon",
+                Location = "Moon",
+                Name = "See all the moon phases"
+            };
+
+            fakeData = new List<Challenge> { Challenge1 };
+            uow = A.Fake<IUnitOfWork>();
+            FakeRepository = A.Fake<IRepository<Challenge>>();
+            A.CallTo(() => uow.ChallengesRepository).Returns(FakeRepository);
+            A.CallTo(() => FakeRepository.GetMaybe("01")).Returns(new Maybe<Challenge>(Challenge1));
+            controller = new ChallengeController(uow);
+        };
+        Because of = () => actionResult = controller.Edit(Challenge1.Id) as ViewResult;
+        It should_return_the_edit_view = () => actionResult.ViewName.ShouldEqual(string.Empty);
+
+        It should_populate_the_viewModel_with_the_item_to_be_edited =
+            () => (actionResult.Model as Challenge).Id.ShouldEqual(Challenge1.Id);
+
+        static List<Challenge> fakeData;
+        static ChallengeController controller;
+        static Challenge Challenge1;
+        static IRepository<Challenge> FakeRepository;
+        static IUnitOfWork uow;
+        static ViewResult actionResult;
+    }
+
+    [Subject(typeof(ChallengeController), "Edit Action")]
+    public class when_sendind_a_get_request_to_the_edit_action_with_an_invalid_id
+    {
+        Establish context = () =>
+        {
+            Challenge1 = new Challenge()
+            {
+                Id = "01",
+                BookSection = "Moon",
+                Points = 1,
+                Category = "Moon",
+                Location = "Moon",
+                Name = "See all the moon phases"
+            };
+
+            fakeData = new List<Challenge> { Challenge1 };
+            uow = A.Fake<IUnitOfWork>();
+            FakeRepository = A.Fake<IRepository<Challenge>>();
+            A.CallTo(() => uow.ChallengesRepository).Returns(FakeRepository);
+            A.CallTo(() => FakeRepository.GetMaybe(A<string>.Ignored)).Returns(Maybe<Challenge>.Empty);
+            controller = new ChallengeController(uow);
+        };
+        Because of = () => actionResult = controller.Edit("03");
+        It should_return_a_not_found_error = () => actionResult.ShouldBeOfExactType<HttpNotFoundResult>();
+
+        static List<Challenge> fakeData;
+        static ChallengeController controller;
+        static Challenge Challenge1;
+        static IRepository<Challenge> FakeRepository;
+        static IUnitOfWork uow;
+        static ActionResult actionResult;
     }
 
 }
