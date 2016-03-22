@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: Repository.cs  Created: 2016-03-17@01:31
-// Last modified: 2016-03-17@02:54 by Fern
+// File: Repository.cs  Created: 2016-03-18@20:18
+// Last modified: 2016-03-21@22:05 by Fern
 
 using System;
 using System.Collections.Generic;
@@ -19,10 +19,13 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     ///   The type of entity contained by the
     ///   repository.
     /// </typeparam>
+    /// <typeparam name="TKey">
+    ///   The type of the primary key
+    /// </typeparam>
     /// <remarks>
     ///   <para>
     ///     This abstract base class implements the generic
-    ///     <see cref="IRepository{TEntity}" /> interface and provides
+    ///     <see cref="IRepository{TEntity,TKey}" /> interface and provides
     ///     implementations for common operations that should be available for
     ///     all entity sets.
     ///   </para>
@@ -34,7 +37,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     ///     have to be updated or replaced.
     ///   </para>
     /// </remarks>
-    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class, IDomainEntity
+    public abstract class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
+        where TEntity : class, IDomainEntity<TKey>
         {
         /// <summary>
         ///   The database context that will be used to persist and retrieve entities from permanent storage.
@@ -42,7 +46,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         protected readonly DbContext Context;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="Repository{TEntity}" /> class.
+        ///   Initializes a new instance of the <see cref="Repository{TEntity,TKey}" /> class.
         /// </summary>
         /// <param name="context">
         ///   The database context that will be used to persist and retrieve entities from permanent
@@ -59,7 +63,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="id">The entity ID.</param>
         /// <exception cref="InvalidOperationException">Thrown if no matching item was found.</exception>
-        public TEntity Get(string id)
+        public TEntity Get(TKey id)
             {
             return Context.Set<TEntity>().Single(p => p.Id.Equals(id));
             }
@@ -69,11 +73,9 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="id">The entity ID.</param>
         /// <returns>A <see cref="Maybe{T}" /> that either contains the matched entity, or is empty.</returns>
-        public Maybe<TEntity> GetMaybe(string id)
+        public Maybe<TEntity> GetMaybe(TKey id)
             {
-            if (string.IsNullOrWhiteSpace(id))
-                return Maybe<TEntity>.Empty;
-            var match = Context.Set<TEntity>().SingleOrDefault(p => p.Id == id);
+            var match = Context.Set<TEntity>().SingleOrDefault(p => p.Id.Equals(id));
             return match == null ? Maybe<TEntity>.Empty : new Maybe<TEntity>(match);
             }
 
@@ -113,7 +115,6 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <param name="entity">The entity to add.</param>
         public void Add(TEntity entity)
             {
-            entity.Id = Guid.NewGuid().ToString();
             Context.Set<TEntity>().Add(entity);
             }
 

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: EntityFramework6UnitOfWork.cs  Created: 2016-03-17@01:10
-// Last modified: 2016-03-17@02:54 by Fern
+// File: EntityFramework6UnitOfWork.cs  Created: 2016-03-18@20:18
+// Last modified: 2016-03-21@22:04 by Fern
 
 using System;
 using Microsoft.AspNet.Identity;
@@ -16,12 +16,12 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         public EntityFramework6UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
             {
             dbContext = context;
-            Users = new UserRepository(dbContext, userManager);
+            UsersRepository = new UserRepository(dbContext, userManager);
             ChallengesRepository = new ChallengeRepository(dbContext);
             }
 
-        public IRepository<Challenge> ChallengesRepository { get; }
-        public IRepository<ApplicationUser> Users { get; }
+        public IRepository<Challenge, int> ChallengesRepository { get; }
+        public IRepository<ApplicationUser, string> UsersRepository { get; }
 
         public void Commit()
             {

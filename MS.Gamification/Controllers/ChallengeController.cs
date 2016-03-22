@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeController.cs  Created: 2016-03-18@22:13
-// Last modified: 2016-03-21@00:00 by Fern
+// Last modified: 2016-03-22@00:53 by Fern
 
 using System.Linq;
 using System.Web.Mvc;
@@ -45,7 +45,7 @@ namespace MS.Gamification.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public ActionResult ConfirmDelete(string id)
+        public ActionResult ConfirmDelete(int id)
             {
             //add code to show details of item to be removed and confirm deletion button
             // select item from viewall screen
@@ -59,7 +59,7 @@ namespace MS.Gamification.Controllers
             return RedirectToAction("Index");
             }
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
             {
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
             if (maybeChallenge.None)
@@ -67,13 +67,28 @@ namespace MS.Gamification.Controllers
             return View(maybeChallenge.Single());
             }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
             {
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
             if (maybeChallenge.None)
                 return HttpNotFound();
 
             return View(maybeChallenge.Single());
+            }
+
+        [HttpPost]
+        public ActionResult Edit(Challenge model)
+            {
+            var id = model.Id;
+            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            var original = maybeChallenge.Single();
+            original.BookSection = model.BookSection;
+            original.Category = model.Category;
+            original.Location = model.Location;
+            original.Name = model.Name;
+            original.Points = model.Points;
+            uow.Commit();
+            return RedirectToAction("Index");
             }
         }
     }

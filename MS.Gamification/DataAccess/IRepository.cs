@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: IRepository.cs  Created: 2016-03-17@00:29
-// Last modified: 2016-03-17@02:54 by Fern
+// File: IRepository.cs  Created: 2016-03-18@20:18
+// Last modified: 2016-03-21@22:05 by Fern
 
 using System;
 using System.Collections.Generic;
@@ -21,13 +21,13 @@ namespace MS.Gamification.DataAccess
     ///   required by the business logic.
     /// </remarks>
     /// <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
-    public interface IRepository<TEntity> where TEntity : class, IDomainEntity
+    public interface IRepository<TEntity, TKey> where TEntity : class, IDomainEntity<TKey>
         {
         /// <summary>
         ///   Gets the specified entity.
         /// </summary>
         /// <param name="id">The entity ID.</param>
-        TEntity Get(string id);
+        TEntity Get(TKey id);
 
         /// <summary>
         ///   Gets an enumerable collection of all entities in the entity set.
@@ -71,7 +71,7 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <param name="id">The entity ID.</param>
         /// <returns>A <see cref="Maybe{T}" /> that either contains the matched entity, or is empty.</returns>
-        Maybe<TEntity> GetMaybe(string id);
+        Maybe<TEntity> GetMaybe(TKey id);
 
         /// <summary>
         ///   Gets all entities that satisfy the supplied specification.

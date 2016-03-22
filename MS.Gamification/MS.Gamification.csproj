@@ -189,7 +189,6 @@
     <Compile Include="BusinessLogic\IQuerySpecification.cs" />
     <Compile Include="BusinessLogic\NotSpecification.cs" />
     <Compile Include="BusinessLogic\OrSpecification.cs" />
-    <Compile Include="BusinessLogic\QuerySpecifications\ExampleQuerySpecifications.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -286,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BusinessLogic\QuerySpecifications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
