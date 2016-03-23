@@ -1,0 +1,150 @@
+﻿// This file is part of the MS.Gamification project
+// 
+// File: Repository.cs  Created: 2016-03-18@20:18
+// Last modified: 2016-03-21@22:05 by Fern
+
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using MS.Gamification.BusinessLogic;
+
+namespace MS.Gamification.DataAccess.EntityFramework6
+    {
+    /// <summary>
+    ///   Generic repository base class with common accessors.
+    /// </summary>
+    /// <typeparam name="TEntity">
+    ///   The type of entity contained by the
+    ///   repository.
+    /// </typeparam>
+    /// <typeparam name="TKey">
+    ///   The type of the primary key
+    /// </typeparam>
+    /// <remarks>
+    ///   <para>
+    ///     This abstract base class implements the generic
+    ///     <see cref="IRepository{TEntity,TKey}" /> interface and provides
+    ///     implementations for common operations that should be available for
+    ///     all entity sets.
+    ///   </para>
+    ///   <para>
+    ///     The implementation is coupled to the database technology being used,
+    ///     so if the persistence framework is changed or upgraded then this
+    ///     class will have to be updated or replaced with a new implementation.
+    ///     This will likely also affect all derived classes, which will also
+    ///     have to be updated or replaced.
+    ///   </para>
+    /// </remarks>
+    public abstract class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
+        where TEntity : class, IDomainEntity<TKey>
+        {
+        /// <summary>
+        ///   The database context that will be used to persist and retrieve entities from permanent storage.
+        /// </summary>
+        protected readonly DbContext Context;
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Repository{TEntity,TKey}" /> class.
+        /// </summary>
+        /// <param name="context">
+        ///   The database context that will be used to persist and retrieve entities from permanent
+        ///   storage.
+        /// </param>
+        protected Repository(DbContext context)
+            {
+            Context = context;
+            }
+
+        #region Implementation of IRepository<TEntity>
+        /// <summary>
+        ///   Gets the specified entity.
+        /// </summary>
+        /// <param name="id">The entity ID.</param>
+        /// <exception cref="InvalidOperationException">Thrown if no matching item was found.</exception>
+        public TEntity Get(TKey id)
+            {
+            return Context.Set<TEntity>().Single(p => p.Id.Equals(id));
+            }
+
+        /// <summary>
+        ///   Gets a single entity by ID, if it exists.
+        /// </summary>
+        /// <param name="id">The entity ID.</param>
+        /// <returns>A <see cref="Maybe{T}" /> that either contains the matched entity, or is empty.</returns>
+        public Maybe<TEntity> GetMaybe(TKey id)
+            {
+            var match = Context.Set<TEntity>().SingleOrDefault(p => p.Id == id);
+            return match == null ? Maybe<TEntity>.Empty : new Maybe<TEntity>(match);
+            }
+
+        /// <summary>
+        ///   Gets an enumerable collection of all entities in the entity set.
+        /// </summary>
+        /// <returns><see cref="IEnumerable{TEntity}" />.</returns>
+        public IEnumerable<TEntity> GetAll()
+            {
+            return Context.Set<TEntity>().ToList();
+            }
+
+        /// <summary>
+        ///   Gets all entities that satisfy a <paramref name="predicate" />.
+        /// </summary>
+        /// <param name="predicate">A predicate expression tree.</param>
+        /// <returns>An <see cref="IEnumerable{TEntity}" /> containing all entities that satisfy the predicate.</returns>
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+            {
+            return Context.Set<TEntity>().Where(predicate);
+            }
+
+        /// <summary>
+        ///   Gets all entities that satisfy the supplied specification.
+        /// </summary>
+        /// <param name="specification">A specification that determines which entities should be returned.</param>
+        /// <returns>A collection of all entities satisfying the specification.</returns>
+        public IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification)
+            {
+            var matches = Find(p => specification.IsSatisfiedBy(p));
+            return matches.AsEnumerable();
+            }
+
+        /// <summary>
+        ///   Adds one entity to the entity set and ensures that it has a unique identifier.
+        /// </summary>
+        /// <param name="entity">The entity to add.</param>
+        public void Add(TEntity entity)
+            {
+            Context.Set<TEntity>().Add(entity);
+            }
+
+        /// <summary>
+        ///   Adds entities to the entity set and ensures that they each have a unique identifier.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        public void Add(IEnumerable<TEntity> entities)
+            {
+            foreach (var entity in entities)
+                Add(entity);
+            }
+
+        /// <summary>
+        ///   Removes one entity from the entity set.
+        /// </summary>
+        /// <param name="entity">The entity to remove.</param>
+        public void Remove(TEntity entity)
+            {
+            Context.Set<TEntity>().Remove(entity);
+            }
+
+        /// <summary>
+        ///   Removes entities from the entity set.
+        /// </summary>
+        /// <param name="entities">The entities.</param>
+        public void Remove(IEnumerable<TEntity> entities)
+            {
+            Context.Set<TEntity>().RemoveRange(entities);
+            }
+        #endregion
+        }
+    }
