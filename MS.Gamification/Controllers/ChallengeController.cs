@@ -79,6 +79,10 @@ namespace MS.Gamification.Controllers
         [HttpPost]
         public ActionResult Edit(Challenge model)
             {
+            if (!ModelState.IsValid)
+                {
+                return View(model);
+                }
             var id = model.Id;
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
             var original = maybeChallenge.Single();

@@ -75,7 +75,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <returns>A <see cref="Maybe{T}" /> that either contains the matched entity, or is empty.</returns>
         public Maybe<TEntity> GetMaybe(TKey id)
             {
-            var match = Context.Set<TEntity>().SingleOrDefault(p => p.Id.Equals(id));
+            var match = Context.Set<TEntity>().SingleOrDefault(p => p.Id == id);
             return match == null ? Maybe<TEntity>.Empty : new Maybe<TEntity>(match);
             }
 

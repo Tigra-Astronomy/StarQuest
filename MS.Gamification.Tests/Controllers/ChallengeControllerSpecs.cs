@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-03-18@20:19
-// Last modified: 2016-03-22@00:49 by Fern
+// Last modified: 2016-03-23@13:04 by Fern
 
 using System;
 using System.Collections.Generic;
@@ -34,13 +34,12 @@ namespace MS.Gamification.Tests.Controllers
         + GET with valid id
         + GET with invalid id
         + POST with valid data
-        - POST with invalid data
-            - Model fails validation
-            - Model ID not found in the database
+        + POST with invalid data
+            + Model fails validation
+            + Model ID not found in the database
     + Show all the challenges
         + It should return a view (the Index view of the Challenge controller)
         + The view model should contain all the challenges from the database
-    - Show all challenges according to some criteria
      */
 
     #region context base classes
@@ -226,6 +225,43 @@ namespace MS.Gamification.Tests.Controllers
         Because of = () => Result = controller.Create(InvalidChallenge) as ViewResult;
         It should_have_an_invalid_model_state = () => controller.ModelState.IsValid.ShouldBeFalse();
         It should_return_the_create_view = () => Result.ViewName.ShouldEqual(string.Empty);
+
+        It should_populate_the_viewmodel_with_the_posted_data =
+            () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);
+
+        It should_raise_an_error_for_name =
+            () => controller.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
+
+        It should_raise_an_error_for_points =
+            () => controller.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
+
+        It should_not_add_an_item_to_the_challenges_repository =
+            () => A.CallTo(() => challengesRepository.Add(A<Challenge>.Ignored)).MustNotHaveHappened();
+
+        static Challenge InvalidChallenge;
+        static ViewResult Result;
+        }
+
+    [Subject(typeof(ChallengeController), "Edit Action POST invalid data")]
+    public class when_calling_the_edit_action_with_an_invalid_model : with_challenge_controller_and_fake_repository
+        {
+        Establish context = () =>
+            {
+            InvalidChallenge = new Challenge()
+                {
+                BookSection = "Moon",
+                Points = 0,
+                Category = "Moon",
+                Location = "Moon",
+                Name = String.Empty
+                };
+
+            controller.ValidateModel(InvalidChallenge);
+            };
+
+        Because of = () => Result = controller.Edit(InvalidChallenge) as ViewResult;
+        It should_have_an_invalid_model_state = () => controller.ModelState.IsValid.ShouldBeFalse();
+        It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
 
         It should_populate_the_viewmodel_with_the_posted_data =
             () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);

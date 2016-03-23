@@ -3,7 +3,7 @@ namespace MS.Gamification.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class Sprint1 : DbMigration
     {
         public override void Up()
         {
@@ -11,8 +11,8 @@ namespace MS.Gamification.Migrations
                 "dbo.Challenges",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
                         Points = c.Int(nullable: false),
                         Category = c.String(),
                         Location = c.String(),
