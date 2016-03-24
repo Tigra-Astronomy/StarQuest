@@ -1,57 +1,63 @@
-﻿using System.Collections.Generic;
+﻿// This file is part of the MS.Gamification project
+// 
+// File: AccountViewModels.cs  Created: 2016-03-23@23:23
+// Last modified: 2016-03-24@00:18 by Fern
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MS.Gamification.Models
-{
-    public class ExternalLoginConfirmationViewModel
     {
+    public class ExternalLoginConfirmationViewModel
+        {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+        }
 
     public class ExternalLoginListViewModel
-    {
+        {
         public string ReturnUrl { get; set; }
-    }
+        }
 
     public class SendCodeViewModel
-    {
+        {
         public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+        public ICollection<SelectListItem> Providers { get; set; }
         public string ReturnUrl { get; set; }
         public bool RememberMe { get; set; }
-    }
+        }
 
     public class VerifyCodeViewModel
-    {
+        {
         [Required]
         public string Provider { get; set; }
 
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
-    }
+        }
 
     public class ForgotViewModel
-    {
+        {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
-    }
+        }
 
     public class LoginViewModel
-    {
+        {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -60,10 +66,10 @@ namespace MS.Gamification.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-    }
+        }
 
     public class RegisterViewModel
-    {
+        {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -77,12 +83,13 @@ namespace MS.Gamification.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password",
+            ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-    }
+        }
 
     public class ResetPasswordViewModel
-    {
+        {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -96,17 +103,18 @@ namespace MS.Gamification.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password",
+            ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
-    }
+        }
 
     public class ForgotPasswordViewModel
-    {
+        {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        }
     }
-}

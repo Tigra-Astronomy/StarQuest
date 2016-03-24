@@ -190,6 +190,7 @@
     <Compile Include="BusinessLogic\NotSpecification.cs" />
     <Compile Include="BusinessLogic\OrSpecification.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />

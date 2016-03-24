@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeController.cs  Created: 2016-03-18@22:13
-// Last modified: 2016-03-22@00:53 by Fern
+// File: ChallengeController.cs  Created: 2016-03-23@23:23
+// Last modified: 2016-03-24@00:38 by Fern
 
 using System.Linq;
 using System.Web.Mvc;
@@ -10,7 +10,7 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers
     {
-    public class ChallengeController : Controller
+    public class ChallengeController : AdminController
         {
         readonly IUnitOfWork uow;
 
@@ -80,9 +80,7 @@ namespace MS.Gamification.Controllers
         public ActionResult Edit(Challenge model)
             {
             if (!ModelState.IsValid)
-                {
                 return View(model);
-                }
             var id = model.Id;
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
             var original = maybeChallenge.Single();
