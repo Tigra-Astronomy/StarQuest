@@ -56,7 +56,7 @@ namespace MS.Gamification.Models
     public class LoginViewModel
         {
         [Required]
-        [Display(Name = "User Name")]
+        [Display(Name = "User Name or Email")]
         public string UserName { get; set; }
 
         [Required]
@@ -86,6 +86,10 @@ namespace MS.Gamification.Models
         [System.ComponentModel.DataAnnotations.Compare("Password",
             ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(40, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        public string UserName { get; set; }
         }
 
     public class ResetPasswordViewModel

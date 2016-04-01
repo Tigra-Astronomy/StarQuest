@@ -4,6 +4,7 @@
 // Last modified: 2016-03-24@00:19 by Fern
 
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -59,10 +60,33 @@ namespace MS.Gamification.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            /*
+            1. Decide if we have a user name or an email address.
+            2. If it's a username, just log in as normal.
+            3. If it's an email, look the username up in the database, then log in with the username.
+            */
+            var signInName = model.UserName;
+            // RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
+            const string emailPattern = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            var emailRegex = new Regex(emailPattern);
+            var isEmail = emailRegex.IsMatch(model.UserName);
+            if (isEmail)
+                {
+                var query = from user in UserManager.Users
+                            where user.Email == signInName
+                            select user.UserName;
+                if (query.Any())
+                    {
+                    signInName = query.First();
+                    }
+                }
+
+            // When we get here, signInName must contain the username, not the email.
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result =
-                await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+                await SignInManager.PasswordSignInAsync(signInName, model.Password, model.RememberMe, false);
             switch (result)
                 {
                 case SignInStatus.Success:
@@ -139,7 +163,7 @@ namespace MS.Gamification.Controllers
             {
             if (ModelState.IsValid)
                 {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                     {
