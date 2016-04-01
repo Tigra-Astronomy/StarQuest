@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,21 +11,56 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security;
 using MS.Gamification.Models;
+using NLog;
+using SendGrid;
 
 namespace MS.Gamification
 {
-    public class EmailService : IIdentityMessageService
+public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+    Logger log = LogManager.GetLogger("mail");
+
+    public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+        // Plug in your email service here to send an email.
+        return configSendGridasync(message);
+        }
+
+    private Task configSendGridasync(IdentityMessage message)
+        {
+        var myMessage = new SendGridMessage();
+        myMessage.AddTo(message.Destination);
+        var fromAddress = ConfigurationManager.AppSettings["mailFromAddress"];
+        var fromName = ConfigurationManager.AppSettings["mailFromName"];
+        myMessage.From = new System.Net.Mail.MailAddress(fromAddress, fromName);
+        myMessage.Subject = message.Subject;
+        myMessage.Text = message.Body;
+        myMessage.Html = message.Body;
+
+        var credentials = new NetworkCredential(
+            ConfigurationManager.AppSettings["mailAccount"],
+            ConfigurationManager.AppSettings["mailPassword"]
+            );
+
+        // Create a Web transport for sending email.
+        try
+            {
+            log.Info($"Sending registration confirmation mail to {message.Destination}:\n{message.Body}");
+            var transportWeb = new Web(credentials);
+            return transportWeb.DeliverAsync(myMessage);
+            }
+        catch (Exception ex)
+            {
+            log.Error(ex, $"Failed to send message to: {message.Destination}");
             return Task.FromResult(0);
+            }
         }
     }
 
-    public class SmsService : IIdentityMessageService
+public class SmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
         {
