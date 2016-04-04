@@ -16,7 +16,7 @@ namespace MS.Gamification.Models
 
         [Range(1, int.MaxValue)]
         public int Points { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
         public int CategoryId { get; set; }
         public string Location { get; set; }
         //ToDo: This property seems like a bad fit, since we may have challenges that are not in the book, or in a different book
