@@ -105,7 +105,7 @@ namespace MS.Gamification.Tests.Controllers
                 {
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -133,7 +133,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -143,7 +143,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 2,
                 BookSection = "Planets",
                 Points = 3,
-                Category = "Saturn",
+                CategoryId = 1,
                 Location = "Solar System",
                 Name = "See Saturn"
                 };
@@ -175,7 +175,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -185,7 +185,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 2,
                 BookSection = "Planets",
                 Points = 3,
-                Category = "Saturn",
+                CategoryId = 1,
                 Location = "Solar System",
                 Name = "See Saturn"
                 };
@@ -214,7 +214,7 @@ namespace MS.Gamification.Tests.Controllers
                 {
                 BookSection = "Moon",
                 Points = 0,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = String.Empty
                 };
@@ -251,7 +251,7 @@ namespace MS.Gamification.Tests.Controllers
                 {
                 BookSection = "Moon",
                 Points = 0,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = String.Empty
                 };
@@ -290,7 +290,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -320,7 +320,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -345,7 +345,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Moon",
                 Points = 1,
-                Category = "Moon",
+                CategoryId = 1,
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
@@ -355,7 +355,7 @@ namespace MS.Gamification.Tests.Controllers
                 Id = 1,
                 BookSection = "Planets",
                 Points = 1,
-                Category = "Planet",
+                CategoryId = 1,
                 Location = "Mars",
                 Name = "See Mars"
                 };

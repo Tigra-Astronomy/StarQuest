@@ -3,6 +3,8 @@
 // File: UserRepository.cs  Created: 2016-03-18@20:18
 // Last modified: 2016-03-21@22:48 by Fern
 
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Identity;
 using MS.Gamification.Models;
 
@@ -26,5 +28,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             {
             this.userManager = userManager;
             }
+
+        public override IEnumerable<PickListItem<string>> PickList =>
+            GetAll().Select(p => new PickListItem<string>(p.Id, $"{p.UserName} <{p.Email}>"));
         }
     }

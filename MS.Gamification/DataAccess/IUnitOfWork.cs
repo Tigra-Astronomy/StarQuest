@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: IUnitOfWork.cs  Created: 2016-03-18@20:18
-// Last modified: 2016-03-21@22:36 by Fern
+// File: IUnitOfWork.cs  Created: 2016-04-01@23:54
+// Last modified: 2016-04-04@02:05 by Fern
 
 using MS.Gamification.Models;
 
@@ -23,6 +23,12 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <value>The users.</value>
         IRepository<ApplicationUser, string> UsersRepository { get; }
+
+        /// <summary>
+        ///   Gets the categories repository.
+        /// </summary>
+        /// <value>The categories repository.</value>
+        IRepository<Category, int> CategoriesRepository { get; }
 
         /// <summary>
         ///   Commits changes to the database and completes the transaction.

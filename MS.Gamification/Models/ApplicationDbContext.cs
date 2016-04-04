@@ -11,6 +11,7 @@ namespace MS.Gamification.Models
             }
 
         public virtual DbSet<Challenge> Challenges { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
 
         public static ApplicationDbContext Create()
             {

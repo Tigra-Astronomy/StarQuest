@@ -38,6 +38,22 @@ namespace MS.Gamification.Migrations
             //    );
             //
 
+            CreateAdministratorAccount(context);
+            CreateCategories(context);
+            context.SaveChanges();
+            }
+
+        void CreateCategories(ApplicationDbContext context)
+            {
+            foreach (var seed in SeedData.Categories)
+                {
+                context.Categories.AddOrUpdate(p => p.Name,
+                    new Category() {Name = seed});
+                }
+            }
+
+        static void CreateAdministratorAccount(ApplicationDbContext context)
+            {
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var userStore = new UserStore<ApplicationUser>(context);
