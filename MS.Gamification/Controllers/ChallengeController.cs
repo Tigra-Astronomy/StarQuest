@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeController.cs  Created: 2016-03-23@23:23
-// Last modified: 2016-03-24@00:38 by Fern
+// File: ChallengeController.cs  Created: 2016-04-01@23:54
+// Last modified: 2016-04-05@00:25 by Fern
 
 using System.Linq;
 using System.Web.Mvc;
@@ -28,6 +28,8 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Create()
             {
+            var pickListItems = uow.CategoriesRepository.PickList;
+            ViewBag.Categories = pickListItems.ToSelectList();
             return View();
             }
 
@@ -73,6 +75,8 @@ namespace MS.Gamification.Controllers
             if (maybeChallenge.None)
                 return HttpNotFound();
 
+            var pickListItems = uow.CategoriesRepository.PickList;
+            ViewBag.Categories = pickListItems.ToSelectList();
             return View(maybeChallenge.Single());
             }
 

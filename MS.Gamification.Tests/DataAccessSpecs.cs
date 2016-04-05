@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FakeItEasy;
 using Machine.Specifications;
+using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests

@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using JetBrains.Annotations;
 using MS.Gamification.BusinessLogic;
 
 namespace MS.Gamification.DataAccess
@@ -79,5 +80,13 @@ namespace MS.Gamification.DataAccess
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
         IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification);
-        }
+
+        /// <summary>
+        /// Gets the pick list (a collection of key-value pairs).
+        /// </summary>
+        /// <value>The pick list.</value>
+        [NotNull]
+        IEnumerable<PickListItem<TKey>> PickList { get; }
+
     }
+}

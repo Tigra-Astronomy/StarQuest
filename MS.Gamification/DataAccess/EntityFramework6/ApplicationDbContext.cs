@@ -1,7 +1,8 @@
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MS.Gamification.Models;
 
-namespace MS.Gamification.Models
+namespace MS.Gamification.DataAccess.EntityFramework6
     {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         {
@@ -11,6 +12,10 @@ namespace MS.Gamification.Models
             }
 
         public virtual DbSet<Challenge> Challenges { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Mission> Missions { get; set; }
+        public virtual DbSet<MissionTrack> MissionTracks { get; set; }
+        
 
         public static ApplicationDbContext Create()
             {

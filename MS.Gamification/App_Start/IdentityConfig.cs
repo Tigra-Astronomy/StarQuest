@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security;
+using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
 using NLog;
 using SendGrid;
