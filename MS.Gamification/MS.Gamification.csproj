@@ -219,6 +219,7 @@
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataAccess\EntityFramework6\ApplicationDbContext.cs" />
     <Compile Include="DataAccess\EntityFramework6\CategoryRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\EntityFramework6UnitOfWork.cs" />
@@ -240,13 +241,18 @@
     <Compile Include="Migrations\201604032355136_CategoryAsRelatedTable.Designer.cs">
       <DependentUpon>201604032355136_CategoryAsRelatedTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604052230306_MissionsAndTracks.cs" />
+    <Compile Include="Migrations\201604052230306_MissionsAndTracks.Designer.cs">
+      <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Challenge.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Mission.cs" />
+    <Compile Include="Models\MissionTrack.cs" />
     <Compile Include="Models\PickListExtensions.cs" />
     <Compile Include="Models\SeedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -338,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604032355136_CategoryAsRelatedTable.resx">
       <DependentUpon>201604032355136_CategoryAsRelatedTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604052230306_MissionsAndTracks.resx">
+      <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
