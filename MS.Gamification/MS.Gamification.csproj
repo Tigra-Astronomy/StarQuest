@@ -231,6 +231,7 @@
     <Compile Include="DataAccess\EntityFramework6\CategoryRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\EntityFramework6UnitOfWork.cs" />
+    <Compile Include="DataAccess\EntityFramework6\ObservationRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\Repository.cs" />
     <Compile Include="DataAccess\EntityFramework6\UserRepository.cs" />
     <Compile Include="DataAccess\IDomainEntity.cs" />
@@ -253,16 +254,26 @@
     <Compile Include="Migrations\201604052230306_MissionsAndTracks.Designer.cs">
       <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604220026296_GA20-ObservingLog.cs" />
+    <Compile Include="Migrations\201604220026296_GA20-ObservingLog.Designer.cs">
+      <DependentUpon>201604220026296_GA20-ObservingLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AntoniadiScale.cs" />
+    <Compile Include="Models\ApprovalWorkflowState.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Challenge.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\FileNameWithoutPathAttribute.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mission.cs" />
     <Compile Include="Models\MissionTrack.cs" />
+    <Compile Include="Models\Observation.cs" />
+    <Compile Include="Models\ObservingEquipment.cs" />
     <Compile Include="Models\PickListExtensions.cs" />
     <Compile Include="Models\SeedData.cs" />
+    <Compile Include="Models\TransparencyLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -356,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604052230306_MissionsAndTracks.resx">
       <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604220026296_GA20-ObservingLog.resx">
+      <DependentUpon>201604220026296_GA20-ObservingLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
