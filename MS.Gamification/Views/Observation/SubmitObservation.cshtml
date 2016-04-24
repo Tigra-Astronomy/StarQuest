@@ -1,0 +1,30 @@
+﻿@model MS.Gamification.Models.SubmitObservationViewModel
+@{ ViewBag.Title = "Submit Observation"; }
+
+<div class="row">
+    <div class="panel panel-body panel-info">
+        <h4>Create Observing Log Entry for: @Model.Challenge.Name</h4>
+    </div>
+</div>
+
+<div class="row">
+
+    @using (Html.BeginForm())
+        {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObservationDateTimeUtc, new {@class = "control-label col-md-2"})
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ObservationDateTimeUtc, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.ObservationDateTimeUtc, "", new {@class = "text-danger"})
+                </div>
+            </div>
+        </div>
+        }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

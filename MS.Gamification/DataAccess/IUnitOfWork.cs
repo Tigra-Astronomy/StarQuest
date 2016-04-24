@@ -31,6 +31,12 @@ namespace MS.Gamification.DataAccess
         IRepository<Category, int> CategoriesRepository { get; }
 
         /// <summary>
+        /// Gets the observations repository.
+        /// </summary>
+        /// <value>The observations repository.</value>
+        IRepository<Observation, int> ObservationsRepository { get; }
+
+        /// <summary>
         ///   Commits changes to the database and completes the transaction.
         /// </summary>
         void Commit();
