@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-04-22@21:48
-// Last modified: 2016-04-24@18:15 by Fern
+// Last modified: 2016-05-08@00:29 by Fern
 
 using System;
 using System.Linq;
@@ -35,6 +35,12 @@ namespace MS.Gamification.Controllers
                 Seeing = AntoniadiScale.Unknown,
                 Transparency = TransparencyLevel.Unknown
                 };
+            var equipmentPicklist = PickListExtensions.FromEnum<ObservingEquipment>();
+            ViewBag.Equipment = equipmentPicklist.ToSelectList();
+            var seeingPicklist = PickListExtensions.FromEnum<AntoniadiScale>();
+            ViewBag.Seeing = seeingPicklist.ToSelectList();
+            var transparencyPicklist = PickListExtensions.FromEnum<TransparencyLevel>();
+            ViewBag.Transparency = transparencyPicklist.ToSelectList();
             return View(model);
             }
 

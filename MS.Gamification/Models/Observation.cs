@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Observation.cs  Created: 2016-04-21@23:39
-// Last modified: 2016-04-22@01:12 by Fern
+// Last modified: 2016-05-04@21:16 by Fern
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +20,8 @@ namespace MS.Gamification.Models
         public string ObservingSite { get; set; }
         public AntoniadiScale Seeing { get; set; }
         public TransparencyLevel Transparency { get; set; }
+
+        [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
         [FileNameWithoutPath]

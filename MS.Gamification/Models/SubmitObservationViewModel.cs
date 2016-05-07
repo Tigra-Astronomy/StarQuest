@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SubmitObservationViewModel.cs  Created: 2016-04-24@16:52
-// Last modified: 2016-04-24@23:31 by Fern
+// Last modified: 2016-05-04@21:53 by Fern
 
 using System;
 using System.Collections.Generic;
@@ -29,6 +29,7 @@ namespace MS.Gamification.Models
         [Required]
         public TransparencyLevel Transparency { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
         [FileNameWithoutPath]
