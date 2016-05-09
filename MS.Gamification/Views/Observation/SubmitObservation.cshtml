@@ -1,66 +1,103 @@
 ﻿@model MS.Gamification.Models.SubmitObservationViewModel
 @{ ViewBag.Title = "Submit Observation"; }
 
-<div class="row">
-    <div class="panel panel-body panel-info">
-        <h4>Create Observing Log Entry for: @Model.Challenge.Name</h4>
+
+<div class="row" id="challenge">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>Submit Observation</h2>
+        </div>
+        <div class="panel-body">@Model.Challenge.Name</div>
     </div>
 </div>
 
-<div class="row">
-
-    @using (Html.BeginForm())
-        {
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-            <div class="form-group">
-                @Html.LabelFor(model => model.ObservationDateTimeUtc, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ObservationDateTimeUtc, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.ObservationDateTimeUtc, "", new {@class = "text-danger"})
+@using (Html.BeginForm())
+    {
+    var labelStyle = new {@class = "control-label col-md-3"};
+    var inputColumns = "col-md-9";
+    var controlStyle = new {htmlAttributes = new {@class = "form-control"}};
+    var validationStyle = new {@class = "text-danger"};
+    @Html.AntiForgeryToken()
+    <div class="row" id="form">
+        @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
+        <div id="leftForm" class="col-md-8 form-horizontal">
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ObservationDateTimeUtc, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.ObservationDateTimeUtc, controlStyle)
+                        @Html.ValidationMessageFor(model => model.ObservationDateTimeUtc, "", validationStyle)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Equipment, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>)ViewBag.Equipment, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Equipment, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Equipment, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>)ViewBag.Equipment, controlStyle)
+                        @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.ObservingSite, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ObservingSite, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.ObservingSite, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ObservingSite, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.ObservingSite, controlStyle)
+                        @Html.ValidationMessageFor(model => model.ObservingSite, "", validationStyle)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seeing, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>)ViewBag.Seeing, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Seeing, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Seeing, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>)ViewBag.Seeing, controlStyle)
+                        @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Transparency, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>)ViewBag.Transparency, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Transparency, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Transparency, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>)ViewBag.Transparency, controlStyle)
+                        @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Notes, new {@class = "control-label col-md-2"})
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Notes, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Notes, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.Notes, controlStyle)
+                        @Html.ValidationMessageFor(model => model.Notes, "", validationStyle)
+                    </div>
                 </div>
             </div>
         </div>
-        }
-</div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        <div id="spacer" class="col-md-1"></div>
+        <div id="rightForm" class="col-md-3 form-horizontal">
+            <div class="row" id="images">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        What I Saw:
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-5 panel panel-danger">
+                            <h3>Image 1</h3>
+                            @Html.RadioButton("Image", 1) Select
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 panel panel-danger">
+                            <h3>Image 2</h3>
+                            @Html.RadioButton("Image", 2) Select
+                        </div>
+                        <div class="col-md-5 panel panel-danger">
+                            <h3>Image 3</h3>
+                            @Html.RadioButton("Image", 3) Select
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 panel panel-danger">
+                            <h3>Image 4</h3>
+                            @Html.RadioButton("Image", 4) Select
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="submit">
+                <input type="submit" value="Create" class="btn btn-warning"/>
+            </div>
+        </div>
+    </div>
+    }

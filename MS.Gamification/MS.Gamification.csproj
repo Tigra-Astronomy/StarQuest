@@ -366,9 +366,9 @@
     <Content Include="Views\Challenge\Create.cshtml" />
     <Content Include="Views\Challenge\Delete.cshtml" />
     <Content Include="Views\Challenge\Edit.cshtml" />
-    <Content Include="Views\Observation\SubmitObservation.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Observation\SubmitObservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

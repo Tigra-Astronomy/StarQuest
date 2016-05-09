@@ -1,41 +1,21 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
+﻿body { padding-bottom: 20px; padding-top: 50px; }
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
+.body-content { padding-left: 15px; padding-right: 15px; }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
-    white-space: normal;
-}
+.dl-horizontal dt { white-space: normal; }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
-textarea {
-    max-width: 280px;
-}
+textarea { max-width: 280px; }*/
 /* Styles to test new editor and display templates.
 ----------------------------------------------------------*/
-.loud-1 {
-    font-weight: bold;
-    color: Red;
-}
-.loud-2 {
-    font-size:  2.0em;
-    color:Green;
-}
-.loud-3 {
-    font-style: italic;
-    color: yellow;
-    background-color: blue;
-}
+.loud-1 { color: Red; font-weight: bold; }
+.loud-2 { color: Green; font-size: 2.0em; }
+.loud-3 { background-color: blue; color: yellow; font-style: italic; }
 
 textarea.form-control { min-height: 10em; }
