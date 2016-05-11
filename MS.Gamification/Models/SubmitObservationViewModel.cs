@@ -15,12 +15,15 @@ namespace MS.Gamification.Models
         public virtual Challenge Challenge { get; set; }
 
         [Required]
-        public DateTime ObservationDateTimeUtc { get; set; }
+        [Display(Name="Observation date and time")]
+        public DateTime ObservationDateTimeLocal { get; set; }
 
         [Required]
+        [Display (Name = "Equipment used")]
         public ObservingEquipment Equipment { get; set; }
 
         [Required]
+        [Display (Name = "Observing site")]
         public string ObservingSite { get; set; }
 
         [Required]

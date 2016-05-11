@@ -29,7 +29,14 @@ namespace MS.Gamification.DataAccess.EntityFramework6
 
         public void Commit()
             {
-            dbContext.SaveChanges();
+            try
+                {
+                dbContext.SaveChanges();
+                }
+            catch (Exception e)
+                {
+                Console.WriteLine(e); // ToDo: write the exception to a log file
+                }
             }
 
         public void Cancel()

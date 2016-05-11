@@ -30,7 +30,7 @@ namespace MS.Gamification.Models
         [FileNameWithoutPath]
         public string SubmittedImage { get; set; }
 
-        public ApprovalWorkflowState Status { get; set; }
+        public ModerationState Status { get; set; }
 
         [Required]
         [Key]

@@ -1,8 +1,8 @@
 namespace MS.Gamification.Models
     {
-    public enum ApprovalWorkflowState
+    public enum ModerationState
         {
-        Submitted,
+        AwaitingModeration,
         Rejected,
         Approved
         }

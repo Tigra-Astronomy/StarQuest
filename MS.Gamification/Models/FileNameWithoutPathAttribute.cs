@@ -40,7 +40,7 @@ namespace TA.SoftwareLicensing.Models
             var segments = name.Split('.');
             if (segments.Length < 2)
                 return false; // Must be filename.extension
-            return base.IsValid(value);
+            return true;    // Valid.
             }
         #endregion
         }

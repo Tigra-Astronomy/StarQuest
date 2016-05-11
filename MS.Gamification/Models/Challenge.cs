@@ -3,14 +3,22 @@
 // File: Challenge.cs  Created: 2016-03-14@23:12
 // Last modified: 2016-03-21@22:04 by Fern
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MS.Gamification.DataAccess;
+using TA.SoftwareLicensing.Models;
 
 namespace MS.Gamification.Models
     {
     public class Challenge : IDomainEntity<int>
         {
+        internal const string NoImagePlaceholder = "NoImage.png";
+
+
+        [Required][FileNameWithoutPath][MaxLength(255)]
+        public string ValidationImage { get; set; } = NoImagePlaceholder;
+
         [Required]
         public string Name { get; set; }
 

@@ -31,7 +31,7 @@ namespace MS.Gamification.Controllers
             var model = new SubmitObservationViewModel
                 {
                 Challenge = maybeChallenge.Single(),
-                ObservationDateTimeUtc = DateTime.UtcNow,
+                ObservationDateTimeLocal = DateTime.UtcNow,
                 Seeing = AntoniadiScale.Unknown,
                 Transparency = TransparencyLevel.Unknown
                 };
@@ -41,14 +41,34 @@ namespace MS.Gamification.Controllers
             ViewBag.Seeing = seeingPicklist.ToSelectList();
             var transparencyPicklist = PickListExtensions.FromEnum<TransparencyLevel>();
             ViewBag.Transparency = transparencyPicklist.ToSelectList();
+            TempData[nameof(Challenge)] = maybeChallenge.Single();
             return View(model);
             }
 
-        //public ActionResult SubmitObservation(FormCollection collection)
-        //[HttpPost]
-
-        // POST: Observation/Create
-        //    {
-        //    }
+        [HttpPost]
+        public ActionResult SubmitObservation(SubmitObservationViewModel model)
+            {
+            var postedChallenge = TempData[nameof(Challenge)] as Challenge;
+            var maybeChallenge = uow.ChallengesRepository.GetMaybe(postedChallenge.Id);
+            var challenge = maybeChallenge.Single();
+            var observation = new Observation
+                {
+                ChallengeId = challenge.Id,
+                Challenge = challenge,
+                Equipment = model.Equipment,
+                Notes = model.Notes,
+                ObservationDateTimeUtc = model.ObservationDateTimeLocal.ToUniversalTime(),
+                ObservingSite = model.ObservingSite,
+                Seeing = model.Seeing,
+                Status = ModerationState.AwaitingModeration,
+                SubmittedImage = Challenge.NoImagePlaceholder,  // ToDo - use the actual submitted image
+                ExpectedImage = Challenge.NoImagePlaceholder,   // ToDo - use the image specified by the challenge
+                Transparency = model.Transparency
+                };
+            uow.ObservationsRepository.Add(observation);
+            uow.Commit();
+            // ToDo: should redirect to a confirmation screen rather than the home page
+            return RedirectToRoute(new {Controller = "Home", Action = "Index"});
+            }
         }
     }
