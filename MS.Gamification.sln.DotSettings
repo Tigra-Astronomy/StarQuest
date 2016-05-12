@@ -6,7 +6,7 @@
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">This file is part of the $SOLUTION$ project&#xD;
 &#xD;
 File: $FILENAME$  Created: $CREATED_YEAR$-$CREATED_MONTH$-$CREATED_DAY$@$CREATED_TIME$&#xD;
-Last modified: $CURRENT_YEAR$-$CURRENT_MONTH$-$CURRENT_DAY$@$CURRENT_TIME$ by $USER_LOGIN$</s:String>
+Last modified: $CURRENT_YEAR$-$CURRENT_MONTH$-$CURRENT_DAY$@$CURRENT_TIME$</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/AbsolutePath/@EntryValue">C:\Users\Fern\Visual Studio Projects\MS.Gamification\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/RelativePath/@EntryValue">..\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>

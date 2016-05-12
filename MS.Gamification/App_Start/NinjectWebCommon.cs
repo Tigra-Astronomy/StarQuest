@@ -2,6 +2,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
+using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(MS.Gamification.App_Start.NinjectWebCommon), "Start")]
@@ -71,6 +72,8 @@ namespace MS.Gamification.App_Start
             kernel.Bind(typeof(IUserStore<ApplicationUser>)).To(typeof(UserStore<ApplicationUser>)).InRequestScope();
             kernel.Bind(typeof(UserManager<ApplicationUser>)).ToSelf().InRequestScope();
             kernel.Bind<IUnitOfWork>().To<EntityFramework6UnitOfWork>().InRequestScope();
+            kernel.Bind<HttpServerUtilityBase>().ToMethod(c => new HttpServerUtilityWrapper(HttpContext.Current.Server));
+            kernel.Bind<IImageStore>().To<WebServerImageStore>().InSingletonScope();
             }        
     }
 }

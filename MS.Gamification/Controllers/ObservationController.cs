@@ -4,6 +4,7 @@
 // Last modified: 2016-05-09@01:52 by Fern
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
@@ -35,6 +36,18 @@ namespace MS.Gamification.Controllers
                 Seeing = AntoniadiScale.Unknown,
                 Transparency = TransparencyLevel.Unknown
                 };
+
+            // Set validation images
+            // ToDo - randomly choose 3 incorrect images and obtain the 1 correct image from the challenge data
+            // For now, just use the NoImage.png placeholder
+            var validationImages = new List<string>
+                {
+                Challenge.NoImagePlaceholder, Challenge.NoImagePlaceholder, Challenge.NoImagePlaceholder,
+                Challenge.NoImagePlaceholder
+                };
+            model.ValidationImages = validationImages;
+
+
             var equipmentPicklist = PickListExtensions.FromEnum<ObservingEquipment>();
             ViewBag.Equipment = equipmentPicklist.ToSelectList();
             var seeingPicklist = PickListExtensions.FromEnum<AntoniadiScale>();

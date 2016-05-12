@@ -1,4 +1,5 @@
-﻿@model MS.Gamification.Models.SubmitObservationViewModel
+﻿@using MS.Gamification.HtmlHelpers
+@model MS.Gamification.Models.SubmitObservationViewModel
 @{ ViewBag.Title = "Submit Observation"; }
 
 
@@ -74,11 +75,14 @@
                         What I Saw:
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-5 panel panel-danger">
-                            <h3>Image 1</h3>
-                            @Html.RadioButton("Image", 1) Select
-                        </div>
-                        <div class="col-md-1"></div>
+                        @foreach (var imageFile in Model.ValidationImages)
+                            {
+                            <div class="col-md-5 panel panel-info">
+                                @Html.ValidationImage(imageFile, new { @class = "img-responsive img-circle" })
+                                @Html.RadioButton("Image", imageFile) Select
+                            </div>
+                            }
+                        @*<div class="col-md-1"></div>
                         <div class="col-md-5 panel panel-danger">
                             <h3>Image 2</h3>
                             @Html.RadioButton("Image", 2) Select
@@ -91,7 +95,7 @@
                         <div class="col-md-5 panel panel-danger">
                             <h3>Image 4</h3>
                             @Html.RadioButton("Image", 4) Select
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
