@@ -242,6 +242,9 @@
     <Compile Include="BusinessLogic\IQuerySpecification.cs" />
     <Compile Include="BusinessLogic\NotSpecification.cs" />
     <Compile Include="BusinessLogic\OrSpecification.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\AllChallengesInCategory.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\NotThisChallenge.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\IncorrectValidationImagesForChallenge.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
@@ -309,6 +312,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ValidationImages\Moon Full.gif" />
+    <Content Include="App_Data\ValidationImages\Moon Half.gif" />
+    <Content Include="App_Data\ValidationImages\Moon Waning Crescent.gif" />
+    <Content Include="App_Data\ValidationImages\Moon Waning Gibbous.gif" />
+    <Content Include="App_Data\ValidationImages\Moon Waxing Crescent.gif" />
+    <Content Include="App_Data\ValidationImages\Moon Waxing Gibbous.gif" />
     <Content Include="App_Data\ValidationImages\NoImage.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -382,9 +391,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BusinessLogic\QuerySpecifications\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

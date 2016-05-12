@@ -74,7 +74,8 @@ namespace MS.Gamification.Migrations
                                     Points = 1,
                                     BookSection = "Moon",
                                     CategoryId = phaseCategory.Id,
-                                    Location = "Moon"
+                                    Location = "Moon",
+                                    ValidationImage = "Moon Waxing Crescent.gif"
                                     },
                                 new Challenge
                                     {
@@ -82,7 +83,8 @@ namespace MS.Gamification.Migrations
                                     Points = 1,
                                     BookSection = "Moon",
                                     CategoryId = phaseCategory.Id,
-                                    Location = "Moon"
+                                    Location = "Moon",
+                                    ValidationImage = "Moon Full.gif"
                                     }
                                 }
                             },
