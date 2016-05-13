@@ -115,7 +115,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <returns>A collection of all entities satisfying the specification.</returns>
         public IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification)
             {
-            var matches = Find(p => specification.IsSatisfiedBy(p));
+            var matches = specification.Query(Context.Set<TEntity>());
             return matches.AsEnumerable();
             }
 

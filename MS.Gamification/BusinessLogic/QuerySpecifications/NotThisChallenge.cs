@@ -6,7 +6,7 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.BusinessLogic.QuerySpecifications
     {
-    public class NotThisChallenge : CompositeSpecification<Challenge>
+    public class NotThisChallenge : QuerySpecification<Challenge>
         {
         readonly Challenge excludedChallenge;
 
@@ -15,9 +15,11 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             this.excludedChallenge = excludedChallenge;
             }
 
-        public override bool IsSatisfiedBy(Challenge candidate)
+        public override IQueryable<Challenge> Query(IQueryable<Challenge> items)
             {
-            return (candidate.Id != excludedChallenge.Id);
+            return from item in items
+                   where item.Id != excludedChallenge.Id
+                   select item;
             }
         }
     }

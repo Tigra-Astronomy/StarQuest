@@ -6,22 +6,25 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.BusinessLogic.QuerySpecifications
     {
-    public class IncorrectValidationImagesForChallenge : CompositeSpecification<Challenge>
+    public class IncorrectValidationImagesForChallenge : QuerySpecification<Challenge>
         {
         readonly Challenge challenge;
-        IQuerySpecification<Challenge> compositeSpecification;
+        IQuerySpecification<Challenge> challengesInSameCategory;
+        IQuerySpecification<Challenge> notThisChallenge;
 
         public IncorrectValidationImagesForChallenge(Challenge challenge)
             {
             this.challenge = challenge;
-            var challengesInSameCategory = new AllChallengesInCategory(challenge.Category);
-            var notThisChallenge = new NotThisChallenge(challenge);
-            compositeSpecification = challengesInSameCategory.And(notThisChallenge);
+            challengesInSameCategory = new ChallengesInCategory(challenge.Category);
+            notThisChallenge = new NotThisChallenge(challenge);
             }
 
-        public override bool IsSatisfiedBy(Challenge candidate)
+
+        public override IQueryable<Challenge> Query(IQueryable<Challenge> items)
             {
-            return compositeSpecification.IsSatisfiedBy(candidate);
+            var challengesInCategory = challengesInSameCategory.Query(items);
+            var result = notThisChallenge.Query(challengesInCategory);
+            return result;
             }
         }
     }

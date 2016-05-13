@@ -14,12 +14,10 @@ namespace MS.Gamification.Controllers
     {
     public class ValidationImageController : Controller
         {
-        readonly HttpServerUtilityBase webServer;
         readonly IImageStore imageStore;
 
-        public ValidationImageController(HttpServerUtilityBase webServer, IImageStore imageStore )
+        public ValidationImageController( IImageStore imageStore )
             {
-            this.webServer = webServer;
             this.imageStore = imageStore;
             }
 
@@ -29,10 +27,9 @@ namespace MS.Gamification.Controllers
             //ToDo - validate that filename is well-formed
             if (!imageStore.FileExists(safeFilename))
                 safeFilename = Challenge.NoImagePlaceholder;
-            var dir = webServer.MapPath("/App_Data/ValidationImages");
-            var path = Path.Combine(dir, safeFilename);
-            var ext = Path.GetExtension(safeFilename).TrimStart('.');
-            return base.File(path, $"image/{ext}");
+            var fullyQualifiedFileName = imageStore.FullyQualifiedFileName(safeFilename);
+            var contentType = imageStore.MimeType(safeFilename);
+            return base.File(fullyQualifiedFileName, contentType);
             }
         }
     }

@@ -237,12 +237,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="BusinessLogic\AndSpecification.cs" />
-    <Compile Include="BusinessLogic\CompositeSpecification.cs" />
-    <Compile Include="BusinessLogic\IQuerySpecification.cs" />
-    <Compile Include="BusinessLogic\NotSpecification.cs" />
-    <Compile Include="BusinessLogic\OrSpecification.cs" />
-    <Compile Include="BusinessLogic\QuerySpecifications\AllChallengesInCategory.cs" />
+    <Compile Include="BusinessLogic\QuerySpecification.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\ChallengesInCategory.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\NotThisChallenge.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\IncorrectValidationImagesForChallenge.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -269,7 +265,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HtmlHelpers\FileSystem.cs" />
+    <Compile Include="HtmlHelpers\WebServerImageStore.cs" />
+    <Compile Include="HtmlHelpers\IImageStore.cs" />
     <Compile Include="HtmlHelpers\ImageHelpers.cs" />
     <Compile Include="Migrations\201603231320365_Sprint1.cs" />
     <Compile Include="Migrations\201603231320365_Sprint1.Designer.cs">
@@ -328,7 +325,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="DataAccess\Data Access Patterns.cd" />
-    <Content Include="BusinessLogic\QuerySpecification.cd" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
