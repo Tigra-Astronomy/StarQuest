@@ -1,0 +1,23 @@
+﻿@model System.Collections.Generic.List<MS.Gamification.Models.Observation>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Log Book</title>
+</head>
+<body>
+<div>
+    @foreach (var item in Model)
+        {
+        <article class="row">
+            <h3>@item.Challenge.Name</h3>
+        </article>
+        }
+</div>
+</body>
+</html>

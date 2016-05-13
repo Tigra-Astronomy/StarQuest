@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -150,8 +151,15 @@ namespace MS.Gamification.Controllers
             var postedChallenge = TempData[nameof(Challenge)] as Challenge;
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(postedChallenge.Id);
             var challenge = maybeChallenge.Single();
+            // ToDo: Get the currently logged-in user.
+            var userID = User.Identity.GetUserId();
+            var user = uow.UsersRepository.Get(userID);
+
             var observation = new Observation
                 {
+                // ToDo: Set User and UserId
+                UserId = userID,
+                User = user,
                 ChallengeId = challenge.Id,
                 Challenge = challenge,
                 Equipment = model.Equipment,
@@ -168,6 +176,13 @@ namespace MS.Gamification.Controllers
             uow.Commit();
             // ToDo: should redirect to a confirmation screen rather than the home page
             return RedirectToRoute(new {Controller = "Home", Action = "Index"});
+            }
+
+        public ActionResult Index()
+            {
+            var userId = User.Identity.GetUserId();
+            var user = uow.UsersRepository.Get(userId);
+            return View(user.Observations);
             }
         }
     }

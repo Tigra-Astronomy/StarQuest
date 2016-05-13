@@ -92,7 +92,5 @@ namespace MS.Gamification.Tests.Controllers
             };
         Because of = () => result = controller.GetImage(string.Empty) as FilePathResult;
         It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
-        static ValidationImageController controller;
-        static FilePathResult result;
         }
     }

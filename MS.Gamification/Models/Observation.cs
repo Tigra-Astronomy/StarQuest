@@ -20,6 +20,8 @@ namespace MS.Gamification.Models
         public string ObservingSite { get; set; }
         public AntoniadiScale Seeing { get; set; }
         public TransparencyLevel Transparency { get; set; }
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }

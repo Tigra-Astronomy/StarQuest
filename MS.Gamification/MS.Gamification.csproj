@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201605110157146_ValidationImages.Designer.cs">
       <DependentUpon>201605110157146_ValidationImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605131852458_UserToObservations.cs" />
+    <Compile Include="Migrations\201605131852458_UserToObservations.Designer.cs">
+      <DependentUpon>201605131852458_UserToObservations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -386,6 +390,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
+    <Content Include="Views\Observation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -410,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605110157146_ValidationImages.resx">
       <DependentUpon>201605110157146_ValidationImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605131852458_UserToObservations.resx">
+      <DependentUpon>201605131852458_UserToObservations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
