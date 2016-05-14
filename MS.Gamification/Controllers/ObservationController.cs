@@ -168,8 +168,8 @@ namespace MS.Gamification.Controllers
                 ObservingSite = model.ObservingSite,
                 Seeing = model.Seeing,
                 Status = ModerationState.AwaitingModeration,
-                SubmittedImage = Challenge.NoImagePlaceholder, // ToDo - use the actual submitted image
-                ExpectedImage = Challenge.NoImagePlaceholder, // ToDo - use the image specified by the challenge
+                SubmittedImage = model.SubmittedImage, 
+                ExpectedImage = challenge.ValidationImage, 
                 Transparency = model.Transparency
                 };
             uow.ObservationsRepository.Add(observation);
@@ -184,6 +184,11 @@ namespace MS.Gamification.Controllers
             var specification = new SingleUserWithObservations(userId);
             var user = uow.UsersRepository.Single(specification);
             return View(user.Observations);
+            }
+
+        public ActionResult Details()
+            {
+            throw new NotImplementedException();
             }
         }
     }

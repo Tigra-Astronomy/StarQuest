@@ -1,25 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// This file is part of the MS.Gamification project
+// 
+// File: SingleUserWithObservations.cs  Created: 2016-05-14@01:42
+// Last modified: 2016-05-14@21:33
+
 using System.Linq;
-using System.Web;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.BusinessLogic.QuerySpecifications
     {
     public class SingleUserWithObservations : QuerySpecification<ApplicationUser>
         {
-        readonly string userId;
+        readonly string requestedUserId;
 
-        public SingleUserWithObservations(string userId )
+        public SingleUserWithObservations(string userId)
             {
-            this.userId = userId;
+            requestedUserId = userId;
             FetchStrategy.Include("Observations.Challenge");
-            // Eager loading of the user's observations
             }
 
         public override IQueryable<ApplicationUser> GetQuery(IQueryable<ApplicationUser> items)
             {
-            return items.Where(p => p.Id == userId);
+            var query = from user in items
+                        where user.Id == requestedUserId
+                        select user;
+            return query;
             }
         }
     }

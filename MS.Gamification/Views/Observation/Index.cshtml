@@ -1,8 +1,5 @@
-﻿@model System.Collections.Generic.List<MS.Gamification.Models.Observation>
-
-@{
-    Layout = null;
-}
+﻿@using MS.Gamification.HtmlHelpers
+@model System.Collections.Generic.List<MS.Gamification.Models.Observation>
 
 <!DOCTYPE html>
 
@@ -15,7 +12,13 @@
     @foreach (var item in Model)
         {
         <article class="row">
-            <h3>@item.Challenge.Name</h3>
+            @Html.ValidationImage(item.SubmittedImage,new {@class="img-responsive img-circle col-md-1"})
+            <div class="col-md-9">
+                @item.ObservationDateTimeUtc.ToLocalTime().ToString()
+                @item.Challenge.Name
+            </div>
+            @Html.ValidationImage("NoImage.png", new {@class="img-responsive img-rounded col-md-1"})
+            @Html.ActionLink("View...","Details", null, new {@class="btn btn-info col-md-1", role="button"})
         </article>
         }
 </div>

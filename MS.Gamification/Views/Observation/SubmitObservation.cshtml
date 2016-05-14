@@ -79,7 +79,7 @@
                             {
                             <div class="col-md-5 panel panel-info">
                                 @Html.ValidationImage(imageFile, new { @class = "img-responsive img-circle" })
-                                @Html.RadioButton("Image", imageFile) Select
+                                @Html.RadioButtonFor(model=>model.SubmittedImage, imageFile) Select
                             </div>
                             }
                         @*<div class="col-md-1"></div>
