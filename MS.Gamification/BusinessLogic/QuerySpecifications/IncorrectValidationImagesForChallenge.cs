@@ -20,10 +20,10 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             }
 
 
-        public override IQueryable<Challenge> Query(IQueryable<Challenge> items)
+        public override IQueryable<Challenge> GetQuery(IQueryable<Challenge> items)
             {
-            var challengesInCategory = challengesInSameCategory.Query(items);
-            var result = notThisChallenge.Query(challengesInCategory);
+            var challengesInCategory = challengesInSameCategory.GetQuery(items);
+            var result = notThisChallenge.GetQuery(challengesInCategory);
             return result;
             }
         }

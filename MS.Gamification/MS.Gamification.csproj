@@ -237,10 +237,12 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BusinessLogic\GenericFetchStrategy.cs" />
     <Compile Include="BusinessLogic\QuerySpecification.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\ChallengesInCategory.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\NotThisChallenge.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\IncorrectValidationImagesForChallenge.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />

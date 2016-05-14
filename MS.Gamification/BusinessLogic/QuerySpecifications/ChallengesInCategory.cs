@@ -15,7 +15,7 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             this.category = category;
             }
 
-        public override IQueryable<Challenge> Query(IQueryable<Challenge> challenges)
+        public override IQueryable<Challenge> GetQuery(IQueryable<Challenge> challenges)
             {
             return from challenge in challenges
                    where challenge.CategoryId == category.Id

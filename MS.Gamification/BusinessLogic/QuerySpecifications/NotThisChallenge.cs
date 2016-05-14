@@ -15,7 +15,7 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             this.excludedChallenge = excludedChallenge;
             }
 
-        public override IQueryable<Challenge> Query(IQueryable<Challenge> items)
+        public override IQueryable<Challenge> GetQuery(IQueryable<Challenge> items)
             {
             return from item in items
                    where item.Id != excludedChallenge.Id

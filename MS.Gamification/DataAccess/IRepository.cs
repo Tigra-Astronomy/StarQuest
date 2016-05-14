@@ -82,6 +82,15 @@ namespace MS.Gamification.DataAccess
         IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification);
 
         /// <summary>
+        /// Gets the single entity that matches the specification.
+        /// Throws an exception if there is not exactly one entity matching the criteria.
+        /// </summary>
+        /// <param name="specification">A query specification for the desired entity</param>
+        /// <returns>The one and only entity that satisfis the criteria.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is not exactly one match.</exception>
+        TEntity Single(IQuerySpecification<TEntity> specification);
+
+        /// <summary>
         /// Gets the pick list (a collection of key-value pairs).
         /// </summary>
         /// <value>The pick list.</value>

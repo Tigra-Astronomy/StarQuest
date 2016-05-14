@@ -8,14 +8,17 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.BusinessLogic
     {
-    public interface IQuerySpecification<T>
+    public interface IQuerySpecification<T> where T : class
         {
-        IQueryable<T> Query(IQueryable<T> items);
+        IQueryable<T> GetQuery(IQueryable<T> items);
+        IFetchStrategy<T> FetchStrategy { get; }
         }
 
-    public abstract class QuerySpecification<T> : IQuerySpecification<T>
+    public abstract class QuerySpecification<T> : IQuerySpecification<T> where T:class
         {
-        public abstract IQueryable<T> Query(IQueryable<T> items);
+        public abstract IQueryable<T> GetQuery(IQueryable<T> items);
+
+        public IFetchStrategy<T> FetchStrategy { get; } = new GenericFetchStrategy<T>();
         }
 
 
@@ -28,7 +31,7 @@ namespace MS.Gamification.BusinessLogic
             this.category = category;
             }
 
-        public override IQueryable<Challenge> Query(IQueryable<Challenge> items)
+        public override IQueryable<Challenge> GetQuery(IQueryable<Challenge> items)
             {
             return from item in items
                    where item.CategoryId == category.Id

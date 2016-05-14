@@ -1,10 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationController.cs  Created: 2016-04-22@21:48
-// Last modified: 2016-05-09@01:52 by Fern
+// File: ObservationController.cs  Created: 2016-05-10@22:29
+// Last modified: 2016-05-14@02:09
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -64,15 +63,14 @@ namespace MS.Gamification.Controllers
             }
 
         /// <summary>
-        /// Builds a list of exactly 4 validation images, consisting of one correct image
-        /// and 3 incorrect images, in a random order.The resultant collection is guaranteed
-        /// to always have exactly 4 entries.
+        ///     Builds a list of exactly 4 validation images, consisting of one correct image and 3 incorrect images, in a
+        ///     random order.The resultant collection is guaranteed to always have exactly 4 entries.
         /// </summary>
         /// <param name="challenge"></param>
         /// <returns></returns>
         IEnumerable<string> GetValidationImages(Challenge challenge)
             {
-            var results = new Dictionary<int,string>();
+            var results = new Dictionary<int, string>();
             var generator = new Random();
             // Add the validation image from the specified challenge, or a placeholder if none is specified
             results.Add(generator.Next(int.MaxValue),
@@ -88,7 +86,7 @@ namespace MS.Gamification.Controllers
             var incorrect = IncorrectImagesForChallenge(challenge).Select(item => item.ValidationImage).ToList();
             var trio = SelectRandomElementsFromList(3, incorrect, Challenge.NoImagePlaceholder);
 
-            int randomKey = 0;
+            var randomKey = 0;
             foreach (var image in trio)
                 {
                 do
@@ -105,15 +103,17 @@ namespace MS.Gamification.Controllers
             }
 
         /// <summary>
-        /// Selects and returns a specified number of elements chosen randomly from a collection. If there are not
-        /// enough elements in the source collection, a filler is used. The resulting collection is guaranteed to have
-        /// exactly the requested number of elements.
+        ///     Selects and returns a specified number of elements chosen randomly from a collection. If there are not
+        ///     enough elements in the source collection, a filler is used. The resulting collection is guaranteed to have
+        ///     exactly the requested number of elements.
         /// </summary>
         /// <typeparam name="T">The type of collection</typeparam>
         /// <param name="count">The number of elements requested.</param>
         /// <param name="source">The source collection to be randomly sampled.</param>
-        /// <param name="filler">An object used as padding when there are not enough source elements to satisfy the
-        /// request.</param>
+        /// <param name="filler">
+        ///     An object used as padding when there are not enough source elements to satisfy the
+        ///     request.
+        /// </param>
         /// <returns></returns>
         IEnumerable<T> SelectRandomElementsFromList<T>(int count, IEnumerable<T> source, T filler)
             {
@@ -122,8 +122,8 @@ namespace MS.Gamification.Controllers
             var usedElements = new List<int>(3);
             var sourceList = source.ToList();
             var sourceCount = sourceList.Count;
-            int index = 0;
-            for (int i = 0; i < count; i++)
+            var index = 0;
+            for (var i = 0; i < count; i++)
                 {
                 if (i >= sourceCount)
                     break;
@@ -152,13 +152,13 @@ namespace MS.Gamification.Controllers
             var maybeChallenge = uow.ChallengesRepository.GetMaybe(postedChallenge.Id);
             var challenge = maybeChallenge.Single();
             // ToDo: Get the currently logged-in user.
-            var userID = User.Identity.GetUserId();
-            var user = uow.UsersRepository.Get(userID);
+            var userId = User.Identity.GetUserId();
+            var user = uow.UsersRepository.Get(userId);
 
             var observation = new Observation
                 {
                 // ToDo: Set User and UserId
-                UserId = userID,
+                UserId = userId,
                 User = user,
                 ChallengeId = challenge.Id,
                 Challenge = challenge,
@@ -168,8 +168,8 @@ namespace MS.Gamification.Controllers
                 ObservingSite = model.ObservingSite,
                 Seeing = model.Seeing,
                 Status = ModerationState.AwaitingModeration,
-                SubmittedImage = Challenge.NoImagePlaceholder,  // ToDo - use the actual submitted image
-                ExpectedImage = Challenge.NoImagePlaceholder,   // ToDo - use the image specified by the challenge
+                SubmittedImage = Challenge.NoImagePlaceholder, // ToDo - use the actual submitted image
+                ExpectedImage = Challenge.NoImagePlaceholder, // ToDo - use the image specified by the challenge
                 Transparency = model.Transparency
                 };
             uow.ObservationsRepository.Add(observation);
@@ -181,7 +181,8 @@ namespace MS.Gamification.Controllers
         public ActionResult Index()
             {
             var userId = User.Identity.GetUserId();
-            var user = uow.UsersRepository.Get(userId);
+            var specification = new SingleUserWithObservations(userId);
+            var user = uow.UsersRepository.Single(specification);
             return View(user.Observations);
             }
         }
