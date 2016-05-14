@@ -1,3 +1,4 @@
+using System;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.Models;
@@ -10,6 +11,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             : base("DefaultConnection", throwIfV1Schema: false)
             {
             }
+
+        public ApplicationDbContext(string connectionString) : base(connectionString) {}
 
         public virtual DbSet<Challenge> Challenges { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
