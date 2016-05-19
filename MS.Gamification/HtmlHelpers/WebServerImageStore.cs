@@ -3,9 +3,9 @@
 // File: FileSystem.cs  Created: 2016-05-12@00:29
 // Last modified: 2016-05-13@16:54
 
+using System.Configuration;
 using System.IO;
 using System.Web;
-using NLog.Internal;
 
 namespace MS.Gamification.HtmlHelpers
     {
@@ -17,8 +17,7 @@ namespace MS.Gamification.HtmlHelpers
         public WebServerImageStore(HttpServerUtilityBase webhost)
             {
             this.webhost = webhost;
-            var config = new ConfigurationManager();
-            rootPath = config.AppSettings["validationImagesRootPath"];
+            rootPath = ConfigurationManager.AppSettings["validationImagesRootPath"];
             }
 
         public bool FileExists(string filename)

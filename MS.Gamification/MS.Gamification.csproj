@@ -245,12 +245,14 @@
     <Compile Include="BusinessLogic\QuerySpecifications\ChallengesInCategory.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\NotThisChallenge.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\IncorrectValidationImagesForChallenge.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\ObservationsAwaitingModeration.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValidationImageController.cs" />
@@ -327,7 +329,10 @@
     <Content Include="App_Data\ValidationImages\NoImage.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -338,6 +343,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FetchStrategyPattern.cd" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -397,6 +407,10 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
     <Content Include="Views\Observation\Index.cshtml" />
+    <Content Include="Views\Shared\NavbarPartial.cshtml" />
+    <Content Include="Views\Shared\ObservationLayout.cshtml" />
+    <Content Include="Views\Shared\Analytics.cshtml" />
+    <Content Include="Views\Moderation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

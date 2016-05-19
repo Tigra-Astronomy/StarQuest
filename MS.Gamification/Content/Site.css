@@ -1,21 +1,63 @@
-﻿body { padding-bottom: 20px; padding-top: 50px; }
+﻿body {
+    padding-bottom: 20px;
+    padding-top: 50px;
+}
 
 /* Set padding to keep content from hitting the edges */
-.body-content { padding-left: 15px; padding-right: 15px; }
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
+
 .dl-horizontal dt { white-space: normal; }
 
 /* Set width on the form input elements since they're 100% wide by default */
+
 /*input,
 select,
 textarea { max-width: 280px; }*/
-/* Styles to test new editor and display templates.
-----------------------------------------------------------*/
-.loud-1 { color: Red; font-weight: bold; }
-.loud-2 { color: Green; font-size: 2.0em; }
-.loud-3 { background-color: blue; color: yellow; font-style: italic; }
 
 textarea.form-control { min-height: 10em; }
+
+/* Status icons */
+
+
+.status-pending {
+    color: goldenrod;
+    font-size: 2em;
+}
+
+.status-approved {
+    color: seagreen;
+    font-size: 2em;
+}
+
+.status-rejected {
+    color: indianred;
+    font-size: 2em;
+}
+
+.status-unknown {
+    color: gray;
+    font-size: 2em;
+}
+
+.row.observation {
+    border-bottom: 1px;
+    border-bottom-color: grey;
+    border-bottom-style: dotted;
+    height: 90px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+.observation-header { margin-top: 12px; }
+
+.approval-status { margin-top: 16px; }
+
+.observation-detail-button { margin-top: 12px; }
