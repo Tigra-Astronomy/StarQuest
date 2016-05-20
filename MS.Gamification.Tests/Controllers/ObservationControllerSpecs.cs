@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationControllerSpecs.cs  Created: 2016-04-22@21:49
-// Last modified: 2016-04-24@18:15 by Fern
+// File: ObservationControllerSpecs.cs  Created: 2016-05-10@22:29
+// Last modified: 2016-05-20@22:55
 
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ using Machine.Specifications.Annotations;
 using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
+using MS.Gamification.Tests.TestHelpers.Fakes;
 
 /*
 Observation controller behaviours
@@ -51,8 +52,7 @@ namespace MS.Gamification.Tests.Controllers
         protected static List<Observation> fakeData;
         protected static IUnitOfWork uow;
 
-        [UsedImplicitly]
-        Cleanup after = () =>
+        [UsedImplicitly] Cleanup after = () =>
             {
             fakeData = null;
             uow = null;
@@ -60,8 +60,7 @@ namespace MS.Gamification.Tests.Controllers
             controller = null;
             };
 
-        [UsedImplicitly]
-        Establish context = () =>
+        [UsedImplicitly] Establish context = () =>
             {
             fakeData = new List<Observation>();
             uow = A.Fake<IUnitOfWork>();
@@ -83,7 +82,7 @@ namespace MS.Gamification.Tests.Controllers
             A.CallTo(() => uow.ChallengesRepository).Returns(fakeChallengesRepository);
             };
 
-        Because of = () => actionResult = controller.SubmitObservation(id: 10);
+        Because of = () => actionResult = controller.SubmitObservation(10);
         It should_return_404_not_found = () => actionResult.ShouldBeOfExactType<HttpNotFoundResult>();
         static ActionResult actionResult;
         }
@@ -92,29 +91,29 @@ namespace MS.Gamification.Tests.Controllers
     public class when_submit_is_called_with_a_valid_challenge : with_observation_controller_and_fake_repository
         {
         Establish context = () =>
-        {
+            {
             var fakeChallengesRepository = A.Fake<IRepository<Challenge, int>>();
             var validChallenge = new Challenge
                 {
                 Id = ValidChallengeId,
                 Name = "Unit test challenge",
-                Category = new Category { Id = 1, Name = "Unit Test" },
+                Category = new Category {Id = 1, Name = "Unit Test"},
                 Location = "Your Imagination",
                 Points = 10
                 };
             var maybechallenge = new Maybe<Challenge>(validChallenge);
             A.CallTo(() => fakeChallengesRepository.GetMaybe(ValidChallengeId)).Returns(maybechallenge);
             A.CallTo(() => uow.ChallengesRepository).Returns(fakeChallengesRepository);
-        };
+            };
 
-        Because of = () => Result = controller.SubmitObservation(id: ValidChallengeId) as ViewResult;
+        Because of = () => Result = controller.SubmitObservation(ValidChallengeId) as ViewResult;
         It should_return_the_default_view_by_convention = () => Result.ViewName.ShouldBeEmpty();
         static ViewResult Result;
         const int ValidChallengeId = 1;
         }
 
     [Subject(typeof(ObservationController), "valid POST request")]
-    public class when_a_valid_submission_is_posted: with_observation_controller_and_fake_repository
+    public class when_a_valid_submission_is_posted : with_observation_controller_and_fake_repository
         {
         Establish context = () =>
             {
@@ -140,6 +139,14 @@ namespace MS.Gamification.Tests.Controllers
                 ValidationImages =
                 new List<string> {"WrongImage1.png", "WrongImage2.png", "CorrectImage.png", "WrongImage4.png"}
                 };
+            var identity = new FakeIdentity("Valid User");
+            var user = new FakePrincipal(identity, new string[] {});
+            var httpContext = new FakeHttpContext("/Observation/SubmitObservation");
+            httpContext.User = user;
+            var controllerContext = new ControllerContext();
+            controllerContext.HttpContext = httpContext;
+            controller.ControllerContext = controllerContext;
+            controller.TempData[nameof(Challenge)] = model.Challenge;
             };
 
         Because of = () => Result = controller.SubmitObservation(model) as ViewResult;
@@ -154,7 +161,7 @@ namespace MS.Gamification.Tests.Controllers
             () =>
                 {
                 A.CallTo(() => observationRepository.Add(A<Observation>.Ignored)).MustHaveHappened();
-                A.CallTo(()=>uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
+                A.CallTo(() => uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
                 };
 
         It should_add_the_submission_to_the_moderation_queue = () => A.CallTo(

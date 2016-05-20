@@ -119,11 +119,16 @@
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
     <Compile Include="Controllers\UnitTestImageStore.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
-    <Compile Include="DataAccessSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="QuerySpecifications\ObservationsAwaitingModerationSpecs.cs" />
     <Compile Include="TestHelpers\ControllerExtensions.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpContext.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpRequest.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpResponse.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
+    <Compile Include="TestHelpers\Fakes\FakePrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
