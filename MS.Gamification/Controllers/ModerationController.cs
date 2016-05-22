@@ -1,15 +1,18 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ModerationController.cs  Created: 2016-05-19@00:56
-// Last modified: 2016-05-19@01:46
+// File: ModerationController.cs  Created: 2016-05-19@01:49
+// Last modified: 2016-05-21@19:36
 
+using System;
+using System.Linq;
 using System.Web.Mvc;
 using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers
     {
-    [Authorize(Roles = "Moderator")]
+    [Authorize(Roles = "Moderator,Administrator")]
     public class ModerationController : UserController
         {
         readonly IUnitOfWork uow;
@@ -23,8 +26,20 @@ namespace MS.Gamification.Controllers
         public ActionResult Index()
             {
             var query = new ObservationsAwaitingModeration();
-            var model = uow.ObservationsRepository.AllSatisfying(query);
+            var queue = uow.ObservationsRepository.AllSatisfying(query);
+            var model = queue.Select(q => new ModerationQueueItem
+                {
+                ObservationId = q.Id,
+                DateTime = q.ObservationDateTimeUtc,
+                ChallengeName = q.Challenge.Name,
+                UserName = q.User.UserName
+                });
             return View(model);
+            }
+
+        public ActionResult Details(int? Id)
+            {
+            throw new NotImplementedException();
             }
         }
     }

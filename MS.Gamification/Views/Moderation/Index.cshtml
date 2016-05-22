@@ -1,7 +1,18 @@
-﻿@model IEnumerable<MS.Gamification.Models.Observation>
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<MS.Gamification.Models.ModerationQueueItem>
 
 @{
     ViewBag.Title = "Moderation Queue";
 }
 
 <h2>Moderation Queue</h2>
+
+@foreach (var observation in Model)
+    {
+    <div class="row">
+        @Html.DisplayFor(p => observation.DateTime, new { @class = "col-md-2" })
+        @Html.DisplayFor(p => observation.UserName, new { @class = "col-md-2" })
+        @Html.DisplayFor(p => observation.ChallengeName, new { @class = "col-md-2" })
+        @Html.ActionLink("View >","Details", new {Id=observation.ObservationId}, new { @class = "btn-sm btn-info col-md-1"})
+    </div>
+    }
