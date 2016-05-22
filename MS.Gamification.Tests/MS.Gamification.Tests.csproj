@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Effort, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Effort.EF6.1.1.5\lib\net45\Effort.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Effort.Extra, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Effort.Extra.EF6.1.2.5\lib\net45\Effort.Extra.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -67,11 +75,16 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
+      <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Extensions" />
@@ -116,20 +129,26 @@
   <ItemGroup>
     <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
+    <Compile Include="Controllers\ControllerContextBuilder.cs" />
     <Compile Include="Controllers\ModerationControllerSpecs.cs" />
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
     <Compile Include="Controllers\UnitTestImageStore.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
+    <Compile Include="Controllers\with_mvc_controller.cs" />
+    <Compile Include="EffortSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="QuerySpecifications\ObservationsAwaitingModerationSpecs.cs" />
     <Compile Include="TestHelpers\ControllerExtensions.cs" />
+    <Compile Include="TestHelpers\EffortExtensions.cs" />
+    <Compile Include="TestHelpers\EffortUnitOfWorkBuilder.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpContext.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpRequest.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpResponse.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpSessionState.cs" />
     <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
     <Compile Include="TestHelpers\Fakes\FakePrincipal.cs" />
+    <Compile Include="TestHelpers\FakeRepositoryBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

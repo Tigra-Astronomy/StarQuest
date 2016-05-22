@@ -1,16 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModerationControllerSpecs.cs  Created: 2016-05-20@23:03
-// Last modified: 2016-05-21@00:29
+// Last modified: 2016-05-22@20:07
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using FakeItEasy;
 using Machine.Specifications;
-using MS.Gamification.BusinessLogic;
 using MS.Gamification.Controllers;
-using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.Controllers
@@ -26,31 +23,23 @@ namespace MS.Gamification.Tests.Controllers
      */
 
     [Subject(typeof(ModerationController), "Index")]
-    public class when_the_index_action_is_called
+    class when_the_index_action_is_called : with_mvc_controller<ModerationController>
         {
-        Establish context = () =>
-            {
-            Observations = new List<Observation>
-                {
-                new Observation {Id = 1, Status = ModerationState.Approved},
-                new Observation {Id = 2, Status = ModerationState.AwaitingModeration},
-                new Observation {Id = 3, Status = ModerationState.Rejected}
-                };
-            uow = A.Fake<IUnitOfWork>();
-            controller = new ModerationController(uow);
-            A.CallTo(() => uow.ObservationsRepository.AllSatisfying(A<IQuerySpecification<Observation>>.Ignored))
-                .Returns(Observations.Where(p => p.Status == ModerationState.AwaitingModeration));
-            };
-
-        Because of = () => { Result = controller.Index() as ViewResult; };
-
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithModerator("mod", "Joe Moderator")
+            .WithStandardUser("user", "Joe User")
+            .WithEntity(new Category {Id = 1, Name = "Category"})
+            .WithEntity(new Challenge {Id = 1, Name = "Unit Test Challenge", CategoryId = 1})
+            .WithEntity(new Observation {Id = 1, Status = ModerationState.Approved, UserId = "user", ChallengeId = 1})
+            .WithEntity(new Observation {Id = 2, Status = ModerationState.AwaitingModeration, UserId = "user", ChallengeId = 1})
+            .WithEntity(new Observation {Id = 3, Status = ModerationState.Rejected, UserId = "user", ChallengeId = 1})
+            .WithRoute("/Moderation/Index", HttpVerbs.Get)
+            .WithRequestingUser("Joe Moderator", "Moderator")
+            .Build();
+        Because of = () => { Result = ControllerUnderTest.Index() as ViewResult; };
         It should_return_the_index_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewmodel_with_the_observations_awaiting_moderation =
-            () => ((IEnumerable<Observation>) Result.Model).Single()
-                .Status.ShouldEqual(ModerationState.AwaitingModeration);
-        static ModerationController controller;
+            () => ((IEnumerable<ModerationQueueItem>) Result.Model).Single().ObservationId.ShouldEqual(2);
         static ViewResult Result;
-        static IUnitOfWork uow;
-        static List<Observation> Observations;
         }
     }
