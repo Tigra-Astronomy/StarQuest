@@ -129,16 +129,16 @@
   <ItemGroup>
     <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
-    <Compile Include="Controllers\ControllerContextBuilder.cs" />
     <Compile Include="Controllers\ModerationControllerSpecs.cs" />
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
-    <Compile Include="Controllers\UnitTestImageStore.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
     <Compile Include="Controllers\with_mvc_controller.cs" />
     <Compile Include="EffortSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="QuerySpecifications\ObservationsAwaitingModerationSpecs.cs" />
+    <Compile Include="TestHelpers\ChallengeWithoutNavigationPropertiesComparer.cs" />
+    <Compile Include="TestHelpers\ControllerContextBuilder.cs" />
     <Compile Include="TestHelpers\ControllerExtensions.cs" />
     <Compile Include="TestHelpers\EffortExtensions.cs" />
     <Compile Include="TestHelpers\EffortUnitOfWorkBuilder.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
     <Compile Include="TestHelpers\Fakes\FakePrincipal.cs" />
     <Compile Include="TestHelpers\FakeRepositoryBuilder.cs" />
+    <Compile Include="TestHelpers\UnitTestImageStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

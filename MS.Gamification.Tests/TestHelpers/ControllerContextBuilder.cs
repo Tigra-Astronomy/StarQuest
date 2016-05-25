@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-22@15:43
-// Last modified: 2016-05-22@19:44
+// Last modified: 2016-05-23@03:11
 
 using System;
 using System.Collections.Generic;
@@ -11,10 +11,9 @@ using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
-using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.Tests.TestHelpers.Fakes;
 
-namespace MS.Gamification.Tests.Controllers
+namespace MS.Gamification.Tests.TestHelpers
     {
     /// <summary>
     ///     Builds an instance of an MVC <see cref="Controller" />, initialized with fke data suitable for unit testing.
@@ -24,6 +23,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
         readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
+        readonly TempDataDictionary tempdata = new TempDataDictionary();
         readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
         Uri baseUri = new Uri("http://localhost:9876");
         HttpVerbs requestMethod = HttpVerbs.Get;
@@ -119,6 +119,7 @@ namespace MS.Gamification.Tests.Controllers
             httpContext.User = fakePrincipal;
             var context = new ControllerContext {HttpContext = httpContext};
             controller.ControllerContext = context;
+            controller.TempData = tempdata;
             return controller;
             }
 
@@ -126,6 +127,12 @@ namespace MS.Gamification.Tests.Controllers
             {
             requestUsername = username;
             requestUserRoles = roles;
+            return this;
+            }
+
+        public ControllerContextBuilder<TController> WithTempData(string key, object value)
+            {
+            tempdata.Add(key, value);
             return this;
             }
         }

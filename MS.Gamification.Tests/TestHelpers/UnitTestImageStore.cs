@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using MS.Gamification.HtmlHelpers;
 
-namespace MS.Gamification.Tests.Controllers
+namespace MS.Gamification.Tests.TestHelpers
     {
     internal class UnitTestImageStore : IImageStore {
         readonly string rootPath;

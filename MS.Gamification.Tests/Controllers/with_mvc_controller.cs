@@ -1,10 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
 // File: with_mvc_controller.cs  Created: 2016-05-22@19:57
-// Last modified: 2016-05-22@20:16
+// Last modified: 2016-05-25@22:56
 
 using System.Web.Mvc;
 using Machine.Specifications;
+using MS.Gamification.DataAccess;
+using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
     {
@@ -27,6 +29,8 @@ namespace MS.Gamification.Tests.Controllers
             ContextBuilder.UnitOfWork.Dispose();
             ControllerUnderTest.Dispose();
             };
-        Establish context = () => { ContextBuilder = new ControllerContextBuilder<TController>(); };
+        Establish context = () => ContextBuilder = new ControllerContextBuilder<TController>();
+
+        protected static IUnitOfWork UnitOfWork => ContextBuilder.UnitOfWork;
         }
     }

@@ -1,9 +1,8 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeControllerSpecs.cs  Created: 2016-03-18@20:19
-// Last modified: 2016-03-23@13:04 by Fern
+// File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-05-25@23:27
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -51,8 +50,7 @@ namespace MS.Gamification.Tests.Controllers
         protected static List<Challenge> fakeData;
         protected static IUnitOfWork uow;
 
-        [UsedImplicitly]
-        Cleanup after = () =>
+        [UsedImplicitly] Cleanup after = () =>
             {
             fakeData = null;
             uow = null;
@@ -60,8 +58,7 @@ namespace MS.Gamification.Tests.Controllers
             controller = null;
             };
 
-        [UsedImplicitly]
-        Establish context = () =>
+        [UsedImplicitly] Establish context = () =>
             {
             fakeData = new List<Challenge>();
             uow = A.Fake<IUnitOfWork>();
@@ -74,34 +71,36 @@ namespace MS.Gamification.Tests.Controllers
     #endregion context base classes
 
     [Subject(typeof(ChallengeController), "Index action")]
-    public class when_viewing_all_challenges : with_challenge_controller_and_fake_repository
+    class when_viewing_all_challenges : with_mvc_controller<ChallengeController>
         {
-        Because of = () => actionResult = controller.Index() as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithEntity(new Category {Id = 99, Name = "Unit Test"})
+            .WithEntity(new Challenge {Id = 1, CategoryId = 99})
+            .WithEntity(new Challenge {Id = 2, CategoryId = 99})
+            .WithEntity(new Challenge {Id = 3, CategoryId = 99})
+            .Build();
+        Because of = () => actionResult = ControllerUnderTest.Index() as ViewResult;
         It should_return_the_index_view = () => actionResult.ViewName.ShouldEqual(string.Empty);
-
-        It should_populate_the_viewmodel_with_all_challenges_in_the_database = () =>
-            {
-            var model = actionResult.Model as IEnumerable<Challenge>;
-            model.Count().ShouldEqual(fakeData.Count());
-            };
-
-        private static ViewResult actionResult;
+        It should_populate_the_viewmodel_with_all_challenges_in_the_database =
+            () => ((IEnumerable<Challenge>) actionResult.Model).Count().ShouldEqual(3);
+        static ViewResult actionResult;
         }
 
     [Subject(typeof(ChallengeController), "Create Action")]
-    public class when_calling_the_create_action_with_no_parameters : with_challenge_controller_and_fake_repository
+    class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
         {
-        Because of = () => Result = controller.Create() as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder.Build();
+        Because of = () => Result = ControllerUnderTest.Create() as ViewResult;
         It should_return_the_create_view = () => Result.ViewName.ShouldEqual(string.Empty);
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST valid data")]
-    public class when_calling_the_create_action_with_valid_form_data : with_challenge_controller_and_fake_repository
+    class when_calling_the_create_action_with_valid_form_data : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
-            ValidChallenge = new Challenge()
+            ValidChallenge = new Challenge
                 {
                 BookSection = "Moon",
                 Points = 1,
@@ -109,248 +108,173 @@ namespace MS.Gamification.Tests.Controllers
                 Location = "Moon",
                 Name = "See all the moon phases"
                 };
+            ControllerUnderTest = ContextBuilder
+                .WithEntity(new Category {Id = 1, Name = "Unit Test"})
+                .Build();
             };
 
-        Because of = () => Result = controller.Create(ValidChallenge) as RedirectToRouteResult;
+        Because of = () => Result = ControllerUnderTest.Create(ValidChallenge) as RedirectToRouteResult;
         It should_return_redirect_to_index = () => Result.RouteValues["Action"].ShouldEqual("Index");
-
-        It should_add_an_item_to_the_challenges_repository =
-            () => A.CallTo(() => challengesRepository.Add(ValidChallenge)).MustHaveHappened(Repeated.Exactly.Once);
-
-        It should_commit_the_transaction = () => A.CallTo(() => uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
-
+        It should_add_one_item_to_the_challenges_repository =
+            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(1);
         static RedirectToRouteResult Result;
         static Challenge ValidChallenge;
         }
 
     [Subject(typeof(ChallengeController), "ConfirmDelete Action")]
-    public class when_calling_the_confirm_delete_action_with_valid_id : with_challenge_controller_and_fake_repository
+    class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
-            NewChallenge1 = new Challenge()
-                {
-                Id = 1,
-                BookSection = "Moon",
-                Points = 1,
-                CategoryId = 1,
-                Location = "Moon",
-                Name = "See all the moon phases"
-                };
-
-            NewChallenge2 = new Challenge()
-                {
-                Id = 2,
-                BookSection = "Planets",
-                Points = 3,
-                CategoryId = 1,
-                Location = "Solar System",
-                Name = "See Saturn"
-                };
-
-            fakeData.Add(NewChallenge1);
-            fakeData.Add(NewChallenge2);
-            A.CallTo(() => challengesRepository.GetMaybe(1)).Returns(new Maybe<Challenge>(NewChallenge1));
+            ControllerUnderTest = ContextBuilder
+                .WithEntity(new Category {Id = 1})
+                .WithEntity(new Challenge
+                    {
+                    Id = 1,
+                    BookSection = "Moon",
+                    Points = 1,
+                    CategoryId = 1,
+                    Location = "Moon",
+                    Name = "See all the moon phases"
+                    })
+                .WithEntity(new Challenge
+                    {
+                    Id = 2,
+                    BookSection = "Planets",
+                    Points = 3,
+                    CategoryId = 1,
+                    Location = "Solar System",
+                    Name = "See Saturn"
+                    })
+                .Build();
             };
 
-        Because of = () => Result = controller.ConfirmDelete(NewChallenge1.Id);
-
-        It should_delete_an_item_from_the_challenges_repository =
-            () => A.CallTo(() => challengesRepository.Remove(NewChallenge1)).MustHaveHappened(Repeated.Exactly.Once);
-
-        It should_commit_the_transaction = () => A.CallTo(() => uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
-
-        static Challenge NewChallenge1;
-        static Challenge NewChallenge2;
+        Because of = () => Result = ControllerUnderTest.ConfirmDelete(1);
+        It should_leave_only_id_2_in_the_repository =
+            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Single().Id.ShouldEqual(2);
         static ActionResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Delete Action")]
-    public class when_calling_the_delete_action_with_a_valid_id : with_challenge_controller_and_fake_repository
+    class when_calling_the_delete_action_with_a_valid_id : with_mvc_controller<ChallengeController>
         {
-        Establish context = () =>
-            {
-            NewChallenge1 = new Challenge()
-                {
-                Id = 1,
-                BookSection = "Moon",
-                Points = 1,
-                CategoryId = 1,
-                Location = "Moon",
-                Name = "See all the moon phases"
-                };
-
-            NewChallenge2 = new Challenge()
-                {
-                Id = 2,
-                BookSection = "Planets",
-                Points = 3,
-                CategoryId = 1,
-                Location = "Solar System",
-                Name = "See Saturn"
-                };
-            fakeData.Add(NewChallenge1);
-            fakeData.Add(NewChallenge2);
-            A.CallTo(() => challengesRepository.GetMaybe(1)).Returns(new Maybe<Challenge>(NewChallenge1));
-            };
-
-        Because of = () => Result = controller.Delete(NewChallenge1.Id) as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithEntity(new Category {Id = 1})
+            .WithEntity(new Challenge {Id = 1, CategoryId = 1})
+            .Build();
+        Because of = () => Result = ControllerUnderTest.Delete(1) as ViewResult;
         It should_return_the_delete_view = () => Result.ViewName.ShouldEqual(string.Empty);
-
         It should_populate_the_viewModel_with_the_item_to_be_deleted =
-            () => (Result.Model as Challenge).Id.ShouldEqual(NewChallenge1.Id);
-
-        static Challenge NewChallenge1;
-        static Challenge NewChallenge2;
+            () => (Result.Model as Challenge).Id.ShouldEqual(1);
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST invalid data")]
-    public class when_calling_the_create_action_with_an_invalid_model : with_challenge_controller_and_fake_repository
+    class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
-            InvalidChallenge = new Challenge()
+            InvalidChallenge = new Challenge
                 {
                 BookSection = "Moon",
                 Points = 0,
                 CategoryId = 1,
                 Location = "Moon",
-                Name = String.Empty
+                Name = string.Empty
                 };
-
-            controller.ValidateModel(InvalidChallenge);
+            ControllerUnderTest = ContextBuilder
+                .WithEntity(new Category {Id = 1})
+                .Build();
+            ControllerUnderTest.ValidateModel(InvalidChallenge);
             };
-
-        Because of = () => Result = controller.Create(InvalidChallenge) as ViewResult;
-        It should_have_an_invalid_model_state = () => controller.ModelState.IsValid.ShouldBeFalse();
+        Because of = () => Result = ControllerUnderTest.Create(InvalidChallenge) as ViewResult;
+        It should_have_an_invalid_model_state = () => ControllerUnderTest.ModelState.IsValid.ShouldBeFalse();
         It should_return_the_create_view = () => Result.ViewName.ShouldEqual(string.Empty);
-
         It should_populate_the_viewmodel_with_the_posted_data =
             () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);
-
         It should_raise_an_error_for_name =
-            () => controller.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
-
+            () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
         It should_raise_an_error_for_points =
-            () => controller.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
-
+            () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository =
-            () => A.CallTo(() => challengesRepository.Add(A<Challenge>.Ignored)).MustNotHaveHappened();
-
+            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action POST invalid data")]
-    public class when_calling_the_edit_action_with_an_invalid_model : with_challenge_controller_and_fake_repository
+    class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
-            InvalidChallenge = new Challenge()
+            InvalidChallenge = new Challenge
                 {
                 BookSection = "Moon",
                 Points = 0,
                 CategoryId = 1,
                 Location = "Moon",
-                Name = String.Empty
+                Name = string.Empty
                 };
-
-            controller.ValidateModel(InvalidChallenge);
+            ControllerUnderTest = ContextBuilder.WithEntity(new Category {Id = 1})
+                .Build();
+            ControllerUnderTest.ValidateModel(InvalidChallenge);
             };
-
-        Because of = () => Result = controller.Edit(InvalidChallenge) as ViewResult;
-        It should_have_an_invalid_model_state = () => controller.ModelState.IsValid.ShouldBeFalse();
+        Because of = () => Result = ControllerUnderTest.Edit(InvalidChallenge) as ViewResult;
+        It should_have_an_invalid_model_state = () => ControllerUnderTest.ModelState.IsValid.ShouldBeFalse();
         It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
-
         It should_populate_the_viewmodel_with_the_posted_data =
             () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);
-
         It should_raise_an_error_for_name =
-            () => controller.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
-
+            () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
         It should_raise_an_error_for_points =
-            () => controller.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
-
-        It should_not_add_an_item_to_the_challenges_repository =
-            () => A.CallTo(() => challengesRepository.Add(A<Challenge>.Ignored)).MustNotHaveHappened();
-
+            () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
+        It should_not_add_an_item_to_the_challenges_repository = () =>
+            UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    public class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
-        : with_challenge_controller_and_fake_repository
+    class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
+        : with_mvc_controller<ChallengeController>
         {
-        Establish context = () =>
-            {
-            Challenge1 = new Challenge()
-                {
-                Id = 1,
-                BookSection = "Moon",
-                Points = 1,
-                CategoryId = 1,
-                Location = "Moon",
-                Name = "See all the moon phases"
-                };
-
-            fakeData.Add(Challenge1);
-            A.CallTo(() => challengesRepository.GetMaybe(1)).Returns(new Maybe<Challenge>(Challenge1));
-            };
-
-        Because of = () => Result = controller.Edit(Challenge1.Id) as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithEntity(new Category {Id = 1})
+            .WithEntity(new Challenge {Id = expectedId, CategoryId = 1})
+            .Build();
+        Because of = () => Result = ControllerUnderTest.Edit(expectedId) as ViewResult;
         It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
-
         It should_populate_the_viewModel_with_the_item_to_be_edited =
-            () => (Result.Model as Challenge).Id.ShouldEqual(Challenge1.Id);
-
-        static Challenge Challenge1;
+            () => (Result.Model as Challenge).Id.ShouldEqual(expectedId);
         static ViewResult Result;
+        const int expectedId = 9;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    public class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
-        : with_challenge_controller_and_fake_repository
+    class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
+        : with_mvc_controller<ChallengeController>
         {
-        Establish context = () =>
-            {
-            Challenge1 = new Challenge()
-                {
-                Id = 1,
-                BookSection = "Moon",
-                Points = 1,
-                CategoryId = 1,
-                Location = "Moon",
-                Name = "See all the moon phases"
-                };
-            A.CallTo(() => challengesRepository.GetMaybe(A<int>.Ignored)).Returns(Maybe<Challenge>.Empty);
-            };
-
-        Because of = () => Result = controller.Edit(3);
+        /*
+         * We put something in the database because an empty database would be a guarantee of 
+         * not finding anything and that might prejudice the test. We want to know it wasn't found because
+         * the IDs didn't match, not because the DB was empty.
+         */
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithEntity(new Category {Id = 1})
+            .WithEntity(new Challenge {Id = 9, CategoryId = 1})
+            .Build();
+        Because of = () => Result = ControllerUnderTest.Edit(3);
         It should_return_a_not_found_error = () => Result.ShouldBeOfExactType<HttpNotFoundResult>();
-
-        static Challenge Challenge1;
         static ActionResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    public class when_sending_a_post_to_the_edit_action_with_a_valid_model
-        : with_challenge_controller_and_fake_repository
+    class when_sending_a_post_to_the_edit_action_with_a_valid_model
+        : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
-            UnmodifiedChallenge = new Challenge()
-                {
-                Id = 1,
-                BookSection = "Moon",
-                Points = 1,
-                CategoryId = 1,
-                Location = "Moon",
-                Name = "See all the moon phases"
-                };
-
-            ModifiedChallenge = new Challenge()
+            ModifiedChallenge = new Challenge
                 {
                 Id = 1,
                 BookSection = "Planets",
@@ -359,20 +283,29 @@ namespace MS.Gamification.Tests.Controllers
                 Location = "Mars",
                 Name = "See Mars"
                 };
-
-            fakeData.Add(UnmodifiedChallenge);
-            A.CallTo(() => challengesRepository.GetMaybe(1))
-                .Returns(new Maybe<Challenge>(UnmodifiedChallenge));
-            controller.ValidateModel(ModifiedChallenge);
+            ControllerUnderTest = ContextBuilder
+                .WithEntity(new Category {Id = 1})
+                .WithEntity(new Challenge
+                    {
+                    Id = 1,
+                    BookSection = "Moon",
+                    Points = 1,
+                    CategoryId = 1,
+                    Location = "Moon",
+                    Name = "See all the moon phases"
+                    })
+                .Build();
+            ControllerUnderTest.ValidateModel(ModifiedChallenge);
             };
-
-        Because of = () => Result = controller.Edit(ModifiedChallenge) as RedirectToRouteResult;
-        It should_successfully_validate_the_model = () => controller.ModelState.IsValid.ShouldBeTrue();
+        Because of = () => Result = ControllerUnderTest.Edit(ModifiedChallenge) as RedirectToRouteResult;
+        It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
-        It should_update_the_repository = () => fakeData.Single().ShouldBeLike(ModifiedChallenge);
-        It should_commit_the_transaction = () => A.CallTo(() => uow.Commit()).MustHaveHappened(Repeated.Exactly.Once);
-
-        static Challenge UnmodifiedChallenge;
+        It should_update_the_repository =
+            () =>
+                UnitOfWork.ChallengesRepository.GetAll()
+                    .Contains(ModifiedChallenge, new ChallengeWithoutNavigationPropertiesComparer())
+                    .ShouldBeTrue();
+        It should_leave_one_item_in_the_repository = () => UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(1);
         static RedirectToRouteResult Result;
         static Challenge ModifiedChallenge;
         }
