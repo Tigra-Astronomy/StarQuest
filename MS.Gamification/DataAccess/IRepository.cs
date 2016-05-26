@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IRepository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-14@22:29
+// Last modified: 2016-05-26@02:35
 
 using System;
 using System.Collections.Generic;
@@ -12,13 +12,14 @@ using MS.Gamification.BusinessLogic;
 namespace MS.Gamification.DataAccess
     {
     /// <summary>
-    ///     Generic repository interface which must be implemented by all repositories that participate in a Unit of Work.
+    ///     Generic repository interface which must be implemented by all repositories that participate in a Unit of
+    ///     Work.
     /// </summary>
     /// <remarks>
     ///     This generic interface is database and application independent and is one of the key articulation points in
-    ///     the application architecture. The interface defines behaviours that are common to all repositories and provide
-    ///     the foundation for entity repositories to specialise into a selection of queries and operations required by
-    ///     the business logic.
+    ///     the application architecture. The interface defines behaviours that are common to all repositories and
+    ///     provide the foundation for entity repositories to specialise into a selection of queries and operations
+    ///     required by the business logic.
     /// </remarks>
     /// <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
     public interface IRepository<TEntity, TKey> where TEntity : class, IDomainEntity<TKey>
@@ -81,19 +82,19 @@ namespace MS.Gamification.DataAccess
         Maybe<TEntity> GetMaybe(TKey id);
 
         /// <summary>
+        ///     Gets at most one item that matches a query specification. Throws an exception if there is more than one
+        ///     one matching item.
+        /// </summary>
+        /// <param name="specification">A query specification for the desired entity</param>
+        /// <returns>Zero or one items in a <see cref="Maybe{TEntity}" />.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there is not exactly one match.</exception>
+        Maybe<TEntity> GetMaybe(IQuerySpecification<TEntity> specification);
+
+        /// <summary>
         ///     Gets all entities that satisfy the supplied specification.
         /// </summary>
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
         IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification);
-
-        /// <summary>
-        ///     Gets the single entity that matches the specification.
-        ///     Throws an exception if there is not exactly one entity matching the criteria.
-        /// </summary>
-        /// <param name="specification">A query specification for the desired entity</param>
-        /// <returns>The one and only entity that satisfies the criteria.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if there is not exactly one match.</exception>
-        TEntity Single(IQuerySpecification<TEntity> specification);
         }
     }

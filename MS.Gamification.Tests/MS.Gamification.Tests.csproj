@@ -148,7 +148,6 @@
     <Compile Include="TestHelpers\Fakes\FakeHttpSessionState.cs" />
     <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
     <Compile Include="TestHelpers\Fakes\FakePrincipal.cs" />
-    <Compile Include="TestHelpers\FakeRepositoryBuilder.cs" />
     <Compile Include="TestHelpers\UnitTestImageStore.cs" />
   </ItemGroup>
   <ItemGroup>

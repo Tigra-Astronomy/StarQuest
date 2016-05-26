@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: Observation.cs  Created: 2016-04-21@23:39
-// Last modified: 2016-05-04@21:16 by Fern
+// File: Observation.cs  Created: 2016-05-10@22:29
+// Last modified: 2016-05-26@02:55
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -14,13 +14,24 @@ namespace MS.Gamification.Models
     public class Observation : IDomainEntity<int>
         {
         public int ChallengeId { get; set; }
+
         public virtual Challenge Challenge { get; set; }
+
+        [Display(Name = "Date and Time")]
         public DateTime ObservationDateTimeUtc { get; set; }
+
+        [Display(Name = "Equipment")]
         public ObservingEquipment Equipment { get; set; }
+
+        [Display(Name = "Observing Site")]
         public string ObservingSite { get; set; }
+
         public AntoniadiScale Seeing { get; set; }
+
         public TransparencyLevel Transparency { get; set; }
+
         public ApplicationUser User { get; set; }
+
         public string UserId { get; set; }
 
         [DataType(DataType.MultilineText)]

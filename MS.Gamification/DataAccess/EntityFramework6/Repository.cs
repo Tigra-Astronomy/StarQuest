@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Repository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-14@02:08
+// Last modified: 2016-05-26@02:38
 
 using System;
 using System.Collections.Generic;
@@ -25,13 +25,13 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     /// <remarks>
     ///     <para>
     ///         This abstract base class implements the generic
-    ///         <see cref="IRepository{TEntity,TKey}" /> interface and provides implementations for common operations that
-    ///         should be available for all entity sets.
+    ///         <see cref="IRepository{TEntity,TKey}" /> interface and provides implementations for common operations
+    ///         that should be available for all entity sets.
     ///     </para>
     ///     <para>
     ///         The implementation is coupled to the database technology being used, so if the persistence framework is
-    ///         changed or upgraded then this class will have to be updated or replaced with a new implementation. This will
-    ///         likely also affect all derived classes, which will also have to be updated or replaced.
+    ///         changed or upgraded then this class will have to be updated or replaced with a new implementation. This
+    ///         will likely also affect all derived classes, which will also have to be updated or replaced.
     ///     </para>
     /// </remarks>
     public abstract class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
@@ -118,7 +118,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             }
 
         /// <summary>
-        ///     Builds an <see cref="ObjectQuery{TEntity}" /> that takes account of the eager loading fetch strategy.
+        ///     Builds an <see cref="ObjectQuery{T}" /> that takes account of the eager loading fetch strategy.
         /// </summary>
         /// <param name="specification"></param>
         /// <returns>A query that includes eager loading of specified related entities.</returns>
@@ -133,14 +133,22 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             }
 
         /// <summary>
-        ///     Gets a single entity that matches a specification. Throws an exception if there is not exactly one match.
+        ///     Gets zero or one items that matches a specification. Throws an exception if there is more than one
+        ///     match.
         /// </summary>
         /// <param name="specification">A query specification that should resolve to exactly one match.</param>
-        /// <returns>The single matched entity.</returns>
-        public TEntity Single(IQuerySpecification<TEntity> specification)
+        /// <returns>The single matched entity, or <see cref="Maybe{T}.Empty" />.</returns>
+        /// <exception cref="InvalidOperationException">
+        ///     More than one result was returned; check your specification!
+        /// </exception>
+        public Maybe<TEntity> GetMaybe(IQuerySpecification<TEntity> specification)
             {
             var query = QueryWithFetchStrategy(specification);
-            return query.Single();
+            var results = query.ToList();
+            var count = results.Count;
+            if (count > 1)
+                throw new InvalidOperationException("More than one result was returned; check your specification!");
+            return count == 0 ? Maybe<TEntity>.Empty : new Maybe<TEntity>(results.Single());
             }
 
         /// <summary>

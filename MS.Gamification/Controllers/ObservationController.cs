@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-05-14@02:09
+// Last modified: 2016-05-26@02:39
 
 using System;
 using System.Collections.Generic;
@@ -63,8 +63,8 @@ namespace MS.Gamification.Controllers
             }
 
         /// <summary>
-        ///     Builds a list of exactly 4 validation images, consisting of one correct image and 3 incorrect images, in a
-        ///     random order.The resultant collection is guaranteed to always have exactly 4 entries.
+        ///     Builds a list of exactly 4 validation images, consisting of one correct image and 3 incorrect images, in
+        ///     a random order.The resultant collection is guaranteed to always have exactly 4 entries.
         /// </summary>
         /// <param name="challenge"></param>
         /// <returns></returns>
@@ -168,8 +168,8 @@ namespace MS.Gamification.Controllers
                 ObservingSite = model.ObservingSite,
                 Seeing = model.Seeing,
                 Status = ModerationState.AwaitingModeration,
-                SubmittedImage = model.SubmittedImage, 
-                ExpectedImage = challenge.ValidationImage, 
+                SubmittedImage = model.SubmittedImage,
+                ExpectedImage = challenge.ValidationImage,
                 Transparency = model.Transparency
                 };
             uow.ObservationsRepository.Add(observation);
@@ -182,8 +182,9 @@ namespace MS.Gamification.Controllers
             {
             var userId = User.Identity.GetUserId();
             var specification = new SingleUserWithObservations(userId);
-            var user = uow.UsersRepository.Single(specification);
-            return View(user.Observations);
+            var maybeUser = uow.UsersRepository.GetMaybe(specification);
+            if (maybeUser.None) return new HttpStatusCodeResult(500, "Unable to retrieve user details. Sorry!");
+            return View(maybeUser.Single().Observations);
             }
 
         public ActionResult Details()

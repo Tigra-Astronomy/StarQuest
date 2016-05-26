@@ -246,6 +246,7 @@
     <Compile Include="BusinessLogic\QuerySpecifications\NotThisChallenge.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\IncorrectValidationImagesForChallenge.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\ObservationsAwaitingModeration.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\SingleObservationWithNavigationProperties.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -412,6 +413,7 @@
     <Content Include="Views\Shared\ObservationLayout.cshtml" />
     <Content Include="Views\Shared\Analytics.cshtml" />
     <Content Include="Views\Moderation\Index.cshtml" />
+    <Content Include="Views\Moderation\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
