@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: AccountController.cs  Created: 2016-03-23@23:23
-// Last modified: 2016-03-24@00:19 by Fern
+// File: AccountController.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-06-05@20:45
 
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,14 +12,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {
     [Authorize]
     public class AccountController : Controller
         {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        ApplicationSignInManager _signInManager;
+        ApplicationUserManager _userManager;
 
         public AccountController() {}
 
@@ -67,7 +68,8 @@ namespace MS.Gamification.Controllers
             */
             var signInName = model.UserName;
             // RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
-            const string emailPattern = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            const string emailPattern =
+                @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
             var emailRegex = new Regex(emailPattern);
             var isEmail = emailRegex.IsMatch(model.UserName);
             if (isEmail)
@@ -89,16 +91,16 @@ namespace MS.Gamification.Controllers
                 await SignInManager.PasswordSignInAsync(signInName, model.Password, model.RememberMe, false);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
                 }
             }
 
@@ -135,14 +137,14 @@ namespace MS.Gamification.Controllers
                         model.RememberBrowser);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
+                    case SignInStatus.Success:
+                        return RedirectToLocal(model.ReturnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid code.");
+                        return View(model);
                 }
             }
 
@@ -171,9 +173,11 @@ namespace MS.Gamification.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
+                    await
+                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
+                            "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                     }
@@ -213,7 +217,7 @@ namespace MS.Gamification.Controllers
             if (ModelState.IsValid)
                 {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
                     {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -334,19 +338,19 @@ namespace MS.Gamification.Controllers
             var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
-                case SignInStatus.Failure:
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+                    case SignInStatus.Failure:
+                    default:
+                        // If the user does not have an account, then prompt the user to create an account
+                        ViewBag.ReturnUrl = returnUrl;
+                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                        return View("ExternalLoginConfirmation",
+                            new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
                 }
             }
 
@@ -425,20 +429,20 @@ namespace MS.Gamification.Controllers
 
         #region Helpers
         // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
+        const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
+        IAuthenticationManager AuthenticationManager
             {
             get { return HttpContext.GetOwinContext().Authentication; }
             }
 
-        private void AddErrors(IdentityResult result)
+        void AddErrors(IdentityResult result)
             {
             foreach (var error in result.Errors)
                 ModelState.AddModelError("", error);
             }
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        ActionResult RedirectToLocal(string returnUrl)
             {
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
@@ -458,7 +462,9 @@ namespace MS.Gamification.Controllers
                 }
 
             public string LoginProvider { get; set; }
+
             public string RedirectUri { get; set; }
+
             public string UserId { get; set; }
 
             public override void ExecuteResult(ControllerContext context)

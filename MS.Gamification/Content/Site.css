@@ -61,3 +61,21 @@ textarea.form-control { min-height: 10em; }
 .approval-status { margin-top: 16px; }
 
 .observation-detail-button { margin-top: 12px; }
+
+/* Password complexity validation box */
+
+.pw-invalid {
+    color: indianred;
+    line-height: 24px;
+    /*background:url(../images/invalid.png) no-repeat 0 50%;*/
+    padding-left: 22px;
+}
+
+.pw-valid {
+    color: darkseagreen;
+    line-height: 24px;
+    /*background:url(../images/valid.png) no-repeat 0 50%;*/
+    padding-left: 22px;
+}
+
+#passwordInfo { display: none; }

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: BundleConfig.cs  Created: 2016-04-01@23:54
-// Last modified: 2016-04-25@01:21 by Fern
+// File: BundleConfig.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-06-05@16:54
 
 using System.Web.Optimization;
 
@@ -26,6 +26,9 @@ namespace MS.Gamification
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/typescript").Include(
+                "~/Scripts/password.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
