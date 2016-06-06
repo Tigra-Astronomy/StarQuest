@@ -1,0 +1,22 @@
+﻿@model int
+@{
+    // Don't render the default layout in this nested view
+    Layout = null;
+}
+<div>
+    <ul class="nav navbar-nav">
+        <li>
+            <p class="navbar-btn">
+                @Html.ActionLink(Model.ToString(),
+                    "Index",
+                    new {controller = "Moderation"},
+                    new
+                        {
+                        @class = "btn btn-small btn-danger",
+                        title = $"{Model} observations awaiting moderation"
+                        }
+                    )
+            </p>
+        </li>
+    </ul>
+</div>

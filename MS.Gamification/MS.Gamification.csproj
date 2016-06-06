@@ -257,6 +257,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ModerationController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValidationImageController.cs" />
@@ -430,6 +431,7 @@
     <Content Include="Scripts\password.js.map" />
     <Content Include="Views\Account\RegistrationConfirmed.cshtml" />
     <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
+    <Content Include="Views\Notification\ModerationQueue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
