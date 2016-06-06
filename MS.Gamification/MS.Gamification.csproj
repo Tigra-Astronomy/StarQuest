@@ -328,6 +328,7 @@
     <Compile Include="ViewModels\ForgotViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
@@ -427,6 +428,8 @@
     <Content Include="Views\Moderation\Index.cshtml" />
     <Content Include="Views\Moderation\Details.cshtml" />
     <Content Include="Scripts\password.js.map" />
+    <Content Include="Views\Account\RegistrationConfirmed.cshtml" />
+    <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

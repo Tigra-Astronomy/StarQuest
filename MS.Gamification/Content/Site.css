@@ -79,3 +79,14 @@ textarea.form-control { min-height: 10em; }
 }
 
 #passwordInfo { display: none; }
+
+.padding-row { min-height: 100px; }
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.dialog-body { font-size: 2.5em; }
+
+.dialog-title { font-size: 3em; }

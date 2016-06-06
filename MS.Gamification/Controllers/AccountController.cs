@@ -1,9 +1,10 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-06-05@20:45
+// Last modified: 2016-06-06@17:26
 
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -84,11 +85,16 @@ namespace MS.Gamification.Controllers
                 }
 
             // When we get here, signInName must contain the username, not the email.
-
+            // Users who have not verified their email address are not allowed to log in.
+            var userDetails = UserManager.Users.Single(p => p.UserName == signInName);
+            if (!userDetails.EmailConfirmed)
+                {
+                return View("PendingEmailConfirmation", new ResendVerificationEmailViewModel {UserId = userDetails.Id});
+                }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result =
-                await SignInManager.PasswordSignInAsync(signInName, model.Password, model.RememberMe, false);
+                await SignInManager.PasswordSignInAsync(signInName, model.Password, model.RememberMe, true);
             switch (result)
                 {
                     case SignInStatus.Success:
@@ -169,23 +175,28 @@ namespace MS.Gamification.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                     {
-                    await SignInManager.SignInAsync(user, false, false);
+                    //await SignInManager.SignInAsync(user, false, false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
-                    await
-                        UserManager.SendEmailAsync(user.Id, "Confirm your account",
-                            "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await SendVerificationEmail(user.Id);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("RegistrationConfirmed", "Account");
                     }
                 AddErrors(result);
                 }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+            }
+
+        async Task SendVerificationEmail(string userId)
+            {
+// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // Send an email with this link
+            var code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId, code}, Request.Url.Scheme);
+            await
+                UserManager.SendEmailAsync(userId, "Confirm your account",
+                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
             }
 
         //
@@ -425,6 +436,23 @@ namespace MS.Gamification.Controllers
                 }
 
             base.Dispose(disposing);
+            }
+
+        [AllowAnonymous]
+        public ActionResult RegistrationConfirmed()
+            {
+            return View();
+            }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ResendVerificationEmail(string id)
+            {
+            if (string.IsNullOrWhiteSpace(id))
+                {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            await SendVerificationEmail(id);
+            return View("RegistrationConfirmed");
             }
 
         #region Helpers
