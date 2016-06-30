@@ -7,13 +7,13 @@ namespace MS.Gamification.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class CategoryAsRelatedTable : IMigrationMetadata
+    public sealed partial class InitialSchema : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CategoryAsRelatedTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialSchema));
         
         string IMigrationMetadata.Id
         {
-            get { return "201604032355136_CategoryAsRelatedTable"; }
+            get { return "201606302114396_InitialSchema"; }
         }
         
         string IMigrationMetadata.Source

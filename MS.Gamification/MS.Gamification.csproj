@@ -280,29 +280,9 @@
     <Compile Include="HtmlHelpers\WebServerImageStore.cs" />
     <Compile Include="HtmlHelpers\IImageStore.cs" />
     <Compile Include="HtmlHelpers\ImageHelpers.cs" />
-    <Compile Include="Migrations\201603231320365_Sprint1.cs" />
-    <Compile Include="Migrations\201603231320365_Sprint1.Designer.cs">
-      <DependentUpon>201603231320365_Sprint1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604032355136_CategoryAsRelatedTable.cs" />
-    <Compile Include="Migrations\201604032355136_CategoryAsRelatedTable.Designer.cs">
-      <DependentUpon>201604032355136_CategoryAsRelatedTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604052230306_MissionsAndTracks.cs" />
-    <Compile Include="Migrations\201604052230306_MissionsAndTracks.Designer.cs">
-      <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604220026296_GA20-ObservingLog.cs" />
-    <Compile Include="Migrations\201604220026296_GA20-ObservingLog.Designer.cs">
-      <DependentUpon>201604220026296_GA20-ObservingLog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605110157146_ValidationImages.cs" />
-    <Compile Include="Migrations\201605110157146_ValidationImages.Designer.cs">
-      <DependentUpon>201605110157146_ValidationImages.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605131852458_UserToObservations.cs" />
-    <Compile Include="Migrations\201605131852458_UserToObservations.Designer.cs">
-      <DependentUpon>201605131852458_UserToObservations.cs</DependentUpon>
+    <Compile Include="Migrations\201606302114396_InitialSchema.cs" />
+    <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
+      <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -335,6 +315,9 @@
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ValidationImages\Jupiter.png" />
+    <Content Include="App_Data\ValidationImages\M31.png" />
+    <Content Include="App_Data\ValidationImages\M45-Pleiades.png" />
     <Content Include="App_Data\ValidationImages\Moon Full.gif" />
     <Content Include="App_Data\ValidationImages\Moon Half.gif" />
     <Content Include="App_Data\ValidationImages\Moon Waning Crescent.gif" />
@@ -342,6 +325,7 @@
     <Content Include="App_Data\ValidationImages\Moon Waxing Crescent.gif" />
     <Content Include="App_Data\ValidationImages\Moon Waxing Gibbous.gif" />
     <Content Include="App_Data\ValidationImages\NoImage.png" />
+    <Content Include="App_Data\ValidationImages\Saturn.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -445,27 +429,12 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603231320365_Sprint1.resx">
-      <DependentUpon>201603231320365_Sprint1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604032355136_CategoryAsRelatedTable.resx">
-      <DependentUpon>201604032355136_CategoryAsRelatedTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604052230306_MissionsAndTracks.resx">
-      <DependentUpon>201604052230306_MissionsAndTracks.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604220026296_GA20-ObservingLog.resx">
-      <DependentUpon>201604220026296_GA20-ObservingLog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605110157146_ValidationImages.resx">
-      <DependentUpon>201605110157146_ValidationImages.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605131852458_UserToObservations.resx">
-      <DependentUpon>201605131852458_UserToObservations.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <EmbeddedResource Include="Migrations\201606302114396_InitialSchema.resx">
+      <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
