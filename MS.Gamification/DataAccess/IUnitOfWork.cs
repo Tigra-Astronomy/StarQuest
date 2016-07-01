@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IUnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-22@06:44
+// Last modified: 2016-07-01@20:23
 
 using System;
 using MS.Gamification.Models;
@@ -36,6 +36,12 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <value>The observations repository.</value>
         IRepository<Observation, int> ObservationsRepository { get; }
+
+        /// <summary>
+        ///     Gets the missions repository.
+        /// </summary>
+        /// <value>The missions queryable collection.</value>
+        IRepository<Mission, int> Missions { get; }
 
         /// <summary>
         ///     Commits changes to the database and completes the transaction.

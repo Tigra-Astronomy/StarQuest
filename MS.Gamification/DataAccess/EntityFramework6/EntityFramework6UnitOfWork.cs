@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-22@07:08
+// Last modified: 2016-07-01@20:30
 
 using System;
 using Microsoft.AspNet.Identity;
@@ -20,6 +20,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             ChallengesRepository = new ChallengeRepository(dbContext);
             CategoriesRepository = new CategoryRepository(dbContext);
             ObservationsRepository = new ObservationRepository(dbContext);
+            Missions = new MissionRepository(dbContext);
             }
 
         public IRepository<Challenge, int> ChallengesRepository { get; }
@@ -29,6 +30,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         public IRepository<Category, int> CategoriesRepository { get; }
 
         public IRepository<Observation, int> ObservationsRepository { get; }
+
+        public IRepository<Mission, int> Missions { get; }
 
         public void Commit()
             {

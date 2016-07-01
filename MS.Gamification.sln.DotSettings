@@ -1,4 +1,24 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/Comment/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/CustomDictionary/CustomDictionaries/=en_002DGB/@EntryIndexedValue">&lt;data Name="en-GB" CaseSensitive="False" Encoded="True" /&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/Identifier/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/ResX/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/String/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=DescriptionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ExampleTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ExceptionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ItemTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ListHeaderTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ListTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ParamTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ParaTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=PermissionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=RemarksTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ReturnsTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=SummaryTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=TermTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=TypeParamTagIndent/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ACCESSOR_DECLARATION_BRACES/@EntryValue">NEXT_LINE_SHIFTED</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ACCESSOR_OWNER_DECLARATION_BRACES/@EntryValue">NEXT_LINE_SHIFTED</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_LINQ_QUERY/@EntryValue">True</s:Boolean>

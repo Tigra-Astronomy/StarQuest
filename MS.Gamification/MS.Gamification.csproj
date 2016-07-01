@@ -239,6 +239,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="BusinessLogic\StarquestPasswordValidator.cs" />
     <Compile Include="BusinessLogic\FetchStrategyExtensions.cs" />
     <Compile Include="BusinessLogic\GenericFetchStrategy.cs" />
@@ -266,6 +267,7 @@
     <Compile Include="DataAccess\EntityFramework6\CategoryRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\EntityFramework6UnitOfWork.cs" />
+    <Compile Include="DataAccess\EntityFramework6\MissionRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservationRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\Repository.cs" />
     <Compile Include="DataAccess\EntityFramework6\UserRepository.cs" />
@@ -309,6 +311,7 @@
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="ViewModels\ForgotViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MissionProgressViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
@@ -417,6 +420,7 @@
     <Content Include="Views\Account\RegistrationConfirmed.cshtml" />
     <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
     <Content Include="Views\Notification\ModerationQueue.cshtml" />
+    <Content Include="Views\Mission\Level.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
@@ -437,9 +441,7 @@
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Mission\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
