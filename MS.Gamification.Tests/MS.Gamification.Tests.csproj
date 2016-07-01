@@ -135,6 +135,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
+    <Compile Include="Controllers\MissionControllerSpecs.cs" />
     <Compile Include="Controllers\ModerationControllerSpecs.cs" />
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
