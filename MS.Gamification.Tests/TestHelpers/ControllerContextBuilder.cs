@@ -1,13 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ControllerContextBuilder.cs  Created: 2016-05-22@15:43
-// Last modified: 2016-05-23@03:11
+// File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-01@00:51
 
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Effort.Extra;
-using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -19,7 +18,7 @@ namespace MS.Gamification.Tests.TestHelpers
     ///     Builds an instance of an MVC <see cref="Controller" />, initialized with fke data suitable for unit testing.
     /// </summary>
     /// <typeparam name="TController">The type of the controller to be constructed.</typeparam>
-    class ControllerContextBuilder<TController> where TController : ControllerBase
+    internal class ControllerContextBuilder<TController> where TController : ControllerBase
         {
         readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
         readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
@@ -111,7 +110,7 @@ namespace MS.Gamification.Tests.TestHelpers
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             var controller = Activator.CreateInstance(typeof(TController), UnitOfWork) as TController;
             if (controller == null)
-                throw new SpecificationException(
+                throw new InvalidOperationException(
                     $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);

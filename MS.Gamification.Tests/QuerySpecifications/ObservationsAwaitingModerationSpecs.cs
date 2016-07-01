@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationsAwaitingModerationSpecs.cs  Created: 2016-05-19@01:05
-// Last modified: 2016-05-19@01:41
+// File: ObservationsAwaitingModerationSpecs.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-01@00:47
 
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace MS.Gamification.Tests.QuerySpecifications
      *  It should produce an empty result
      */
 
-    class when_querying_observations_and_there_is_one_observation_in_pending_state
+    internal class when_querying_observations_and_there_is_one_observation_in_pending_state
         {
         Establish context = () => Observations = new List<Observation>
             {
@@ -44,7 +44,7 @@ namespace MS.Gamification.Tests.QuerySpecifications
         static List<Observation> Results;
         }
 
-    class when_querying_observations_and_there_are_no_observation_in_pending_state
+    internal class when_querying_observations_and_there_are_no_observation_in_pending_state
         {
         Establish context = () => Observations = new List<Observation>
             {

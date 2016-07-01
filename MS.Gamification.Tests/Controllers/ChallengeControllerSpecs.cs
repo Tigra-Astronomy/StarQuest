@@ -1,14 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-25@23:27
+// Last modified: 2016-07-01@00:49
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FakeItEasy;
+using JetBrains.Annotations;
 using Machine.Specifications;
-using Machine.Specifications.Annotations;
 using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -71,7 +71,7 @@ namespace MS.Gamification.Tests.Controllers
     #endregion context base classes
 
     [Subject(typeof(ChallengeController), "Index action")]
-    class when_viewing_all_challenges : with_mvc_controller<ChallengeController>
+    internal class when_viewing_all_challenges : with_mvc_controller<ChallengeController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithEntity(new Category {Id = 99, Name = "Unit Test"})
@@ -87,7 +87,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Create Action")]
-    class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.Create() as ViewResult;
@@ -96,7 +96,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST valid data")]
-    class when_calling_the_create_action_with_valid_form_data : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_create_action_with_valid_form_data : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -122,7 +122,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "ConfirmDelete Action")]
-    class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -156,7 +156,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Delete Action")]
-    class when_calling_the_delete_action_with_a_valid_id : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_delete_action_with_a_valid_id : with_mvc_controller<ChallengeController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithEntity(new Category {Id = 1})
@@ -170,7 +170,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST invalid data")]
-    class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -203,7 +203,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Edit Action POST invalid data")]
-    class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    internal class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -229,13 +229,13 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-            UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
+                UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
+    internal class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
         : with_mvc_controller<ChallengeController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
@@ -251,7 +251,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
+    internal class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
         : with_mvc_controller<ChallengeController>
         {
         /*
@@ -269,7 +269,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    class when_sending_a_post_to_the_edit_action_with_a_valid_model
+    internal class when_sending_a_post_to_the_edit_action_with_a_valid_model
         : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>

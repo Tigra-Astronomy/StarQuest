@@ -256,6 +256,7 @@
     <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MissionController.cs" />
     <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
@@ -435,6 +436,9 @@
     <EmbeddedResource Include="Migrations\201606302114396_InitialSchema.resx">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Mission\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
