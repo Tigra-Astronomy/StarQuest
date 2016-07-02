@@ -1,12 +1,13 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-01@00:51
+// Last modified: 2016-07-02@03:29
 
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Effort.Extra;
+using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -20,15 +21,15 @@ namespace MS.Gamification.Tests.TestHelpers
     /// <typeparam name="TController">The type of the controller to be constructed.</typeparam>
     internal class ControllerContextBuilder<TController> where TController : ControllerBase
         {
-        readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
-        readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
-        readonly TempDataDictionary tempdata = new TempDataDictionary();
-        readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
-        Uri baseUri = new Uri("http://localhost:9876");
-        HttpVerbs requestMethod = HttpVerbs.Get;
-        string requestPath = "/";
-        string requestUsername = string.Empty;
-        string[] requestUserRoles;
+        private readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
+        private readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
+        private readonly TempDataDictionary tempdata = new TempDataDictionary();
+        private readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
+        private Uri baseUri = new Uri("http://localhost:9876");
+        private HttpVerbs requestMethod = HttpVerbs.Get;
+        private string requestPath = "/";
+        private string requestUsername = string.Empty;
+        private string[] requestUserRoles;
 
         public IUnitOfWork UnitOfWork { get; private set; }
 
@@ -48,7 +49,7 @@ namespace MS.Gamification.Tests.TestHelpers
             return this;
             }
 
-        void CreateUserInRoles(string id, string username, IEnumerable<string> roles)
+        private void CreateUserInRoles(string id, string username, IEnumerable<string> roles)
             {
             var user = new ApplicationUser {Id = id, UserName = username};
             foreach (var role in roles)
@@ -75,7 +76,7 @@ namespace MS.Gamification.Tests.TestHelpers
 
 
         /// <summary>
-        ///     Adds an entity to the test data context.
+        ///     Adds an entity to the test data context, inferring the table name from the entity type.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity, which determines to which table it is added.</typeparam>
         /// <param name="entity">
@@ -89,6 +90,25 @@ namespace MS.Gamification.Tests.TestHelpers
         public ControllerContextBuilder<TController> WithEntity<TEntity>(TEntity entity) where TEntity : class
             {
             data.Table<TEntity>().Add(entity);
+            return this;
+            }
+
+        /// <summary>
+        ///     Adds an entity to the test data context and explicitly specifies the table name.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity, which determines to which table it is added.</typeparam>
+        /// <param name="entity">
+        ///     The initialized entity, including any foreign key IDs (navigation properties should not
+        ///     be populated).
+        /// </param>
+        /// <param name="tableName">Specifies the table name if it cannot be inferred from the entity type name.</param>
+        /// <returns>
+        ///     A reference to this <see cref="ControllerContextBuilder{TController}" /> that may be used to
+        ///     fluently chain operations.
+        /// </returns>
+        public ControllerContextBuilder<TController> WithEntity<TEntity>(TEntity entity, string tableName) where TEntity : class
+            {
+            data.Table<TEntity>(tableName).Add(entity);
             return this;
             }
 
@@ -110,7 +130,7 @@ namespace MS.Gamification.Tests.TestHelpers
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             var controller = Activator.CreateInstance(typeof(TController), UnitOfWork) as TController;
             if (controller == null)
-                throw new InvalidOperationException(
+                throw new SpecificationException(
                     $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);

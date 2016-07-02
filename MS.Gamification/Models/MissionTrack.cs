@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionTrack.cs  Created: 2016-04-05@23:10
-// Last modified: 2016-04-05@23:11 by Fern
+// File: MissionTrack.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-07-02@02:19
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,11 +14,20 @@ namespace MS.Gamification.Models
         {
         [Required]
         public string Name { get; set; }
+
         public int Number { get; set; }
+
         public virtual List<Challenge> Challenges { get; set; }
+
         [Required]
         public string AwardTitle { get; set; }
-        [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
+        public int MissionId { get; set; }
+
+        public Mission Mission { get; set; }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         }
     }
