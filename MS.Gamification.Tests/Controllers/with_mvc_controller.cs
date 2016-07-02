@@ -1,8 +1,9 @@
 // This file is part of the MS.Gamification project
 // 
-// File: with_mvc_controller.cs  Created: 2016-05-22@19:57
-// Last modified: 2016-05-25@22:56
+// File: with_mvc_controller.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-02@18:56
 
+using System;
 using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.DataAccess;
@@ -20,14 +21,14 @@ namespace MS.Gamification.Tests.Controllers
     ///     The unit under test should be stored in the field <see cref="ControllerUnderTest" />. This should be built
     ///     using the <see cref="ControllerContextBuilder{TController}" /> in <see cref="ContextBuilder" />.
     /// </remarks>
-    class with_mvc_controller<TController> where TController : Controller
+    class with_mvc_controller<TController> where TController : ControllerBase
         {
         protected static ControllerContextBuilder<TController> ContextBuilder;
         protected static TController ControllerUnderTest;
         Cleanup after = () =>
             {
             ContextBuilder.UnitOfWork.Dispose();
-            ControllerUnderTest.Dispose();
+            (ControllerUnderTest as IDisposable)?.Dispose();
             };
         Establish context = () => ContextBuilder = new ControllerContextBuilder<TController>();
 

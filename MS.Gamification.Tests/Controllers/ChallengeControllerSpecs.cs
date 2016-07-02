@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-01@00:49
+// Last modified: 2016-07-02@19:56
 
 using System.Collections.Generic;
 using System.Linq;
@@ -71,23 +71,18 @@ namespace MS.Gamification.Tests.Controllers
     #endregion context base classes
 
     [Subject(typeof(ChallengeController), "Index action")]
-    internal class when_viewing_all_challenges : with_mvc_controller<ChallengeController>
+    class when_viewing_all_challenges : with_standard_mission<ChallengeController>
         {
-        Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithEntity(new Category {Id = 99, Name = "Unit Test"})
-            .WithEntity(new Challenge {Id = 1, CategoryId = 99})
-            .WithEntity(new Challenge {Id = 2, CategoryId = 99})
-            .WithEntity(new Challenge {Id = 3, CategoryId = 99})
-            .Build();
+        Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => actionResult = ControllerUnderTest.Index() as ViewResult;
         It should_return_the_index_view = () => actionResult.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewmodel_with_all_challenges_in_the_database =
-            () => ((IEnumerable<Challenge>) actionResult.Model).Count().ShouldEqual(3);
+            () => ((IEnumerable<Challenge>) actionResult.Model).Count().ShouldEqual(6);
         static ViewResult actionResult;
         }
 
     [Subject(typeof(ChallengeController), "Create Action")]
-    internal class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
+    class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.Create() as ViewResult;
@@ -96,7 +91,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST valid data")]
-    internal class when_calling_the_create_action_with_valid_form_data : with_mvc_controller<ChallengeController>
+    class when_calling_the_create_action_with_valid_form_data : with_standard_mission<ChallengeController>
         {
         Establish context = () =>
             {
@@ -104,48 +99,34 @@ namespace MS.Gamification.Tests.Controllers
                 {
                 BookSection = "Moon",
                 Points = 1,
-                CategoryId = 1,
+                CategoryId = 10,
                 Location = "Moon",
-                Name = "See all the moon phases"
+                Name = "See all the moon phases",
+                MissionTrackId = 1
                 };
-            ControllerUnderTest = ContextBuilder
-                .WithEntity(new Category {Id = 1, Name = "Unit Test"})
-                .Build();
+            ControllerUnderTest = ContextBuilder.Build();
+            originalCount = UnitOfWork.ChallengesRepository.GetAll().Count();
             };
-
         Because of = () => Result = ControllerUnderTest.Create(ValidChallenge) as RedirectToRouteResult;
         It should_return_redirect_to_index = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_add_one_item_to_the_challenges_repository =
-            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(1);
+            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(originalCount + 1);
         static RedirectToRouteResult Result;
         static Challenge ValidChallenge;
+        static int originalCount;
         }
 
     [Subject(typeof(ChallengeController), "ConfirmDelete Action")]
-    internal class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
+    class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
                 .WithEntity(new Category {Id = 1})
-                .WithEntity(new Challenge
-                    {
-                    Id = 1,
-                    BookSection = "Moon",
-                    Points = 1,
-                    CategoryId = 1,
-                    Location = "Moon",
-                    Name = "See all the moon phases"
-                    })
-                .WithEntity(new Challenge
-                    {
-                    Id = 2,
-                    BookSection = "Planets",
-                    Points = 3,
-                    CategoryId = 1,
-                    Location = "Solar System",
-                    Name = "See Saturn"
-                    })
+                .WithMission().WithTrack(1)
+                .WithChallenge("See all the moon phases").WithId(1).InCategory(1).BuildChallenge()
+                .WithChallenge("See Saturn").WithId(2).InCategory(1).BuildChallenge()
+                .BuildTrack().BuildMission()
                 .Build();
             };
 
@@ -156,21 +137,18 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Delete Action")]
-    internal class when_calling_the_delete_action_with_a_valid_id : with_mvc_controller<ChallengeController>
+    class when_calling_the_delete_action_with_a_valid_id : with_standard_mission<ChallengeController>
         {
-        Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithEntity(new Category {Id = 1})
-            .WithEntity(new Challenge {Id = 1, CategoryId = 1})
-            .Build();
-        Because of = () => Result = ControllerUnderTest.Delete(1) as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder.Build();
+        Because of = () => Result = ControllerUnderTest.Delete(100) as ViewResult;
         It should_return_the_delete_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewModel_with_the_item_to_be_deleted =
-            () => (Result.Model as Challenge).Id.ShouldEqual(1);
+            () => (Result.Model as Challenge).Id.ShouldEqual(100);
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Create Action POST invalid data")]
-    internal class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -203,7 +181,7 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Edit Action POST invalid data")]
-    internal class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
         {
         Establish context = () =>
             {
@@ -229,29 +207,25 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-                UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
+            UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    internal class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
-        : with_mvc_controller<ChallengeController>
+    class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
+        : with_standard_mission<ChallengeController>
         {
-        Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithEntity(new Category {Id = 1})
-            .WithEntity(new Challenge {Id = expectedId, CategoryId = 1})
-            .Build();
-        Because of = () => Result = ControllerUnderTest.Edit(expectedId) as ViewResult;
+        Establish context = () => ControllerUnderTest = ContextBuilder.Build();
+        Because of = () => Result = ControllerUnderTest.Edit(100) as ViewResult;
         It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewModel_with_the_item_to_be_edited =
-            () => (Result.Model as Challenge).Id.ShouldEqual(expectedId);
+            () => (Result.Model as Challenge).Id.ShouldEqual(100);
         static ViewResult Result;
-        const int expectedId = 9;
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    internal class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
+    class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
         : with_mvc_controller<ChallengeController>
         {
         /*
@@ -269,44 +243,33 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(ChallengeController), "Edit Action")]
-    internal class when_sending_a_post_to_the_edit_action_with_a_valid_model
-        : with_mvc_controller<ChallengeController>
+    class when_sending_a_post_to_the_edit_action_with_a_valid_model
+        : with_standard_mission<ChallengeController>
         {
         Establish context = () =>
             {
             ModifiedChallenge = new Challenge
                 {
-                Id = 1,
+                Id = 200,
                 BookSection = "Planets",
                 Points = 1,
                 CategoryId = 1,
                 Location = "Mars",
-                Name = "See Mars"
+                Name = "See Mars", MissionTrackId = 2
                 };
-            ControllerUnderTest = ContextBuilder
-                .WithEntity(new Category {Id = 1})
-                .WithEntity(new Challenge
-                    {
-                    Id = 1,
-                    BookSection = "Moon",
-                    Points = 1,
-                    CategoryId = 1,
-                    Location = "Moon",
-                    Name = "See all the moon phases"
-                    })
-                .Build();
+            ControllerUnderTest = ContextBuilder.Build();
+            expectedChallengeCount = UnitOfWork.ChallengesRepository.GetAll().Count();
             ControllerUnderTest.ValidateModel(ModifiedChallenge);
             };
         Because of = () => Result = ControllerUnderTest.Edit(ModifiedChallenge) as RedirectToRouteResult;
         It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
-        It should_update_the_repository =
-            () =>
-                UnitOfWork.ChallengesRepository.GetAll()
-                    .Contains(ModifiedChallenge, new ChallengeWithoutNavigationPropertiesComparer())
-                    .ShouldBeTrue();
-        It should_leave_one_item_in_the_repository = () => UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(1);
+        It should_update_the_repository = () =>
+            UnitOfWork.ChallengesRepository.Get(200).Name.ShouldEqual("See Mars");
+        It should_not_change_the_count_of_challenges =
+            () => UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(expectedChallengeCount);
         static RedirectToRouteResult Result;
         static Challenge ModifiedChallenge;
+        static int expectedChallengeCount;
         }
     }

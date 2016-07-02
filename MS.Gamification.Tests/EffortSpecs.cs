@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: EffortSpecs.cs  Created: 2016-05-22@05:14
-// Last modified: 2016-05-22@06:44
+// File: EffortSpecs.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-02@18:49
 
 using System.Linq;
 using Effort.Extra;
@@ -29,16 +29,14 @@ namespace MS.Gamification.Tests
             };
         Because of = () =>
             {
-            var challenge = new Challenge
-                {
-                Id = 99, ValidationImage = "fake.jpg", Name = "Unit Test Challenge", BookSection = "Section 1",
-                CategoryId = 2, Location = "Here", Points = 10
-                };
-            uow.ChallengesRepository.Add(challenge);
+            // ID is DbGenerated so the 99 should be ignored.
+            var category = new Category {Id = 99, Name = "The Last Category"};
+            uow.CategoriesRepository.Add(category);
             uow.Commit();
             };
         Cleanup after = () => uow.Dispose();
-        It should_work_just_like_a_real_database = () => uow.ChallengesRepository.GetAll().Count().ShouldEqual(1);
+        It should_have_4_categories = () => uow.CategoriesRepository.GetAll().Count().ShouldEqual(4);
+        It should_have_category_4 = () => uow.CategoriesRepository.Get(4).Id.ShouldEqual(4);
         static IUnitOfWork uow;
         }
     }
