@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionControllerSpecs.cs  Created: 2016-07-01@07:36
-// Last modified: 2016-07-03@01:13
+// Last modified: 2016-07-03@23:39
 
 using System.Linq;
 using System.Web.Mvc;
@@ -99,7 +99,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")
-            .WithRequestingUser("user", "User")
+            .WithRequestingUser("user", "Joe User")
             .WithObservation().ForUser("user").ForChallenge(100).BuildObservation()
             .WithObservation().ForUser("user").ForChallenge(200).BuildObservation()
             .WithObservation().ForUser("user").ForChallenge(300).BuildObservation()

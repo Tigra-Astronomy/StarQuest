@@ -727,7 +727,7 @@
         </xs:attribute>
         <xs:attribute name="dbUserName" type="SimpleLayoutAttribute">
           <xs:annotation>
-            <xs:documentation>Database user name. If the ConnectionString is not provided this value will be used to construct the "User ID=" part of the connection string.</xs:documentation>
+            <xs:documentation>Database requestingUser name. If the ConnectionString is not provided this value will be used to construct the "User ID=" part of the connection string.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="keepConnection" type="xs:boolean">
@@ -910,7 +910,7 @@
         </xs:attribute>
         <xs:attribute name="log" type="xs:string">
           <xs:annotation>
-            <xs:documentation>Name of the Event Log to write to. This can be System, Application or any user-defined name.</xs:documentation>
+            <xs:documentation>Name of the Event Log to write to. This can be System, Application or any requestingUser-defined name.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="machineName" type="xs:string">
@@ -1214,7 +1214,7 @@
           <xs:element name="logOnType" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.SecurityLogOnType" />
           <xs:element name="password" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="revertToSelf" minOccurs="0" maxOccurs="1" type="xs:boolean" />
-          <xs:element name="userName" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="requestingUserName" minOccurs="0" maxOccurs="1" type="xs:string" />
         </xs:choice>
         <xs:attribute name="name" type="xs:string">
           <xs:annotation>
@@ -1248,10 +1248,10 @@
         </xs:attribute>
         <xs:attribute name="revertToSelf" type="xs:boolean">
           <xs:annotation>
-            <xs:documentation>Indicates whether to revert to the credentials of the process instead of impersonating another user.</xs:documentation>
+            <xs:documentation>Indicates whether to revert to the credentials of the process instead of impersonating another requestingUser.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="userName" type="xs:string">
+        <xs:attribute name="requestingUserName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Username to change context to.</xs:documentation>
           </xs:annotation>

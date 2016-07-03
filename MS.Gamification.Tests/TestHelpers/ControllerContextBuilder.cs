@@ -1,10 +1,11 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-03@01:33
+// Last modified: 2016-07-04@00:29
 
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Web.Mvc;
 using Effort.Extra;
 using Machine.Specifications;
@@ -12,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers.Fakes;
+using Ninject;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
@@ -28,6 +30,7 @@ namespace MS.Gamification.Tests.TestHelpers
         Uri baseUri = new Uri("http://localhost:9876");
         HttpVerbs requestMethod = HttpVerbs.Get;
         string requestPath = "/";
+        string requestUserId = string.Empty;
         string requestUsername = string.Empty;
         string[] requestUserRoles;
 
@@ -128,24 +131,31 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             var dataLoader = new ObjectDataLoader(data);
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
-            var controller = Activator.CreateInstance(typeof(TController), UnitOfWork) as TController;
-            if (controller == null)
-                throw new SpecificationException(
-                    $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);
             httpContext.User = fakePrincipal;
             var context = new ControllerContext {HttpContext = httpContext};
+            /*
+             * Use Ninject to create the controller, as we don't know in advance what
+             * type of controller or how many constructor parameters it has.
+             */
+            var kernel = BuildNinjectKernel(UnitOfWork, fakeIdentity, requestUserId);
+            var controller = kernel.Get<TController>();
+            if (controller == null)
+                throw new SpecificationException(
+                    $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
+
             controller.ControllerContext = context;
             controller.TempData = tempdata;
             return controller;
             }
 
-        public ControllerContextBuilder<TController> WithRequestingUser(string username, params string[] roles)
+        public ControllerContextBuilder<TController> WithRequestingUser(string id, string username, params string[] roles)
             {
             requestUsername = username;
             requestUserRoles = roles;
+            requestUserId = id;
             return this;
             }
 
@@ -153,6 +163,16 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             tempdata.Add(key, value);
             return this;
+            }
+
+        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId)
+            {
+            var requestUserId = userId;
+            IKernel kernel = new StandardKernel();
+            kernel.Bind<IUnitOfWork>().ToMethod(u => UnitOfWork);
+            kernel.Bind<ICurrentUser>().ToMethod(u => new FakeCurrentUser(identity, requestUserId));
+            kernel.Bind<TController>().ToSelf().InTransientScope();
+            return kernel;
             }
         }
     }

@@ -264,6 +264,8 @@
     <Compile Include="Controllers\ObservationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValidationImageController.cs" />
+    <Compile Include="DataAccess\AsyncExtensions.cs" />
+    <Compile Include="DataAccess\AspNetIdentityCurrentUser.cs" />
     <Compile Include="DataAccess\EntityFramework6\ApplicationDbContext.cs" />
     <Compile Include="DataAccess\EntityFramework6\CategoryRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />

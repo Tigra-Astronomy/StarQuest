@@ -81,6 +81,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -151,6 +155,7 @@
     <Compile Include="TestHelpers\ControllerExtensions.cs" />
     <Compile Include="TestHelpers\EffortExtensions.cs" />
     <Compile Include="TestHelpers\EffortUnitOfWorkBuilder.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeCurrentUser.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpContext.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpRequest.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpResponse.cs" />
