@@ -255,6 +255,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
+    <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MissionController.cs" />
@@ -421,6 +422,7 @@
     <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
     <Content Include="Views\Notification\ModerationQueue.cshtml" />
     <Content Include="Views\Mission\Level.cshtml" />
+    <Content Include="Views\Dummy\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
