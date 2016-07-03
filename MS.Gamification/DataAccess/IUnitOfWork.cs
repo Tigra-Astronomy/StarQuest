@@ -35,7 +35,7 @@ namespace MS.Gamification.DataAccess
         ///     Gets the observations repository.
         /// </summary>
         /// <value>The observations repository.</value>
-        IRepository<Observation, int> ObservationsRepository { get; }
+        IRepository<Observation, int> Observations { get; }
 
         /// <summary>
         ///     Gets the missions repository.

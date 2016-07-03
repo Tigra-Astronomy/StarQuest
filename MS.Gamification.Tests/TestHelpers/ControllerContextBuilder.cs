@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-02@03:29
+// Last modified: 2016-07-03@01:33
 
 using System;
 using System.Collections.Generic;
@@ -19,17 +19,17 @@ namespace MS.Gamification.Tests.TestHelpers
     ///     Builds an instance of an MVC <see cref="Controller" />, initialized with fke data suitable for unit testing.
     /// </summary>
     /// <typeparam name="TController">The type of the controller to be constructed.</typeparam>
-    internal class ControllerContextBuilder<TController> where TController : ControllerBase
+    class ControllerContextBuilder<TController> where TController : ControllerBase
         {
-        private readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
-        private readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
-        private readonly TempDataDictionary tempdata = new TempDataDictionary();
-        private readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
-        private Uri baseUri = new Uri("http://localhost:9876");
-        private HttpVerbs requestMethod = HttpVerbs.Get;
-        private string requestPath = "/";
-        private string requestUsername = string.Empty;
-        private string[] requestUserRoles;
+        readonly FakeHttpContext blobby = new FakeHttpContext("/", "GET");
+        readonly ObjectData data = new ObjectData(TableNamingStrategy.Pluralised);
+        readonly TempDataDictionary tempdata = new TempDataDictionary();
+        readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
+        Uri baseUri = new Uri("http://localhost:9876");
+        HttpVerbs requestMethod = HttpVerbs.Get;
+        string requestPath = "/";
+        string requestUsername = string.Empty;
+        string[] requestUserRoles;
 
         public IUnitOfWork UnitOfWork { get; private set; }
 
@@ -49,9 +49,9 @@ namespace MS.Gamification.Tests.TestHelpers
             return this;
             }
 
-        private void CreateUserInRoles(string id, string username, IEnumerable<string> roles)
+        void CreateUserInRoles(string id, string username, IEnumerable<string> roles)
             {
-            var user = new ApplicationUser {Id = id, UserName = username};
+            var user = new ApplicationUser {Id = id, UserName = username, Email = $"{id}@nowhere.nw", EmailConfirmed = true};
             foreach (var role in roles)
                 {
                 user.Roles.Add(new IdentityUserRole {RoleId = role, UserId = id});

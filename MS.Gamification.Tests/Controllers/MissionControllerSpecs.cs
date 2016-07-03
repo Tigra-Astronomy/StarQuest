@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionControllerSpecs.cs  Created: 2016-07-01@07:36
-// Last modified: 2016-07-02@19:28
+// Last modified: 2016-07-03@01:13
 
 using System.Linq;
 using System.Web.Mvc;
@@ -93,5 +93,19 @@ namespace MS.Gamification.Tests.Controllers
         static ViewResult result;
         static MissionTrack[] tracks;
         static MissionProgressViewModel model;
+        }
+
+    class when_the_user_has_completed_one_challenge_in_each_track : with_standard_mission<MissionController>
+        {
+        Establish context = () => ControllerUnderTest = ContextBuilder
+            .WithStandardUser("user", "Joe User")
+            .WithRequestingUser("user", "User")
+            .WithObservation().ForUser("user").ForChallenge(100).BuildObservation()
+            .WithObservation().ForUser("user").ForChallenge(200).BuildObservation()
+            .WithObservation().ForUser("user").ForChallenge(300).BuildObservation()
+            .Build();
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        It should_have_the_expected_overall_progress = () => Model.OverallProgressPercent.ShouldEqual(50);
+        static MissionProgressViewModel Model;
         }
     }

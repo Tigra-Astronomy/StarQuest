@@ -19,7 +19,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             UsersRepository = new UserRepository(dbContext);
             ChallengesRepository = new ChallengeRepository(dbContext);
             CategoriesRepository = new CategoryRepository(dbContext);
-            ObservationsRepository = new ObservationRepository(dbContext);
+            Observations = new ObservationRepository(dbContext);
             Missions = new MissionRepository(dbContext);
             }
 
@@ -29,7 +29,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
 
         public IRepository<Category, int> CategoriesRepository { get; }
 
-        public IRepository<Observation, int> ObservationsRepository { get; }
+        public IRepository<Observation, int> Observations { get; }
 
         public IRepository<Mission, int> Missions { get; }
 

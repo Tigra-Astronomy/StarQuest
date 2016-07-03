@@ -112,7 +112,7 @@ namespace MS.Gamification.Tests.Controllers
             .Build();
         Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Approve(2);
         It should_change_the_observation_status_to_approved =
-            () => UnitOfWork.ObservationsRepository.Get(2).Status.ShouldEqual(ModerationState.Approved);
+            () => UnitOfWork.Observations.Get(2).Status.ShouldEqual(ModerationState.Approved);
         It should_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         static RedirectToRouteResult Result;
         }
@@ -127,7 +127,7 @@ namespace MS.Gamification.Tests.Controllers
         Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Reject(2);
 
         It should_change_the_observation_status_to_rejected =
-            () => UnitOfWork.ObservationsRepository.Get(2).Status.ShouldEqual(ModerationState.Rejected);
+            () => UnitOfWork.Observations.Get(2).Status.ShouldEqual(ModerationState.Rejected);
         It should_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         static RedirectToRouteResult Result;
         }

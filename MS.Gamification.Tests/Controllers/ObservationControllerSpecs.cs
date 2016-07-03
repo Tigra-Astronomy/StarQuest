@@ -97,16 +97,16 @@ namespace MS.Gamification.Tests.Controllers
 
         Because of = () => Result = ControllerUnderTest.SubmitObservation(model) as ViewResult;
         It should_save_the_observation_time_in_universal_time =
-            () => ContextBuilder.UnitOfWork.ObservationsRepository
+            () => ContextBuilder.UnitOfWork.Observations
                 .GetAll()
                 .Single()
                 .ObservationDateTimeUtc
                 .ShouldEqual(ObservationDateTimeUtc);
         It should_save_the_submission_in_the_database =
-            () => ContextBuilder.UnitOfWork.ObservationsRepository.GetAll().Count().ShouldEqual(1);
+            () => ContextBuilder.UnitOfWork.Observations.GetAll().Count().ShouldEqual(1);
 
         It should_add_the_submission_to_the_moderation_queue = () =>
-            ContextBuilder.UnitOfWork.ObservationsRepository.GetAll()
+            ContextBuilder.UnitOfWork.Observations.GetAll()
                 .Single()
                 .Status.ShouldEqual(ModerationState.AwaitingModeration);
         static ViewResult Result;

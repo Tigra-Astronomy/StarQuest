@@ -240,6 +240,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\MissionLevelProgress.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\ObservationsForUserMission.cs" />
     <Compile Include="BusinessLogic\StarquestPasswordValidator.cs" />
     <Compile Include="BusinessLogic\FetchStrategyExtensions.cs" />
     <Compile Include="BusinessLogic\GenericFetchStrategy.cs" />

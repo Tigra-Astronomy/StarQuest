@@ -172,7 +172,7 @@ namespace MS.Gamification.Controllers
                 ExpectedImage = challenge.ValidationImage,
                 Transparency = model.Transparency
                 };
-            uow.ObservationsRepository.Add(observation);
+            uow.Observations.Add(observation);
             uow.Commit();
             // ToDo: should redirect to a confirmation screen rather than the home page
             return RedirectToRoute(new {Controller = "Home", Action = "Index"});

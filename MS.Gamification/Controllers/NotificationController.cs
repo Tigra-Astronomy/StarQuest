@@ -29,7 +29,7 @@ namespace MS.Gamification.Controllers
                 }
             var query = new ObservationsAwaitingModeration();
             query.FetchStrategy = new GenericFetchStrategy<Observation>();
-            var results = uow.ObservationsRepository.AllSatisfying(query);
+            var results = uow.Observations.AllSatisfying(query);
             return View(results.Count());
             }
         }
