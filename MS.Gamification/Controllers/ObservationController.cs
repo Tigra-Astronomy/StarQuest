@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-05-26@02:39
+// Last modified: 2016-07-04@00:47
 
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace MS.Gamification.Controllers
     {
     public class ObservationController : UserController
         {
-        readonly IUnitOfWork uow;
+        private readonly IUnitOfWork uow;
 
         public ObservationController(IUnitOfWork uow)
             {
@@ -28,7 +28,7 @@ namespace MS.Gamification.Controllers
             {
             if (id == null)
                 return new HttpNotFoundResult("Challenge ID must be specified");
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id.Value);
+            var maybeChallenge = uow.Challenges.GetMaybe(id.Value);
             if (maybeChallenge.None)
                 return HttpNotFound();
             var model = new SubmitObservationViewModel
@@ -56,10 +56,10 @@ namespace MS.Gamification.Controllers
             return View(model);
             }
 
-        IEnumerable<Challenge> IncorrectImagesForChallenge(Challenge challenge)
+        private IEnumerable<Challenge> IncorrectImagesForChallenge(Challenge challenge)
             {
             var specification = new IncorrectValidationImagesForChallenge(challenge);
-            return uow.ChallengesRepository.AllSatisfying(specification);
+            return uow.Challenges.AllSatisfying(specification);
             }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace MS.Gamification.Controllers
         /// </summary>
         /// <param name="challenge"></param>
         /// <returns></returns>
-        IEnumerable<string> GetValidationImages(Challenge challenge)
+        private IEnumerable<string> GetValidationImages(Challenge challenge)
             {
             var results = new Dictionary<int, string>();
             var generator = new Random();
@@ -115,7 +115,7 @@ namespace MS.Gamification.Controllers
         ///     request.
         /// </param>
         /// <returns></returns>
-        IEnumerable<T> SelectRandomElementsFromList<T>(int count, IEnumerable<T> source, T filler)
+        private IEnumerable<T> SelectRandomElementsFromList<T>(int count, IEnumerable<T> source, T filler)
             {
             var generator = new Random();
             var results = new List<T>(count);
@@ -149,7 +149,7 @@ namespace MS.Gamification.Controllers
         public ActionResult SubmitObservation(SubmitObservationViewModel model)
             {
             var postedChallenge = TempData[nameof(Challenge)] as Challenge;
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(postedChallenge.Id);
+            var maybeChallenge = uow.Challenges.GetMaybe(postedChallenge.Id);
             var challenge = maybeChallenge.Single();
             // ToDo: Get the currently logged-in user.
             var userId = User.Identity.GetUserId();

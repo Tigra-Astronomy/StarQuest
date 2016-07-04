@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-01@20:30
+// Last modified: 2016-07-04@00:53
 
 using System;
 using Microsoft.AspNet.Identity;
@@ -11,19 +11,19 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     {
     public class EntityFramework6UnitOfWork : IUnitOfWork
         {
-        readonly ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
         public EntityFramework6UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
             {
             dbContext = context;
             UsersRepository = new UserRepository(dbContext);
-            ChallengesRepository = new ChallengeRepository(dbContext);
+            Challenges = new ChallengeRepository(dbContext);
             CategoriesRepository = new CategoryRepository(dbContext);
             Observations = new ObservationRepository(dbContext);
             Missions = new MissionRepository(dbContext);
             }
 
-        public IRepository<Challenge, int> ChallengesRepository { get; }
+        public IRepository<Challenge, int> Challenges { get; }
 
         public IRepository<ApplicationUser, string> UsersRepository { get; }
 
@@ -42,6 +42,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             catch (Exception e)
                 {
                 Console.WriteLine(e); // ToDo: write the exception to a log file
+                throw;
                 }
             }
 
@@ -72,7 +73,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             GC.SuppressFinalize(this);
             }
 
-        bool disposed;
+        private bool disposed;
 
         /// <summary>
         ///     Releases unmanaged and - optionally - managed resources.

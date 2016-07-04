@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeController.cs  Created: 2016-04-01@23:54
-// Last modified: 2016-04-05@00:25 by Fern
+// File: ChallengeController.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-07-04@00:46
 
 using System.Linq;
 using System.Web.Mvc;
@@ -12,7 +12,7 @@ namespace MS.Gamification.Controllers
     {
     public class ChallengeController : AdminController
         {
-        readonly IUnitOfWork uow;
+        private readonly IUnitOfWork uow;
 
         public ChallengeController(IUnitOfWork uow)
             {
@@ -22,7 +22,7 @@ namespace MS.Gamification.Controllers
         // GET: Challenge
         public ActionResult Index()
             {
-            var model = uow.ChallengesRepository.GetAll();
+            var model = uow.Challenges.GetAll();
             return View(model);
             }
 
@@ -39,7 +39,7 @@ namespace MS.Gamification.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            uow.ChallengesRepository.Add(model);
+            uow.Challenges.Add(model);
             uow.Commit();
             return RedirectToAction("Index");
             }
@@ -53,17 +53,17 @@ namespace MS.Gamification.Controllers
             // select item from viewall screen
             //show details screen = get request to (new) details method
             //confirm delete - post request to delete method
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            var maybeChallenge = uow.Challenges.GetMaybe(id);
             if (maybeChallenge.None)
                 return HttpNotFound();
-            uow.ChallengesRepository.Remove(maybeChallenge.Single());
+            uow.Challenges.Remove(maybeChallenge.Single());
             uow.Commit();
             return RedirectToAction("Index");
             }
 
         public ActionResult Delete(int id)
             {
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            var maybeChallenge = uow.Challenges.GetMaybe(id);
             if (maybeChallenge.None)
                 return HttpNotFound();
             return View(maybeChallenge.Single());
@@ -71,7 +71,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Edit(int id)
             {
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            var maybeChallenge = uow.Challenges.GetMaybe(id);
             if (maybeChallenge.None)
                 return HttpNotFound();
 
@@ -86,7 +86,7 @@ namespace MS.Gamification.Controllers
             if (!ModelState.IsValid)
                 return View(model);
             var id = model.Id;
-            var maybeChallenge = uow.ChallengesRepository.GetMaybe(id);
+            var maybeChallenge = uow.Challenges.GetMaybe(id);
             var original = maybeChallenge.Single();
             original.BookSection = model.BookSection;
             original.Category = model.Category;

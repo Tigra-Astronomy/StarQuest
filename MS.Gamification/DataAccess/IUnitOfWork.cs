@@ -17,7 +17,7 @@ namespace MS.Gamification.DataAccess
         ///     Gets the challenges repository.
         /// </summary>
         /// <value>The challenges repository.</value>
-        IRepository<Challenge, int> ChallengesRepository { get; }
+        IRepository<Challenge, int> Challenges { get; }
 
         /// <summary>
         ///     Gets the users repository.

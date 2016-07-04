@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModerationControllerSpecs.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-02@19:57
+// Last modified: 2016-07-04@01:15
 
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.Models;
+using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
     {
@@ -108,7 +109,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")
-            .WithEntity(new Observation {Id = 2, Status = ModerationState.AwaitingModeration, UserId = "user", ChallengeId = 100})
+            .WithObservation().ForChallenge(100).WithId(2).ForUserId("user").AwaitingModeration().BuildObservation()
             .Build();
         Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Approve(2);
         It should_change_the_observation_status_to_approved =
@@ -122,7 +123,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")
-            .WithEntity(new Observation {Id = 2, Status = ModerationState.AwaitingModeration, UserId = "user", ChallengeId = 100})
+            .WithObservation().ForChallenge(100).WithId(2).ForUserId("user").AwaitingModeration().BuildObservation()
             .Build();
         Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Reject(2);
 

@@ -165,6 +165,7 @@
     <Compile Include="TestHelpers\MissionBuilder.ChallengeBuilder.cs" />
     <Compile Include="TestHelpers\MissionBuilder.cs" />
     <Compile Include="TestHelpers\MissionBuilder.TrackBuilder.cs" />
+    <Compile Include="TestHelpers\ObservationBuilder.cs" />
     <Compile Include="TestHelpers\UnitTestImageStore.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-02@19:56
+// Last modified: 2016-07-04@00:46
 
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace MS.Gamification.Tests.Controllers
             uow = A.Fake<IUnitOfWork>();
             challengesRepository = A.Fake<IRepository<Challenge, int>>();
             A.CallTo(() => challengesRepository.GetAll()).Returns(fakeData);
-            A.CallTo(() => uow.ChallengesRepository).Returns(challengesRepository);
+            A.CallTo(() => uow.Challenges).Returns(challengesRepository);
             controller = new ChallengeController(uow);
             };
         }
@@ -105,12 +105,12 @@ namespace MS.Gamification.Tests.Controllers
                 MissionTrackId = 1
                 };
             ControllerUnderTest = ContextBuilder.Build();
-            originalCount = UnitOfWork.ChallengesRepository.GetAll().Count();
+            originalCount = UnitOfWork.Challenges.GetAll().Count();
             };
         Because of = () => Result = ControllerUnderTest.Create(ValidChallenge) as RedirectToRouteResult;
         It should_return_redirect_to_index = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_add_one_item_to_the_challenges_repository =
-            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(originalCount + 1);
+            () => ContextBuilder.UnitOfWork.Challenges.GetAll().Count().ShouldEqual(originalCount + 1);
         static RedirectToRouteResult Result;
         static Challenge ValidChallenge;
         static int originalCount;
@@ -132,7 +132,7 @@ namespace MS.Gamification.Tests.Controllers
 
         Because of = () => Result = ControllerUnderTest.ConfirmDelete(1);
         It should_leave_only_id_2_in_the_repository =
-            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().Single().Id.ShouldEqual(2);
+            () => ContextBuilder.UnitOfWork.Challenges.GetAll().Single().Id.ShouldEqual(2);
         static ActionResult Result;
         }
 
@@ -175,7 +175,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository =
-            () => ContextBuilder.UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
+            () => ContextBuilder.UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
@@ -207,7 +207,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-            UnitOfWork.ChallengesRepository.GetAll().ShouldBeEmpty();
+            UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
@@ -258,16 +258,16 @@ namespace MS.Gamification.Tests.Controllers
                 Name = "See Mars", MissionTrackId = 2
                 };
             ControllerUnderTest = ContextBuilder.Build();
-            expectedChallengeCount = UnitOfWork.ChallengesRepository.GetAll().Count();
+            expectedChallengeCount = UnitOfWork.Challenges.GetAll().Count();
             ControllerUnderTest.ValidateModel(ModifiedChallenge);
             };
         Because of = () => Result = ControllerUnderTest.Edit(ModifiedChallenge) as RedirectToRouteResult;
         It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_update_the_repository = () =>
-            UnitOfWork.ChallengesRepository.Get(200).Name.ShouldEqual("See Mars");
+            UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
         It should_not_change_the_count_of_challenges =
-            () => UnitOfWork.ChallengesRepository.GetAll().Count().ShouldEqual(expectedChallengeCount);
+            () => UnitOfWork.Challenges.GetAll().Count().ShouldEqual(expectedChallengeCount);
         static RedirectToRouteResult Result;
         static Challenge ModifiedChallenge;
         static int expectedChallengeCount;

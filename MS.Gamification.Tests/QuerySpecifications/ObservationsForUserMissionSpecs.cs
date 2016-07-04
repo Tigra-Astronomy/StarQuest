@@ -20,9 +20,9 @@ namespace MS.Gamification.Tests.QuerySpecifications
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")
             .WithStandardUser("otherUser", "Anonymous")
-            .WithObservation().ForChallenge(100).ForUser("user").BuildObservation()
-            .WithObservation().ForChallenge(200).ForUser("user").BuildObservation()
-            .WithObservation().ForChallenge(200).ForUser("otherUser").BuildObservation()
+            .WithObservation().ForChallenge(100).ForUserId("user").BuildObservation()
+            .WithObservation().ForChallenge(200).ForUserId("user").BuildObservation()
+            .WithObservation().ForChallenge(200).ForUserId("otherUser").BuildObservation()
             .Build();
         Because of = () =>
             results = UnitOfWork.Observations.AllSatisfying(new ObservationsForUserMission("user", 1));
