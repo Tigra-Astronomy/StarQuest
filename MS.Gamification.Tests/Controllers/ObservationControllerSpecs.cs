@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationControllerSpecs.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-07-02@20:02
+// Last modified: 2016-07-04@22:29
 
 using System;
 using System.Linq;
@@ -59,7 +59,6 @@ namespace MS.Gamification.Tests.Controllers
         It should_put_the_challenge_into_tempdata =
             () => ((Challenge) Result.TempData[nameof(Challenge)]).Id.ShouldEqual(100);
         static ViewResult Result;
-        static Challenge ValidChallenge;
         }
 
     [Subject(typeof(ObservationController), "valid POST request")]

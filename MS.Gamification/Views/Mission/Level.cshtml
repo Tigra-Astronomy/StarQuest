@@ -1,7 +1,121 @@
-﻿@model MS.Gamification.ViewModels.MissionProgressViewModel
+﻿@model dynamic
 
 @{
     ViewBag.Title = "Mission Progress";
+    var levels = new int[3] { 1, 2, 3 };
+    var levelNames = new[] { "Monkton Stargazer", "Monkton Astronomer", "Monkton Cosmologist" };
 }
 
-<h2>Mission Progress</h2>
+<ul class="nav nav-tabs">
+    @foreach (int level in levels)
+        {
+        var liClass = level == 1 ? "active" : string.Empty;
+        var levelId = $"#level{level}";
+        <li class="@liClass">
+            <a data-toggle="tab" href="@levelId">@levelNames[level - 1]</a>
+        </li>
+        }
+</ul>
+
+<div class="tab-content">
+
+    @foreach (int level in levels)
+        {
+        var levelId = $"level{level}";
+        var activeClass = level == 1 ? " active" : string.Empty;
+        var tabClasses = $"tab-pane fade in{activeClass}";
+        <div class="@tabClasses" id="@levelId">
+
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Level @level
+                        </div>
+                        <div class="col-md-4">
+                            @levelNames[level - 1]
+                        </div>
+                        <div class="col-md-5">
+                            <div class="progress" role="progressbar">
+                                <div class="progress-bar-warning progress-striped" style="width: 50%">
+                                    Level 50% complete
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @foreach (int track in new[] { 1, 2, 3 })
+                {
+                <div class="panel panel-default">
+                    <div class="panel-heading track">
+                        <div class="row trackHeader">
+                            <div class="col-md-6">Track @track: the moon</div>
+                            <div class="col-md-6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-success" role="progressbar" style="width: 50%">
+                                        50% complete
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row trackContent">
+                            <div class="col-md-10 challenges">
+                                <div class="row challenge">
+                                    <div class="col-md-4">See the waxing full moon</div>
+                                    <div class="col-md-4">
+                                        <a>Details</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="fa fa-square-o"></i>
+                                        1 point
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="btn btn-sm btn-info">
+                                            Log <i class="fa fa-angle-double-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row challenge">
+                                    <div class="col-md-4">See the 1st quarter moon</div>
+                                    <div class="col-md-4">
+                                        <a>Details</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="fa fa-check"></i>
+                                        1 point
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="btn btn-sm btn-info">
+                                            Log <i class="fa fa-angle-double-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row challenge">
+                                    <div class="col-md-4">See the gibbous full moon</div>
+                                    <div class="col-md-4">
+                                        <a>Details</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <i class="fa fa-square-o"></i>
+                                        1 point
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="btn btn-sm btn-info">
+                                            Log <i class="fa fa-angle-double-right"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 badge">
+                                <i class="fa fa-4x fa-android"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+        </div>
+        }
+</div>
