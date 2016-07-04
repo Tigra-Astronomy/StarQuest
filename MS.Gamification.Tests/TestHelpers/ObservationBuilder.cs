@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ObservationBuilder.cs  Created: 2016-07-04@01:05
-// Last modified: 2016-07-04@01:11
+// Last modified: 2016-07-04@19:45
 
 using System;
 using System.Threading;
@@ -77,6 +77,18 @@ namespace MS.Gamification.Tests.TestHelpers
         public ObservationBuilder<TController> WithId(int id)
             {
             observationId = id;
+            return this;
+            }
+
+        public ObservationBuilder<TController> Rejected()
+            {
+            observationStatus = ModerationState.Rejected;
+            return this;
+            }
+
+        public ObservationBuilder<TController> Approved()
+            {
+            observationStatus = ModerationState.Approved;
             return this;
             }
         }

@@ -239,6 +239,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BusinessLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="BusinessLogic\QuerySpecifications\ObservationsForUserMission.cs" />
     <Compile Include="BusinessLogic\StarquestPasswordValidator.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChallengeController.cs" />
+    <Compile Include="Controllers\ChallengesInMission.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MissionController.cs" />
@@ -444,7 +446,9 @@
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
