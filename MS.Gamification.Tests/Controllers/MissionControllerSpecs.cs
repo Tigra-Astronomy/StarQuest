@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionControllerSpecs.cs  Created: 2016-07-01@07:36
-// Last modified: 2016-07-04@19:48
+// Last modified: 2016-07-05@00:46
 
 using System.Linq;
 using System.Web.Mvc;
@@ -40,13 +40,14 @@ using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Tests.Controllers
     {
+    [Ignore("MissionController.Level no longer takes a levelId argument, but it may come back later")]
     [Subject(typeof(MissionController), "Level ID omitted")]
     class when_invoking_the_level_action_with_no_id_parameter : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithMission().WithId(1).BuildMission()
             .Build();
-        Because of = () => result = (ViewResult) ControllerUnderTest.Level(1, null);
+        Because of = () => result = (ViewResult) ControllerUnderTest.Level(1);
         It should_assume_level_1 = () => ((MissionProgressViewModel) result.Model).Level.ShouldEqual(1);
         static ViewResult result;
         }
@@ -57,12 +58,13 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithMission().BuildMission()
             .Build();
-        Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(InvalidMissionId, null);
+        Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(InvalidMissionId);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);
         static HttpStatusCodeResult result;
         const int InvalidMissionId = 99;
         }
 
+    [Ignore("Controller no longer takes a levelId argument")]
     [Subject(typeof(MissionController), "Invalid Level")]
     class when_the_mission_id_is_valid_but_an_invalid_level_number_is_specified
         : with_mvc_controller<MissionController>
@@ -70,7 +72,7 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithMission().WithId(1).Level(1).BuildMission()
             .Build();
-        Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(1, InvalidLevel);
+        Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(1 /*, InvalidLevel*/);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);
         static HttpStatusCodeResult result;
         const int InvalidLevel = 2;
@@ -82,7 +84,7 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () =>
             {
-            result = (ViewResult) ControllerUnderTest.Level(1, 1);
+            result = (ViewResult) ControllerUnderTest.Level(1);
             model = result.Model as MissionProgressViewModel;
             tracks = model.Tracks.ToArray();
             };
@@ -106,7 +108,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
             .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
             .Build();
-        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1)).Model as MissionProgressViewModel;
         It should_have_the_expected_overall_progress = () => Model.OverallProgressPercent.ShouldEqual(50);
         static MissionProgressViewModel Model;
         }
@@ -124,7 +126,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
             .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation()
             .Build();
-        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1)).Model as MissionProgressViewModel;
         It should_have_100_percent_overall_progress = () => Model.OverallProgressPercent.ShouldEqual(100);
         static MissionProgressViewModel Model;
         }
@@ -143,7 +145,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
             .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
             .Build();
-        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1)).Model as MissionProgressViewModel;
         It should_only_count_the_first_valid_observation_for_each_challenge = () => Model.OverallProgressPercent.ShouldEqual(50);
         static MissionProgressViewModel Model;
         }
@@ -159,7 +161,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation() // Track 3
             .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation() // Track 3 = 100%
             .Build();
-        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1)).Model as MissionProgressViewModel;
         It should_compute_progress_for_track_1 = () => Model.TrackProgress[0].ShouldEqual(0);
         It should_compute_progress_for_track_2 = () => Model.TrackProgress[1].ShouldEqual(50);
         It should_compute_progress_for_track_3 = () => Model.TrackProgress[2].ShouldEqual(100);
@@ -178,7 +180,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(200).Rejected().BuildObservation()
             .WithObservation().ForUserId("user").ForChallenge(300).Approved().BuildObservation()
             .Build();
-        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1, 1)).Model as MissionProgressViewModel;
+        Because of = () => Model = ((ViewResult) ControllerUnderTest.Level(1)).Model as MissionProgressViewModel;
         It should_compute_progress_for_track_1 = () => Model.TrackProgress[0].ShouldEqual(0);
         It should_compute_progress_for_track_2 = () => Model.TrackProgress[1].ShouldEqual(0);
         It should_compute_progress_for_track_3 = () => Model.TrackProgress[2].ShouldEqual(50);

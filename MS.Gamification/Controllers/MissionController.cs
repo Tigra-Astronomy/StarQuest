@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionController.cs  Created: 2016-07-01@00:05
-// Last modified: 2016-07-04@21:26
+// Last modified: 2016-07-05@00:40
 
 using System;
 using System.Collections.Generic;
@@ -26,21 +26,22 @@ namespace MS.Gamification.Controllers
             }
 
         // GET Mission/Level/1
-        public ActionResult Level(int missionId, int? levelId)
+        public ActionResult Level(int id)
             {
             // Validate the parameters and fetch the Mission from the database
-            var model = new MissionProgressViewModel();
-            model.Level = levelId ?? 1;
-            var query = new MissionLevelProgress(missionId, model.Level);
+            var query = new MissionLevelProgress(id);
             var maybeMission = uow.Missions.GetMaybe(query);
             if (maybeMission.None)
                 return HttpNotFound("The specified Mission ID was not found");
             var mission = maybeMission.Single();
+            var model = new MissionProgressViewModel();
+            model.Level = mission.Level;
+
             model.Tracks = new List<MissionTrack>(mission.Tracks);
             // Get the logged in requestingUser and fetch the requestingUser's Observation log from the database
             //var observationSpecification = new ObservationsForUserMission(requestingUser.UniqueId, mission.Id);
             //var userObservations = uow.Observations.AllSatisfying(observationSpecification);
-            var challengeSpecification = new ChallengesInMission(missionId);
+            var challengeSpecification = new ChallengesInMission(mission.Id);
             var challengesInMission = uow.Challenges.AllSatisfying(challengeSpecification);
             // Only count one observation towards each challenge, for the purposes of computing progress.
             var eligibleObservationsForMission = new EligibleObservationsForChallenges(challengesInMission,

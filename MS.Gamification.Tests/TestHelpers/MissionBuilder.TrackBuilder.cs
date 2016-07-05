@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionBuilder.TrackBuilder.cs  Created: 2016-07-02@03:44
-// Last modified: 2016-07-02@18:24
+// Last modified: 2016-07-04@23:48
 
 using System.Collections.Generic;
 using System.Threading;
@@ -10,17 +10,17 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    internal partial class MissionBuilder<TContoller> where TContoller : ControllerBase
+    partial class MissionBuilder<TContoller> where TContoller : ControllerBase
         {
         internal partial class TrackBuilder
             {
-            private static int uniqueId;
-            private readonly List<Challenge> challenges = new List<Challenge>();
-            private readonly MissionBuilder<TContoller> mission;
-            private readonly string trackAwardTitle;
-            private readonly int trackId;
-            private string trackName;
-            private int trackNumber;
+            static int uniqueId;
+            readonly List<Challenge> challenges = new List<Challenge>();
+            readonly MissionBuilder<TContoller> mission;
+            readonly string trackAwardTitle;
+            int trackId;
+            string trackName;
+            int trackNumber;
 
             public TrackBuilder(MissionBuilder<TContoller> mission, int trackNumber)
                 {
@@ -65,6 +65,12 @@ namespace MS.Gamification.Tests.TestHelpers
             internal ChallengeBuilder WithChallenge(string name)
                 {
                 return new ChallengeBuilder(this).WithName(name);
+                }
+
+            public TrackBuilder WithId(int id)
+                {
+                trackId = id;
+                return this;
                 }
             }
         }

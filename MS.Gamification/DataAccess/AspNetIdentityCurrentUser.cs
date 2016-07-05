@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AspNetIdentityCurrentUser.cs  Created: 2016-07-03@22:08
-// Last modified: 2016-07-03@23:07
+// Last modified: 2016-07-05@04:59
 
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
@@ -62,7 +62,7 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <param name="manager">The ASP.Net Identity User Manager.</param>
         /// <param name="identity">The identity as reported by the HTTP Context.</param>
-        public AspNetIdentityCurrentUser(UserManager<ApplicationUser, string> manager, IIdentity identity)
+        public AspNetIdentityCurrentUser(ApplicationUserManager manager, IIdentity identity)
             {
             this.manager = manager;
             this.identity = identity;
@@ -104,7 +104,7 @@ namespace MS.Gamification.DataAccess
 
         private ApplicationUser GetApplicationUser()
             {
-            return manager.FindByNameAsync(LoginName).WaitForResult();
+            return manager.FindByName(LoginName);
             }
         }
     }

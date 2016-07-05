@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: with_standard_mission.cs  Created: 2016-07-02@17:27
-// Last modified: 2016-07-02@19:29
+// Last modified: 2016-07-04@23:49
 
 using System.Web.Mvc;
 using Machine.Specifications;
@@ -38,13 +38,13 @@ namespace MS.Gamification.Tests.Controllers
             .WithEntity(new Category {Id = 30, Name = "Open Cluster"})
             .WithEntity(new Category {Id = 40, Name = "Galaxy"})
             .WithMission().WithId(1).Level(1)
-            .WithTrack(1)
+            .WithTrack(1).WithId(1)
             .WithChallenge("See the New Moon").WithId(100).InCategory(10).BuildChallenge()
             .WithChallenge("See the Full Moon").WithId(101).InCategory(10).BuildChallenge().BuildTrack()
-            .WithTrack(2)
+            .WithTrack(2).WithId(2)
             .WithChallenge("See Jupiter").WithId(200).InCategory(20).BuildChallenge()
             .WithChallenge("See Saturn").WithId(201).InCategory(20).BuildChallenge().BuildTrack()
-            .WithTrack(3)
+            .WithTrack(3).WithId(3)
             .WithChallenge("See the Pleiades").WithId(300).InCategory(30).BuildChallenge()
             .WithChallenge("See Andromeda").WithId(400).InCategory(40).BuildChallenge().BuildTrack()
             .BuildMission();

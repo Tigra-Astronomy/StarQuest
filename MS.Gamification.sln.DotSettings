@@ -40,6 +40,7 @@ Last modified: $CURRENT_YEAR$-$CURRENT_MONTH$-$CURRENT_DAY$@$CURRENT_TIME$</s:St
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File712682D6E5BE084D824198D504540544/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File712682D6E5BE084D824198D504540544/RelativePriority/@EntryValue">1</s:Double>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/IsOn/@EntryValue">False</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/RelativePriority/@EntryValue">0.5</s:Double>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEB65CDFB713FEC428FA74836AC6544C0/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEB65CDFB713FEC428FA74836AC6544C0/RelativePriority/@EntryValue">2</s:Double>

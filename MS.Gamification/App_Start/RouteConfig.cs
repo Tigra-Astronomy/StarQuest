@@ -19,11 +19,11 @@ namespace MS.Gamification
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-                name: "MissionProgress",
-                url: "Mission/{missionId}/{levelId}",
-                defaults: new {controller = "Mission", action = "Level", levelId = UrlParameter.Optional}
-                );
+            //routes.MapRoute(
+            //    name: "MissionProgress",
+            //    url: "Mission/{missionId}/{levelId}",
+            //    defaults: new {controller = "Mission", action = "Level", levelId = UrlParameter.Optional}
+            //    );
             routes.IgnoreRoute("elmah.axd");
         }
     }

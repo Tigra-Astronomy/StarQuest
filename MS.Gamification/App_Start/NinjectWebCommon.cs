@@ -4,10 +4,12 @@
 // Last modified: 2016-07-03@23:14
 
 using System;
+using System.Data.Entity;
 using System.Security.Principal;
 using System.Web;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
@@ -73,13 +75,16 @@ namespace MS.Gamification.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
             {
-            kernel.Bind(typeof(ApplicationDbContext)).ToSelf().InRequestScope();
-            kernel.Bind(typeof(IUserStore<ApplicationUser>)).To(typeof(UserStore<ApplicationUser>)).InRequestScope();
-            kernel.Bind(typeof(UserManager<ApplicationUser>)).ToSelf().InRequestScope();
+            kernel.Bind<ApplicationDbContext>().ToSelf().InRequestScope();
+            kernel.Bind<DbContext>().To<ApplicationDbContext>().InRequestScope();
+            kernel.Bind<IUserStore<ApplicationUser>>().To<ApplicationUserStore>().InRequestScope();
+            kernel.Bind<ApplicationUserManager>().ToSelf().InRequestScope();
+            kernel.Bind<ApplicationSignInManager>().ToSelf().InRequestScope();
+            kernel.Bind<IAuthenticationManager>().ToMethod(m => HttpContext.Current.GetOwinContext().Authentication);
             kernel.Bind<IUnitOfWork>().To<EntityFramework6UnitOfWork>().InRequestScope();
             kernel.Bind<HttpServerUtilityBase>().ToMethod(c => new HttpServerUtilityWrapper(HttpContext.Current.Server));
             kernel.Bind<IImageStore>().To<WebServerImageStore>().InSingletonScope();
-            kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity);
+            kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
             kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
             }
         }

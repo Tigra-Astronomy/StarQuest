@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionBuilder.ChallengeBuilder.cs  Created: 2016-07-02@16:26
-// Last modified: 2016-07-02@18:24
+// Last modified: 2016-07-05@05:10
 
 using System.Threading;
 using System.Web.Mvc;
@@ -9,21 +9,21 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    internal partial class MissionBuilder<TContoller> where TContoller : ControllerBase
+    partial class MissionBuilder<TContoller> where TContoller : ControllerBase
         {
         internal partial class TrackBuilder
             {
             internal class ChallengeBuilder
                 {
-                private static int uniqueId;
-                private readonly int awardPoints = 1;
-                private readonly string bookSection = "Unspecified";
-                private readonly string location = "Nowhere";
-                private readonly TrackBuilder trackBuilder;
-                private readonly string validationImage = "NoImage.png";
-                private int categoryId = 1;
-                private int challengeId;
-                private string challengeName = "No name";
+                static int uniqueId;
+                readonly int awardPoints = 1;
+                readonly string bookSection = "Unspecified";
+                readonly string location = "Nowhere";
+                readonly TrackBuilder trackBuilder;
+                readonly string validationImage = "NoImage.png";
+                int categoryId = 10;
+                int challengeId;
+                string challengeName = "No name";
 
                 public ChallengeBuilder(TrackBuilder trackBuilder)
                     {
