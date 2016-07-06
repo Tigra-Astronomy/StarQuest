@@ -24,7 +24,7 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             {
             var observations = from observation in items
                                where observation.UserId == userId
-                               where observation.Challenge.MissionTrack.MissionId == missionId
+                               where observation.Challenge.MissionTrack.MissionLevelId == missionId
                                orderby observation.ObservationDateTimeUtc ascending
                                select observation;
             return observations;

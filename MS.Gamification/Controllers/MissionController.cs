@@ -41,7 +41,7 @@ namespace MS.Gamification.Controllers
             // Get the logged in requestingUser and fetch the requestingUser's Observation log from the database
             //var observationSpecification = new ObservationsForUserMission(requestingUser.UniqueId, mission.Id);
             //var userObservations = uow.Observations.AllSatisfying(observationSpecification);
-            var challengeSpecification = new ChallengesInMission(mission.Id);
+            var challengeSpecification = new ChallengesInMissionLevel(mission.Id);
             var challengesInMission = uow.Challenges.AllSatisfying(challengeSpecification);
             // Only count one observation towards each challenge, for the purposes of computing progress.
             var eligibleObservationsForMission = new EligibleObservationsForChallenges(challengesInMission,

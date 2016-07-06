@@ -6,9 +6,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using MS.Gamification.Models;
 using TA.SoftwareLicensing.Models;
 
-namespace MS.Gamification.Models
+namespace MS.Gamification.ViewModels
     {
     public class SubmitObservationViewModel
         {

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {

@@ -10,6 +10,7 @@ using Machine.Specifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Tests.Controllers
     {

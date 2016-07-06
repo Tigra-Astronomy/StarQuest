@@ -1,8 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: Mission.cs  Created: 2016-04-05@22:45
-// Last modified: 2016-04-05@23:34 by Fern
+// File: Mission.cs  Created: 2016-07-06@22:09
+// Last modified: 2016-07-06@22:15
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,13 +13,12 @@ namespace MS.Gamification.Models
     {
     public class Mission : IDomainEntity<int>
         {
-        [Required]
-        public string Name { get; set; }
-        public int Level { get; set; }
-        public virtual List<MissionTrack> Tracks { get; set; }
-        [Required]
-        public string AwardTitle { get; set; }
-        [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required][Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required][MaxLength(128)]
+        public string Title { get; set; }
+
+        public virtual List<MissionLevel> MissionLevels { get; set; }
         }
     }

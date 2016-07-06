@@ -31,7 +31,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
 
         public IRepository<Observation, int> Observations { get; }
 
-        public IRepository<Mission, int> Missions { get; }
+        public IRepository<MissionLevel, int> Missions { get; }
 
         public void Commit()
             {

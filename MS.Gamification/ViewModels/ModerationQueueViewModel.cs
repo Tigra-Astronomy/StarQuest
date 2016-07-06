@@ -5,7 +5,7 @@
 
 using System;
 
-namespace MS.Gamification.Models
+namespace MS.Gamification.ViewModels
     {
     /// <summary>
     ///     Data transfer object used to display the moderation queue

@@ -84,7 +84,7 @@ namespace MS.Gamification.Models
             var openClusterCategory = context.Categories.Single(p => p.Name == "Open Cluster");
             var galaxyCategory = context.Categories.Single(p => p.Name == "Galaxy");
             context.Missions.AddOrUpdate(p => p.Name,
-                new Mission
+                new MissionLevel
                     {
                     Name = "Beta Mission",
                     AwardTitle = "Beta Tester",

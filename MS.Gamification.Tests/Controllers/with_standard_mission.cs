@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: with_standard_mission.cs  Created: 2016-07-02@17:27
-// Last modified: 2016-07-04@23:49
+// Last modified: 2016-07-06@23:39
 
 using System.Web.Mvc;
 using Machine.Specifications;
@@ -18,7 +18,8 @@ namespace MS.Gamification.Tests.Controllers
      * Category 30 - Open Cluster
      * Category 40 - Galaxy
      * 
-     * Mission "Unit Test Mission" Id=1 Level=1
+     * Mission "Unit Test Mission" Id=1 
+     * Level=1
      *  Track 1 - Lunar Observer
      *      100 See the New Moon    1 point     Category 10
      *      101 See the Full Moon   1 point     Category 10
@@ -37,7 +38,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithEntity(new Category {Id = 20, Name = "Planet"})
             .WithEntity(new Category {Id = 30, Name = "Open Cluster"})
             .WithEntity(new Category {Id = 40, Name = "Galaxy"})
-            .WithMission().WithId(1).Level(1)
+            .WithMissionLevel().WithId(1).Level(1)
             .WithTrack(1).WithId(1)
             .WithChallenge("See the New Moon").WithId(100).InCategory(10).BuildChallenge()
             .WithChallenge("See the Full Moon").WithId(101).InCategory(10).BuildChallenge().BuildTrack()

@@ -8,7 +8,7 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.BusinessLogic.QuerySpecifications
     {
-    public class MissionLevelProgress : QuerySpecification<Mission>
+    public class MissionLevelProgress : QuerySpecification<MissionLevel>
         {
         private readonly int levelId;
         private readonly int missionId;
@@ -20,7 +20,7 @@ namespace MS.Gamification.BusinessLogic.QuerySpecifications
             FetchStrategy.Include(p => p.Tracks);
             }
 
-        public override IQueryable<Mission> GetQuery(IQueryable<Mission> items)
+        public override IQueryable<MissionLevel> GetQuery(IQueryable<MissionLevel> items)
             {
             var query = from item in items
                         where item.Id == missionId

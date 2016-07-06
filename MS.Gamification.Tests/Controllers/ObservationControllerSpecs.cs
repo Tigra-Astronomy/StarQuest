@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 /*
 Observation controller behaviours

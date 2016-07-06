@@ -10,7 +10,7 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.DataAccess.EntityFramework6
     {
-    internal class MissionRepository : Repository<Mission, int>
+    internal class MissionRepository : Repository<MissionLevel, int>
         {
         public MissionRepository(DbContext dbContext) : base(dbContext) {}
 

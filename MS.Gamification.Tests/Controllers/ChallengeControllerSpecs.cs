@@ -123,7 +123,7 @@ namespace MS.Gamification.Tests.Controllers
             {
             ControllerUnderTest = ContextBuilder
                 .WithEntity(new Category {Id = 1})
-                .WithMission().WithTrack(1)
+                .WithMissionLevel().WithTrack(1)
                 .WithChallenge("See all the moon phases").WithId(1).InCategory(1).BuildChallenge()
                 .WithChallenge("See Saturn").WithId(2).InCategory(1).BuildChallenge()
                 .BuildTrack().BuildMission()

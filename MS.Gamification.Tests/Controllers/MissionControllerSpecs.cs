@@ -45,7 +45,7 @@ namespace MS.Gamification.Tests.Controllers
     class when_invoking_the_level_action_with_no_id_parameter : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMission().WithId(1).BuildMission()
+            .WithMissionLevel().WithId(1).BuildMission()
             .Build();
         Because of = () => result = (ViewResult) ControllerUnderTest.Level(1);
         It should_assume_level_1 = () => ((MissionProgressViewModel) result.Model).Level.ShouldEqual(1);
@@ -56,7 +56,7 @@ namespace MS.Gamification.Tests.Controllers
     class when_an_invalid_mission_id_is_specified : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMission().BuildMission()
+            .WithMissionLevel().BuildMission()
             .Build();
         Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(InvalidMissionId);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);
@@ -70,7 +70,7 @@ namespace MS.Gamification.Tests.Controllers
         : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMission().WithId(1).Level(1).BuildMission()
+            .WithMissionLevel().WithId(1).Level(1).BuildMission()
             .Build();
         Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Level(1 /*, InvalidLevel*/);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);

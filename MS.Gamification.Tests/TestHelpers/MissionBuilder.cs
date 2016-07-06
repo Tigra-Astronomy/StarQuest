@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionBuilder.cs  Created: 2016-07-02@02:52
-// Last modified: 2016-07-02@18:27
+// Last modified: 2016-07-07@00:07
 
 using System.Collections.Generic;
 using System.Threading;
@@ -10,20 +10,22 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    internal partial class MissionBuilder<TContoller> where TContoller : ControllerBase
+    partial class MissionBuilder<TContoller> where TContoller : ControllerBase
         {
-        private static int uniqueId;
-        private readonly string awardTitle;
-        private readonly ControllerContextBuilder<TContoller> context;
-        private readonly List<MissionTrack> tracks;
-        private int missionId;
-        private int missionLevel;
-        private string missionName;
+        static int uniqueId;
+        readonly string awardTitle;
+        readonly ControllerContextBuilder<TContoller> context;
+        readonly int missionId;
+        readonly List<MissionTrack> tracks;
+        int missionLevel;
+        int missionLevelId;
+        string missionName;
 
-        public MissionBuilder(ControllerContextBuilder<TContoller> context)
+        public MissionBuilder(ControllerContextBuilder<TContoller> context, int missionId = 1)
             {
             this.context = context;
-            missionId = Interlocked.Increment(ref uniqueId);
+            this.missionId = missionId;
+            missionLevelId = Interlocked.Increment(ref uniqueId);
             missionLevel = 1;
             missionName = "Unit Test Mission";
             awardTitle = "Unit Tester";
@@ -32,7 +34,7 @@ namespace MS.Gamification.Tests.TestHelpers
 
         public MissionBuilder<TContoller> WithId(int id)
             {
-            missionId = id;
+            missionLevelId = id;
             missionName = $"Unit Test Mission {id}";
 
             return this;
@@ -45,13 +47,19 @@ namespace MS.Gamification.Tests.TestHelpers
 
         public ControllerContextBuilder<TContoller> BuildMission()
             {
-            var mission = new Mission
+            context.WithEntity(new Mission
+                {
+                Title = "Unit Test Mission",
+                Id = missionId
+                });
+            var level = new MissionLevel
                 {
                 AwardTitle = awardTitle,
-                Id = missionId,
+                Id = missionLevelId,
                 Level = missionLevel,
                 Name = missionName,
-                Tracks = tracks
+                Tracks = tracks,
+                MissionId = 1
                 };
             foreach (var track in tracks)
                 {
@@ -61,10 +69,10 @@ namespace MS.Gamification.Tests.TestHelpers
                     challenge.MissionTrackId = track.Id;
                     context.WithEntity(challenge);
                     }
-                track.MissionId = missionId;
+                track.MissionLevelId = missionLevelId;
                 context.WithEntity(track);
                 }
-            context.WithEntity(mission);
+            context.WithEntity(level);
             return context;
             }
 
