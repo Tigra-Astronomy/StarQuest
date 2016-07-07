@@ -30,7 +30,7 @@ namespace MS.Gamification.Controllers
             {
             // Validate the parameters and fetch the Mission from the database
             var query = new MissionLevelProgress(id);
-            var maybeMission = uow.Missions.GetMaybe(query);
+            var maybeMission = uow.MissionLevels.GetMaybe(query);
             if (maybeMission.None)
                 return HttpNotFound("The specified Mission ID was not found");
             var mission = maybeMission.Single();

@@ -281,6 +281,7 @@
     <Compile Include="DataAccess\EntityFramework6\CategoryRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ChallengeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\EntityFramework6UnitOfWork.cs" />
+    <Compile Include="DataAccess\EntityFramework6\MissionLevelRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservationRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\Repository.cs" />

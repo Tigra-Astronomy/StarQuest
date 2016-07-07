@@ -41,8 +41,14 @@ namespace MS.Gamification.DataAccess
         ///     Gets the missions repository.
         /// </summary>
         /// <value>The missions queryable collection.</value>
-        IRepository<MissionLevel, int> Missions { get; }
+        IRepository<MissionLevel, int> MissionLevels { get; }
 
+        /// <summary>
+        /// Gets the missions.
+        /// </summary>
+        /// <value>The missions.</value>
+        IRepository<Mission,int> Missions { get; }
+        
         /// <summary>
         ///     Commits changes to the database and completes the transaction.
         /// </summary>
