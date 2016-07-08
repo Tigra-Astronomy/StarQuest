@@ -5,8 +5,8 @@
 
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 

@@ -1,5 +1,5 @@
 using System.Linq;
-using MS.Gamification.BusinessLogic;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers

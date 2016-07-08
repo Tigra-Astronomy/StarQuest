@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 

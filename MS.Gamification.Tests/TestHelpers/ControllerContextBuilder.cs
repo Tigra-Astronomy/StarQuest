@@ -11,6 +11,7 @@ using Effort.Extra;
 using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers.Fakes;
 using Ninject;
@@ -35,6 +36,8 @@ namespace MS.Gamification.Tests.TestHelpers
         string[] requestUserRoles;
 
         public IUnitOfWork UnitOfWork { get; private set; }
+
+        public GameRulesService RulesService { get; private set; }
 
 
         /// <summary>
@@ -131,6 +134,7 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             var dataLoader = new ObjectDataLoader(data);
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
+            RulesService = new GameRulesService();
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);
@@ -140,7 +144,7 @@ namespace MS.Gamification.Tests.TestHelpers
              * Use Ninject to create the controller, as we don't know in advance what
              * type of controller or how many constructor parameters it has.
              */
-            var kernel = BuildNinjectKernel(UnitOfWork, fakeIdentity, requestUserId);
+            var kernel = BuildNinjectKernel(UnitOfWork, fakeIdentity, requestUserId, RulesService);
             var controller = kernel.Get<TController>();
             if (controller == null)
                 throw new SpecificationException(
@@ -165,13 +169,14 @@ namespace MS.Gamification.Tests.TestHelpers
             return this;
             }
 
-        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId)
+        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId, GameRulesService rulesService)
             {
             var requestUserId = userId;
             IKernel kernel = new StandardKernel();
             kernel.Bind<IUnitOfWork>().ToMethod(u => UnitOfWork);
             kernel.Bind<ICurrentUser>().ToMethod(u => new FakeCurrentUser(identity, requestUserId));
             kernel.Bind<TController>().ToSelf().InTransientScope();
+            kernel.Bind<GameRulesService>().ToMethod(s => RulesService);
             return kernel;
             }
         }

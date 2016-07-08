@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.BusinessLogic.QuerySpecifications
+namespace MS.Gamification.GameLogic.QuerySpecifications
     {
     public class NotThisChallenge : QuerySpecification<Challenge>
         {

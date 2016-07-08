@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 
-namespace MS.Gamification.BusinessLogic
+namespace MS.Gamification.GameLogic
     {
     public class StarquestPasswordValidator : IIdentityValidator<string>
         {

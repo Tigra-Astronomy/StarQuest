@@ -1,13 +1,13 @@
 using System.Linq;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.BusinessLogic.QuerySpecifications
+namespace MS.Gamification.GameLogic.QuerySpecifications
     {
     /// <summary>
     ///     Specifies the set of observations submitted by a given user against the given Mission ID. Eagerly loads the
     ///     Challenge and Mission Track for each observation.
     /// </summary>
-    /// <seealso cref="BusinessLogic.QuerySpecification{Observation}" />
+    /// <seealso cref="QuerySpecification{T}" />
     public class ObservationsForUserMission : QuerySpecification<Observation>
         {
         private readonly int missionId;

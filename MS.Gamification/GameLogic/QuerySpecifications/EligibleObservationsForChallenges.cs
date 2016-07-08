@@ -8,7 +8,7 @@ using System.Linq;
 using Microsoft.Ajax.Utilities;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.BusinessLogic.QuerySpecifications
+namespace MS.Gamification.GameLogic.QuerySpecifications
     {
     class EligibleObservationsForChallenges : QuerySpecification<Observation>
         {

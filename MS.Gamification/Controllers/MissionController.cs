@@ -7,22 +7,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using MS.Gamification.GameLogic;
 
 namespace MS.Gamification.Controllers
     {
     public class MissionController : UserController
         {
         private readonly ICurrentUser requestingUser;
+        private readonly GameRulesService rules;
         private readonly IUnitOfWork uow;
 
-        public MissionController(IUnitOfWork uow, ICurrentUser user)
+        public MissionController(IUnitOfWork uow, ICurrentUser user, GameRulesService rules)
             {
             this.uow = uow;
             requestingUser = user;
+            this.rules = rules;
             }
 
         // GET Mission/Level/1
@@ -49,7 +52,7 @@ namespace MS.Gamification.Controllers
             var observationsForMission = uow.Observations.AllSatisfying(eligibleObservationsForMission);
             var missionTotalChallenges = 0;
             mission.Tracks.ForEach(p => missionTotalChallenges += p.Challenges.Count);
-            model.OverallProgressPercent = ComputePercentComplete(challengesInMission, observationsForMission);
+            model.OverallProgressPercent = rules.ComputePercentComplete(challengesInMission, observationsForMission);
             // Compute individual track progress
             var trackPercentComplete = new List<int>(model.Tracks.Count());
             foreach (var track in model.Tracks)
@@ -58,30 +61,10 @@ namespace MS.Gamification.Controllers
                 var eligibleObservationsForTrack = new EligibleObservationsForChallenges(challengesInTrack,
                     requestingUser.UniqueId);
                 var observations = uow.Observations.AllSatisfying(eligibleObservationsForTrack);
-                trackPercentComplete.Add(ComputePercentComplete(challengesInTrack, observations));
+                trackPercentComplete.Add(rules.ComputePercentComplete(challengesInTrack, observations));
                 }
             model.TrackProgress = trackPercentComplete;
             return View(model);
-            }
-
-        /// <summary>
-        ///     Computes the percent complete for a set of challenges, given a set of eligible observations. The
-        ///     computation is based on the number of points gained, rather than just a simple count.
-        /// </summary>
-        /// <param name="challenges">The set of challenges that represents 100% progress.</param>
-        /// <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
-        /// <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
-        /// <remarks>
-        ///     It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-        ///     <see cref="EligibleObservations" />.
-        /// </remarks>
-        private int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations)
-            {
-            var pointsAvailable = challenges.Select(p => p.Points).Sum();
-            if (pointsAvailable < 1) return 0; // Avoid divide-by-zero error
-            var pointsAwarded = eligibleObservations.Select(p => p.Challenge.Points).Sum();
-            var percentComplete = pointsAwarded * 100 / pointsAvailable;
-            return Math.Min(percentComplete, 100);
             }
         }
     }

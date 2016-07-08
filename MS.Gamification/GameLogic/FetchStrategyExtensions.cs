@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace MS.Gamification.BusinessLogic
+namespace MS.Gamification.GameLogic
     {
     /// <summary>
     /// Extension methods used by <see cref="GenericFetchStrategy{TEntity}"/>

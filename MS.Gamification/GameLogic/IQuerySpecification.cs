@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace MS.Gamification.BusinessLogic
+namespace MS.Gamification.GameLogic
     {
     public interface IQuerySpecification<T> where T : class
         {

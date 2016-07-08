@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.QuerySpecifications

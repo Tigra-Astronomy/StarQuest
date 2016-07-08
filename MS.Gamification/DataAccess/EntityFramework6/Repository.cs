@@ -9,7 +9,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Linq.Expressions;
-using MS.Gamification.BusinessLogic;
+using MS.Gamification.GameLogic;
 
 namespace MS.Gamification.DataAccess.EntityFramework6
     {

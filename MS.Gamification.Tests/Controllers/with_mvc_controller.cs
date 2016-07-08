@@ -7,6 +7,7 @@ using System;
 using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
@@ -33,5 +34,7 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ContextBuilder = new ControllerContextBuilder<TController>();
 
         protected static IUnitOfWork UnitOfWork => ContextBuilder.UnitOfWork;
+
+        protected static GameRulesService RulesService => ContextBuilder.RulesService;
         }
     }

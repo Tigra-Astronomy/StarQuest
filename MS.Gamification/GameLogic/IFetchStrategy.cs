@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace MS.Gamification.BusinessLogic
+namespace MS.Gamification.GameLogic
     {
     /// <summary>
     /// Defines an abstraction that enables a query to specify eager loading of related entities.

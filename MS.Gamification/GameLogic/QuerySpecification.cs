@@ -5,7 +5,7 @@
 
 using System.Linq;
 
-namespace MS.Gamification.BusinessLogic
+namespace MS.Gamification.GameLogic
     {
     public abstract class QuerySpecification<T> : IQuerySpecification<T> where T : class
         {

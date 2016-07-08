@@ -1,19 +1,19 @@
 // This file is part of the MS.Gamification project
 // 
 // File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-03@23:14
+// Last modified: 2016-07-08@02:45
 
 using System;
 using System.Data.Entity;
 using System.Security.Principal;
 using System.Web;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
+using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using Ninject;
@@ -86,6 +86,7 @@ namespace MS.Gamification.App_Start
             kernel.Bind<IImageStore>().To<WebServerImageStore>().InSingletonScope();
             kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
             kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
+            kernel.Bind<GameRulesService>().ToSelf().InRequestScope();
             }
         }
     }

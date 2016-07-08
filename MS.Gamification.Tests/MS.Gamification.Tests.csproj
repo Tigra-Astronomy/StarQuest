@@ -159,6 +159,7 @@
     <Compile Include="Controllers\with_mvc_controller.cs" />
     <Compile Include="Controllers\with_standard_mission.cs" />
     <Compile Include="EffortSpecs.cs" />
+    <Compile Include="GameRulesServiceSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuerySpecifications\ChallengesInMissionSpecs.cs" />
     <Compile Include="QuerySpecifications\EligibleObservationsForChallengesSpecs.cs" />

@@ -6,7 +6,7 @@
 using System.Linq;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.BusinessLogic.QuerySpecifications
+namespace MS.Gamification.GameLogic.QuerySpecifications
     {
     public class SingleObservationWithNavigationProperties : QuerySpecification<Observation>
         {
