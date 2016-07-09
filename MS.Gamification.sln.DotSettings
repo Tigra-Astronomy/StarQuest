@@ -1,4 +1,24 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/Comment/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/CustomDictionary/CustomDictionaries/=en_002DGB/@EntryIndexedValue">&lt;data Name="en-GB" CaseSensitive="False" Encoded="True" /&gt;</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/Identifier/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/ResX/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/String/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:String x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/DictionaryName/@EntryValue">en-GB,en-US</s:String>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=DescriptionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ExampleTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ExceptionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ItemTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ListHeaderTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ListTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ParamTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ParaTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=PermissionTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=RemarksTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=ReturnsTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=SummaryTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=TermTagIndent/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/AgentSmith/XmlDocumentation/ReflowAndRetag/WhitespaceIndentSettings/=TypeParamTagIndent/@EntryIndexedValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ACCESSOR_DECLARATION_BRACES/@EntryValue">NEXT_LINE_SHIFTED</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ACCESSOR_OWNER_DECLARATION_BRACES/@EntryValue">NEXT_LINE_SHIFTED</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_LINQ_QUERY/@EntryValue">True</s:Boolean>
@@ -11,11 +31,17 @@ Last modified: $CURRENT_YEAR$-$CURRENT_MONTH$-$CURRENT_DAY$@$CURRENT_TIME$</s:St
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/AbsolutePath/@EntryValue">C:\Users\Fern\Visual Studio Projects\MS.Gamification\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/RelativePath/@EntryValue">..\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=7A54C79378B1774BB0F92578C4370375/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=7A54C79378B1774BB0F92578C4370375/AbsolutePath/@EntryValue">D:\VS-Projects\ms.gamification\MS.Gamification.Tests\MS.Gamification.Tests.csproj.DotSettings</s:String>
+	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=7A54C79378B1774BB0F92578C4370375/RelativePath/@EntryValue">..\MS.Gamification.Tests\MS.Gamification.Tests.csproj.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EB65CDFB713FEC428FA74836AC6544C0/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EB65CDFB713FEC428FA74836AC6544C0/AbsolutePath/@EntryValue">C:\Users\Fern\Visual Studio Projects\MS.Gamification\MS.Gamification.MSpec-Style.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=EB65CDFB713FEC428FA74836AC6544C0/RelativePath/@EntryValue">..\MS.Gamification.MSpec-Style.DotSettings</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File712682D6E5BE084D824198D504540544/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File712682D6E5BE084D824198D504540544/RelativePriority/@EntryValue">1</s:Double>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/IsOn/@EntryValue">False</s:Boolean>
+	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File7A54C79378B1774BB0F92578C4370375/RelativePriority/@EntryValue">0.5</s:Double>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEB65CDFB713FEC428FA74836AC6544C0/@KeyIndexDefined">True</s:Boolean>
 	<s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=FileEB65CDFB713FEC428FA74836AC6544C0/RelativePriority/@EntryValue">2</s:Double>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EAddAccessorOwnerDeclarationBracesMigration/@EntryIndexedValue">True</s:Boolean>

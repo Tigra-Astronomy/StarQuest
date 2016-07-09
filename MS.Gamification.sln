@@ -1,13 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "MS.Gamification.Requirements", "MS.Gamification.Requirements\MS.Gamification.Requirements.modelproj", "{EAF0B43D-ABDD-4102-A638-F1303EF029B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS.Gamification", "MS.Gamification\MS.Gamification.csproj", "{9BAAB516-20C0-4CF3-AEEF-ABD1A0C1F52B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS.Gamification.Tests", "MS.Gamification.Tests\MS.Gamification.Tests.csproj", "{4F644E45-A167-4111-99DE-A20FFA5E8CFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{672139D3-65F2-4CF5-A456-C7E5884A4896}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		MS.Gamification.MSpec-Style.DotSettings = MS.Gamification.MSpec-Style.DotSettings
+		MS.Gamification.sln.DotSettings = MS.Gamification.sln.DotSettings
+		MS.Gamification.sln.GhostDoc.user.dic = MS.Gamification.sln.GhostDoc.user.dic
+		MS.Gamification.sln.GhostDoc.xml = MS.Gamification.sln.GhostDoc.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

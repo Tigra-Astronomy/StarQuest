@@ -24,27 +24,16 @@ namespace MS.Gamification.Migrations
                         ValidationImage = c.String(nullable: false, maxLength: 255),
                         Name = c.String(nullable: false),
                         Points = c.Int(nullable: false),
-                        CategoryId = c.Int(nullable: false),
                         Location = c.String(),
                         BookSection = c.String(),
-                        MissionTrack_Id = c.Int(),
+                        CategoryId = c.Int(nullable: false),
+                        MissionTrackId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
-                .ForeignKey("dbo.MissionTracks", t => t.MissionTrack_Id)
+                .ForeignKey("dbo.MissionTracks", t => t.MissionTrackId, cascadeDelete: true)
                 .Index(t => t.CategoryId)
-                .Index(t => t.MissionTrack_Id);
-            
-            CreateTable(
-                "dbo.Missions",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Level = c.Int(nullable: false),
-                        AwardTitle = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+                .Index(t => t.MissionTrackId);
             
             CreateTable(
                 "dbo.MissionTracks",
@@ -54,11 +43,34 @@ namespace MS.Gamification.Migrations
                         Name = c.String(nullable: false),
                         Number = c.Int(nullable: false),
                         AwardTitle = c.String(nullable: false),
-                        Mission_Id = c.Int(),
+                        MissionLevelId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Missions", t => t.Mission_Id)
-                .Index(t => t.Mission_Id);
+                .ForeignKey("dbo.MissionLevels", t => t.MissionLevelId, cascadeDelete: true)
+                .Index(t => t.MissionLevelId);
+            
+            CreateTable(
+                "dbo.MissionLevels",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        Level = c.Int(nullable: false),
+                        AwardTitle = c.String(nullable: false),
+                        MissionId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Missions", t => t.MissionId, cascadeDelete: true)
+                .Index(t => t.MissionId);
+            
+            CreateTable(
+                "dbo.Missions",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Observations",
@@ -161,8 +173,9 @@ namespace MS.Gamification.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Observations", "ChallengeId", "dbo.Challenges");
-            DropForeignKey("dbo.MissionTracks", "Mission_Id", "dbo.Missions");
-            DropForeignKey("dbo.Challenges", "MissionTrack_Id", "dbo.MissionTracks");
+            DropForeignKey("dbo.MissionTracks", "MissionLevelId", "dbo.MissionLevels");
+            DropForeignKey("dbo.MissionLevels", "MissionId", "dbo.Missions");
+            DropForeignKey("dbo.Challenges", "MissionTrackId", "dbo.MissionTracks");
             DropForeignKey("dbo.Challenges", "CategoryId", "dbo.Categories");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -172,8 +185,9 @@ namespace MS.Gamification.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Observations", new[] { "UserId" });
             DropIndex("dbo.Observations", new[] { "ChallengeId" });
-            DropIndex("dbo.MissionTracks", new[] { "Mission_Id" });
-            DropIndex("dbo.Challenges", new[] { "MissionTrack_Id" });
+            DropIndex("dbo.MissionLevels", new[] { "MissionId" });
+            DropIndex("dbo.MissionTracks", new[] { "MissionLevelId" });
+            DropIndex("dbo.Challenges", new[] { "MissionTrackId" });
             DropIndex("dbo.Challenges", new[] { "CategoryId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
@@ -181,8 +195,9 @@ namespace MS.Gamification.Migrations
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.Observations");
-            DropTable("dbo.MissionTracks");
             DropTable("dbo.Missions");
+            DropTable("dbo.MissionLevels");
+            DropTable("dbo.MissionTracks");
             DropTable("dbo.Challenges");
             DropTable("dbo.Categories");
         }

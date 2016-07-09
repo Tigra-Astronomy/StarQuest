@@ -1,17 +1,20 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ControllerContextBuilder.cs  Created: 2016-05-22@15:43
-// Last modified: 2016-05-23@03:11
+// File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-04@00:29
 
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using System.Web.Mvc;
 using Effort.Extra;
 using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers.Fakes;
+using Ninject;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
@@ -28,10 +31,13 @@ namespace MS.Gamification.Tests.TestHelpers
         Uri baseUri = new Uri("http://localhost:9876");
         HttpVerbs requestMethod = HttpVerbs.Get;
         string requestPath = "/";
+        string requestUserId = string.Empty;
         string requestUsername = string.Empty;
         string[] requestUserRoles;
 
         public IUnitOfWork UnitOfWork { get; private set; }
+
+        public GameRulesService RulesService { get; private set; }
 
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace MS.Gamification.Tests.TestHelpers
 
         void CreateUserInRoles(string id, string username, IEnumerable<string> roles)
             {
-            var user = new ApplicationUser {Id = id, UserName = username};
+            var user = new ApplicationUser {Id = id, UserName = username, Email = $"{id}@nowhere.nw", EmailConfirmed = true};
             foreach (var role in roles)
                 {
                 user.Roles.Add(new IdentityUserRole {RoleId = role, UserId = id});
@@ -76,7 +82,7 @@ namespace MS.Gamification.Tests.TestHelpers
 
 
         /// <summary>
-        ///     Adds an entity to the test data context.
+        ///     Adds an entity to the test data context, inferring the table name from the entity type.
         /// </summary>
         /// <typeparam name="TEntity">The type of the entity, which determines to which table it is added.</typeparam>
         /// <param name="entity">
@@ -90,6 +96,25 @@ namespace MS.Gamification.Tests.TestHelpers
         public ControllerContextBuilder<TController> WithEntity<TEntity>(TEntity entity) where TEntity : class
             {
             data.Table<TEntity>().Add(entity);
+            return this;
+            }
+
+        /// <summary>
+        ///     Adds an entity to the test data context and explicitly specifies the table name.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity, which determines to which table it is added.</typeparam>
+        /// <param name="entity">
+        ///     The initialized entity, including any foreign key IDs (navigation properties should not
+        ///     be populated).
+        /// </param>
+        /// <param name="tableName">Specifies the table name if it cannot be inferred from the entity type name.</param>
+        /// <returns>
+        ///     A reference to this <see cref="ControllerContextBuilder{TController}" /> that may be used to
+        ///     fluently chain operations.
+        /// </returns>
+        public ControllerContextBuilder<TController> WithEntity<TEntity>(TEntity entity, string tableName) where TEntity : class
+            {
+            data.Table<TEntity>(tableName).Add(entity);
             return this;
             }
 
@@ -109,24 +134,32 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             var dataLoader = new ObjectDataLoader(data);
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
-            var controller = Activator.CreateInstance(typeof(TController), UnitOfWork) as TController;
-            if (controller == null)
-                throw new SpecificationException(
-                    $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
+            RulesService = new GameRulesService();
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);
             httpContext.User = fakePrincipal;
             var context = new ControllerContext {HttpContext = httpContext};
+            /*
+             * Use Ninject to create the controller, as we don't know in advance what
+             * type of controller or how many constructor parameters it has.
+             */
+            var kernel = BuildNinjectKernel(UnitOfWork, fakeIdentity, requestUserId, RulesService);
+            var controller = kernel.Get<TController>();
+            if (controller == null)
+                throw new SpecificationException(
+                    $"ControllerContextBuilder: Unable to create controller instance of type {nameof(TController)}");
+
             controller.ControllerContext = context;
             controller.TempData = tempdata;
             return controller;
             }
 
-        public ControllerContextBuilder<TController> WithRequestingUser(string username, params string[] roles)
+        public ControllerContextBuilder<TController> WithRequestingUser(string id, string username, params string[] roles)
             {
             requestUsername = username;
             requestUserRoles = roles;
+            requestUserId = id;
             return this;
             }
 
@@ -134,6 +167,17 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             tempdata.Add(key, value);
             return this;
+            }
+
+        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId, GameRulesService rulesService)
+            {
+            var requestUserId = userId;
+            IKernel kernel = new StandardKernel();
+            kernel.Bind<IUnitOfWork>().ToMethod(u => UnitOfWork);
+            kernel.Bind<ICurrentUser>().ToMethod(u => new FakeCurrentUser(identity, requestUserId));
+            kernel.Bind<TController>().ToSelf().InTransientScope();
+            kernel.Bind<GameRulesService>().ToMethod(s => RulesService);
+            return kernel;
             }
         }
     }

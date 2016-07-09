@@ -90,3 +90,15 @@ textarea.form-control { min-height: 10em; }
 .dialog-body { font-size: 2.5em; }
 
 .dialog-title { font-size: 3em; }
+
+.track .progress {
+    border: 1px solid indianred;
+    height: 25px;
+    margin-top: 15px;
+}
+
+.level .progress {
+    border: 1px solid indianred;
+    height: 25px;
+    margin-top: 25px;
+}

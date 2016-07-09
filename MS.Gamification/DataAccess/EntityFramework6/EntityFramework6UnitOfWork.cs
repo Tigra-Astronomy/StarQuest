@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-22@07:08
+// Last modified: 2016-07-07@00:41
 
 using System;
 using Microsoft.AspNet.Identity;
@@ -11,24 +11,30 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     {
     public class EntityFramework6UnitOfWork : IUnitOfWork
         {
-        readonly ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
         public EntityFramework6UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
             {
             dbContext = context;
             UsersRepository = new UserRepository(dbContext);
-            ChallengesRepository = new ChallengeRepository(dbContext);
+            Challenges = new ChallengeRepository(dbContext);
             CategoriesRepository = new CategoryRepository(dbContext);
-            ObservationsRepository = new ObservationRepository(dbContext);
+            Observations = new ObservationRepository(dbContext);
+            MissionLevels = new MissionLevelRepository(dbContext);
+            Missions = new MissionRepository(dbContext);
             }
 
-        public IRepository<Challenge, int> ChallengesRepository { get; }
+        public IRepository<Challenge, int> Challenges { get; }
 
         public IRepository<ApplicationUser, string> UsersRepository { get; }
 
         public IRepository<Category, int> CategoriesRepository { get; }
 
-        public IRepository<Observation, int> ObservationsRepository { get; }
+        public IRepository<Observation, int> Observations { get; }
+
+        public IRepository<MissionLevel, int> MissionLevels { get; }
+
+        public IRepository<Mission, int> Missions { get; }
 
         public void Commit()
             {
@@ -39,6 +45,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             catch (Exception e)
                 {
                 Console.WriteLine(e); // ToDo: write the exception to a log file
+                throw;
                 }
             }
 
@@ -69,7 +76,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             GC.SuppressFinalize(this);
             }
 
-        bool disposed;
+        private bool disposed;
 
         /// <summary>
         ///     Releases unmanaged and - optionally - managed resources.

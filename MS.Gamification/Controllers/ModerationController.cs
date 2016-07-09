@@ -5,9 +5,10 @@
 
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {
@@ -25,7 +26,7 @@ namespace MS.Gamification.Controllers
         public ActionResult Index()
             {
             var query = new ObservationsAwaitingModeration();
-            var queue = uow.ObservationsRepository.AllSatisfying(query);
+            var queue = uow.Observations.AllSatisfying(query);
             var model = queue.Select(q => new ModerationQueueItem
                 {
                 ObservationId = q.Id,
@@ -40,7 +41,7 @@ namespace MS.Gamification.Controllers
             {
             if (!id.HasValue) return new HttpStatusCodeResult(400, "No observation ID specified");
             var query = new SingleObservationWithNavigationProperties(id.Value);
-            var maybeObservation = uow.ObservationsRepository.GetMaybe(query);
+            var maybeObservation = uow.Observations.GetMaybe(query);
             if (maybeObservation.None)
                 {
                 return new HttpNotFoundResult();
@@ -50,7 +51,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Approve(int id)
             {
-            var maybeObservation = uow.ObservationsRepository.GetMaybe(id);
+            var maybeObservation = uow.Observations.GetMaybe(id);
             if (maybeObservation.None)
                 return new HttpNotFoundResult("Could not retrieve the specified observation");
             var observation = maybeObservation.Single();
@@ -61,7 +62,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Reject(int id)
             {
-            var maybeObservation = uow.ObservationsRepository.GetMaybe(id);
+            var maybeObservation = uow.Observations.GetMaybe(id);
             if (maybeObservation.None)
                 return new HttpNotFoundResult("Could not retrieve the specified observation");
             var observation = maybeObservation.Single();

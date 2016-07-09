@@ -28,11 +28,12 @@ namespace MS.Gamification.DataAccess.EntityFramework6
 
         public virtual DbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<Mission> Missions { get; set; }
+        public virtual DbSet<MissionLevel> MissionLevels { get; set; }
 
         public virtual DbSet<MissionTrack> MissionTracks { get; set; }
 
         public virtual DbSet<Observation> Observations { get; set; }
+        public virtual DbSet<Mission> Missions { get; set; }
 
 
         public static ApplicationDbContext Create()

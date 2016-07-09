@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
 {

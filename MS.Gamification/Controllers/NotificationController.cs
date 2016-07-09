@@ -5,9 +5,9 @@
 
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.BusinessLogic;
-using MS.Gamification.BusinessLogic.QuerySpecifications;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers
@@ -29,7 +29,7 @@ namespace MS.Gamification.Controllers
                 }
             var query = new ObservationsAwaitingModeration();
             query.FetchStrategy = new GenericFetchStrategy<Observation>();
-            var results = uow.ObservationsRepository.AllSatisfying(query);
+            var results = uow.Observations.AllSatisfying(query);
             return View(results.Count());
             }
         }
