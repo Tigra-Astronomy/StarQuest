@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-04@00:46
+// Last modified: 2016-07-09@22:42
 
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,7 @@ using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
+using MS.Gamification.ViewModels;
 
 // ReSharper disable PublicMembersMustHaveComments
 
@@ -95,7 +96,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         Establish context = () =>
             {
-            ValidChallenge = new Challenge
+            ValidChallenge = new CreateChallengeViewModel
                 {
                 BookSection = "Moon",
                 Points = 1,
@@ -112,7 +113,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_add_one_item_to_the_challenges_repository =
             () => ContextBuilder.UnitOfWork.Challenges.GetAll().Count().ShouldEqual(originalCount + 1);
         static RedirectToRouteResult Result;
-        static Challenge ValidChallenge;
+        static CreateChallengeViewModel ValidChallenge;
         static int originalCount;
         }
 
@@ -152,7 +153,7 @@ namespace MS.Gamification.Tests.Controllers
         {
         Establish context = () =>
             {
-            InvalidChallenge = new Challenge
+            InvalidChallenge = new CreateChallengeViewModel
                 {
                 BookSection = "Moon",
                 Points = 0,
@@ -169,14 +170,14 @@ namespace MS.Gamification.Tests.Controllers
         It should_have_an_invalid_model_state = () => ControllerUnderTest.ModelState.IsValid.ShouldBeFalse();
         It should_return_the_create_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewmodel_with_the_posted_data =
-            () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);
+            () => (Result.Model as CreateChallengeViewModel).ShouldBeLike(InvalidChallenge);
         It should_raise_an_error_for_name =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository =
             () => ContextBuilder.UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
-        static Challenge InvalidChallenge;
+        static CreateChallengeViewModel InvalidChallenge;
         static ViewResult Result;
         }
 

@@ -1,18 +1,23 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: PicklistItem.cs  Created: 2016-04-03@23:33
-// Last modified: 2016-04-03@23:36 by Fern
+// File: PicklistItem.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-07-09@23:11
 
 namespace MS.Gamification.DataAccess
     {
     /// <summary>
-    ///   Represents a key-value pair that can be used in a select (drop-down) field in a view
+    ///     Represents a key-value pair that can be used in a select (drop-down) field in a view
     /// </summary>
     /// <typeparam name="TKey">The type of the key.</typeparam>
     public class PickListItem<TKey>
         {
+        public PickListItem()
+            {
+            DisplayName = string.Empty;
+            }
+
         /// <summary>
-        ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
         public PickListItem(TKey id, string displayName)
             {
@@ -20,7 +25,8 @@ namespace MS.Gamification.DataAccess
             DisplayName = displayName;
             }
 
-        public TKey Id { get; }
-        public string DisplayName { get; }
+        public TKey Id { get; set; }
+
+        public string DisplayName { get; set; }
         }
     }

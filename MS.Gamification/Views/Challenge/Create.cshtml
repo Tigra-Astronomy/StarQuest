@@ -1,4 +1,4 @@
-﻿@model MS.Gamification.Models.Challenge
+﻿@model MS.Gamification.ViewModels.CreateChallengeViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -13,7 +13,16 @@
     <div class="form-horizontal">
         <h4>Challenge</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MissionTrackId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MissionTrackId, (IEnumerable<SelectListItem>)ViewBag.Tracks, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MissionTrackId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -32,10 +41,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model=>model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.Categories, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Category, "", new {@class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new {@class = "text-danger"})
             </div>
         </div>
 
