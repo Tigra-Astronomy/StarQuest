@@ -48,7 +48,13 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <value>The missions.</value>
         IRepository<Mission,int> Missions { get; }
-        
+
+        /// <summary>
+        /// Gets the mission tracks.
+        /// </summary>
+        /// <value>The mission tracks.</value>
+        IRepository<MissionTrack, int> MissionTracks { get;  }
+
         /// <summary>
         ///     Commits changes to the database and completes the transaction.
         /// </summary>

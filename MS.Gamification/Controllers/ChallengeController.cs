@@ -1,12 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-04@00:46
+// Last modified: 2016-07-09@23:40
 
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {
@@ -28,18 +30,28 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Create()
             {
-            var pickListItems = uow.CategoriesRepository.PickList;
-            ViewBag.Categories = pickListItems.ToSelectList();
+            PopulateViewDataForCreateChallenge();
             return View();
             }
 
+        private void PopulateViewDataForCreateChallenge()
+            {
+            var pickListItems = uow.CategoriesRepository.PickList;
+            var tracks = uow.MissionTracks.PickList;
+            ViewBag.Categories = pickListItems.ToSelectList();
+            ViewBag.Tracks = tracks.ToSelectList();
+            }
+
         [HttpPost]
-        public ActionResult Create(Challenge model)
+        public ActionResult Create(CreateChallengeViewModel model)
             {
             if (!ModelState.IsValid)
+                {
+                PopulateViewDataForCreateChallenge();
                 return View(model);
-
-            uow.Challenges.Add(model);
+                }
+            var challenge = Mapper.Map<CreateChallengeViewModel, Challenge>(model);
+            uow.Challenges.Add(challenge);
             uow.Commit();
             return RedirectToAction("Index");
             }

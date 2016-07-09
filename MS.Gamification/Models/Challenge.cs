@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: Challenge.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-02@16:23
+// Last modified: 2016-07-09@22:51
 
 using System.ComponentModel.DataAnnotations;
 using MS.Gamification.DataAccess;
@@ -12,12 +12,17 @@ namespace MS.Gamification.Models
     public class Challenge : IDomainEntity<int>
         {
         internal const string NoImagePlaceholder = "NoImage.png";
+        private string validationImage = NoImagePlaceholder;
 
 
         [Required]
         [FileNameWithoutPath]
         [MaxLength(255)]
-        public string ValidationImage { get; set; } = NoImagePlaceholder;
+        public string ValidationImage
+            {
+            get { return validationImage; }
+            set { validationImage = string.IsNullOrWhiteSpace(value) ? NoImagePlaceholder : value; }
+            }
 
         [Required]
         public string Name { get; set; }
