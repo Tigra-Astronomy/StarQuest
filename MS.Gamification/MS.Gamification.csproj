@@ -466,6 +466,7 @@
     <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
     <Content Include="Views\Notification\ModerationQueue.cshtml" />
     <Content Include="Views\Mission\Level.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

@@ -79,11 +79,8 @@
 </div>
 
 @section moderator{
-    <div class="btn btn-success">
-        @Html.ActionLink("Approve","Approve",new {id=Model.Id})
-    </div>
-
-    <div class="btn btn-danger">
-        @Html.ActionLink("Reject", "Reject",new {Model.Id})
+    <div class="row">
+        @Html.ActionLink("Approve", "Approve", new {id = Model.Id}, new {@class = "btn btn-success"})
+        @Html.ActionLink("Reject", "Reject", new {Model.Id}, new {@class = "btn btn-danger"})
     </div>
 }
