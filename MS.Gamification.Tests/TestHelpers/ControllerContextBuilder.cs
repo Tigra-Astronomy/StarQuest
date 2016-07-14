@@ -1,15 +1,17 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-04@00:29
+// Last modified: 2016-07-13@23:53
 
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
 using System.Web.Mvc;
+using AutoMapper;
 using Effort.Extra;
 using Machine.Specifications;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
@@ -177,6 +179,8 @@ namespace MS.Gamification.Tests.TestHelpers
             kernel.Bind<ICurrentUser>().ToMethod(u => new FakeCurrentUser(identity, requestUserId));
             kernel.Bind<TController>().ToSelf().InTransientScope();
             kernel.Bind<GameRulesService>().ToMethod(s => RulesService);
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
+            kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
             return kernel;
             }
         }

@@ -1,16 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-09@22:42
+// Last modified: 2016-07-13@23:36
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using FakeItEasy;
-using JetBrains.Annotations;
 using Machine.Specifications;
 using MS.Gamification.Controllers;
-using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels;
@@ -41,35 +38,6 @@ namespace MS.Gamification.Tests.Controllers
         + It should return a view (the Index view of the Challenge controller)
         + The view model should contain all the challenges from the database
      */
-
-    #region context base classes
-    public class with_challenge_controller_and_fake_repository
-        {
-        protected static IRepository<Challenge, int> challengesRepository;
-
-        protected static ChallengeController controller;
-        protected static List<Challenge> fakeData;
-        protected static IUnitOfWork uow;
-
-        [UsedImplicitly] Cleanup after = () =>
-            {
-            fakeData = null;
-            uow = null;
-            challengesRepository = null;
-            controller = null;
-            };
-
-        [UsedImplicitly] Establish context = () =>
-            {
-            fakeData = new List<Challenge>();
-            uow = A.Fake<IUnitOfWork>();
-            challengesRepository = A.Fake<IRepository<Challenge, int>>();
-            A.CallTo(() => challengesRepository.GetAll()).Returns(fakeData);
-            A.CallTo(() => uow.Challenges).Returns(challengesRepository);
-            controller = new ChallengeController(uow);
-            };
-        }
-    #endregion context base classes
 
     [Subject(typeof(ChallengeController), "Index action")]
     class when_viewing_all_challenges : with_standard_mission<ChallengeController>
@@ -208,7 +176,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-            UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
+                UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
         static Challenge InvalidChallenge;
         static ViewResult Result;
         }
@@ -266,7 +234,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_update_the_repository = () =>
-            UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
+                UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
         It should_not_change_the_count_of_challenges =
             () => UnitOfWork.Challenges.GetAll().Count().ShouldEqual(expectedChallengeCount);
         static RedirectToRouteResult Result;

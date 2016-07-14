@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Global.asax.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-09@22:26
+// Last modified: 2016-07-13@23:33
 
 using System.Web;
 using System.Web.Mvc;
@@ -18,7 +18,6 @@ namespace MS.Gamification
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            MapperConfig.RegisterMaps();
             }
         }
     }

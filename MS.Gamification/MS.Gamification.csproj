@@ -249,10 +249,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
-    <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionTrackRepository.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
@@ -340,6 +340,7 @@
     <Compile Include="ViewModels\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\MissionProgressViewModel.cs" />
     <Compile Include="ViewModels\ModerationQueueViewModel.cs" />
+    <Compile Include="ViewModels\ObservationDetailsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
@@ -467,6 +468,7 @@
     <Content Include="Views\Notification\ModerationQueue.cshtml" />
     <Content Include="Views\Mission\Level.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\Observation\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
