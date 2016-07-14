@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-09@23:40
+// Last modified: 2016-07-13@23:33
 
 using System.Linq;
 using System.Web.Mvc;
@@ -14,11 +14,13 @@ namespace MS.Gamification.Controllers
     {
     public class ChallengeController : AdminController
         {
+        private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
 
-        public ChallengeController(IUnitOfWork uow)
+        public ChallengeController(IUnitOfWork uow, IMapper mapper)
             {
             this.uow = uow;
+            this.mapper = mapper;
             }
 
         // GET: Challenge
@@ -32,6 +34,12 @@ namespace MS.Gamification.Controllers
             {
             PopulateViewDataForCreateChallenge();
             return View();
+            }
+
+        public ActionResult Details(int id)
+            {
+            var model = new Challenge();
+            return View(model);
             }
 
         private void PopulateViewDataForCreateChallenge()
@@ -50,7 +58,7 @@ namespace MS.Gamification.Controllers
                 PopulateViewDataForCreateChallenge();
                 return View(model);
                 }
-            var challenge = Mapper.Map<CreateChallengeViewModel, Challenge>(model);
+            var challenge = mapper.Map<CreateChallengeViewModel, Challenge>(model);
             uow.Challenges.Add(challenge);
             uow.Commit();
             return RedirectToAction("Index");

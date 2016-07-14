@@ -1,13 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Observation.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-05-26@02:55
+// Last modified: 2016-07-14@01:02
 
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MS.Gamification.DataAccess;
-using TA.SoftwareLicensing.Models;
 
 namespace MS.Gamification.Models
     {

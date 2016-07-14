@@ -1,11 +1,10 @@
 // This file is part of the MS.Gamification project
 // 
 // File: Challenge.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-09@22:51
+// Last modified: 2016-07-14@01:03
 
 using System.ComponentModel.DataAnnotations;
 using MS.Gamification.DataAccess;
-using TA.SoftwareLicensing.Models;
 
 namespace MS.Gamification.Models
     {

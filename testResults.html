@@ -1,0 +1,1517 @@
+<html>
+<head>
+  <title>Machine.Specifications Report</title>
+  <style type="text/css">body {
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: .9em;
+}
+
+.count {
+  color: lightgrey;
+}
+
+.failure, .notimplemented, .ignored {
+  color: red;
+  font-weight: bold;
+  display: inline;
+}
+
+.notimplemented {
+  color: orange;
+}
+
+.ignored {
+  color: gold;
+}
+
+p.exception_type {
+  color: black;
+  font-weight: bold;
+  display: inline;
+}
+
+pre.exception_message {
+  border-style: dashed;
+  border-color: #FF828D;
+  border-width: thin;
+  background-color: #FFD2CF;
+  white-space: pre-wrap; /* CSS2.1 compliant */
+  white-space: -moz-pre-wrap; /* Mozilla-based browsers */
+  white-space: o-pre-wrap; /* Opera 7+ */
+  padding: 1em;
+}
+
+hr {
+  color: lightgrey;
+  border: 1px solid lightgrey;
+  height: 1px;
+}
+
+ul.prev-next {
+  padding: 0;
+  margin: 0;
+  font-size: 2em;
+  }
+  
+.spec ul.prev-next {
+  float: right;
+  right: 30%;
+  position: absolute;
+  margin-top: -1em;
+  }
+
+ul.prev-next li {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+ul.prev-next li a {
+  color: lightgrey;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 .3em;
+  border: 1px solid lightgrey;
+}
+
+ul.prev-next li.failure a {
+  border-color: red;
+}
+
+ul.prev-next li.notimplemented a {
+  border-color: orange;
+}
+
+ul.prev-next li.ignored a {
+  border-color: gold;
+}
+
+ul.prev-next li.failure a:hover {
+  background-color: red;
+  color: #fff;
+}
+
+ul.prev-next li.notimplemented a:hover {
+  background-color: orange;
+  color: #000;
+}
+
+ul.prev-next li.ignored a:hover {
+  background-color: gold;
+  color: #000;
+}
+
+ul.prev-next li.back a:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+div.supplement {
+  display: none;
+}
+  
+@media print {
+  ul.prev-next {
+    display: none;
+  }
+}
+  </style>
+</head>
+<body>
+  <ul class="prev-next">
+    <li class="ignored">
+      <a href="#36">Go to first ignored specification &dArr;</a>
+    </li>
+  </ul>
+  <h1>
+    MS.Gamification.Tests
+</h1>
+<h2 class="count">
+  28 concerns,
+  43 contexts,
+  82 specifications
+  ,
+    <span class="ignored">5 ignored specs</span>
+</h2>
+<script type="text/javascript">
+  function toggleVisibility(id, description)
+  {
+    var section = document.getElementById(id);
+    var link = document.getElementById(id + "_link");
+
+    if (section.style.display == "block")
+    {
+      section.style.display = "none";
+      link.innerHTML = "Show " + description;
+    } else
+    {
+      section.style.display = "block";
+      link.innerHTML = "Hide " + description;
+    }
+  };
+</script> 
+  
+  <hr/>
+  <hr/>
+  
+  <h2 class="concern">
+   specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when fetching eligible observations for a set of challenges
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="78">should find only one eligible observation</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when querying the challenges for a mission
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="77">should find only challenges for mission 1 level 1</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ApplicationDbContext EFFORT in memory provider specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when applying effort
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="1">should have 4 categories</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="2">should have category 4</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController ConfirmDelete Action specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when calling the confirm delete action with valid id
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="10">should leave only id 2 in the repository</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Create Action specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when calling the create action with no parameters
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="7">should return the create view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Create Action POST invalid data specifications
+</h2>
+<h3 class="count">
+  1 context, 6 specifications
+</h3><h3 class="context">
+  when calling the create action with an invalid model
+</h3>
+<h4 class="count">
+  6 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="13">should have an invalid model state</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="14">should return the create view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="15">should populate the viewmodel with the posted data</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="16">should raise an error for name</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="17">should raise an error for points</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="18">should not add an item to the challenges repository</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Create Action POST valid data specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when calling the create action with valid form data
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="8">should return redirect to index</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="9">should add one item to the challenges repository</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Delete Action specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when calling the delete action with a valid id
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="11">should return the delete view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="12">should populate the viewModel with the item to be deleted</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Edit Action specifications
+</h2>
+<h3 class="count">
+  3 contexts, 7 specifications
+</h3><h3 class="context">
+  when sending a get request to the edit action with a valid id
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="25">should return the edit view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="26">should populate the viewModel with the item to be edited</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when sending a get request to the edit action with an invalid id
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="27">should return a not found error</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when sending a post to the edit action with a valid model
+</h3>
+<h4 class="count">
+  4 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="28">should successfully validate the model</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="29">should return a redirect to the index action</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="30">should update the repository</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="31">should not change the count of challenges</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Edit Action POST invalid data specifications
+</h2>
+<h3 class="count">
+  1 context, 6 specifications
+</h3><h3 class="context">
+  when calling the edit action with an invalid model
+</h3>
+<h4 class="count">
+  6 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="19">should have an invalid model state</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="20">should return the edit view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="21">should populate the viewmodel with the posted data</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="22">should raise an error for name</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="23">should raise an error for points</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="24">should not add an item to the challenges repository</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ChallengeController Index action specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when viewing all challenges
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="5">should return the index view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="6">should populate the viewmodel with all challenges in the database</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  GameRulesService specifications
+</h2>
+<h3 class="count">
+  2 contexts, 2 specifications
+</h3><h3 class="context">
+  when testing if a level is complete and there are no observations
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="3">should be false</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when testing if a level is complete and there are sufficient observations
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="4">should be true</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  HomeController specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when calling the index action of the home controller
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="32">should return a view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="33">should be the default view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController Invalid Level specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when the mission id is valid but an invalid level number is specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="36">should return 404</span>
+
+
+
+<div class="ignored">
+  &lArr; IGNORED
+  <ul class="prev-next">
+    <li class="prev ignored">
+    </li>
+    <li class="next ignored">
+      <a href="#34" title="Go to next ignored specification">&dArr;</a>
+    </li>
+  </ul>
+</div>
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController Invalid Mission ID specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when an invalid mission id is specified
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="35">should return 404</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController Level ID omitted specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when invoking the level action with no id parameter
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="34">should assume level 1</span>
+
+
+
+<div class="ignored">
+  &lArr; IGNORED
+  <ul class="prev-next">
+    <li class="prev ignored">
+      <a href="#36" title="Go to previous ignored specification">&uArr;</a>
+    </li>
+    <li class="next ignored">
+      <a href="#69" title="Go to next ignored specification">&dArr;</a>
+    </li>
+  </ul>
+</div>
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController Mission Progress computation specifications
+</h2>
+<h3 class="count">
+  3 contexts, 3 specifications
+</h3><h3 class="context">
+  when the user has completed all challenges in all tracks
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="43">should have 100 percent overall progress</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the user has completed one challenge in each track
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="42">should have the expected overall progress</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when the user has submitted more observations than required for some challenges
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="44">should only count the first valid observation for each challenge</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController observations retrieval specifications
+</h2>
+<h3 class="count">
+  1 context, 5 specifications
+</h3><h3 class="context">
+  when valid mission and level ids are specified
+</h3>
+<h4 class="count">
+  5 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="37">should have expected level</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="38">should have expected track count</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="39">should have expected challenges in track 1</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="40">should have expected challenges in track 2</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="41">should have expected challenges in track 3</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  MissionController Track Progress computation specifications
+</h2>
+<h3 class="count">
+  2 contexts, 8 specifications
+</h3><h3 class="context">
+  when computing progress for each track
+</h3>
+<h4 class="count">
+  4 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="45">should compute progress for track 1</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="46">should compute progress for track 2</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="47">should compute progress for track 3</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="48">should compute overall progress</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when computing progress for each track and there are unapproved observations
+</h3>
+<h4 class="count">
+  4 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="49">should compute progress for track 1</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="50">should compute progress for track 2</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="51">should compute progress for track 3</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="52">should compute overall progress</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ModerationController Approve specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when posting an approval for a valid observation
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="61">should change the observation status to approved</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="62">should redirect to the index action</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when posting an approval for an invalid id
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="59">should return 404 not found</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ModerationController Details specifications
+</h2>
+<h3 class="count">
+  3 contexts, 4 specifications
+</h3><h3 class="context">
+  when getting a valid observation id
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="57">should return the default view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="58">should populate the model with the specified entity</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when getting an id that is not in the database
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="56">should return 404 not found</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when getting and the id parameter is null
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="55">should return 400 bad request</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ModerationController Index specifications
+</h2>
+<h3 class="count">
+  1 context, 2 specifications
+</h3><h3 class="context">
+  when the index action is called
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="53">should return the index view</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="54">should populate the viewmodel with the observations awaiting moderation</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ModerationController Reject specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when posting a rejection for an invalid id
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="60">should return 404 not found</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when posting an rejection for a valid observation
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="63">should change the observation status to rejected</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="64">should redirect to the index action</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ObservationController non-existing challenge specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when an observation with a non existent challenge is submitted
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="65">should return 404 not found</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ObservationController valid POST request specifications
+</h2>
+<h3 class="count">
+  1 context, 3 specifications
+</h3><h3 class="context">
+  when a valid submission is posted
+</h3>
+<h4 class="count">
+  3 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="69">should save the observation time in universal time</span>
+
+
+
+<div class="ignored">
+  &lArr; IGNORED
+  <ul class="prev-next">
+    <li class="prev ignored">
+      <a href="#34" title="Go to previous ignored specification">&uArr;</a>
+    </li>
+    <li class="next ignored">
+      <a href="#70" title="Go to next ignored specification">&dArr;</a>
+    </li>
+  </ul>
+</div>
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="70">should save the submission in the database</span>
+
+
+
+<div class="ignored">
+  &lArr; IGNORED
+  <ul class="prev-next">
+    <li class="prev ignored">
+      <a href="#69" title="Go to previous ignored specification">&uArr;</a>
+    </li>
+    <li class="next ignored">
+      <a href="#71" title="Go to next ignored specification">&dArr;</a>
+    </li>
+  </ul>
+</div>
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="71">should add the submission to the moderation queue</span>
+
+
+
+<div class="ignored">
+  &lArr; IGNORED
+  <ul class="prev-next">
+    <li class="prev ignored">
+      <a href="#70" title="Go to previous ignored specification">&uArr;</a>
+    </li>
+    <li class="next ignored">
+    </li>
+  </ul>
+</div>
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ObservationController valid request specifications
+</h2>
+<h3 class="count">
+  1 context, 3 specifications
+</h3><h3 class="context">
+  when submit is called with a valid challenge
+</h3>
+<h4 class="count">
+  3 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="66">should return the default view by convention</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="67">should include the challenge in the view model</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="68">should put the challenge into tempdata</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ObservationsAwaitingModeration specifications
+</h2>
+<h3 class="count">
+  2 contexts, 3 specifications
+</h3><h3 class="context">
+  when querying observations and there are no observation in pending state
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="81">should produce no results</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when querying observations and there is one observation in pending state
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="79">should produce one result</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="80">should be awaiting moderation</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ObservationsForUserMission specifications
+</h2>
+<h3 class="count">
+  1 context, 1 specification
+</h3><h3 class="context">
+  when fetching observations for a users who has observed multiple missions
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="82">should fetch two observations</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h2 class="concern">
+  ValidationImageController GetImage specifications
+</h2>
+<h3 class="count">
+  4 contexts, 5 specifications
+</h3><h3 class="context">
+  when called with a malformed filename
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="76">should return the placeholder image</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when called with a well formed filename which does not exist
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="73">should return the placeholder image</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when called with a well formed filename which exists
+</h3>
+<h4 class="count">
+  2 specifications
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="74">should return the image</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+          <li class="spec"><span id="75">should set the correct mime type for the image file</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul><h3 class="context">
+  when called with no filename
+</h3>
+<h4 class="count">
+  1 specification
+</h4>
+ 
+        <ul>
+          <li class="spec"><span id="72">should return the placeholder image</span>
+
+
+
+
+ 
+
+ 
+
+          </li>
+        </ul>
+    <hr/>
+</body>
+</html>

@@ -1,12 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-07-04@00:47
+// Last modified: 2016-07-14@00:33
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.QuerySpecifications;
@@ -17,11 +18,13 @@ namespace MS.Gamification.Controllers
     {
     public class ObservationController : UserController
         {
+        private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
 
-        public ObservationController(IUnitOfWork uow)
+        public ObservationController(IUnitOfWork uow, IMapper mapper)
             {
             this.uow = uow;
+            this.mapper = mapper;
             }
 
         // GET: Observation/Create
@@ -188,9 +191,14 @@ namespace MS.Gamification.Controllers
             return View(maybeUser.Single().Observations);
             }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
             {
-            throw new NotImplementedException();
+            var specification = new SingleObservationWithNavigationProperties(id);
+            var maybeObservation = uow.Observations.GetMaybe(specification);
+            if (maybeObservation.None)
+                return HttpNotFound("There is no observation with the specified ID");
+            var model = mapper.Map<Observation, ObservationDetailsViewModel>(maybeObservation.Single());
+            return View(model);
             }
         }
     }

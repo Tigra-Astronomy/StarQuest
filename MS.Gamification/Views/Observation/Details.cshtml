@@ -1,0 +1,76 @@
+﻿@using MS.Gamification.HtmlHelpers
+@using MS.Gamification.ViewModels
+@model ObservationDetailsViewModel
+
+@{
+    ViewBag.Title = "Moderate Observation";
+    ViewBag.ChallengeName = Model.ChallengeName; //ToDo: Should this be in the controller?
+    Layout = "~/Views/Shared/ObservationLayout.cshtml";
+    var labelStyle = new { @class = "control-label col-md-3" };
+    var valueColumns = "col-md-9";
+    var controlStyle = new { htmlAttributes = new { @class = "form-control" } };
+}
+
+<h2>Observation Details</h2>
+<h3>Submitted by: @Model.UserName</h3>
+
+<div class="row" id="observation">
+    <div id="leftForm" class="col-md-8 form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObservationDateTimeUtc, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.ObservationDateTimeUtc, controlStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Equipment, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.Equipment, controlStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObservingSite, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.ObservingSite, controlStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Seeing, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.Seeing, controlStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Transparency, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.Transparency, controlStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, labelStyle)
+                <div class=@valueColumns>
+                    @Html.DisplayFor(model => model.Notes, controlStyle)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="spacer" class="col-md-1"></div>
+    <div id="rightForm" class="col-md-3 form-horizontal">
+        <div class="row" id="images">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    What I saw:
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-6 panel panel-info">
+                        @Html.ValidationImage(Model.SubmittedImage, new { @class = "img-responsive img-circle" })
+                        <br />
+                        Submitted
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
