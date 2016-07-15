@@ -1,6 +1,6 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ValidationImageController.cs  Created: 2016-05-11@23:01
+// File: ImageController.cs  Created: 2016-05-11@23:01
 // Last modified: 2016-05-11@23:14
 
 using System;
@@ -12,16 +12,16 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers
     {
-    public class ValidationImageController : Controller
+    public class ImageController : Controller
         {
         readonly IImageStore imageStore;
 
-        public ValidationImageController( IImageStore imageStore )
+        public ImageController( IImageStore imageStore )
             {
             this.imageStore = imageStore;
             }
 
-        public ActionResult GetImage(string filename)
+        public ActionResult ValidationImage(string filename)
             {
             var safeFilename = filename ?? Challenge.NoImagePlaceholder;
             //ToDo - validate that filename is well-formed
@@ -31,5 +31,14 @@ namespace MS.Gamification.Controllers
             var contentType = imageStore.MimeType(safeFilename);
             return base.File(fullyQualifiedFileName, contentType);
             }
+
+        public ActionResult Badge(string filename)
+            {
+            var safeFilename = filename ?? Challenge.NoImagePlaceholder;
+            //ToDo: create a placeholder for badges
+
+
+
         }
+    }
     }

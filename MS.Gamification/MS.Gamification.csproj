@@ -281,7 +281,7 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\ValidationImageController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="DataAccess\AsyncExtensions.cs" />
     <Compile Include="DataAccess\AspNetIdentityCurrentUser.cs" />
     <Compile Include="DataAccess\EntityFramework6\ApplicationDbContext.cs" />
@@ -351,6 +351,18 @@
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Badges\badge-purple.png" />
+    <Content Include="App_Data\Badges\clock.png" />
+    <Content Include="App_Data\Badges\fire.png" />
+    <Content Include="App_Data\Badges\glass-empty.png" />
+    <Content Include="App_Data\Badges\lightbulb.png" />
+    <Content Include="App_Data\Badges\person.png" />
+    <Content Include="App_Data\Badges\speech-happy.png" />
+    <Content Include="App_Data\Badges\sprinter.png" />
+    <Content Include="App_Data\Badges\star-green.png" />
+    <Content Include="App_Data\Badges\star-red.png" />
+    <Content Include="App_Data\Badges\star-yellow.png" />
+    <Content Include="App_Data\Badges\tick.png" />
     <Content Include="App_Data\ValidationImages\Jupiter.png" />
     <Content Include="App_Data\ValidationImages\M31.png" />
     <Content Include="App_Data\ValidationImages\M45-Pleiades.png" />
@@ -469,6 +481,7 @@
     <Content Include="Views\Mission\Level.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Observation\Details.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

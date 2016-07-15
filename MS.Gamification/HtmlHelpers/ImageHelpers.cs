@@ -12,7 +12,7 @@ namespace MS.Gamification.HtmlHelpers
             {
             UrlHelper urlHelper = ((Controller)htmlHelper.ViewContext.Controller).Url;
             TagBuilder imgTag = new TagBuilder("img");
-            var routeToImage = urlHelper.Action("GetImage", "ValidationImage", new {filename});
+            var routeToImage = urlHelper.Action("ValidationImage", "Image", new {filename});
             imgTag.MergeAttribute("src", routeToImage);
             imgTag.MergeAttribute("alt", "Validation Image");
             imgTag.MergeAttributes(new System.Web.Routing.RouteValueDictionary(htmlAttributes));

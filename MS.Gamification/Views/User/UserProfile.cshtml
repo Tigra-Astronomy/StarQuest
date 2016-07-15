@@ -1,0 +1,73 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "User profile";
+}
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">Fern Hughes</div>
+        <div class="panel-body" id="titles">Monkton Stargazer Lunar Explorer Deep Space Explorer</div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">Gravatar</div>
+        <div class="panel panel-body" id="gravatar">
+            <i class="fa fa-4x fa-android"></i>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">Latest Badges</div>
+        <div class="panel-body" id="badges">
+            <img src="~/App_Data/Badges/star-green.png"/>
+            <img src="~/App_Data/Badges/fire.png"/>
+            <img src="~/App_Data/Badges/lightbulb.png"/>
+            <img src="~/App_Data/Badges/star-red.png"/>
+            <img src="~/App_Data/Badges/speech-happy.png"/>
+            <button class="btn btn-info" type="button">See all badges</button>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">My Log Book</div>
+        <div class="panel-body" id="logBook"></div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">Missions</div>
+        <div class="panel-body" id="missions">
+            <div class="col-md-6" id="mission1Name">
+                Mission 1
+            </div>
+            <div class="col-md-6" id="mission1Progress">
+                50% complete
+            </div>
+            <div class="col-md-6" id="mission2Name">
+                Mission 2
+            </div>
+            <div class="col-md-6" id="mission2Progress">
+                30% complete
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="panel panel-info">
+        <div class="panel-heading">Overall progress</div>
+        <div class="panel-body" id="progress">
+            <div class="progress-bar-warning progress-striped">
+                Level 1: 30% complete
+            </div>
+        </div>
+    </div>
+</div>
