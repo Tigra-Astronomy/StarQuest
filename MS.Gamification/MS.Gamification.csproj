@@ -412,6 +412,7 @@
     </None>
     <None Include="Properties\PublishProfiles\starquest.monktonstargazers.org - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\jira-web-collector.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <None Include="Scripts\jquery-2.2.4-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />

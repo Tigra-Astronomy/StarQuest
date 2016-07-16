@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-06-05@16:54
+// Last modified: 2016-07-16@05:05
 
 using System.Web.Optimization;
 
@@ -26,6 +26,8 @@ namespace MS.Gamification
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jira").Include("~/Scripts/jira-web-collector.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/typescript").Include(
                 "~/Scripts/password.js"));
