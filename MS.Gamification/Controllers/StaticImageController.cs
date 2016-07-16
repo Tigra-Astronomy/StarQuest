@@ -1,19 +1,14 @@
-﻿// This file is part of the MS.Gamification project
-// 
-// File: BadgeImageController.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-07-16@22:43
-
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MS.Gamification.HtmlHelpers;
 using Ninject;
 
 namespace MS.Gamification.Controllers
     {
-    public class BadgeImageController : Controller
+    public class StaticImageController : Controller
         {
         private readonly IImageStore imageStore;
 
-        public BadgeImageController([Named("BadgeImageStore")] IImageStore imageStore)
+        public StaticImageController([Named("StaticImageStore")] IImageStore imageStore)
             {
             this.imageStore = imageStore;
             }

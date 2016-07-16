@@ -98,6 +98,10 @@ namespace MS.Gamification.App_Start
                 .InSingletonScope()
                 .Named("BadgeImageStore")
                 .WithConstructorArgument("rootUrl", ConfigurationManager.AppSettings["badgeImagesRootPath"]);
+            kernel.Bind<IImageStore>().To<WebServerImageStore>()
+                .InSingletonScope()
+                .Named("StaticImageStore")
+                .WithConstructorArgument("rootUrl", "/Images");
             kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
             kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
             kernel.Bind<GameRulesService>().ToSelf().InRequestScope();

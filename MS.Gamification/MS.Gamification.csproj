@@ -254,6 +254,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="Controllers\BadgeImageController.cs" />
+    <Compile Include="Controllers\StaticImageController.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionTrackRepository.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
@@ -356,10 +357,17 @@
   <ItemGroup>
     <Content Include="App_Data\Badges\badge-purple.png" />
     <Content Include="App_Data\Badges\clock.png" />
+    <Content Include="App_Data\Badges\Deep-Space-Explorer-2.png" />
+    <Content Include="App_Data\Badges\Deep-Space-Explorer-3.png" />
+    <Content Include="App_Data\Badges\Deep-Space-Explorer-1.png" />
     <Content Include="App_Data\Badges\fire.png" />
     <Content Include="App_Data\Badges\glass-empty.png" />
     <Content Include="App_Data\Badges\lightbulb.png" />
+    <Content Include="App_Data\Badges\Lunar-Observer-1.png" />
+    <Content Include="App_Data\Badges\Lunar-Observer-2.png" />
+    <Content Include="App_Data\Badges\Lunar-Observer-3.png" />
     <Content Include="App_Data\Badges\person.png" />
+    <Content Include="App_Data\Badges\Planetologist-1.png" />
     <Content Include="App_Data\Badges\speech-happy.png" />
     <Content Include="App_Data\Badges\sprinter.png" />
     <Content Include="App_Data\Badges\star-green.png" />
@@ -388,6 +396,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Masthead.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="DataAccess\Data Access Patterns.cd" />
@@ -506,6 +515,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
