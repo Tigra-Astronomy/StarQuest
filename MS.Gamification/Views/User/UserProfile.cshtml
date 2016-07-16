@@ -3,18 +3,25 @@
 
 @{
     ViewBag.Title = "User profile";
+    var badgeStyle = new {@class = "img-responsive"};
 }
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Fern Hughes</div>
+        <div class="panel-heading">
+            <h3>
+                Fern Hughes
+            </h3>
+        </div>
         <div class="panel-body" id="titles">Monkton Stargazer Lunar Explorer Deep Space Explorer</div>
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Gravatar</div>
+        <div class="panel-heading">
+            <h3>Gravatar</h3>
+        </div>
         <div class="panel panel-body" id="gravatar">
             <i class="fa fa-4x fa-android"></i>
         </div>
@@ -23,28 +30,98 @@
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Latest Badges</div>
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Latest badges</h3>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-info" type="button">See all <i class="fa fa-angle-double-right"></i></button>
+                </div>
+            </div>
+        </div>
         <div class="panel-body" id="badges">
-            @Html.Badge("star-green")
-            @Html.Badge("fire")
-            @Html.Badge("lightbulb")
-            @Html.Badge("star-red")
-            @Html.Badge("speech-happy")
-            <button class="btn btn-info" type="button">See all badges</button>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Badge("star-green", badgeStyle)
+                </div>
+                <div class="col-md-4">
+                    @Html.Badge("fire", badgeStyle)
+                </div>
+                <div class="col-md-4">
+                    @Html.Badge("lightbulb", badgeStyle)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Badge("star-red", badgeStyle)
+                </div>
+                <div class="col-md-4">
+                    @Html.Badge("speech-happy", badgeStyle)
+                </div>
+                <div class="col-md-4">
+                    @Html.Badge("glass-empty", badgeStyle)
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">My Log Book</div>
-        <div class="panel-body" id="logBook"></div>
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-md-9">
+                    <h3>Recent Observations</h3>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-info" type="button">See all <i class="fa fa-angle-double-right"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" id="logBook">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Challenge</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2016-07-16 04:19 UTC</td>
+                    <td>See Saturn</td>
+                    <td>
+                        <i class="fa fa-check"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2016-05-16 01:19 UTC</td>
+                    <td>See the Cassini division in Saturn's rings</td>
+                    <td>
+                        <i class="fa fa-check"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2016-07-15 03:19 UTC</td>
+                    <td>See attack ships on Mars</td>
+                    <td>
+                        <i class="fa fa-question"></i>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
     </div>
 </div>
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Missions</div>
+        <div class="panel-heading">
+            <h3>Missions</h3>
+        </div>
         <div class="panel-body" id="missions">
             <div class="col-md-6" id="mission1Name">
                 Mission 1
@@ -64,10 +141,14 @@
 
 <div class="col-md-6">
     <div class="panel panel-info">
-        <div class="panel-heading">Overall progress</div>
+        <div class="panel-heading">
+            <h3 >Overall progress</h3>
+        </div>
         <div class="panel-body" id="progress">
-            <div class="progress-bar-warning progress-striped">
-                Level 1: 30% complete
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning progress-striped" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
+                    Level 1: 30% complete
+                </div>
             </div>
         </div>
     </div>
