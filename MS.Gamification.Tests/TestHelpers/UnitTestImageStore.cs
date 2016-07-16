@@ -1,33 +1,37 @@
+// This file is part of the MS.Gamification project
+// 
+// File: UnitTestImageStore.cs  Created: 2016-07-10@00:07
+// Last modified: 2016-07-16@01:46
+
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using MS.Gamification.HtmlHelpers;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    internal class UnitTestImageStore : IImageStore {
+    internal class UnitTestImageStore : Dictionary<string, string>, IImageStore
+        {
         readonly string rootPath;
-        readonly IEnumerable<string> validFiles;
 
-        public UnitTestImageStore(string rootPath, IEnumerable<string> validFiles)
+        public UnitTestImageStore(string rootPath)
             {
             this.rootPath = rootPath;
-            this.validFiles = validFiles;
+            this["NoImage"] = "NoImage.png";
             }
 
-        public bool FileExists(string filename)
+        public new string this[string key] { get { return base[key]; } set { base[key] = Path.Combine(rootPath, value); } }
+
+        public string FindImage(string identifier)
             {
-            return validFiles.Contains(filename);
+            if (ContainsKey(identifier))
+                return this[identifier];
+            return this["NoImage"];
             }
 
-        public string FullyQualifiedFileName(string filename)
+        public string MimeType(string identifier)
             {
-            return Path.Combine(rootPath, filename);
+            var image = FindImage(identifier);
+            return $"image/{Path.GetExtension(image).TrimStart('.')}";
             }
-
-        public string MimeType(string filename)
-            {
-            return $"image/{Path.GetExtension(filename).TrimStart('.')}";
-            }
-    }
+        }
     }

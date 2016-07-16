@@ -1,4 +1,5 @@
-﻿@model dynamic
+﻿@using MS.Gamification.HtmlHelpers
+@model dynamic
 
 @{
     ViewBag.Title = "User profile";
@@ -24,11 +25,11 @@
     <div class="panel panel-info">
         <div class="panel-heading">Latest Badges</div>
         <div class="panel-body" id="badges">
-            <img src="~/App_Data/Badges/star-green.png"/>
-            <img src="~/App_Data/Badges/fire.png"/>
-            <img src="~/App_Data/Badges/lightbulb.png"/>
-            <img src="~/App_Data/Badges/star-red.png"/>
-            <img src="~/App_Data/Badges/speech-happy.png"/>
+            @Html.Badge("star-green")
+            @Html.Badge("fire")
+            @Html.Badge("lightbulb")
+            @Html.Badge("star-red")
+            @Html.Badge("speech-happy")
             <button class="btn btn-info" type="button">See all badges</button>
         </div>
     </div>

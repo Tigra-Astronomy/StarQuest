@@ -1,9 +1,10 @@
 // This file is part of the MS.Gamification project
 // 
-// File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-13@23:25
+// File: NinjectWebCommon.cs  Created: 2016-04-01@23:54
+// Last modified: 2016-07-16@03:14
 
 using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Security.Principal;
 using System.Web;
@@ -32,7 +33,7 @@ namespace MS.Gamification.App_Start
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         /// <summary>
-        ///     Starts the application
+        ///   Starts the application
         /// </summary>
         public static void Start()
             {
@@ -42,7 +43,7 @@ namespace MS.Gamification.App_Start
             }
 
         /// <summary>
-        ///     Stops the application.
+        ///   Stops the application.
         /// </summary>
         public static void Stop()
             {
@@ -50,7 +51,7 @@ namespace MS.Gamification.App_Start
             }
 
         /// <summary>
-        ///     Creates the kernel that will manage your application.
+        ///   Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
@@ -72,7 +73,7 @@ namespace MS.Gamification.App_Start
             }
 
         /// <summary>
-        ///     Load your modules or register your services here!
+        ///   Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
@@ -87,7 +88,16 @@ namespace MS.Gamification.App_Start
             kernel.Bind<IAuthenticationManager>().ToMethod(m => HttpContext.Current.GetOwinContext().Authentication);
             kernel.Bind<IUnitOfWork>().To<EntityFramework6UnitOfWork>().InRequestScope();
             kernel.Bind<HttpServerUtilityBase>().ToMethod(c => new HttpServerUtilityWrapper(HttpContext.Current.Server));
-            kernel.Bind<IImageStore>().To<WebServerImageStore>().InSingletonScope();
+            //kernel.Bind<IImageStore>().To<WebServerImageStore>().InSingletonScope();
+            kernel.Bind<IFileSystemService>().To<WindowsFileSystem>().InSingletonScope();
+            kernel.Bind<IImageStore>().To<WebServerImageStore>()
+                .InSingletonScope()
+                .Named("ValidationImageStore")
+                .WithConstructorArgument("rootUrl", ConfigurationManager.AppSettings["validationImagesRootPath"]);
+            kernel.Bind<IImageStore>().To<WebServerImageStore>()
+                .InSingletonScope()
+                .Named("BadgeImageStore")
+                .WithConstructorArgument("rootUrl", ConfigurationManager.AppSettings["badgeImagesRootPath"]);
             kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
             kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
             kernel.Bind<GameRulesService>().ToSelf().InRequestScope();

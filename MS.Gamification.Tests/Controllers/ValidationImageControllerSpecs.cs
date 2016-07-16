@@ -1,9 +1,8 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ValidationImageControllerSpecs.cs  Created: 2016-05-11@23:16
-// Last modified: 2016-05-13@17:34
+// File: ValidationImageControllerSpecs.cs  Created: 2016-07-10@00:07
+// Last modified: 2016-07-16@01:33
 
-using System.Collections.Generic;
 using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.Controllers;
@@ -32,66 +31,45 @@ namespace MS.Gamification.Tests.Controllers
     class with_fake_web_server
         {
         protected const string RootPath = @"C:\UnitTestFakePath";
-        protected static ImageController controller;
-        protected static List<string> validFiles;
+        protected static ValidationImageController controller;
         protected static FilePathResult result;
+        protected static UnitTestImageStore FakeImageStore;
+
         Cleanup after = () =>
             {
             controller = null;
-            validFiles = null;
+            FakeImageStore = null;
             result = null;
             };
-        Establish context = () => { validFiles = new List<string> {Challenge.NoImagePlaceholder}; };
-        }
 
-    [Subject(typeof(ImageController), "ValidationImage")]
-    class when_called_with_no_filename : with_fake_web_server
-        {
         Establish context = () =>
             {
-            var fakeFilesystem = new UnitTestImageStore(RootPath, new List<string>());
-            controller = new ImageController(fakeFilesystem);
+            FakeImageStore = new UnitTestImageStore(RootPath);
+            controller = new ValidationImageController(FakeImageStore);
             };
-        Because of = () => result = controller.ValidationImage(null) as FilePathResult;
+        }
+
+    [Subject(typeof(ValidationImageController), "ValidationImage")]
+    class when_called_with_a_null_identifier : with_fake_web_server
+        {
+        Because of = () => result = controller.GetImage(null) as FilePathResult;
         It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
         }
 
-    [Subject(typeof(ImageController), "ValidationImage")]
-    class when_called_with_a_well_formed_filename_which_does_not_exist : with_fake_web_server
+    [Subject(typeof(ValidationImageController), "ValidationImage")]
+    class when_called_with_a_well_formed_id_which_does_not_exist_in_the_store : with_fake_web_server
         {
-        Establish context = () =>
-            {
-            var fakeFilesystem = new UnitTestImageStore(RootPath, validFiles);
-            controller = new ImageController(fakeFilesystem);
-            };
-        Because of = () => result = controller.ValidationImage("unittest.png") as FilePathResult;
+        Because of = () => result = controller.GetImage("doesnotexist") as FilePathResult;
         It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
         }
 
-    [Subject(typeof(ImageController), "ValidationImage")]
-    class when_called_with_a_well_formed_filename_which_exists : with_fake_web_server
+    [Subject(typeof(ValidationImageController), "ValidationImage")]
+    class when_called_with_a_well_formed_identifier_which_exists_in_the_store : with_fake_web_server
         {
-        Establish context = () =>
-            {
-            validFiles.Add(UnittestPng);
-            var fakeFilesystem = new UnitTestImageStore(RootPath, validFiles);
-            controller = new ImageController(fakeFilesystem);
-            };
-        Because of = () => result = controller.ValidationImage(UnittestPng) as FilePathResult;
+        Establish context = () => FakeImageStore["unittest"] = UnittestPng;
+        Because of = () => result = controller.GetImage("unittest") as FilePathResult;
         It should_return_the_image = () => result.FileName.ShouldEndWith(UnittestPng);
         It should_set_the_correct_mime_type_for_the_image_file = () => result.ContentType.ShouldEqual("image/png");
         const string UnittestPng = "unittest.png";
-        }
-
-    [Subject(typeof(ImageController), "ValidationImage")]
-    class when_called_with_a_malformed_filename : with_fake_web_server
-        {
-        Establish context = () =>
-            {
-            var fakeFilesystem = new UnitTestImageStore(RootPath, validFiles);
-            controller = new ImageController(fakeFilesystem);
-            };
-        Because of = () => result = controller.ValidationImage(string.Empty) as FilePathResult;
-        It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
         }
     }
