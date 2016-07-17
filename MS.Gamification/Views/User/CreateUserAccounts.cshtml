@@ -6,12 +6,13 @@
 
 <h3>Create User Accounts</h3>
 
-<div class="form-group">
-    <label for="emailBox">Enter email addresses here:</label>
-    <textarea class="form-control" rows="5" id="emailBox"></textarea>
-</div>
-
-<p>
-    <a class="btn btn-default" href="#">Create accounts &raquo;</a>
-</p>
+<form action="@Url.Action("CreateUserAccounts")" method="post">
+    <div class="form-group">
+        <label for="emailBox">Enter email addresses here:</label>
+        <textarea class="form-control" name="emails" rows="5" id="emailBox"></textarea>
+    </div>
+    <p>
+        <input type="submit"value="Create accounts &raquo;"/>
+    </p>
+</form>
 
