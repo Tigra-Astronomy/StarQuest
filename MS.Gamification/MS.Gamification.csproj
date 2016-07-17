@@ -496,6 +496,8 @@
     <Content Include="Views\Observation\Details.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\User\AdminDashboard.cshtml" />
+    <Content Include="Views\User\CreateUserAccounts.cshtml" />
+    <Content Include="Views\User\CreateUserAccountsConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
