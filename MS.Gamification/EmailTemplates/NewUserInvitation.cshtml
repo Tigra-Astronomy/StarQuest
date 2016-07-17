@@ -1,0 +1,27 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<VerificationTokenEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+<p>
+    You have been invited to participate in the Star Quest programme
+    operated by Monkton Stargazers. Star Quest is a fun, practical observing
+    programme in which you score points by submitting observations,
+    win badges and progress through levels from beginner to expert.
+</p>
+<p>
+    To complete your account setup, we need you set your password.
+    Please click the link below to finalize your account setup:
+</p>
+
+<a href="@Model.CallbackUrl">I want to participate in @Model.ApplicationName</a>
+
+<p>
+    If you do not wish to participate, do not click the link
+    and your account will not be enabled.
+</p>
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

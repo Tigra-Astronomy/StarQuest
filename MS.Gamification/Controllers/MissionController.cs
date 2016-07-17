@@ -1,21 +1,20 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionController.cs  Created: 2016-07-01@00:05
-// Last modified: 2016-07-05@00:40
+// File: MissionController.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-17@07:48
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
-using MS.Gamification.GameLogic;
 
 namespace MS.Gamification.Controllers
     {
-    public class MissionController : UserController
+    public class MissionController : RequiresAuthorization
         {
         private readonly ICurrentUser requestingUser;
         private readonly GameRulesService rules;

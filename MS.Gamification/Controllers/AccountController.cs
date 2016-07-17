@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-06-06@17:26
+// Last modified: 2016-07-17@04:22
 
 using System.Linq;
 using System.Net;
@@ -14,14 +14,15 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using Constants = MS.Gamification.GameLogic.Constants;
 
 namespace MS.Gamification.Controllers
     {
     [Authorize]
     public class AccountController : Controller
         {
-        ApplicationSignInManager _signInManager;
-        ApplicationUserManager _userManager;
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
 
         public AccountController() {}
 
@@ -68,10 +69,7 @@ namespace MS.Gamification.Controllers
             3. If it's an email, look the username up in the database, then log in with the username.
             */
             var signInName = model.UserName;
-            // RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
-            const string emailPattern =
-                @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-            var emailRegex = new Regex(emailPattern);
+            var emailRegex = new Regex(Constants.emailPattern);
             var isEmail = emailRegex.IsMatch(model.UserName);
             if (isEmail)
                 {
@@ -188,7 +186,7 @@ namespace MS.Gamification.Controllers
             return View(model);
             }
 
-        async Task SendVerificationEmail(string userId)
+        private async Task SendVerificationEmail(string userId)
             {
 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
             // Send an email with this link
@@ -236,10 +234,10 @@ namespace MS.Gamification.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
 
             // If we got this far, something failed, redisplay form
@@ -457,20 +455,20 @@ namespace MS.Gamification.Controllers
 
         #region Helpers
         // Used for XSRF protection when adding external logins
-        const string XsrfKey = "XsrfId";
+        private const string XsrfKey = "XsrfId";
 
-        IAuthenticationManager AuthenticationManager
+        private IAuthenticationManager AuthenticationManager
             {
             get { return HttpContext.GetOwinContext().Authentication; }
             }
 
-        void AddErrors(IdentityResult result)
+        private void AddErrors(IdentityResult result)
             {
             foreach (var error in result.Errors)
                 ModelState.AddModelError("", error);
             }
 
-        ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string returnUrl)
             {
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);

@@ -2,7 +2,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.App_Start
+namespace MS.Gamification
     {
     class ApplicationUserStore : UserStore<ApplicationUser>
         {

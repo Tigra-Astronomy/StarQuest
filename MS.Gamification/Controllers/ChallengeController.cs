@@ -12,7 +12,7 @@ using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {
-    public class ChallengeController : AdminController
+    public class ChallengeController : RequiresAdministratorRights
         {
         private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
