@@ -1,8 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-18@05:05
+// Last modified: 2016-07-18@23:22
 
+using System;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -79,6 +80,12 @@ namespace MS.Gamification.Controllers
                 }
             }
 
+        /// <summary>
+        ///     Finds the user by name or email.
+        /// </summary>
+        /// <param name="userNameOrEmail">The user name or email.</param>
+        /// <returns>The <see cref="ApplicationUser" />, if found.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if there was not exactly one user found.</exception>
         private ApplicationUser FindUserByNameOrEmail(string userNameOrEmail)
             {
             /*
@@ -281,8 +288,12 @@ namespace MS.Gamification.Controllers
             {
             if (!ModelState.IsValid)
                 return View(model);
-            var user = FindUserByNameOrEmail(model.Email);
-            if (user == null)
+            ApplicationUser user;
+            try
+                {
+                user = FindUserByNameOrEmail(model.Email);
+                }
+            catch (InvalidOperationException) // Did not find exactly one user.
                 {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");

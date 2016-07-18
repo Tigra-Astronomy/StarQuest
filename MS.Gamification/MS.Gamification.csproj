@@ -275,6 +275,8 @@
     <Compile Include="Controllers\StaticImageController.cs" />
     <Compile Include="Controllers\RequiresAuthorization.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionTrackRepository.cs" />
+    <Compile Include="DataAccess\PickListExtensions.cs" />
+    <Compile Include="DataAccess\QueryableExtensions.cs" />
     <Compile Include="EmailTemplates\VerificationTokenEmailModel.cs" />
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
@@ -346,7 +348,6 @@
     <Compile Include="Models\MissionTrack.cs" />
     <Compile Include="Models\Observation.cs" />
     <Compile Include="Models\ObservingEquipment.cs" />
-    <Compile Include="Models\PickListExtensions.cs" />
     <Compile Include="Models\SeedData.cs" />
     <Compile Include="Models\TransparencyLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -703,6 +704,7 @@
     <Content Include="Views\UserAdministration\CreateUserAccounts.cshtml" />
     <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
     <Content Include="Views\UserAdministration\ManageUsers.cshtml" />
+    <Content Include="Views\UserAdministration\ManageUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

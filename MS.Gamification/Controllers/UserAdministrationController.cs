@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-18@17:02
+// Last modified: 2016-07-18@23:48
 
 using System;
 using System.Collections.Generic;
@@ -9,24 +9,33 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using RazorEngine.Templating;
+using Constants = MS.Gamification.GameLogic.Constants;
 
 namespace MS.Gamification.Controllers
     {
     [Authorize]
     public class UserAdministrationController : RequiresAdministratorRights
         {
+        private readonly IMapper mapper;
         private readonly IRazorEngineService razor;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationUserManager userManager;
 
-        public UserAdministrationController(ApplicationUserManager userManager, IRazorEngineService razor)
+        public UserAdministrationController(ApplicationUserManager userManager, RoleManager<IdentityRole> roleManager,
+            IRazorEngineService razor, IMapper mapper)
             {
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.razor = razor;
+            this.mapper = mapper;
             }
 
         public ActionResult UserProfile()
@@ -126,6 +135,12 @@ namespace MS.Gamification.Controllers
 
         public ActionResult ManageUsers()
             {
+            var model = CreateManageUsersViewModel();
+            return View(model);
+            }
+
+        private List<ManageUserViewModel> CreateManageUsersViewModel()
+            {
             var query = from user in userManager.Users
                         select new ManageUserViewModel
                             {
@@ -136,13 +151,75 @@ namespace MS.Gamification.Controllers
                             HasValidPassword = user.PasswordHash != null,
                             EmailVerified = user.EmailConfirmed
                             };
-            var model = query.ToList();
-            return View(model);
+            return query.ToList();
             }
 
-        public ActionResult ManageUser(string id)
+        public async Task<ActionResult> ManageUser(string id)
             {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(id))
+                {
+                ModelState.AddModelError("", "Invalid user ID");
+                var model = CreateManageUsersViewModel();
+                return View("ManageUsers", model);
+                }
+            try
+                {
+                var user = await userManager.FindByIdAsync(id);
+                var roles = await userManager.GetRolesAsync(id);
+                var model = mapper.Map<ApplicationUser, ManageUserViewModel>(user);
+                model.Roles = roles;
+                AddAvailableRolesToViewData();
+                return View(model);
+                }
+            catch (Exception ex)
+                {
+                ModelState.AddModelError("", ex);
+                var model = CreateManageUsersViewModel();
+                return View("ManageUsers", model);
+                }
+            }
+
+        private void AddAvailableRolesToViewData()
+            {
+            var availableRoles = roleManager.Roles
+                .Select(p => new PickListItem<string> {Id = p.Name, DisplayName = p.Name})
+                .ToList();
+            var rolePicker = availableRoles.ToSelectList();
+            ViewData["Roles"] = rolePicker;
+            }
+
+        [HttpPost]
+        public async Task<ActionResult> AddRole(ManageUserViewModel model)
+            {
+            try
+                {
+                if (model == null) throw new InvalidOperationException("Invalid model");
+                if (string.IsNullOrWhiteSpace(model.RoleToAdd))
+                    throw new InvalidOperationException($"Invalid role '{model.RoleToAdd}'");
+                var result = await userManager.AddToRoleAsync(model.Id, model.RoleToAdd);
+                AddIdentityErrors(result);
+                }
+            catch (Exception ex)
+                {
+                ModelState.AddModelError("", ex);
+                }
+            return RedirectToAction("ManageUser", new {id = model.Id});
+            }
+
+        public async Task<ActionResult> RemoveRole(string id, string role)
+            {
+            var result = await userManager.RemoveFromRoleAsync(id, role);
+            AddIdentityErrors(result);
+            return RedirectToAction("ManageUser", new {id});
+            }
+
+        private void AddIdentityErrors(IdentityResult result)
+            {
+            if (result.Succeeded) return;
+            foreach (var error in result.Errors)
+                {
+                ModelState.AddModelError("", error);
+                }
             }
         }
     }

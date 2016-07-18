@@ -112,3 +112,29 @@ textarea.form-control { min-height: 10em; }
     margin-bottom: 0px;
     text-shadow: black 0.3em 0.3em 0.3em;
 }
+
+/* adapted from http://maxwells.github.io/bootstrap-tags.html */
+.tag {
+  font-size: 14px;
+  padding: .5em;
+  margin: 0 .1em;
+}
+.tag a {
+  color: #bbb;
+  cursor: pointer;
+  opacity: 0.6;
+  margin: 0 0 0 .3em;
+}
+.tag a:hover {
+  opacity: 1.0
+}
+
+.tag .remove {
+    top: 0;
+    /*vertical-align: bottom;*/
+}
+
+.tag a .icon-white {
+    color: #fff;
+    /*margin-bottom: 2px;*/
+}
