@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-06-07@02:20
-// Last modified: 2016-07-18@05:06
+// File: UserAdministrationController.cs  Created: 2016-07-18@16:18
+// Last modified: 2016-07-18@17:02
 
 using System;
 using System.Collections.Generic;
@@ -122,6 +122,27 @@ namespace MS.Gamification.Controllers
                 throw new InvalidOperationException(result.Errors.FirstOrDefault());
             code = await userManager.GeneratePasswordResetTokenAsync(userId);
             return RedirectToAction("ResetPassword", "Account", new {code});
+            }
+
+        public ActionResult ManageUsers()
+            {
+            var query = from user in userManager.Users
+                        select new ManageUserViewModel
+                            {
+                            Id = user.Id,
+                            Email = user.Email,
+                            Username = user.UserName,
+                            AccountLocked = user.LockoutEnabled,
+                            HasValidPassword = user.PasswordHash != null,
+                            EmailVerified = user.EmailConfirmed
+                            };
+            var model = query.ToList();
+            return View(model);
+            }
+
+        public ActionResult ManageUser(string id)
+            {
+            throw new NotImplementedException();
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-16@05:05
+// Last modified: 2016-07-18@17:52
 
 using System.Web.Optimization;
 
@@ -31,6 +31,15 @@ namespace MS.Gamification
 
             bundles.Add(new ScriptBundle("~/bundles/typescript").Include(
                 "~/Scripts/password.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                "~/Scripts/DataTables/jquery.dataTables.js",
+                "~/Scripts/DataTables/dataTables.bootstrap.js"));
+
+            bundles.Add(new StyleBundle("~/Content/dataTables").Include(
+                "~/Content/DataTables/jquery.dataTables.css",
+                "~/Content/DataTables/dataTables.bootstrap.css",
+                "~/Content/dataTables.fontawesome.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",

@@ -217,3 +217,5 @@ ModelManifest.xml
 /MS.Gamification/Scripts/password.js
 /MS.Gamification/Scripts/typings/jquery/jquery.d.ts
 jquery*.js
+/MS.Gamification/Content/DataTables
+/MS.Gamification/Scripts/DataTables
