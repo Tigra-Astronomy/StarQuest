@@ -1,15 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: EffortUnitOfWorkBuilder.cs  Created: 2016-05-22@04:50
-// Last modified: 2016-05-22@06:29
+// File: EffortUnitOfWorkBuilder.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-07-17@12:01
 
 using Effort;
 using Effort.DataLoaders;
 using Effort.Extra;
-using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
-using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
@@ -31,8 +29,7 @@ namespace MS.Gamification.Tests.TestHelpers
             var dataLoader = loader ?? new ObjectDataLoader(new ObjectData());
             var connection = DbConnectionFactory.CreateTransient(dataLoader);
             var dbContext = new ApplicationDbContext(connection);
-            var uow = new EntityFramework6UnitOfWork(dbContext,
-                new ApplicationUserManager(new UserStore<ApplicationUser>(dbContext)));
+            var uow = new EntityFramework6UnitOfWork(dbContext);
             return uow;
             }
         }

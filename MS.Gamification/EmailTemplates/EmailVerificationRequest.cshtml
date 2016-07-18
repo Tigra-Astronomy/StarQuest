@@ -5,14 +5,8 @@
     Layout = "EmailLayout.cshtml";
 }
 <p>
-    You have been invited to participate in the Star Quest programme
-    operated by Monkton Stargazers. Star Quest is a fun, practical observing
-    programme in which you score points by submitting observations,
-    win badges and progress through levels from beginner to expert.
-</p>
-<p>
-    To complete your account setup, we need you set your password.
-    Please click the link below to finalize your account setup:
+    @Model.ApplicationName needs to verify that it has your correct email address.
+    Please confirm your email address by clicking the following link:
 </p>
 
 @*
@@ -28,7 +22,7 @@
                         <a href="@Model.CallbackUrl"
                            target="_blank"
                            style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; padding: 12px 18px; border: 1px solid #e9703e; display: inline-block;">
-                           Participate in @Model.ApplicationName &rarr;
+                           Confirm Email Address &rarr;
                         </a>
                     </td>
                 </tr>
@@ -39,8 +33,10 @@
 @* End button *@
 
 <p>
-    If you do not wish to participate, do not click the link
-    and your account will not be enabled.
+    If you do not confirm your address within a short time, your account may be locked.
+    If you suspect that your confirmation link may have expired, please visit the site,
+    try to log in normally and when prompted, select "Resend verification email".
+    Alternatively, please contact the site administrators for assistance.
 </p>
 <p>
     For more information about @Model.ApplicationName, please see

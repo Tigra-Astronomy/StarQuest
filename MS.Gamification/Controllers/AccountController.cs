@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@04:22
+// Last modified: 2016-07-18@02:31
 
 using System.Linq;
 using System.Net;
@@ -12,8 +12,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using RazorEngine.Templating;
 using Constants = MS.Gamification.GameLogic.Constants;
 
 namespace MS.Gamification.Controllers
@@ -21,27 +23,18 @@ namespace MS.Gamification.Controllers
     [Authorize]
     public class AccountController : Controller
         {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private readonly IAuthenticationManager authManager;
+        private readonly IRazorEngineService razorEngine;
+        private readonly ApplicationSignInManager signInManager;
+        private readonly ApplicationUserManager userManager;
 
-        public AccountController() {}
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,
+            IAuthenticationManager authManager, IRazorEngineService razorEngine)
             {
-            UserManager = userManager;
-            SignInManager = signInManager;
-            }
-
-        public ApplicationSignInManager SignInManager
-            {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
-            private set { _signInManager = value; }
-            }
-
-        public ApplicationUserManager UserManager
-            {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
+            this.authManager = authManager;
+            this.razorEngine = razorEngine;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
             }
 
         //
@@ -63,36 +56,14 @@ namespace MS.Gamification.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            /*
-            1. Decide if we have a user name or an email address.
-            2. If it's a username, just log in as normal.
-            3. If it's an email, look the username up in the database, then log in with the username.
-            */
-            var signInName = model.UserName;
-            var emailRegex = new Regex(Constants.emailPattern);
-            var isEmail = emailRegex.IsMatch(model.UserName);
-            if (isEmail)
-                {
-                var query = from user in UserManager.Users
-                            where user.Email == signInName
-                            select user.UserName;
-                if (query.Any())
-                    {
-                    signInName = query.First();
-                    }
-                }
-
-            // When we get here, signInName must contain the username, not the email.
-            // Users who have not verified their email address are not allowed to log in.
-            var userDetails = UserManager.Users.Single(p => p.UserName == signInName);
+            var userDetails = FindUserByNameOrEmail(model.UserName);
             if (!userDetails.EmailConfirmed)
                 {
                 return View("PendingEmailConfirmation", new ResendVerificationEmailViewModel {UserId = userDetails.Id});
                 }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result =
-                await SignInManager.PasswordSignInAsync(signInName, model.Password, model.RememberMe, true);
+            var result = await signInManager.PasswordSignInAsync(userDetails.UserName, model.Password, model.RememberMe, true);
             switch (result)
                 {
                     case SignInStatus.Success:
@@ -108,13 +79,41 @@ namespace MS.Gamification.Controllers
                 }
             }
 
+        private ApplicationUser FindUserByNameOrEmail(string userNameOrEmail)
+            {
+            /*
+            1. Decide if we have a user name or an email address.
+            2. If it's a username, just log in as normal.
+            3. If it's an email, look the username up in the database, then log in with the username.
+            */
+            var signInName = userNameOrEmail;
+            var emailRegex = new Regex(Constants.emailPattern);
+            var isEmail = emailRegex.IsMatch(userNameOrEmail);
+            if (isEmail)
+                {
+                var query = from user in userManager.Users
+                            where user.Email == userNameOrEmail
+                            where user.EmailConfirmed
+                            select user.UserName;
+                if (query.Any())
+                    {
+                    signInName = query.First();
+                    }
+                }
+
+            // When we get here, signInName must contain the username, not the email.
+            // Users who have not verified their email address are not allowed to log in.
+            var userDetails = userManager.Users.Single(p => p.UserName == signInName);
+            return userDetails;
+            }
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
             {
             // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
+            if (!await signInManager.HasBeenVerifiedAsync())
                 return View("Error");
             return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
             }
@@ -135,7 +134,8 @@ namespace MS.Gamification.Controllers
             // You can configure the account lockout settings in IdentityConfig
             var result =
                 await
-                    SignInManager.TwoFactorSignInAsync(model.Provider,
+                    signInManager.TwoFactorSignInAsync(
+                        model.Provider,
                         model.Code,
                         model.RememberMe,
                         model.RememberBrowser);
@@ -170,13 +170,10 @@ namespace MS.Gamification.Controllers
             if (ModelState.IsValid)
                 {
                 var user = new ApplicationUser {UserName = model.UserName, Email = model.Email};
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                     {
-                    //await SignInManager.SignInAsync(user, false, false);
-
                     await SendVerificationEmail(user.Id);
-
                     return RedirectToAction("RegistrationConfirmed", "Account");
                     }
                 AddErrors(result);
@@ -188,13 +185,12 @@ namespace MS.Gamification.Controllers
 
         private async Task SendVerificationEmail(string userId)
             {
-// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
             // Send an email with this link
-            var code = await UserManager.GenerateEmailConfirmationTokenAsync(userId);
+            var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId, code}, Request.Url.Scheme);
-            await
-                UserManager.SendEmailAsync(userId, "Confirm your account",
-                    "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            var emailBody = RenderTokenVerificationEmail("EmailVerificationRequest.cshtml", callbackUrl, code);
+            await userManager.SendEmailAsync(userId, "Star Quest: Confirm your email address", emailBody);
             }
 
         //
@@ -204,7 +200,7 @@ namespace MS.Gamification.Controllers
             {
             if (userId == null || code == null)
                 return View("Error");
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            var result = await userManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
             }
 
@@ -225,8 +221,9 @@ namespace MS.Gamification.Controllers
             {
             if (ModelState.IsValid)
                 {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
+                var user = FindUserByNameOrEmail(model.Email);
+                var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user.Id);
+                if (user == null || !isEmailConfirmed)
                     {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -234,15 +231,30 @@ namespace MS.Gamification.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                var code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
+                var emailBody = RenderTokenVerificationEmail("ResetPassword.cshtml", callbackUrl, code);
+                await userManager.SendEmailAsync(user.Id, "Star Quest: Reset password", emailBody);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
 
             // If we got this far, something failed, redisplay form
             return View(model);
             }
+
+        private string RenderTokenVerificationEmail(string template, string callbackUrl, string code)
+            {
+            var emailModel = new VerificationTokenEmailModel
+                {
+                ApplicationName = "Star Quest",
+                CallbackUrl = callbackUrl,
+                InformationUrl = Url.Action("Index", "Home"),
+                VerificationToken = code
+                };
+            var emailBody = razorEngine.RunCompile(template, typeof(VerificationTokenEmailModel), emailModel);
+            return emailBody;
+            }
+
 
         //
         // GET: /Account/ForgotPasswordConfirmation
@@ -269,13 +281,13 @@ namespace MS.Gamification.Controllers
             {
             if (!ModelState.IsValid)
                 return View(model);
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await userManager.FindByNameAsync(model.Email);
             if (user == null)
                 {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await userManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             AddErrors(result);
@@ -307,10 +319,11 @@ namespace MS.Gamification.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
             {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
+            var userId =
+                await signInManager.GetVerifiedUserIdAsync();
             if (userId == null)
                 return View("Error");
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
+            var userFactors = await userManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions =
                 userFactors.Select(purpose => new SelectListItem {Text = purpose, Value = purpose}).ToList();
             return
@@ -328,7 +341,7 @@ namespace MS.Gamification.Controllers
                 return View();
 
             // Generate the token and send it
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
+            if (!await signInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
                 return View("Error");
             return RedirectToAction("VerifyCode",
                 new {Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe});
@@ -339,12 +352,12 @@ namespace MS.Gamification.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
             {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            var loginInfo = await authManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)
                 return RedirectToAction("Login");
 
             // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, false);
+            var result = await signInManager.ExternalSignInAsync(loginInfo, false);
             switch (result)
                 {
                     case SignInStatus.Success:
@@ -377,17 +390,17 @@ namespace MS.Gamification.Controllers
             if (ModelState.IsValid)
                 {
                 // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var info = await authManager.GetExternalLoginInfoAsync();
                 if (info == null)
                     return View("ExternalLoginFailure");
                 var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
-                var result = await UserManager.CreateAsync(user);
+                var result = await userManager.CreateAsync(user);
                 if (result.Succeeded)
                     {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    result = await userManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                         {
-                        await SignInManager.SignInAsync(user, false, false);
+                        await signInManager.SignInAsync(user, false, false);
                         return RedirectToLocal(returnUrl);
                         }
                     }
@@ -404,7 +417,7 @@ namespace MS.Gamification.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
             {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            authManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
             }
 
@@ -414,26 +427,6 @@ namespace MS.Gamification.Controllers
         public ActionResult ExternalLoginFailure()
             {
             return View();
-            }
-
-        protected override void Dispose(bool disposing)
-            {
-            if (disposing)
-                {
-                if (_userManager != null)
-                    {
-                    _userManager.Dispose();
-                    _userManager = null;
-                    }
-
-                if (_signInManager != null)
-                    {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                    }
-                }
-
-            base.Dispose(disposing);
             }
 
         [AllowAnonymous]
@@ -456,11 +449,6 @@ namespace MS.Gamification.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-            {
-            get { return HttpContext.GetOwinContext().Authentication; }
-            }
 
         private void AddErrors(IdentityResult result)
             {

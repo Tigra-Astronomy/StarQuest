@@ -441,6 +441,7 @@
     <Content Include="ClassDiagram1.cd" />
     <Content Include="EmailTemplates\NewUserInvitation.cshtml" />
     <Content Include="EmailTemplates\EmailLayout.cshtml" />
+    <Content Include="EmailTemplates\EmailVerificationRequest.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -543,7 +544,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="IdentityHelpers\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

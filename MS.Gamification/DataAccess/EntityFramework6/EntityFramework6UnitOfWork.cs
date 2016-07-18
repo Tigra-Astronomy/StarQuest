@@ -1,10 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-09@21:09
+// Last modified: 2016-07-17@12:01
 
 using System;
-using Microsoft.AspNet.Identity;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.DataAccess.EntityFramework6
@@ -13,7 +12,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         {
         private readonly ApplicationDbContext dbContext;
 
-        public EntityFramework6UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EntityFramework6UnitOfWork(ApplicationDbContext context)
             {
             dbContext = context;
             UsersRepository = new UserRepository(dbContext);

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@08:55
+// Last modified: 2016-07-17@22:10
 
 using System;
 using System.Configuration;
@@ -11,10 +11,10 @@ using System.Web;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using MS.Gamification;
 using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
@@ -24,6 +24,7 @@ using MS.Gamification.Models;
 using Ninject;
 using Ninject.Activation;
 using Ninject.Web.Common;
+using Owin;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
@@ -32,11 +33,13 @@ using WebActivatorEx;
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: ApplicationShutdownMethod(typeof(NinjectWebCommon), "Stop")]
 
-namespace MS.Gamification.App_Start
+namespace MS.Gamification
     {
     public static class NinjectWebCommon
         {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+
+        private static IDataProtectionProvider DataProtectionProvider { get; set; }
 
         /// <summary>
         ///     Starts the application
@@ -45,6 +48,11 @@ namespace MS.Gamification.App_Start
             {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
+            }
+
+        public static void ConfigureServices(IAppBuilder owinApp)
+            {
+            DataProtectionProvider = owinApp.GetDataProtectionProvider();
             bootstrapper.Initialize(CreateKernel);
             }
 
@@ -91,14 +99,17 @@ namespace MS.Gamification.App_Start
             kernel.Bind<IRoleStore<IdentityRole, string>>()
                 .To<RoleStore<IdentityRole, string, IdentityUserRole>>()
                 .InRequestScope();
-            kernel.Bind<ApplicationUserManager>()
-                .ToMethod(m => HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>())
+            kernel.Bind<IDataProtectionProvider>()
+                .ToMethod(m => DataProtectionProvider)
+                .InSingletonScope();
+            kernel.Bind<ApplicationUserManager>().ToSelf()
                 .InRequestScope();
             kernel.Bind<ApplicationSignInManager>().ToSelf().InRequestScope();
             kernel.Bind<IAuthenticationManager>()
                 .ToMethod(m => HttpContext.Current.GetOwinContext().Authentication)
                 .InRequestScope();
-            kernel.Bind<IDataProtectionProvider>().To
+            kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
+            kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
             kernel.Bind<HttpServerUtilityBase>()
                 .ToMethod(c => new HttpServerUtilityWrapper(HttpContext.Current.Server))
                 .InRequestScope();
@@ -118,8 +129,6 @@ namespace MS.Gamification.App_Start
                 .InSingletonScope()
                 .Named("StaticImageStore")
                 .WithConstructorArgument("rootUrl", "/Images");
-            kernel.Bind<IIdentity>().ToMethod(p => HttpContext.Current.User.Identity).InRequestScope();
-            kernel.Bind<ICurrentUser>().To<AspNetIdentityCurrentUser>();
             kernel.Bind<GameRulesService>().ToSelf().InRequestScope();
 
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
