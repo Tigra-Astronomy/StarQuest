@@ -1,3 +1,8 @@
+// This file is part of the MS.Gamification project
+// 
+// File: LoginViewModel.cs  Created: 2016-06-05@19:58
+// Last modified: 2016-07-18@04:06
+
 using System.ComponentModel.DataAnnotations;
 
 namespace MS.Gamification.ViewModels
@@ -5,7 +10,7 @@ namespace MS.Gamification.ViewModels
     public class LoginViewModel
         {
         [Required]
-        [Display(Name = "User Name or Email")]
+        [Display(Name = "Username or Email")]
         public string UserName { get; set; }
 
         [Required]

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: AccountViewModels.cs  Created: 2016-03-23@23:23
-// Last modified: 2016-03-24@00:18 by Fern
+// File: ForgotPasswordViewModel.cs  Created: 2016-06-05@19:58
+// Last modified: 2016-07-18@04:05
 
 using System.ComponentModel.DataAnnotations;
 
@@ -11,7 +11,7 @@ namespace MS.Gamification.ViewModels
         {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Username or Email")]
         public string Email { get; set; }
         }
     }

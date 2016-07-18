@@ -1,25 +1,25 @@
-﻿@model MS.Gamification.ViewModels.MissionProgressViewModel
+﻿@model MissionProgressViewModel
 
 @{
     ViewBag.Title = "Mission Progress";
-    var levels = new int[] { 1 };
-    var levelNames = new[] { "Monkton Stargazer" };
+    var levels = new[] {1};
+    var levelNames = new[] {"Monkton Stargazer"};
 }
 
 <ul class="nav nav-tabs">
-    @foreach (int level in levels)
+    @foreach (var level in levels)
         {
         var liClass = level == 1 ? "active" : string.Empty;
         var levelId = $"#level{level}";
-    <li class="@liClass">
-        <a data-toggle="tab" href="@levelId">@levelNames[level - 1]</a>
-    </li>
+        <li class="@liClass">
+            <a data-toggle="tab" href="@levelId">@levelNames[level - 1]</a>
+        </li>
         }
 </ul>
 
 <div class="tab-content">
 
-    @foreach (int level in levels)
+    @foreach (var level in levels)
         {
         var levelId = $"level{level}";
         var activeClass = level == 1 ? " active" : string.Empty;
@@ -79,8 +79,8 @@
                                         </div>
                                         <div class="col-md-1">
                                             <a class="btn btn-sm btn-info"
-                                                href="@Url.Action("SubmitObservation", new { controller = "Observation", id = challenge.Id })">
-                                            Log <i class="fa fa-angle-double-right"></i>
+                                               href="@Url.Action("SubmitObservation", new {controller = "Observation", id = challenge.Id})">
+                                                Log <i class="fa fa-angle-double-right"></i>
                                             </a>
                                         </div>
                                     </div>

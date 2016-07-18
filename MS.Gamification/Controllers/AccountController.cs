@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-18@02:31
+// Last modified: 2016-07-18@05:05
 
 using System.Linq;
 using System.Net;
@@ -248,7 +248,7 @@ namespace MS.Gamification.Controllers
                 {
                 ApplicationName = "Star Quest",
                 CallbackUrl = callbackUrl,
-                InformationUrl = Url.Action("Index", "Home"),
+                InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
                 VerificationToken = code
                 };
             var emailBody = razorEngine.RunCompile(template, typeof(VerificationTokenEmailModel), emailModel);
@@ -281,7 +281,7 @@ namespace MS.Gamification.Controllers
             {
             if (!ModelState.IsValid)
                 return View(model);
-            var user = await userManager.FindByNameAsync(model.Email);
+            var user = FindUserByNameOrEmail(model.Email);
             if (user == null)
                 {
                 // Don't reveal that the user does not exist
