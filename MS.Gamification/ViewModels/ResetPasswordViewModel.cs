@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ResetPasswordViewModel.cs  Created: 2016-06-05@19:58
-// Last modified: 2016-07-18@04:08
+// Last modified: 2016-07-18@05:50
 
 using System.ComponentModel.DataAnnotations;
 
@@ -11,7 +11,7 @@ namespace MS.Gamification.ViewModels
         {
         [Required]
         [EmailAddress]
-        [Display(Name = "Username or Email")]
+        [Display(Name = "Email address")]
         public string Email { get; set; }
 
         [Required]
