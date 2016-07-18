@@ -524,6 +524,7 @@
     <Content Include="Views\UserAdministration\AdminDashboard.cshtml" />
     <Content Include="Views\UserAdministration\CreateUserAccounts.cshtml" />
     <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
+    <Content Include="Views\UserAdministration\ManageUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

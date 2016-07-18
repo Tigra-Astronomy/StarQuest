@@ -216,3 +216,4 @@ ModelManifest.xml
 *.map
 /MS.Gamification/Scripts/password.js
 /MS.Gamification/Scripts/typings/jquery/jquery.d.ts
+jquery*.js
