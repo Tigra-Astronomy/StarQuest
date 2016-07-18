@@ -1,8 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-18@05:05
+// File: AccountController.cs  Created: 2016-04-01@23:54
+// Last modified: 2016-07-18@02:31
 
+using System;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -28,8 +29,10 @@ namespace MS.Gamification.Controllers
         private readonly ApplicationSignInManager signInManager;
         private readonly ApplicationUserManager userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,
-            IAuthenticationManager authManager, IRazorEngineService razorEngine)
+        public AccountController(ApplicationUserManager userManager,
+            ApplicationSignInManager signInManager,
+            IAuthenticationManager authManager,
+            IRazorEngineService razorEngine)
             {
             this.authManager = authManager;
             this.razorEngine = razorEngine;
@@ -56,7 +59,17 @@ namespace MS.Gamification.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            var userDetails = FindUserByNameOrEmail(model.UserName);
+            ApplicationUser userDetails;
+            try
+                {
+                userDetails = FindUserByNameOrEmail(model.UserName);
+                }
+            catch (InvalidOperationException e)
+                {
+                ModelState.AddModelError("", "Invalid login attempt");
+                return View(model);
+                }
+
             if (!userDetails.EmailConfirmed)
                 {
                 return View("PendingEmailConfirmation", new ResendVerificationEmailViewModel {UserId = userDetails.Id});
@@ -66,16 +79,16 @@ namespace MS.Gamification.Controllers
             var result = await signInManager.PasswordSignInAsync(userDetails.UserName, model.Password, model.RememberMe, true);
             switch (result)
                 {
-                    case SignInStatus.Success:
-                        return RedirectToLocal(returnUrl);
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
-                    case SignInStatus.Failure:
-                    default:
-                        ModelState.AddModelError("", "Invalid login attempt.");
-                        return View(model);
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
                 }
             }
 
@@ -141,14 +154,14 @@ namespace MS.Gamification.Controllers
                         model.RememberBrowser);
             switch (result)
                 {
-                    case SignInStatus.Success:
-                        return RedirectToLocal(model.ReturnUrl);
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.Failure:
-                    default:
-                        ModelState.AddModelError("", "Invalid code.");
-                        return View(model);
+                case SignInStatus.Success:
+                    return RedirectToLocal(model.ReturnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid code.");
+                    return View(model);
                 }
             }
 
@@ -255,7 +268,6 @@ namespace MS.Gamification.Controllers
             return emailBody;
             }
 
-
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -360,19 +372,19 @@ namespace MS.Gamification.Controllers
             var result = await signInManager.ExternalSignInAsync(loginInfo, false);
             switch (result)
                 {
-                    case SignInStatus.Success:
-                        return RedirectToLocal(returnUrl);
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
-                    case SignInStatus.Failure:
-                    default:
-                        // If the user does not have an account, then prompt the user to create an account
-                        ViewBag.ReturnUrl = returnUrl;
-                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                        return View("ExternalLoginConfirmation",
-                            new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+                case SignInStatus.Failure:
+                default:
+                    // If the user does not have an account, then prompt the user to create an account
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    return View("ExternalLoginConfirmation",
+                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
                 }
             }
 
