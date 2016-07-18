@@ -1,4 +1,4 @@
-﻿@model MS.Gamification.ViewModels.ResendVerificationEmailViewModel
+﻿@model ResendVerificationEmailViewModel
 
 @{
     ViewBag.Title = "Account Locked";
@@ -30,7 +30,7 @@
         @Html.ActionLink(
             "Resend verification email",
             "ResendVerificationEmail",
-            new {id=Model.UserId},
+            new {id = Model.UserId},
             new {@class = "btn btn-info"}
             );
     </div>

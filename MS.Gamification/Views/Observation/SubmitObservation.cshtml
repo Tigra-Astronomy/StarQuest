@@ -1,5 +1,5 @@
 ﻿@using MS.Gamification.HtmlHelpers
-@model MS.Gamification.ViewModels.SubmitObservationViewModel
+@model SubmitObservationViewModel
 @{
     ViewBag.Title = "Submit Observation";
     ViewBag.ChallengeName = Model.Challenge.Name;
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Equipment, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>)ViewBag.Equipment, controlStyle)
+                        @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>) ViewBag.Equipment, controlStyle)
                         @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
                     </div>
                 </div>
@@ -42,14 +42,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Seeing, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>)ViewBag.Seeing, controlStyle)
+                        @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>) ViewBag.Seeing, controlStyle)
                         @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Transparency, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>)ViewBag.Transparency, controlStyle)
+                        @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>) ViewBag.Transparency, controlStyle)
                         @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
                     </div>
                 </div>
@@ -73,8 +73,8 @@
                         @foreach (var imageFile in Model.ValidationImages)
                             {
                             <div class="col-md-5 panel panel-info">
-                                @Html.ValidationImage(imageFile, new { @class = "img-responsive img-circle" })
-                                @Html.RadioButtonFor(model=>model.SubmittedImage, imageFile) Select
+                                @Html.ValidationImage(imageFile, new {@class = "img-responsive img-circle"})
+                                @Html.RadioButtonFor(model => model.SubmittedImage, imageFile) Select
                             </div>
                             }
                         @*<div class="col-md-1"></div>

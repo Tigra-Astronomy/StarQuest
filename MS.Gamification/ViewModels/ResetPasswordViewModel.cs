@@ -1,3 +1,8 @@
+// This file is part of the MS.Gamification project
+// 
+// File: ResetPasswordViewModel.cs  Created: 2016-06-05@19:58
+// Last modified: 2016-07-18@04:08
+
 using System.ComponentModel.DataAnnotations;
 
 namespace MS.Gamification.ViewModels
@@ -6,7 +11,7 @@ namespace MS.Gamification.ViewModels
         {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Username or Email")]
         public string Email { get; set; }
 
         [Required]
@@ -17,8 +22,8 @@ namespace MS.Gamification.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [System.ComponentModel.DataAnnotations.Compare("Password",
-            ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password",
+             ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
