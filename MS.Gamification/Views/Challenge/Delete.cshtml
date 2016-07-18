@@ -1,4 +1,4 @@
-﻿@model MS.Gamification.Models.Challenge
+﻿@model Challenge
 @{
     ViewBag.Title = "Delete";
 }
@@ -8,7 +8,7 @@
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Challenge</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -53,12 +53,12 @@
     </dl>
 
     @using (Html.BeginForm())
-    {
+        {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Confirm Delete" class="btn btn-default" /> |
+            <input type="submit" value="Confirm Delete" class="btn btn-default"/> |
             @Html.ActionLink("Back to List", "Index")
         </div>
-    }
+        }
 </div>

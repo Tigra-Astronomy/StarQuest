@@ -6,17 +6,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Star Quest", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Star Quest", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("My Profile", "Index", "Home")</li>
-                <li>@Html.ActionLink("My Missions", "Level", new {controller="Mission", id=1})</li>
+                <li>@Html.ActionLink("My Missions", "Level", new {controller = "Mission", id = 1})</li>
                 <li>@Html.ActionLink("My Observations", "Index", "Observation")</li>
             </ul>
             @{
-                Html.RenderAction("ModerationQueue","Notification" );
+                Html.RenderAction("ModerationQueue", "Notification");
             }
             @Html.Partial("_LoginPartial")
         </div>
