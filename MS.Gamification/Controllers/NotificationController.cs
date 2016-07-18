@@ -23,7 +23,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult ModerationQueue()
             {
-            if (!User.IsInRole(AdminController.ModeratorRoleName))
+            if (!User.IsInRole(RequiresAdministratorRights.ModeratorRoleName))
                 {
                 return new EmptyResult();
                 }

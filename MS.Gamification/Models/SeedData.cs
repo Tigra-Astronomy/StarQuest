@@ -63,17 +63,17 @@ namespace MS.Gamification.Models
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            if (!context.Roles.Any(role => role.Name == AdminController.AdministratorRoleName))
-                roleManager.Create(new IdentityRole {Name = AdminController.AdministratorRoleName});
-            if (!context.Roles.Any(role => role.Name == AdminController.ModeratorRoleName))
-                roleManager.Create(new IdentityRole {Name = AdminController.ModeratorRoleName});
+            if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.AdministratorRoleName))
+                roleManager.Create(new IdentityRole {Name = RequiresAdministratorRights.AdministratorRoleName});
+            if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.ModeratorRoleName))
+                roleManager.Create(new IdentityRole {Name = RequiresAdministratorRights.ModeratorRoleName});
             if (!context.Users.Any(user => user.UserName == AdministratorUserName))
                 {
                 //ToDo: Hard coded secrets!! These need to come from web.config or similar
                 var user = new ApplicationUser
                     {UserName = AdministratorUserName, Email = "nobody@nowhere.com", EmailConfirmed = true};
                 userManager.Create(user, AdministratorDefaultPassword);
-                userManager.AddToRole(user.Id, AdminController.AdministratorRoleName);
+                userManager.AddToRole(user.Id, RequiresAdministratorRights.AdministratorRoleName);
                 }
             }
 

@@ -13,7 +13,7 @@ using MS.Gamification.ViewModels;
 namespace MS.Gamification.Controllers
     {
     [Authorize(Roles = "Moderator,Administrator")]
-    public class ModerationController : UserController
+    public class ModerationController : RequiresAuthorization
         {
         readonly IUnitOfWork uow;
 

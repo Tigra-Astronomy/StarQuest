@@ -1,0 +1,44 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<VerificationTokenEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+<p>
+    @Model.ApplicationName needs to verify that it has your correct email address.
+    Please confirm your email address by clicking the following link:
+</p>
+
+@*
+    Callback button using the "Border + Padding" technique,
+    see: https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design
+*@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" style="-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" bgcolor="#e9703e">
+                        <a href="@Model.CallbackUrl"
+                           target="_blank"
+                           style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; padding: 12px 18px; border: 1px solid #e9703e; display: inline-block;">
+                           Confirm Email Address &rarr;
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+@* End button *@
+
+<p>
+    If you do not confirm your address within a short time, your account may be locked.
+    If you suspect that your confirmation link may have expired, please visit the site,
+    try to log in normally and when prompted, select "Resend verification email".
+    Alternatively, please contact the site administrators for assistance.
+</p>
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

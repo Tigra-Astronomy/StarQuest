@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IdentityConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-06-05@21:14
+// Last modified: 2016-07-17@11:32
 
 using System;
 using System.Configuration;
@@ -10,11 +10,10 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using MS.Gamification.DataAccess.EntityFramework6;
+using Microsoft.Owin.Security.DataProtection;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using NLog;
@@ -24,7 +23,7 @@ namespace MS.Gamification
     {
     public class EmailService : IIdentityMessageService
         {
-        readonly Logger log = LogManager.GetLogger("mail");
+        private readonly Logger log = LogManager.GetLogger("mail");
 
         public Task SendAsync(IdentityMessage message)
             {
@@ -32,7 +31,7 @@ namespace MS.Gamification
             return configSendGridasync(message);
             }
 
-        Task configSendGridasync(IdentityMessage message)
+        private Task configSendGridasync(IdentityMessage message)
             {
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
@@ -46,7 +45,7 @@ namespace MS.Gamification
             var credentials = new NetworkCredential(
                 ConfigurationManager.AppSettings["mailAccount"],
                 ConfigurationManager.AppSettings["mailPassword"]
-                );
+            );
 
             // Create a Web transport for sending email.
             try
@@ -75,50 +74,46 @@ namespace MS.Gamification
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
         {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
-            : base(store) {}
-
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        public ApplicationUserManager(IUserStore<ApplicationUser> store, IDataProtectionProvider dataProtectionProvider)
+            : base(store)
             {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            //var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            UserValidator = new UserValidator<ApplicationUser>(this)
                 {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
                 };
 
             // Configure validation logic for passwords
-            manager.PasswordValidator = new StarquestPasswordValidator
+            PasswordValidator = new StarquestPasswordValidator
                 {
                 RequiredLength = 8, RequiredComplexityFactors = 3
                 };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+            UserLockoutEnabledByDefault = true;
+            DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
+            RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
                 {
                 MessageFormat = "Your security code is {0}"
                 });
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
+            RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
                 {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
                 });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
-            var dataProtectionProvider = options.DataProtectionProvider;
+            EmailService = new EmailService();
+            SmsService = new SmsService();
             if (dataProtectionProvider != null)
                 {
-                manager.UserTokenProvider =
+                UserTokenProvider =
                     new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
                 }
-            return manager;
             }
         }
 

@@ -16,7 +16,7 @@ using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Controllers
     {
-    public class ObservationController : UserController
+    public class ObservationController : RequiresAuthorization
         {
         private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
