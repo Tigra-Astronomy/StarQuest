@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BadgeImageController.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-07-16@22:43
+// Last modified: 2016-07-19@03:07
 
 using System.Web.Mvc;
 using MS.Gamification.HtmlHelpers;
@@ -18,6 +18,7 @@ namespace MS.Gamification.Controllers
             this.imageStore = imageStore;
             }
 
+        [OutputCache(Duration = 60 * 60 * 24)]
         public ActionResult GetImage(string id)
             {
             var fullyQualifiedFileName = imageStore.FindImage(id);

@@ -1,6 +1,6 @@
 ﻿@using System.Configuration
 @{
-    var TrackingId = ConfigurationManager.AppSettings["GoogleTrackingId"];
+    var trackingId = ConfigurationManager.AppSettings["GoogleTrackingId"];
 }
 <script>
     (function(i, s, o, g, r, a, m)
@@ -18,7 +18,7 @@
         m.parentNode.insertBefore(a, m);
         })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', '@TrackingId', 'auto');
+    ga('create', '@trackingId', 'auto');
     ga('send', 'pageview');
 
 </script>

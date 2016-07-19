@@ -18,6 +18,7 @@ namespace MS.Gamification.Controllers
             this.imageStore = imageStore;
             }
 
+        [OutputCache]
         public ActionResult GetImage(string id)
             {
             if (id == null)

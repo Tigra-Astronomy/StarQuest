@@ -13,6 +13,7 @@ namespace MS.Gamification.Controllers
             this.imageStore = imageStore;
             }
 
+        [OutputCache(Duration = 60*60*24)]
         public ActionResult GetImage(string id)
             {
             var fullyQualifiedFileName = imageStore.FindImage(id);
