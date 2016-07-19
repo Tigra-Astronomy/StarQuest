@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.DataAccess;
 
-namespace MS.Gamification.Models
+namespace MS.Gamification.DataAccess
     {
     public static class PickListExtensions
         {
