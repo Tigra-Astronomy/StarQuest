@@ -700,7 +700,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Observation\Details.cshtml" />
     <Content Include="Views\UserAdministration\UserProfile.cshtml" />
-    <Content Include="Views\UserAdministration\AdminDashboard.cshtml" />
+    <Content Include="Views\UserAdministration\Index.cshtml" />
     <Content Include="Views\UserAdministration\CreateUserAccounts.cshtml" />
     <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
     <Content Include="Views\UserAdministration\ManageUsers.cshtml" />

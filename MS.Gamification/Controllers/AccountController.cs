@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: AccountController.cs  Created: 2016-04-01@23:54
-// Last modified: 2016-07-18@05:05
+// File: AccountController.cs  Created: 2016-05-10@22:28
+// Last modified: 2016-07-19@01:22
 
 using System;
 using System.Linq;
@@ -64,7 +64,7 @@ namespace MS.Gamification.Controllers
                 {
                 userDetails = FindUserByNameOrEmail(model.UserName);
                 }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
                 {
                 ModelState.AddModelError("", "Invalid login attempt");
                 return View(model);
@@ -79,16 +79,16 @@ namespace MS.Gamification.Controllers
             var result = await signInManager.PasswordSignInAsync(userDetails.UserName, model.Password, model.RememberMe, true);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, model.RememberMe});
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
                 }
             }
 
@@ -160,14 +160,14 @@ namespace MS.Gamification.Controllers
                         model.RememberBrowser);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
+                    case SignInStatus.Success:
+                        return RedirectToLocal(model.ReturnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid code.");
+                        return View(model);
                 }
             }
 
@@ -382,19 +382,19 @@ namespace MS.Gamification.Controllers
             var result = await signInManager.ExternalSignInAsync(loginInfo, false);
             switch (result)
                 {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
-                case SignInStatus.Failure:
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+                    case SignInStatus.Failure:
+                    default:
+                        // If the user does not have an account, then prompt the user to create an account
+                        ViewBag.ReturnUrl = returnUrl;
+                        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                        return View("ExternalLoginConfirmation",
+                            new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
                 }
             }
 

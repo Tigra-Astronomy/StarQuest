@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-18@23:48
+// Last modified: 2016-07-19@01:22
 
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace MS.Gamification.Controllers
             return View();
             }
 
-        public ActionResult AdminDashboard()
+        public ActionResult Index()
             {
             return View();
             }
