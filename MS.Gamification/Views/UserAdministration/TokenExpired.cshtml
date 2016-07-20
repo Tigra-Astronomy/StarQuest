@@ -1,0 +1,24 @@
+﻿@model ForgotViewModel
+
+@{
+    ViewBag.Title = "Token Invalid Or Expired";
+  }
+
+<div class="panel panel-heading"><h2>Token Invalid or Expired</h2></div>
+
+<div class="panel-body">
+    <h3>Your email verification token has expired or is invalid. Please enter your email to get a new token</h3>
+    @using (Html.BeginForm("ReplacementToken", "UserAdministration"))
+        {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
+        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger col-md-12"})
+        @Html.EditorFor(m => Model.Email)
+        <input type="submit" value="Submit" class="btn btn-warning"/>
+        }
+
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-19@01:22
+// File: UserAdministrationController.cs  Created: 2016-07-18@03:02
+// Last modified: 2016-07-20@01:37
 
 using System;
 using System.Collections.Generic;
@@ -29,8 +29,10 @@ namespace MS.Gamification.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationUserManager userManager;
 
-        public UserAdministrationController(ApplicationUserManager userManager, RoleManager<IdentityRole> roleManager,
-            IRazorEngineService razor, IMapper mapper)
+        public UserAdministrationController(ApplicationUserManager userManager,
+            RoleManager<IdentityRole> roleManager,
+            IRazorEngineService razor,
+            IMapper mapper)
             {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -128,9 +130,35 @@ namespace MS.Gamification.Controllers
                 return View("Error");
             var result = await userManager.ConfirmEmailAsync(userId, code);
             if (!result.Succeeded)
-                throw new InvalidOperationException(result.Errors.FirstOrDefault());
+                //throw new InvalidOperationException(result.Errors.FirstOrDefault());
+                return View("TokenExpired");
             code = await userManager.GeneratePasswordResetTokenAsync(userId);
             return RedirectToAction("ResetPassword", "Account", new {code});
+            }
+
+        public ActionResult SimulateExpiredToken()
+            {
+            return View("TokenExpired");
+            }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ReplacementToken(ForgotViewModel model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View("TokenExpired", model);
+                }
+            try
+                {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                await SendNotificationEmail(user.Id);
+                }
+            catch (Exception e)
+                {
+                Console.WriteLine(e);
+                }
+            return View();
             }
 
         public ActionResult ManageUsers()
@@ -193,7 +221,8 @@ namespace MS.Gamification.Controllers
             {
             try
                 {
-                if (model == null) throw new InvalidOperationException("Invalid model");
+                if (model == null)
+                    throw new InvalidOperationException("Invalid model");
                 if (string.IsNullOrWhiteSpace(model.RoleToAdd))
                     throw new InvalidOperationException($"Invalid role '{model.RoleToAdd}'");
                 var result = await userManager.AddToRoleAsync(model.Id, model.RoleToAdd);
@@ -215,7 +244,8 @@ namespace MS.Gamification.Controllers
 
         private void AddIdentityErrors(IdentityResult result)
             {
-            if (result.Succeeded) return;
+            if (result.Succeeded)
+                return;
             foreach (var error in result.Errors)
                 {
                 ModelState.AddModelError("", error);
