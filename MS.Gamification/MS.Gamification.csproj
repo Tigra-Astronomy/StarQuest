@@ -280,6 +280,14 @@
     <Compile Include="EmailTemplates\VerificationTokenEmailModel.cs" />
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
+    <Compile Include="GameLogic\Preconditions\CompositePredicate.cs" />
+    <Compile Include="GameLogic\Preconditions\HasAll.cs" />
+    <Compile Include="GameLogic\Preconditions\HasAny.cs" />
+    <Compile Include="GameLogic\Preconditions\HasBadge.cs" />
+    <Compile Include="GameLogic\Preconditions\ICompositePredicate.cs" />
+    <Compile Include="GameLogic\Preconditions\IPredicate.cs" />
+    <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
+    <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
@@ -336,8 +344,13 @@
     <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607201222135_BadgesAndPreconditions.cs" />
+    <Compile Include="Migrations\201607201222135_BadgesAndPreconditions.Designer.cs">
+      <DependentUpon>201607201222135_BadgesAndPreconditions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
+    <Compile Include="Models\Badge.cs" />
     <Compile Include="Models\Mission.cs" />
     <Compile Include="Models\ModerationState.cs" />
     <Compile Include="Models\Category.cs" />
@@ -527,6 +540,10 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="GameLogic\Preconditions\Samples\AllOfASetOfBadges.xml" />
+    <Content Include="GameLogic\Preconditions\Samples\AnyOfASetOfBadges.xml" />
+    <Content Include="GameLogic\Preconditions\Samples\CompositeCondition.xml" />
+    <Content Include="GameLogic\Preconditions\Samples\SingleBadge.xml" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Masthead.png" />
@@ -552,6 +569,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <EmbeddedResource Include="GameLogic\Preconditions\LevelPreconditionSchema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607201222135_BadgesAndPreconditions.resx">
+      <DependentUpon>201607201222135_BadgesAndPreconditions.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
