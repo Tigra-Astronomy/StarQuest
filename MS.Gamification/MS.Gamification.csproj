@@ -702,6 +702,9 @@
     <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
     <Content Include="Views\UserAdministration\ManageUsers.cshtml" />
     <Content Include="Views\UserAdministration\ManageUser.cshtml" />
+    <Content Include="Views\UserAdministration\TokenExpired.cshtml" />
+    <Content Include="Views\UserAdministration\ReplacementToken.cshtml" />
+    <Content Include="Views\UserAdministration\ResendInvitation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

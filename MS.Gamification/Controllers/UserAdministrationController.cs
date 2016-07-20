@@ -1,11 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-19@01:22
+// Last modified: 2016-07-20@03:53
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -16,6 +17,7 @@ using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using NLog;
 using RazorEngine.Templating;
 using Constants = MS.Gamification.GameLogic.Constants;
 
@@ -24,18 +26,22 @@ namespace MS.Gamification.Controllers
     [Authorize]
     public class UserAdministrationController : RequiresAdministratorRights
         {
+        private readonly ILogger log;
         private readonly IMapper mapper;
         private readonly IRazorEngineService razor;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationUserManager userManager;
 
-        public UserAdministrationController(ApplicationUserManager userManager, RoleManager<IdentityRole> roleManager,
-            IRazorEngineService razor, IMapper mapper)
+        public UserAdministrationController(ApplicationUserManager userManager,
+            RoleManager<IdentityRole> roleManager,
+            IRazorEngineService razor,
+            IMapper mapper)
             {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.razor = razor;
             this.mapper = mapper;
+            log = LogManager.GetCurrentClassLogger();
             }
 
         public ActionResult UserProfile()
@@ -98,17 +104,27 @@ namespace MS.Gamification.Controllers
 
         private async Task CreateAndNotifyUser(string emailAddress)
             {
+            log.Info($"Provisioning user account for email address {emailAddress}");
             // The user is created with an 'un-utterable' password, which must be reset
             var user = new ApplicationUser {UserName = emailAddress, Email = emailAddress};
-            var password = $"Aa1@#{new Guid()}";
-            var result = await userManager.CreateAsync(user, password);
+            //var password = $"Aa1@#{new Guid()}";
+            var result = await userManager.CreateAsync(user /*, password*/);
             if (!result.Succeeded)
-                throw new InvalidOperationException(result.Errors.First());
+                {
+                var builder = new StringBuilder($"Unable to provision user account for {emailAddress}:");
+                foreach (var error in result.Errors)
+                    {
+                    builder.Append($"\n... {error}");
+                    }
+                log.Error(builder.ToString());
+                throw new InvalidOperationException(builder.ToString());
+                }
             await SendNotificationEmail(user.Id);
             }
 
         private async Task SendNotificationEmail(string userId)
             {
+            log.Info($"Sending invitation to user {userId}");
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var emailModel = new VerificationTokenEmailModel
                 {
@@ -119,6 +135,7 @@ namespace MS.Gamification.Controllers
                 };
             var emailBody = razor.RunCompile("NewUserInvitation.cshtml", typeof(VerificationTokenEmailModel), emailModel);
             await userManager.SendEmailAsync(userId, "Invitation to Star Quest by Monkton Stargazers", emailBody);
+            log.Info($"Successfully sent invitation email to user id {userId}");
             }
 
         [AllowAnonymous]
@@ -128,10 +145,64 @@ namespace MS.Gamification.Controllers
                 return View("Error");
             var result = await userManager.ConfirmEmailAsync(userId, code);
             if (!result.Succeeded)
-                throw new InvalidOperationException(result.Errors.FirstOrDefault());
+                //throw new InvalidOperationException(result.Errors.FirstOrDefault());
+                return View("TokenExpired");
             code = await userManager.GeneratePasswordResetTokenAsync(userId);
             return RedirectToAction("ResetPassword", "Account", new {code});
             }
+
+        public ActionResult SimulateExpiredToken()
+            {
+            return View("TokenExpired");
+            }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ReplacementToken(ForgotViewModel model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View("TokenExpired", model);
+                }
+            try
+                {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                await SendNotificationEmail(user.Id);
+                }
+            catch (Exception e)
+                {
+                Console.WriteLine(e);
+                }
+            return View();
+            }
+
+        public ActionResult ResendInvitation()
+            {
+            return View();
+            }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> ResendInvitation(ForgotViewModel model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View(model);
+                }
+            try
+                {
+                var user = await userManager.FindByEmailAsync(model.Email);
+                await SendNotificationEmail(user.Id);
+                }
+            catch (Exception e)
+                {
+                ModelState.AddModelError(nameof(model.Email), e.Message);
+                return View(model);
+                }
+            return View("ReplacementToken");
+            }
+
 
         public ActionResult ManageUsers()
             {
@@ -193,7 +264,8 @@ namespace MS.Gamification.Controllers
             {
             try
                 {
-                if (model == null) throw new InvalidOperationException("Invalid model");
+                if (model == null)
+                    throw new InvalidOperationException("Invalid model");
                 if (string.IsNullOrWhiteSpace(model.RoleToAdd))
                     throw new InvalidOperationException($"Invalid role '{model.RoleToAdd}'");
                 var result = await userManager.AddToRoleAsync(model.Id, model.RoleToAdd);
@@ -215,7 +287,8 @@ namespace MS.Gamification.Controllers
 
         private void AddIdentityErrors(IdentityResult result)
             {
-            if (result.Succeeded) return;
+            if (result.Succeeded)
+                return;
             foreach (var error in result.Errors)
                 {
                 ModelState.AddModelError("", error);
