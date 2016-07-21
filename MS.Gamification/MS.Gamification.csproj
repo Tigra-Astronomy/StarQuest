@@ -373,6 +373,7 @@
     <Compile Include="ViewModels\CreateChallengeViewModel.cs" />
     <Compile Include="ViewModels\CreateUsersConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateUsersViewModel.cs" />
+    <Compile Include="ViewModels\CustomValidation\XmlDocumentAttribute.cs" />
     <Compile Include="ViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginListViewModel.cs" />
     <Compile Include="ViewModels\FactorViewModel.cs" />
