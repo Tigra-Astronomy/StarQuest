@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LevelPrecondition xmlns="http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd">
+  <HasAll>
+    <HasBadge id="1" />
+    <HasBadge id="2" />
+    <HasBadge id="3" />
+  </HasAll>
+</LevelPrecondition>

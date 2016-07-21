@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@12:01
+// Last modified: 2016-07-20@22:39
 
 using System;
 using MS.Gamification.Models;
@@ -11,6 +11,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     public class EntityFramework6UnitOfWork : IUnitOfWork
         {
         private readonly ApplicationDbContext dbContext;
+
 
         public EntityFramework6UnitOfWork(ApplicationDbContext context)
             {
@@ -22,6 +23,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             MissionLevels = new MissionLevelRepository(dbContext);
             Missions = new MissionRepository(dbContext);
             MissionTracks = new MissionTrackRepository(dbContext);
+            Badges = new BadgeRepository(dbContext);
             }
 
         public IRepository<Challenge, int> Challenges { get; }
@@ -37,6 +39,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         public IRepository<Mission, int> Missions { get; }
 
         public IRepository<MissionTrack, int> MissionTracks { get; }
+
+        public IRepository<Badge, int> Badges { get; }
 
         public void Commit()
             {
