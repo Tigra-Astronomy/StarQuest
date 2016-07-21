@@ -199,6 +199,7 @@
     <Compile Include="TestHelpers\ObservationBuilder.cs" />
     <Compile Include="TestHelpers\TestData.cs" />
     <Compile Include="TestHelpers\UnitTestImageStore.cs" />
+    <Compile Include="ValidateXmlSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
@@ -211,6 +212,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="TestData\PreconditionsEngine\LevelPreconditionSchema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MS.Gamification\MS.Gamification.csproj">
