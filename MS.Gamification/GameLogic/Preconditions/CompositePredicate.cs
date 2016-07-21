@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: CompositePredicate.cs  Created: 2016-07-20@11:21
-// Last modified: 2016-07-20@13:19
+// Last modified: 2016-07-20@22:41
 
 using System.Collections.Generic;
 
@@ -28,7 +28,7 @@ namespace MS.Gamification.GameLogic.Preconditions
 
         public abstract bool Evaluate(T candidate);
 
-        private class False<TQ> : IPredicate<TQ>
+        internal class False<TQ> : IPredicate<TQ>
             {
             public bool Evaluate(TQ candidate)
                 {

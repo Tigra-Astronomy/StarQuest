@@ -274,6 +274,7 @@
     <Compile Include="Controllers\BadgeImageController.cs" />
     <Compile Include="Controllers\StaticImageController.cs" />
     <Compile Include="Controllers\RequiresAuthorization.cs" />
+    <Compile Include="DataAccess\EntityFramework6\BadgeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionTrackRepository.cs" />
     <Compile Include="DataAccess\PickListExtensions.cs" />
     <Compile Include="DataAccess\QueryableExtensions.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="GameLogic\Preconditions\IPredicate.cs" />
     <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
     <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
+    <Compile Include="GameLogic\Preconditions\PreconditionExtensions.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
@@ -543,6 +545,7 @@
     <Content Include="GameLogic\Preconditions\Samples\AllOfASetOfBadges.xml" />
     <Content Include="GameLogic\Preconditions\Samples\AnyOfASetOfBadges.xml" />
     <Content Include="GameLogic\Preconditions\Samples\CompositeCondition.xml" />
+    <Content Include="GameLogic\Preconditions\Samples\JoinedBefore.xml" />
     <Content Include="GameLogic\Preconditions\Samples\SingleBadge.xml" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -559,7 +562,6 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Models\Domain Entities Logical Structure.cd" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="EmailTemplates\NewUserInvitation.cshtml" />
     <Content Include="EmailTemplates\EmailLayout.cshtml" />
     <Content Include="EmailTemplates\EmailVerificationRequest.cshtml" />
@@ -575,6 +577,7 @@
     <EmbeddedResource Include="Migrations\201607201222135_BadgesAndPreconditions.resx">
       <DependentUpon>201607201222135_BadgesAndPreconditions.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="GameLogic\Preconditions\Level Preconditions Engine.cd" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

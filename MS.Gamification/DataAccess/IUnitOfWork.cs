@@ -56,6 +56,12 @@ namespace MS.Gamification.DataAccess
         IRepository<MissionTrack, int> MissionTracks { get;  }
 
         /// <summary>
+        /// All badges known to the system.
+        /// </summary>
+        /// <value>The badges.</value>
+        IRepository<Badge, int> Badges { get; }
+
+        /// <summary>
         ///     Commits changes to the database and completes the transaction.
         /// </summary>
         void Commit();

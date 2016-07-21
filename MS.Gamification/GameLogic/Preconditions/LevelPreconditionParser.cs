@@ -1,12 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: LevelPreconditionParser.cs  Created: 2016-07-20@11:33
-// Last modified: 2016-07-20@13:48
+// Last modified: 2016-07-21@02:04
 
 using System;
 using System.Linq;
 using System.Xml.Linq;
-using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using NLog;
 
@@ -19,21 +18,15 @@ namespace MS.Gamification.GameLogic.Preconditions
     internal class LevelPreconditionParser
         {
         private static readonly XNamespace xmlns = "http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd";
-        private readonly IRepository<Badge, int> badges;
         private readonly ILogger log = LogManager.GetCurrentClassLogger();
-
-        public LevelPreconditionParser(IRepository<Badge, int> badges)
-            {
-            this.badges = badges;
-            }
 
         public IPredicate<ApplicationUser> ParsePreconditionXml(string xml)
             {
             try
                 {
-                var parsedXml = XElement.Parse(xml, LoadOptions.PreserveWhitespace);
-                var rootElement = parsedXml.Element(xmlns + "LevelPrecondition");
-                var rootPredicate = rootElement.Elements().Single();
+                var rootElement = XElement.Parse(xml, LoadOptions.PreserveWhitespace);
+                //var rootElement = parsedXml.Element(xmlns + "LevelPrecondition");
+                var rootPredicate = rootElement.Descendants().First();
                 return CreatePredicate(rootPredicate);
                 }
             catch (Exception e)
@@ -66,7 +59,7 @@ namespace MS.Gamification.GameLogic.Preconditions
             {
             try
                 {
-                var dateAttribute = predicateXml.Attribute(xmlns + "date");
+                var dateAttribute = predicateXml.Attribute("date");
                 var deadline = DateTime.Parse(dateAttribute.Value);
                 return new JoinedBefore(deadline);
                 }
@@ -106,12 +99,9 @@ namespace MS.Gamification.GameLogic.Preconditions
             {
             try
                 {
-                var idAttribute = predicateXml.Attribute(xmlns + "id");
+                var idAttribute = predicateXml.Attribute("id");
                 var badgeId = int.Parse(idAttribute.Value);
-                var maybeBadge = badges.GetMaybe(badgeId);
-                if (maybeBadge.None)
-                    return CompositePredicate<ApplicationUser>.AlwaysFalse;
-                return new HasBadge(maybeBadge.Single());
+                return new HasBadge(badgeId);
                 }
             catch (Exception e)
                 {
