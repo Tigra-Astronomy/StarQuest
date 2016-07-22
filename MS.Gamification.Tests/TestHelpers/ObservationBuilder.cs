@@ -12,7 +12,7 @@ namespace MS.Gamification.Tests.TestHelpers
     {
     class ObservationBuilder<TController> where TController : ControllerBase
         {
-        const string MissingImage = "NoImage.png";
+        const string MissingImage = "NoImage";
         // ReSharper disable once StaticMemberInGenericType
         static int uniqueId;
         readonly ControllerContextBuilder<TController> context;

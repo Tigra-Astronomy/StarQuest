@@ -1,11 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationDetailsViewModel.cs  Created: 2016-07-13@23:59
-// Last modified: 2016-07-14@00:43
+// File: ObservationDetailsViewModel.cs  Created: 2016-07-16@04:48
+// Last modified: 2016-07-22@13:07
 
 using System;
 using System.ComponentModel.DataAnnotations;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels.CustomValidation;
 
 namespace MS.Gamification.ViewModels
     {
@@ -29,7 +30,7 @@ namespace MS.Gamification.ViewModels
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
-        [FileNameWithoutPath]
+        [ImageIdentifier]
         public string SubmittedImage { get; set; }
 
         public string UserName { get; set; }

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionBuilder.TrackBuilder.cs  Created: 2016-07-02@03:44
-// Last modified: 2016-07-04@23:48
+// File: MissionBuilder.TrackBuilder.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-22@13:37
 
 using System.Collections.Generic;
 using System.Threading;
@@ -51,7 +51,8 @@ namespace MS.Gamification.Tests.TestHelpers
                     AwardTitle = trackAwardTitle,
                     Challenges = challenges,
                     Name = trackName,
-                    Number = trackNumber
+                    Number = trackNumber,
+                    BadgeId = null
                     };
                 mission.tracks.Add(track);
                 return mission;

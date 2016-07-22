@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MS.Gamification.DataAccess;
+using MS.Gamification.ViewModels.CustomValidation;
 
 namespace MS.Gamification.Models
     {
@@ -36,10 +37,10 @@ namespace MS.Gamification.Models
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
-        [FileNameWithoutPath]
+        [ImageIdentifier]
         public string ExpectedImage { get; set; }
 
-        [FileNameWithoutPath]
+        [ImageIdentifier]
         public string SubmittedImage { get; set; }
 
         public ModerationState Status { get; set; }

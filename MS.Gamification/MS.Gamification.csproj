@@ -358,7 +358,6 @@
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Challenge.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
-    <Compile Include="Models\FileNameWithoutPathAttribute.cs" />
     <Compile Include="Models\MissionLevel.cs" />
     <Compile Include="Models\MissionTrack.cs" />
     <Compile Include="Models\Observation.cs" />
@@ -378,6 +377,8 @@
     <Compile Include="ViewModels\CreateChallengeViewModel.cs" />
     <Compile Include="ViewModels\CreateUsersConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateUsersViewModel.cs" />
+    <Compile Include="ViewModels\CustomValidation\FileNameWithoutPathAttribute.cs" />
+    <Compile Include="ViewModels\CustomValidation\ImageIdentifierAttribute.cs" />
     <Compile Include="ViewModels\CustomValidation\XmlDocumentAttribute.cs" />
     <Compile Include="ViewModels\ExternalLoginConfirmationViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginListViewModel.cs" />
@@ -401,6 +402,9 @@
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Badges\alpha-deep-space-explorer-1.png" />
+    <Content Include="App_Data\Badges\alpha-lunar-observer-1.png" />
+    <Content Include="App_Data\Badges\alpha-planetologist-1.png" />
     <Content Include="App_Data\Badges\alpha-tester.png" />
     <Content Include="App_Data\Badges\badge-purple.png" />
     <Content Include="App_Data\Badges\clock.png" />
@@ -413,6 +417,7 @@
     <Content Include="App_Data\Badges\Lunar-Observer-1.png" />
     <Content Include="App_Data\Badges\Lunar-Observer-2.png" />
     <Content Include="App_Data\Badges\Lunar-Observer-3.png" />
+    <Content Include="App_Data\Badges\NoImage.png" />
     <Content Include="App_Data\Badges\person.png" />
     <Content Include="App_Data\Badges\Planetologist-1.png" />
     <Content Include="App_Data\Badges\speech-happy.png" />
@@ -558,6 +563,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Masthead.png" />
     <Content Include="DataAccess\Data Access Patterns.cd" />
+    <Content Include="Images\NoImage.png" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -730,7 +736,7 @@
     <Content Include="Views\Account\RegistrationConfirmed.cshtml" />
     <Content Include="Views\Account\PendingEmailConfirmation.cshtml" />
     <Content Include="Views\Notification\ModerationQueue.cshtml" />
-    <Content Include="Views\Mission\Level.cshtml" />
+    <Content Include="Views\Mission\Progress.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Observation\Details.cshtml" />
     <Content Include="Views\UserAdministration\UserProfile.cshtml" />

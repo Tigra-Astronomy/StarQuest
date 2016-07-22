@@ -1,0 +1,105 @@
+﻿@using MS.Gamification.HtmlHelpers
+@model MissionProgressViewModel
+
+@{
+    ViewBag.Title = "Mission Progress";
+    var levels = Model.Levels;
+}
+
+<h2>Mission Progress: @Model.MissionTitle</h2>
+
+<ul class="nav nav-tabs">
+    @foreach (var level in levels)
+        {
+        var liClass = level.Level == 1 ? "active" : string.Empty;
+        var liDataToggle = level.Unlocked ? "data-toggle='tab'" : string.Empty;
+        var levelId = $"#level{level.Level}";
+        <li class="@liClass" >
+            <a @liDataToggle href="@levelId">@level.Level</a>
+        </li>
+        }
+</ul>
+
+<div class="tab-content">
+
+    @foreach (var level in levels)
+        {
+        var levelNumber = level.Level;
+        var levelIdAttribute = $"level{level.Level}";
+        var activeClass = levelNumber == 1 ? "active" : string.Empty;
+        var tabClasses = $"tab-pane fade in {activeClass}";
+        <div class="@tabClasses" id="@levelIdAttribute">
+            @if (level.Unlocked)
+                {
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <div class="row level">
+                            <div class="col-md-2">
+                                <h3 >Level @levelNumber</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <h3 >Overall Progress</h3>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="progress" role="progressbar">
+                                    <div class="progress-bar-warning progress-striped" style="width: @level.OverallProgressPercent%">
+                                        Level @level.OverallProgressPercent% complete
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                foreach (var track in level.Tracks)
+                     {
+                     var trackPercentComplete = level.TrackProgress[track.Number - 1];
+                     <div class="panel panel-info">
+                         <div class="panel-heading track">
+                             <div class="row trackHeader">
+                                 <div class="col-md-6">
+                                     <h3 >Track @track.Number: @track.Name</h3>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="progress">
+                                         <div class="progress-bar progress-success" role="progressbar" style="width: @trackPercentComplete%">
+                                             @trackPercentComplete% complete
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="panel-body">
+                             <div class="row trackContent">
+                                 <div class="col-md-10 challenges">
+                                     @foreach (var challenge in track.Challenges)
+                                         {
+                                         <div class="row challenge">
+                                             <div class="col-md-4">@challenge.Name</div>
+                                             <div class="col-md-4">
+                                                 <a>Details</a>
+                                             </div>
+                                             <div class="col-md-3">
+                                                 <i class="fa fa-square-o"></i>
+                                                 @challenge.Points points
+                                             </div>
+                                             <div class="col-md-1">
+                                                 <a class="btn btn-sm btn-info"
+                                                    href="@Url.Action("SubmitObservation", new {controller = "Observation", id = challenge.Id})">
+                                                     Log <i class="fa fa-angle-double-right"></i>
+                                                 </a>
+                                             </div>
+                                         </div>
+                                         }
+                                 </div>
+                                 <div class="col-md-2">
+                                     @Html.Badge(@track.Badge.ImageIdentifier, new { @class="img img-responsive"})
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     }
+                }
+        </div>
+        }
+</div>

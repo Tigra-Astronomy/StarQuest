@@ -71,7 +71,8 @@ namespace MS.Gamification.Tests.Controllers
                 CategoryId = 10,
                 Location = "Moon",
                 Name = "See all the moon phases",
-                MissionTrackId = 1
+                MissionTrackId = 1,
+                ValidationImage = "no-image"
                 };
             ControllerUnderTest = ContextBuilder.Build();
             originalCount = UnitOfWork.Challenges.GetAll().Count();

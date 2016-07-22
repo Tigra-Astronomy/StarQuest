@@ -53,14 +53,14 @@ namespace MS.Gamification.Tests.Controllers
     class when_called_with_a_null_identifier : with_fake_web_server
         {
         Because of = () => result = controller.GetImage(null) as FilePathResult;
-        It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
+        It should_return_the_placeholder_image = () => result.FileName.ShouldContain(Challenge.NoImagePlaceholder);
         }
 
     [Subject(typeof(ValidationImageController), "ValidationImage")]
     class when_called_with_a_well_formed_id_which_does_not_exist_in_the_store : with_fake_web_server
         {
         Because of = () => result = controller.GetImage("doesnotexist") as FilePathResult;
-        It should_return_the_placeholder_image = () => result.FileName.ShouldEndWith(Challenge.NoImagePlaceholder);
+        It should_return_the_placeholder_image = () => result.FileName.ShouldContain(Challenge.NoImagePlaceholder);
         }
 
     [Subject(typeof(ValidationImageController), "ValidationImage")]

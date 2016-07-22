@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("My Profile", "Index", "Home")</li>
-                <li>@Html.ActionLink("My Missions", "Level", new {controller = "Mission", id = 1})</li>
+                <li>@Html.ActionLink("My Missions", "Progress", new {controller = "Mission", id = 1})</li>
                 <li>@Html.ActionLink("My Observations", "Index", "Observation")</li>
                 @if (User.IsInRole("Administrator"))
                     {

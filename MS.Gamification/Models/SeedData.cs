@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SeedData.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-22@05:26
+// Last modified: 2016-07-22@11:39
 
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
@@ -92,15 +92,17 @@ namespace MS.Gamification.Models
                         {
                         new MissionLevel
                             {
-                            Name = "Beta Mission",
-                            AwardTitle = "Beta Tester",
+                            Name = "Alpha Mission",
+                            AwardTitle = "Legendary Alpha Tester",
                             Level = 1,
                             Tracks = new List<MissionTrack>
                                 {
                                 new MissionTrack
                                     {
                                     Name = "Lunar Track",
-                                    AwardTitle = "Beta Lunar Observer",
+                                    AwardTitle = "Alpha Lunar Observer",
+                                    Badge =
+                                    new Badge {Name = "Alpha Lunar Observer", ImageIdentifier = "alpha-lunar-observer-1"},
                                     Number = 1,
                                     Challenges = new List<Challenge>
                                         {
@@ -111,7 +113,7 @@ namespace MS.Gamification.Models
                                             BookSection = "Moon",
                                             CategoryId = phaseCategory.Id,
                                             Location = "Moon",
-                                            ValidationImage = "Moon Waxing Crescent.gif"
+                                            ValidationImage = "Moon-Waxing-Crescent"
                                             },
                                         new Challenge
                                             {
@@ -120,15 +122,16 @@ namespace MS.Gamification.Models
                                             BookSection = "Moon",
                                             CategoryId = phaseCategory.Id,
                                             Location = "Moon",
-                                            ValidationImage = "Moon Full.gif"
+                                            ValidationImage = "Moon-Full"
                                             }
                                         }
                                     },
                                 new MissionTrack
                                     {
                                     Name = "Planetary Track",
-                                    AwardTitle = "Beta Planetologist",
+                                    AwardTitle = "Alpha Planetologist",
                                     Number = 2,
+                                    Badge = new Badge {Name = "Alpha Planetologist", ImageIdentifier = "alpha-planetologist-1"},
                                     Challenges = new List<Challenge>
                                         {
                                         new Challenge
@@ -138,7 +141,7 @@ namespace MS.Gamification.Models
                                             BookSection = "Solar System",
                                             CategoryId = planetCategory.Id,
                                             Location = "Solar System",
-                                            ValidationImage = "Jupiter.png"
+                                            ValidationImage = "Jupiter"
                                             },
                                         new Challenge
                                             {
@@ -147,15 +150,18 @@ namespace MS.Gamification.Models
                                             BookSection = "Solar System",
                                             CategoryId = planetCategory.Id,
                                             Location = "Solar System",
-                                            ValidationImage = "Saturn.png"
+                                            ValidationImage = "Saturn"
                                             }
                                         }
                                     },
                                 new MissionTrack
                                     {
                                     Name = "Deep Space Track",
-                                    AwardTitle = "Beta Deep Space Explorer",
+                                    AwardTitle = "Alpha Deep Space Explorer",
                                     Number = 3,
+                                    Badge =
+                                    new Badge
+                                        {Name = "Alpha Deep Space Explorer", ImageIdentifier = "alpha-deep-space-explorer-1"},
                                     Challenges = new List<Challenge>
                                         {
                                         new Challenge
@@ -165,7 +171,7 @@ namespace MS.Gamification.Models
                                             BookSection = "Winter",
                                             CategoryId = openClusterCategory.Id,
                                             Location = "Taurus",
-                                            ValidationImage = "M45-Pleiades.png"
+                                            ValidationImage = "M45-Pleiades"
                                             },
                                         new Challenge
                                             {
@@ -174,7 +180,7 @@ namespace MS.Gamification.Models
                                             BookSection = "Autumn",
                                             CategoryId = galaxyCategory.Id,
                                             Location = "Andromeda",
-                                            ValidationImage = "M31.png"
+                                            ValidationImage = "M31"
                                             }
                                         }
                                     }

@@ -19,7 +19,7 @@ namespace MS.Gamification.Tests.Controllers
      * Category 40 - Galaxy
      * 
      * Mission "Unit Test Mission" Id=1 
-     * Level=1
+     * Progress=1
      *  Track 1 - Lunar Observer
      *      100 See the New Moon    1 point     Category 10
      *      101 See the Full Moon   1 point     Category 10

@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
-namespace MS.Gamification.Models
+namespace MS.Gamification.ViewModels.CustomValidation
     {
     /// <summary>
     ///   Validation data annotation that checks for a valid file name (with no directory or path).

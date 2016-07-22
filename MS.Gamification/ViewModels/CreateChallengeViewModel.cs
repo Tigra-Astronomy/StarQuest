@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: CreateChallengeViewModel.cs  Created: 2016-07-09@20:19
-// Last modified: 2016-07-09@23:53
+// Last modified: 2016-07-22@13:20
 
 using System.ComponentModel.DataAnnotations;
 
@@ -30,5 +30,7 @@ namespace MS.Gamification.ViewModels
 
         [Display(Name = "Mission Track")]
         public int MissionTrackId { get; set; }
+
+        public string ValidationImage { get; set; } = string.Empty;
         }
     }

@@ -113,6 +113,7 @@ namespace MS.Gamification.Controllers
             original.Location = model.Location;
             original.Name = model.Name;
             original.Points = model.Points;
+            original.ValidationImage = model.ValidationImage;
             uow.Commit();
             return RedirectToAction("Index");
             }

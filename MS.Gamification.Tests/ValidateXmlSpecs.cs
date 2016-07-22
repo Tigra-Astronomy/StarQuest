@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ValidateXmlSpecs.cs  Created: 2016-07-21@12:10
-// Last modified: 2016-07-22@04:22
+// Last modified: 2016-07-22@10:14
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +9,10 @@ using Machine.Specifications;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels.CustomValidation;
 
-namespace Namespace
+namespace MS.Gamification.Tests
     {
     [Subject(typeof(XmlDocumentAttribute))]
-    class When_the_xml_file_conforms_to_the_schema
+    class When_the_xml_file_is_well_formed
         {
         Establish context = () =>
             {
