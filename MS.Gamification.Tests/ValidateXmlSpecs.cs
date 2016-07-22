@@ -1,8 +1,9 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ValidateXmlSpecs.cs  Created: 2016-07-21@08:17
-// Last modified: 2016-07-21@11:39
+// File: ValidateXmlSpecs.cs  Created: 2016-07-21@12:10
+// Last modified: 2016-07-22@04:22
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using Machine.Specifications;
 using MS.Gamification.Tests.TestHelpers;
@@ -11,13 +12,13 @@ using MS.Gamification.ViewModels.CustomValidation;
 namespace Namespace
     {
     [Subject(typeof(XmlDocumentAttribute))]
-    internal class When_the_xml_file_conforms_to_the_schema
+    class When_the_xml_file_conforms_to_the_schema
         {
         Establish context = () =>
             {
             xml = TestData.FromEmbeddedResource("PreconditionsEngine.HasAll-1-2-4.xml");
             xsd = TestData.FromEmbeddedResource("PreconditionsEngine.LevelPreconditionSchema.xsd");
-            Validator = new TestableXmlDocumentAttribute(xsd);
+            Validator = new TestableXmlDocumentAttribute();
             };
 
         Because of = () => Result = Validator.TestIsValid(xml, new ValidationContext(xml));
@@ -31,7 +32,9 @@ namespace Namespace
 
     class TestableXmlDocumentAttribute : XmlDocumentAttribute
         {
-        public TestableXmlDocumentAttribute(string xsd) : base(xsd) {}
+        public TestableXmlDocumentAttribute() {}
+
+        public TestableXmlDocumentAttribute(string xsdResourceName, Type xsdResourceType) : base(xsdResourceName, xsdResourceType) {}
 
         public ValidationResult TestIsValid(object value, ValidationContext validationContext)
             {

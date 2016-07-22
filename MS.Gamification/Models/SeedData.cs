@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SeedData.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-07@02:07
+// Last modified: 2016-07-22@05:26
 
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;

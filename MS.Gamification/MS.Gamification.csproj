@@ -346,9 +346,9 @@
     <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607201222135_BadgesAndPreconditions.cs" />
-    <Compile Include="Migrations\201607201222135_BadgesAndPreconditions.Designer.cs">
-      <DependentUpon>201607201222135_BadgesAndPreconditions.cs</DependentUpon>
+    <Compile Include="Migrations\201607220045476_BadgesAndPreconditions.cs" />
+    <Compile Include="Migrations\201607220045476_BadgesAndPreconditions.Designer.cs">
+      <DependentUpon>201607220045476_BadgesAndPreconditions.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -366,6 +366,11 @@
     <Compile Include="Models\SeedData.cs" />
     <Compile Include="Models\TransparencyLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
@@ -396,6 +401,7 @@
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Badges\alpha-tester.png" />
     <Content Include="App_Data\Badges\badge-purple.png" />
     <Content Include="App_Data\Badges\clock.png" />
     <Content Include="App_Data\Badges\Deep-Space-Explorer-2.png" />
@@ -575,10 +581,14 @@
     <EmbeddedResource Include="GameLogic\Preconditions\LevelPreconditionSchema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201607201222135_BadgesAndPreconditions.resx">
-      <DependentUpon>201607201222135_BadgesAndPreconditions.cs</DependentUpon>
-    </EmbeddedResource>
     <Content Include="GameLogic\Preconditions\Level Preconditions Engine.cd" />
+    <EmbeddedResource Include="Migrations\201607220045476_BadgesAndPreconditions.resx">
+      <DependentUpon>201607220045476_BadgesAndPreconditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -13,7 +13,7 @@ namespace MS.Gamification.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201607201222135_BadgesAndPreconditions"; }
+            get { return "201607220045476_BadgesAndPreconditions"; }
         }
         
         string IMigrationMetadata.Source

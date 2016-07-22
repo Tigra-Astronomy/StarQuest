@@ -16,14 +16,16 @@ namespace MS.Gamification.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser, IDomainEntity<string>
         {
-        public virtual List<Observation> Observations { get; set; } = new List<Observation>();
-
-        public virtual List<Badge> Badges { get; set; } = new List<Badge>();
-
         /// <summary>
         ///     The date and time on which the user account was provisioned.
         /// </summary>
         public DateTime Provisioned { get; set; } = DateTime.Now;
+
+        #region Navigation
+        public virtual List<Observation> Observations { get; set; } = new List<Observation>();
+
+        public virtual List<Badge> Badges { get; set; } = new List<Badge>();
+        #endregion Navigation
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
             {
