@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-19@01:22
+// Last modified: 2016-07-22@14:43
 
 using System;
 using System.Linq;
@@ -192,7 +192,7 @@ namespace MS.Gamification.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                     {
-                    await SendVerificationEmail(user.Id);
+                    await SendVerificationEmail(user.Id, model.Email);
                     return RedirectToAction("RegistrationConfirmed", "Account");
                     }
                 AddErrors(result);
@@ -202,13 +202,13 @@ namespace MS.Gamification.Controllers
             return View(model);
             }
 
-        private async Task SendVerificationEmail(string userId)
+        private async Task SendVerificationEmail(string userId, string email)
             {
             // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
             // Send an email with this link
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId, code}, Request.Url.Scheme);
-            var emailBody = RenderTokenVerificationEmail("EmailVerificationRequest.cshtml", callbackUrl, code);
+            var emailBody = RenderTokenVerificationEmail("EmailVerificationRequest.cshtml", callbackUrl, code, email);
             await userManager.SendEmailAsync(userId, "Star Quest: Confirm your email address", emailBody);
             }
 
@@ -252,7 +252,7 @@ namespace MS.Gamification.Controllers
                 // Send an email with this link
                 var code = await userManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
-                var emailBody = RenderTokenVerificationEmail("ResetPassword.cshtml", callbackUrl, code);
+                var emailBody = RenderTokenVerificationEmail("ResetPassword.cshtml", callbackUrl, code, user.Email);
                 await userManager.SendEmailAsync(user.Id, "Star Quest: Reset password", emailBody);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
@@ -261,14 +261,15 @@ namespace MS.Gamification.Controllers
             return View(model);
             }
 
-        private string RenderTokenVerificationEmail(string template, string callbackUrl, string code)
+        private string RenderTokenVerificationEmail(string template, string callbackUrl, string code, string email)
             {
             var emailModel = new VerificationTokenEmailModel
                 {
                 ApplicationName = "Star Quest",
                 CallbackUrl = callbackUrl,
                 InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
-                VerificationToken = code
+                VerificationToken = code,
+                Recipient = email
                 };
             var emailBody = razorEngine.RunCompile(template, typeof(VerificationTokenEmailModel), emailModel);
             return emailBody;
@@ -464,7 +465,7 @@ namespace MS.Gamification.Controllers
                 {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-            await SendVerificationEmail(id);
+            await SendVerificationEmail(id, string.Empty);
             return View("RegistrationConfirmed");
             }
 

@@ -32,6 +32,13 @@
 </table>
 @* End button *@
 
+@if (!string.IsNullOrWhiteSpace(Model.Recipient))
+    {
+    <p>
+        This message was sent to: <strong>@Model.Recipient</strong><br/>
+    </p>
+    }
+
 <p>
     If you do not confirm your address within a short time, your account may be locked.
     If you suspect that your confirmation link may have expired, please visit the site,

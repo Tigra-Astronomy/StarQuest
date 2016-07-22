@@ -28,7 +28,7 @@
                         <a href="@Model.CallbackUrl"
                            target="_blank"
                            style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; padding: 12px 18px; border: 1px solid #e9703e; display: inline-block;">
-                           Participate in @Model.ApplicationName &rarr;
+                            Participate in @Model.ApplicationName &rarr;
                         </a>
                     </td>
                 </tr>
@@ -37,6 +37,14 @@
     </tr>
 </table>
 @* End button *@
+
+@if (!string.IsNullOrWhiteSpace(Model.Recipient))
+    {
+    <p>
+        This invitation was sent to: <strong>@Model.Recipient</strong><br/>
+        Please use this address when requested by the web site.
+    </p>
+    }
 
 <p>
     If you do not wish to participate, do not click the link
