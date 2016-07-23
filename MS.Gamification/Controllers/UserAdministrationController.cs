@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-20@03:53
+// Last modified: 2016-07-22@16:02
 
 using System;
 using System.Collections.Generic;
@@ -119,10 +119,10 @@ namespace MS.Gamification.Controllers
                 log.Error(builder.ToString());
                 throw new InvalidOperationException(builder.ToString());
                 }
-            await SendNotificationEmail(user.Id);
+            await SendNotificationEmail(user.Id, emailAddress);
             }
 
-        private async Task SendNotificationEmail(string userId)
+        private async Task SendNotificationEmail(string userId, string email)
             {
             log.Info($"Sending invitation to user {userId}");
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
@@ -131,7 +131,8 @@ namespace MS.Gamification.Controllers
                 ApplicationName = "Star Quest",
                 CallbackUrl = Url.Action("ConfirmEmail", "UserAdministration", new {userId, code}, Request.Url.Scheme),
                 InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
-                VerificationToken = code
+                VerificationToken = code,
+                Recipient = email
                 };
             var emailBody = razor.RunCompile("NewUserInvitation.cshtml", typeof(VerificationTokenEmailModel), emailModel);
             await userManager.SendEmailAsync(userId, "Invitation to Star Quest by Monkton Stargazers", emailBody);
@@ -168,7 +169,7 @@ namespace MS.Gamification.Controllers
             try
                 {
                 var user = await userManager.FindByEmailAsync(model.Email);
-                await SendNotificationEmail(user.Id);
+                await SendNotificationEmail(user.Id, model.Email);
                 }
             catch (Exception e)
                 {
@@ -193,7 +194,7 @@ namespace MS.Gamification.Controllers
             try
                 {
                 var user = await userManager.FindByEmailAsync(model.Email);
-                await SendNotificationEmail(user.Id);
+                await SendNotificationEmail(user.Id, model.Email);
                 }
             catch (Exception e)
                 {
