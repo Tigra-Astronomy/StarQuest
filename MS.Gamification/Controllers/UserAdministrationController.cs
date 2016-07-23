@@ -295,5 +295,17 @@ namespace MS.Gamification.Controllers
                 ModelState.AddModelError("", error);
                 }
             }
+
+        public ActionResult BatchObservations()
+            {
+            var users = userManager.Users.Select(p => new BatchObservationUserViewModel
+                {
+                Selected = false,
+                UserId = p.Id,
+                UserName = p.UserName
+                });
+            var model = users.ToList();
+            return View(model);
+            }
         }
     }

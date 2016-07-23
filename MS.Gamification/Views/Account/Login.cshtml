@@ -37,15 +37,18 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-primary"/>
+                        <span>
+                            <input type="submit" value="Log in" class="btn btn-primary" />
+                        </span>
+                        <span >
+                            @Html.ActionLink("I forgot my password »", "ForgotPassword", null, new {@class = "btn btn-default"})
+                        </span>
+
                     </div>
                 </div>
                 @*<p>
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>*@
-                    <p>
-                        @Html.ActionLink("I forgot my password »", "ForgotPassword", null, new {@class="btn btn-default"})
-                    </p>
                 }
         </section>
     </div>

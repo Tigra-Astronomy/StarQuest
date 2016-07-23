@@ -372,6 +372,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\BatchObservationUserViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="ViewModels\CreateChallengeViewModel.cs" />
@@ -748,6 +749,8 @@
     <Content Include="Views\UserAdministration\TokenExpired.cshtml" />
     <Content Include="Views\UserAdministration\ReplacementToken.cshtml" />
     <Content Include="Views\UserAdministration\ResendInvitation.cshtml" />
+    <Content Include="Views\UserAdministration\BatchObservations.cshtml" />
+    <Content Include="Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
