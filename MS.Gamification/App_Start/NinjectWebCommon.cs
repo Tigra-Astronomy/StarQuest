@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@22:10
+// Last modified: 2016-07-24@05:12
 
 using System;
 using System.Configuration;
@@ -129,7 +129,7 @@ namespace MS.Gamification
                 .InSingletonScope()
                 .Named("StaticImageStore")
                 .WithConstructorArgument("rootUrl", "/Images");
-            kernel.Bind<GameRulesService>().ToSelf().InRequestScope();
+            kernel.Bind<IGameEngineService>().To<GameRulesService>().InRequestScope();
 
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
             kernel.Bind<IMapper>().ToMethod(m => mapperConfiguration.CreateMapper()).InSingletonScope();

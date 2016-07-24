@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionBuilder.ChallengeBuilder.cs  Created: 2016-07-02@16:26
-// Last modified: 2016-07-05@05:10
+// File: MissionBuilder.ChallengeBuilder.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-24@07:28
 
 using System.Threading;
 using System.Web.Mvc;
@@ -20,10 +20,10 @@ namespace MS.Gamification.Tests.TestHelpers
                 readonly string bookSection = "Unspecified";
                 readonly string location = "Nowhere";
                 readonly TrackBuilder trackBuilder;
-                readonly string validationImage = "NoImage.png";
                 int categoryId = 10;
                 int challengeId;
                 string challengeName = "No name";
+                string validationImage = "NoImage.png";
 
                 public ChallengeBuilder(TrackBuilder trackBuilder)
                     {
@@ -63,6 +63,12 @@ namespace MS.Gamification.Tests.TestHelpers
                 public ChallengeBuilder WithId(int id)
                     {
                     challengeId = id;
+                    return this;
+                    }
+
+                public ChallengeBuilder WithValidationImage(string imageIdentifier)
+                    {
+                    validationImage = imageIdentifier;
                     return this;
                     }
                 }

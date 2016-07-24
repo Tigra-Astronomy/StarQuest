@@ -279,8 +279,10 @@
     <Compile Include="DataAccess\PickListExtensions.cs" />
     <Compile Include="DataAccess\QueryableExtensions.cs" />
     <Compile Include="EmailTemplates\VerificationTokenEmailModel.cs" />
+    <Compile Include="GameLogic\BatchCreateObservationsResult.cs" />
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
+    <Compile Include="GameLogic\IGameEngineService.cs" />
     <Compile Include="GameLogic\Preconditions\CompositePredicate.cs" />
     <Compile Include="GameLogic\Preconditions\HasAll.cs" />
     <Compile Include="GameLogic\Preconditions\HasAny.cs" />
@@ -290,6 +292,7 @@
     <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
     <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
     <Compile Include="GameLogic\Preconditions\PreconditionExtensions.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ObservationsForChallenge.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
@@ -398,6 +401,8 @@
     <Compile Include="ViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SubmitObservationViewModel.cs" />
+    <Compile Include="ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
+    <Compile Include="ViewModels\UserAdministration\BatchObservationViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
@@ -748,6 +753,9 @@
     <Content Include="Views\UserAdministration\TokenExpired.cshtml" />
     <Content Include="Views\UserAdministration\ReplacementToken.cshtml" />
     <Content Include="Views\UserAdministration\ResendInvitation.cshtml" />
+    <Content Include="Views\UserAdministration\BatchObservations.cshtml" />
+    <Content Include="Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
+    <Content Include="Views\UserAdministration\BatchObservationDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

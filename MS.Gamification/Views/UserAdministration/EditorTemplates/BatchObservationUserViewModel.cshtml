@@ -1,0 +1,10 @@
+﻿@model MS.Gamification.ViewModels.UserAdministration.BatchObservationUserViewModel
+
+<tr>
+    <td class="text-nowrap">@Html.CheckBoxFor(m => m.Selected, new { @class = "chkSelect" })</td>
+    <td colspan="3">
+        @Model.UserName
+        @Html.HiddenFor(m => m.UserName)
+        @Html.HiddenFor(m => m.UserId)
+    </td>
+</tr>

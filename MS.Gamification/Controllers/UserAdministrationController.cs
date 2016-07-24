@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-22@16:02
+// Last modified: 2016-07-24@14:04
 
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.UserAdministration;
 using NLog;
 using RazorEngine.Templating;
 using Constants = MS.Gamification.GameLogic.Constants;
@@ -26,19 +28,25 @@ namespace MS.Gamification.Controllers
     [Authorize]
     public class UserAdministrationController : RequiresAdministratorRights
         {
+        private readonly IGameEngineService gameEngine;
         private readonly ILogger log;
         private readonly IMapper mapper;
         private readonly IRazorEngineService razor;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUnitOfWork uow;
         private readonly ApplicationUserManager userManager;
 
         public UserAdministrationController(ApplicationUserManager userManager,
             RoleManager<IdentityRole> roleManager,
+            IUnitOfWork uow,
+            IGameEngineService gameEngine,
             IRazorEngineService razor,
             IMapper mapper)
             {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.uow = uow;
+            this.gameEngine = gameEngine;
             this.razor = razor;
             this.mapper = mapper;
             log = LogManager.GetCurrentClassLogger();
@@ -294,6 +302,63 @@ namespace MS.Gamification.Controllers
                 {
                 ModelState.AddModelError("", error);
                 }
+            }
+
+        public ActionResult BatchObservations()
+            {
+            var users = userManager.Users.Select(p => new BatchObservationUserViewModel
+                {
+                Selected = false,
+                UserId = p.Id,
+                UserName = p.UserName
+                });
+            var model = users.ToList();
+            return View(model);
+            }
+
+        [HttpPost]
+        public ActionResult BatchObservations(List<BatchObservationUserViewModel> model)
+            {
+            var selectedUsers = model.Where(p => p.Selected).Select(s => s.UserId).ToList();
+            var observationModel = new BatchObservationViewModel
+                {
+                Users = selectedUsers
+                };
+            ViewBag.Message =
+                $"Enter observation details and click Submit to create an observation for {selectedUsers.Count()} users.";
+
+            PrepareBatchObservationViewModel(observationModel);
+            return View("BatchObservationDetails", observationModel);
+            }
+
+        private BatchObservationViewModel PrepareBatchObservationViewModel(BatchObservationViewModel model)
+            {
+            ViewBag.UserCount = model.Users.Count;
+            var challengeSelector = uow.Challenges.PickList.ToSelectList();
+            ViewData["ChallengeSelector"] = challengeSelector;
+            var equipmentPicklist = PickListExtensions.FromEnum<ObservingEquipment>();
+            ViewBag.Equipment = equipmentPicklist.ToSelectList();
+            var seeingPicklist = PickListExtensions.FromEnum<AntoniadiScale>();
+            ViewBag.Seeing = seeingPicklist.ToSelectList();
+            var transparencyPicklist = PickListExtensions.FromEnum<TransparencyLevel>();
+            ViewBag.Transparency = transparencyPicklist.ToSelectList();
+            return model;
+            }
+
+        [HttpPost]
+        public ActionResult BatchObservationDetails(BatchObservationViewModel model)
+            {
+            var observation = mapper.Map<BatchObservationViewModel, Observation>(model);
+            var results = gameEngine.BatchCreateObservations(observation, model.Users);
+            PrepareBatchObservationViewModel(model);
+            ViewData["Message"] =
+                $"Successfully created {results.Succeeded}; Failed to create {results.Failed} observations.";
+
+            foreach (var key in results.Errors.Keys)
+                {
+                ModelState.AddModelError(null, $"{key}: {results.Errors[key]}");
+                }
+            return View(model);
             }
         }
     }
