@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-24@05:02
-// Last modified: 2016-07-24@05:05
+// Last modified: 2016-07-24@06:48
 
 using System.Collections.Generic;
 using MS.Gamification.Models;
@@ -28,6 +28,6 @@ namespace MS.Gamification.GameLogic
         /// </summary>
         /// <param name="observation">The observation template.</param>
         /// <param name="userIds">A list of user IDs.</param>
-        void BatchCreateObservations(Observation observation, IEnumerable<string> userIds);
+        BatchCreateObservationsResult BatchCreateObservations(Observation observation, IEnumerable<string> userIds);
         }
     }

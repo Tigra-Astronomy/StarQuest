@@ -1,6 +1,6 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: DummyController.cs  Created: 2016-07-20@21:40
+// File: DummyGameController.cs  Created: 2016-07-20@21:40
 // Last modified: 2016-07-20@21:41
 
 using System.Web.Mvc;

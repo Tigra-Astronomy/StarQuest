@@ -168,6 +168,8 @@
     <Compile Include="Controllers\with_mvc_controller.cs" />
     <Compile Include="Controllers\with_standard_mission.cs" />
     <Compile Include="EffortSpecs.cs" />
+    <Compile Include="GameLogic\BulkCreateObservationsSpecs.cs" />
+    <Compile Include="GameLogic\DummyGameController.cs" />
     <Compile Include="GameLogic\LevelPreconditionEngineSpecs.cs" />
     <Compile Include="GameLogic\with_game_logic_context.cs" />
     <Compile Include="GameRulesServiceSpecs.cs" />

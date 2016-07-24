@@ -279,6 +279,7 @@
     <Compile Include="DataAccess\PickListExtensions.cs" />
     <Compile Include="DataAccess\QueryableExtensions.cs" />
     <Compile Include="EmailTemplates\VerificationTokenEmailModel.cs" />
+    <Compile Include="GameLogic\BatchCreateObservationsResult.cs" />
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
     <Compile Include="GameLogic\IGameEngineService.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
     <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
     <Compile Include="GameLogic\Preconditions\PreconditionExtensions.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ObservationsForChallenge.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />

@@ -1,11 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-07-18@22:29
+// Last modified: 2016-07-24@15:16
 
 using AutoMapper;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.UserAdministration;
 
 namespace MS.Gamification.App_Start
     {
@@ -23,6 +24,7 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.HasValidPassword, m => m.ResolveUsing(r => !string.IsNullOrWhiteSpace(r.PasswordHash)))
                 .ForMember(m => m.Roles, m => m.Ignore())
                 .ForMember(m => m.RoleToAdd, m => m.Ignore());
+            CreateMap<BatchObservationViewModel, Observation>();
             }
         }
     }

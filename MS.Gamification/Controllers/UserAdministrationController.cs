@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-24@05:12
+// Last modified: 2016-07-24@14:04
 
 using System;
 using System.Collections.Generic;
@@ -349,8 +349,15 @@ namespace MS.Gamification.Controllers
         public ActionResult BatchObservationDetails(BatchObservationViewModel model)
             {
             var observation = mapper.Map<BatchObservationViewModel, Observation>(model);
-            gameEngine.BatchCreateObservations(observation, model.Users);
+            var results = gameEngine.BatchCreateObservations(observation, model.Users);
             PrepareBatchObservationViewModel(model);
+            ViewData["Message"] =
+                $"Successfully created {results.Succeeded}; Failed to create {results.Failed} observations.";
+
+            foreach (var key in results.Errors.Keys)
+                {
+                ModelState.AddModelError(null, $"{key}: {results.Errors[key]}");
+                }
             return View(model);
             }
         }

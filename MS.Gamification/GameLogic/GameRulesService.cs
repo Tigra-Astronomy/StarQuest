@@ -1,11 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-24@05:09
+// Last modified: 2016-07-24@12:34
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using NLog;
 
@@ -14,6 +17,14 @@ namespace MS.Gamification.GameLogic
     public class GameRulesService : IGameEngineService
         {
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+        private readonly IMapper mapper;
+        private readonly IUnitOfWork unitOfWork;
+
+        public GameRulesService(IUnitOfWork unitOfWork, IMapper mapper)
+            {
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            }
 
         /// <summary>
         ///     Computes the percent complete for a set of challenges, given a set of eligible observations. The
@@ -40,10 +51,55 @@ namespace MS.Gamification.GameLogic
         /// </summary>
         /// <param name="observation">The observation template.</param>
         /// <param name="userIds">A list of user IDs.</param>
-        public void BatchCreateObservations(Observation observation, IEnumerable<string> userIds)
+        public BatchCreateObservationsResult BatchCreateObservations(Observation observation, IEnumerable<string> userIds)
             {
             Log.Info($"Batch creating observations for {userIds.Count()} users, Challenge ID {observation.ChallengeId}");
-            Log.Warn("Method not implemented");
+            var resultSummary = new BatchCreateObservationsResult();
+            var maybeChallenge = unitOfWork.Challenges.GetMaybe(observation.ChallengeId);
+            if (maybeChallenge.None)
+                {
+                resultSummary.Failed = userIds.Count();
+                resultSummary.Succeeded = 0;
+                resultSummary.Errors["General"] = "Unable to locate the challenge in the database";
+                return resultSummary;
+                }
+            var maybeUser = Maybe<ApplicationUser>.Empty;
+            foreach (var userId in userIds)
+                {
+                try
+                    {
+                    maybeUser = unitOfWork.UsersRepository.GetMaybe(userId);
+                    if (maybeUser.None)
+                        {
+                        ++resultSummary.Failed;
+                        resultSummary.Errors[userId] = $"User not found in the database";
+                        continue;
+                        }
+                    var specification = new ObservationsForChallenge(userId, observation.ChallengeId);
+                    var userObservations = unitOfWork.Observations.AllSatisfying(specification);
+                    if (userObservations.Any(p => p.ObservationDateTimeUtc.Date == observation.ObservationDateTimeUtc.Date))
+                        {
+                        ++resultSummary.Failed;
+                        resultSummary.Errors[maybeUser.Single().UserName] = "User already has that observation on that date.";
+                        continue;
+                        }
+                    var observationToAdd = mapper.Map<Observation, Observation>(observation);
+                    observationToAdd.UserId = userId;
+                    observationToAdd.ChallengeId = observation.ChallengeId;
+                    observationToAdd.SubmittedImage = maybeChallenge.Single().ValidationImage;
+                    observationToAdd.Status = ModerationState.Approved;
+                    unitOfWork.Observations.Add(observationToAdd);
+                    unitOfWork.Commit();
+                    ++resultSummary.Succeeded;
+                    }
+                catch (Exception ex)
+                    {
+                    ++resultSummary.Failed;
+                    resultSummary.Errors[maybeUser.Single().UserName] = $"Error: {ex.Message}";
+                    }
+                }
+
+            return resultSummary;
             }
 
         /// <summary>

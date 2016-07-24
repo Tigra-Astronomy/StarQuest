@@ -19,7 +19,7 @@
 
 <h2>Batch Create Observations</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("BatchObservationDetails","UserAdministration"))
     {
     // Render hidden fields for each user to ensure they are posted back.
     // NOTE: using a foreach won't work because of the way model binding works
