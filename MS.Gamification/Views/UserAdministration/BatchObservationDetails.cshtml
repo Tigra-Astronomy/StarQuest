@@ -1,0 +1,92 @@
+﻿@model MS.Gamification.ViewModels.UserAdministration.BatchObservationViewModel
+
+@{
+    ViewBag.Title = "Batch Observation Details";
+    var userCount = Model.Users.Count;
+    var labelStyle = new { @class = "control-label col-md-3" };
+    var inputColumns = "col-md-9";
+    var controlStyle = new { htmlAttributes = new { @class = "form-control" } };
+    var validationStyle = new { @class = "text-danger" };
+}
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+        <i class="fa fa-exclamation fa-circle"></i>
+        Acknowledge
+    </button>
+    <strong>Create Batch Observations</strong>
+    @ViewBag.Message
+</div>
+
+<h2>Batch Create Observations</h2>
+
+@using (Html.BeginForm())
+    {
+    // Render hidden fields for each user to ensure they are posted back.
+    // NOTE: using a foreach won't work because of the way model binding works
+    for (var i = 0; i < userCount; i++)
+        {
+        @Html.HiddenFor(model => Model.Users[i])
+        }
+
+    @Html.AntiForgeryToken()
+    <div class="row" id="input-area">
+        @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
+        <div id="form" class="col-xs-12 form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(m => m.ChallengeId, labelStyle)
+                <div class="@inputColumns">
+                    @Html.DropDownListFor(m => m.ChallengeId, (IEnumerable<SelectListItem>) ViewData["ChallengeSelector"])
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObservationDateTimeUtc, labelStyle)
+                <div class=@inputColumns>
+                    @Html.EditorFor(model => model.ObservationDateTimeUtc, controlStyle)
+                    @Html.ValidationMessageFor(model => model.ObservationDateTimeUtc, "", validationStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Equipment, labelStyle)
+                <div class=@inputColumns>
+                    @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>) ViewBag.Equipment, controlStyle)
+                    @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ObservingSite, labelStyle)
+                <div class=@inputColumns>
+                    @Html.EditorFor(model => model.ObservingSite, controlStyle)
+                    @Html.ValidationMessageFor(model => model.ObservingSite, "", validationStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Seeing, labelStyle)
+                <div class=@inputColumns>
+                    @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>) ViewBag.Seeing, controlStyle)
+                    @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Transparency, labelStyle)
+                <div class=@inputColumns>
+                    @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>) ViewBag.Transparency, controlStyle)
+                    @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, labelStyle)
+                <div class=@inputColumns>
+                    @Html.EditorFor(model => model.Notes, controlStyle)
+                    @Html.ValidationMessageFor(model => model.Notes, "", validationStyle)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <span>
+                    <input type="submit" value="Submit for @userCount users" class="btn btn-danger" />
+                </span>
+            </div>
+        </div>
+    </div>
+    }

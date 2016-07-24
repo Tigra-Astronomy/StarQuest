@@ -1,17 +1,20 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: GameRulesService.cs  Created: 2016-07-08@02:12
-// Last modified: 2016-07-08@03:23
+// File: GameRulesService.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-24@05:09
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using MS.Gamification.Models;
+using NLog;
 
 namespace MS.Gamification.GameLogic
     {
-    public class GameRulesService
+    public class GameRulesService : IGameEngineService
         {
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         ///     Computes the percent complete for a set of challenges, given a set of eligible observations. The
         ///     computation is based on the number of points gained, rather than just a simple count.
@@ -23,13 +26,24 @@ namespace MS.Gamification.GameLogic
         ///     It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
         ///     <see cref="EligibleObservations" />.
         /// </remarks>
-        internal int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations)
+        public int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations)
             {
             var pointsAvailable = challenges.Select(p => p.Points).Sum();
             if (pointsAvailable < 1) return 0; // Avoid divide-by-zero error
             var pointsAwarded = eligibleObservations.Select(p => p.Challenge.Points).Sum();
             var percentComplete = pointsAwarded * 100 / pointsAvailable;
             return Math.Min(percentComplete, 100);
+            }
+
+        /// <summary>
+        ///     Creates observations in bulk, for the specified list of users.
+        /// </summary>
+        /// <param name="observation">The observation template.</param>
+        /// <param name="userIds">A list of user IDs.</param>
+        public void BatchCreateObservations(Observation observation, IEnumerable<string> userIds)
+            {
+            Log.Info($"Batch creating observations for {userIds.Count()} users, Challenge ID {observation.ChallengeId}");
+            Log.Warn("Method not implemented");
             }
 
         /// <summary>

@@ -1,4 +1,4 @@
-namespace MS.Gamification.ViewModels
+namespace MS.Gamification.ViewModels.UserAdministration
     {
     public class BatchObservationUserViewModel {
         public bool Selected { get; set; }
