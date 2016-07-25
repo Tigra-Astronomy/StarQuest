@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ValidationImageController.cs  Created: 2016-07-10@00:07
-// Last modified: 2016-07-16@03:15
+// Last modified: 2016-07-25@05:16
 
 using System.Web.Mvc;
 using MS.Gamification.HtmlHelpers;
@@ -18,7 +18,7 @@ namespace MS.Gamification.Controllers
             this.imageStore = imageStore;
             }
 
-        [OutputCache]
+        [OutputCache(Duration = 60*60*24)]
         public ActionResult GetImage(string id)
             {
             if (id == null)
