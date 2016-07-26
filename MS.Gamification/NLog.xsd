@@ -30,7 +30,7 @@
         <xs:documentation>Write internal NLog messages to the specified file.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="internalLogLevel" type="NLogProgress">
+    <xs:attribute name="internalLogLevel" type="NLogLevel">
       <xs:annotation>
         <xs:documentation>Log level threshold for internal log messages. Default value is: Info.</xs:documentation>
       </xs:annotation>
@@ -1020,8 +1020,8 @@
           <xs:element name="archiveFileName" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="archiveEvery" minOccurs="0" maxOccurs="1" type="NLog.Targets.FileArchivePeriod" />
           <xs:element name="archiveAboveSize" minOccurs="0" maxOccurs="1" type="xs:long" />
-          <xs:element name="maxArchiveFiles" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="enableArchiveFileCompression" minOccurs="0" maxOccurs="1" type="xs:boolean" />
+          <xs:element name="maxArchiveFiles" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="forceManaged" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="cleanupFileName" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="fileName" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -1093,14 +1093,14 @@
             <xs:documentation>Size in bytes above which log files will be automatically archived. Warning: combining this with  isn't supported. We cannot create multiple archive files, if they should have the same name. Choose: </xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="maxArchiveFiles" type="xs:integer">
-          <xs:annotation>
-            <xs:documentation>Maximum number of archive files that should be kept.</xs:documentation>
-          </xs:annotation>
-        </xs:attribute>
         <xs:attribute name="enableArchiveFileCompression" type="xs:boolean">
           <xs:annotation>
             <xs:documentation>Indicates whether to compress archive files into the zip archive format.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="maxArchiveFiles" type="xs:integer">
+          <xs:annotation>
+            <xs:documentation>Maximum number of archive files that should be kept.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="forceManaged" type="xs:boolean">
@@ -1270,7 +1270,7 @@
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="domain" minOccurs="0" maxOccurs="1" type="xs:string" />
-          <xs:element name="impersonationLevel" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.SecurityImpersonationProgress" />
+          <xs:element name="impersonationLevel" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.SecurityImpersonationLevel" />
           <xs:element name="logOnProvider" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.LogOnProviderType" />
           <xs:element name="logOnType" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.SecurityLogOnType" />
           <xs:element name="password" minOccurs="0" maxOccurs="1" type="xs:string" />
@@ -1287,7 +1287,7 @@
             <xs:documentation>Windows domain name to change context to.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="impersonationLevel" type="NLog.Targets.Wrappers.SecurityImpersonationProgress">
+        <xs:attribute name="impersonationLevel" type="NLog.Targets.Wrappers.SecurityImpersonationLevel">
           <xs:annotation>
             <xs:documentation>Required impersonation level.</xs:documentation>
           </xs:annotation>
@@ -2238,6 +2238,18 @@
       <xs:enumeration value="HttpGet" />
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="CompoundLayout">
+    <xs:complexContent>
+      <xs:extension base="Layout">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="layout" minOccurs="0" maxOccurs="unbounded" type="Layout" />
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Layout">
+    <xs:choice minOccurs="0" maxOccurs="unbounded" />
+  </xs:complexType>
   <xs:complexType name="CsvLayout">
     <xs:complexContent>
       <xs:extension base="Layout">
