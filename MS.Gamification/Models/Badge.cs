@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Badge.cs  Created: 2016-07-21@12:10
-// Last modified: 2016-07-22@01:18
+// Last modified: 2016-07-26@13:35
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +13,11 @@ namespace MS.Gamification.Models
     {
     public class Badge : IDomainEntity<int>
         {
+        public Badge()
+            {
+            Users = new List<ApplicationUser>();
+            }
+
         /// <summary>
         ///     Identifies the storage location of a badge bitmap to an <see cref="IImageStore" /> service.
         /// </summary>

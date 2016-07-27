@@ -309,6 +309,7 @@
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />
@@ -365,6 +366,10 @@
     <Compile Include="Migrations\201607220045476_BadgesAndPreconditions.cs" />
     <Compile Include="Migrations\201607220045476_BadgesAndPreconditions.Designer.cs">
       <DependentUpon>201607220045476_BadgesAndPreconditions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607271900449_BadgesRequired.cs" />
+    <Compile Include="Migrations\201607271900449_BadgesRequired.Designer.cs">
+      <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -572,12 +577,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="GameLogic\Preconditions\Rules\AllOfASetOfBadges.xml" />
     <Content Include="GameLogic\Preconditions\Rules\AlphaMission-Level2.xml" />
-    <Content Include="GameLogic\Preconditions\Rules\AnyOfASetOfBadges.xml" />
-    <Content Include="GameLogic\Preconditions\Rules\CompositeCondition.xml" />
-    <Content Include="GameLogic\Preconditions\Rules\JoinedBefore.xml" />
-    <Content Include="GameLogic\Preconditions\Rules\SingleBadge.xml" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Masthead.png" />
@@ -605,6 +605,9 @@
     <Content Include="GameLogic\Preconditions\Level Preconditions Engine.cd" />
     <EmbeddedResource Include="Migrations\201607220045476_BadgesAndPreconditions.resx">
       <DependentUpon>201607220045476_BadgesAndPreconditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607271900449_BadgesRequired.resx">
+      <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

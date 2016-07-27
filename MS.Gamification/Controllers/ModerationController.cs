@@ -6,6 +6,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
@@ -16,10 +17,12 @@ namespace MS.Gamification.Controllers
     public class ModerationController : RequiresAuthorization
         {
         readonly IUnitOfWork uow;
+        private readonly IGameEngineService gameEngine;
 
-        public ModerationController(IUnitOfWork uow)
+        public ModerationController(IUnitOfWork uow, IGameEngineService gameEngine)
             {
             this.uow = uow;
+            this.gameEngine = gameEngine;
             }
 
         // GET /Moderation
@@ -57,6 +60,7 @@ namespace MS.Gamification.Controllers
             var observation = maybeObservation.Single();
             observation.Status = ModerationState.Approved;
             uow.Commit();
+            gameEngine.EvaluateBadges(observation);            
             return RedirectToAction("Index");
             }
 
