@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionBuilder.TrackBuilder.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-22@13:37
+// Last modified: 2016-07-27@19:55
 
 using System.Collections.Generic;
 using System.Threading;
@@ -18,6 +18,7 @@ namespace MS.Gamification.Tests.TestHelpers
             readonly List<Challenge> challenges = new List<Challenge>();
             readonly MissionBuilder<TContoller> mission;
             readonly string trackAwardTitle;
+            readonly Badge badge = new Badge {Id = uniqueId, ImageIdentifier = $"image-{uniqueId}", Name = $"Bade {uniqueId}"};
             int trackId;
             string trackName;
             int trackNumber;
@@ -52,7 +53,8 @@ namespace MS.Gamification.Tests.TestHelpers
                     Challenges = challenges,
                     Name = trackName,
                     Number = trackNumber,
-                    BadgeId = null
+                    BadgeId = badge.Id,
+                    Badge = badge
                     };
                 mission.tracks.Add(track);
                 return mission;

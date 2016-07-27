@@ -157,7 +157,7 @@ namespace MS.Gamification.Controllers
             var challenge = maybeChallenge.Single();
             // ToDo: Get the currently logged-in user.
             var userId = User.Identity.GetUserId();
-            var user = uow.UsersRepository.Get(userId);
+            var user = uow.Users.Get(userId);
 
             var observation = new Observation
                 {
@@ -186,7 +186,7 @@ namespace MS.Gamification.Controllers
             {
             var userId = User.Identity.GetUserId();
             var specification = new SingleUserWithObservations(userId);
-            var maybeUser = uow.UsersRepository.GetMaybe(specification);
+            var maybeUser = uow.Users.GetMaybe(specification);
             if (maybeUser.None) return new HttpStatusCodeResult(500, "Unable to retrieve user details. Sorry!");
             return View(maybeUser.Single().Observations);
             }

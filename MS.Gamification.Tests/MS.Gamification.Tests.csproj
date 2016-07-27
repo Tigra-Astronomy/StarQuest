@@ -171,6 +171,7 @@
     <Compile Include="GameLogic\BulkCreateObservationsSpecs.cs" />
     <Compile Include="GameLogic\DummyGameController.cs" />
     <Compile Include="GameLogic\LevelPreconditionEngineSpecs.cs" />
+    <Compile Include="GameLogic\LevelUnlockingSpecs.cs" />
     <Compile Include="GameLogic\with_game_logic_context.cs" />
     <Compile Include="GameRulesServiceSpecs.cs" />
     <Compile Include="HtmlHelpers\WebServerImageStoreSpecs.cs" />

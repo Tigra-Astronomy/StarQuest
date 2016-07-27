@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionBuilder.cs  Created: 2016-07-02@02:52
-// Last modified: 2016-07-07@00:07
+// File: MissionBuilder.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-27@19:55
 
 using System.Collections.Generic;
 using System.Threading;
@@ -63,6 +63,7 @@ namespace MS.Gamification.Tests.TestHelpers
                 };
             foreach (var track in tracks)
                 {
+                context.WithEntity(track.Badge);
                 foreach (var challenge in track.Challenges)
                     {
                     // Make sure the challenges are attached to this track and added to the dataset.

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-24@09:16
+// Last modified: 2016-07-26@13:35
 
 using System;
 using System.Collections.Generic;
@@ -184,6 +184,27 @@ namespace MS.Gamification.Tests.TestHelpers
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
             kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
             return kernel;
+            }
+
+        public ControllerContextBuilder<TController> WithUserAwardedBadges(string userId, string userName, params int[] badges)
+            {
+            var user = new ApplicationUser
+                {Id = userId, UserName = userName, Email = $"{userId}@nowhere.nw", EmailConfirmed = true};
+            foreach (var badgeId in badges)
+                {
+                var badgeToAdd = new Badge
+                    {
+                    Id = badgeId,
+                    Name = $"Badge-{badgeId}",
+                    ImageIdentifier = $"Badge-{badgeId}"
+                    };
+                user.Badges.Add(badgeToAdd);
+                badgeToAdd.Users.Add(user);
+                data.Table<Badge>().Add(badgeToAdd);
+                }
+            data.Table<ApplicationUser>("AspNetUsers").Add(user);
+
+            return this;
             }
         }
     }

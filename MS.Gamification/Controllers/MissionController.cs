@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionController.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-22@09:45
+// Last modified: 2016-07-26@09:55
 
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace MS.Gamification.Controllers
                 var levelModel = new LevelProgressViewModel
                     {
                     Level = missionLevel.Level,
-                    Unlocked = true // ToDo - evaluate preconditions
+                    Unlocked = rules.IsLevelUnlockedForUser(missionLevel, requestingUser.UniqueId)
                     };
                 levelModel.Level = missionLevel.Level;
                 levelModel.Tracks = new List<MissionTrack>(missionLevel.Tracks);

@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-24@12:34
+// Last modified: 2016-07-27@19:22
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic.Preconditions;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using NLog;
@@ -68,7 +69,7 @@ namespace MS.Gamification.GameLogic
                 {
                 try
                     {
-                    maybeUser = unitOfWork.UsersRepository.GetMaybe(userId);
+                    maybeUser = unitOfWork.Users.GetMaybe(userId);
                     if (maybeUser.None)
                         {
                         ++resultSummary.Failed;
@@ -103,6 +104,56 @@ namespace MS.Gamification.GameLogic
             }
 
         /// <summary>
+        ///     Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
+        /// </summary>
+        /// <param name="observation">The observation that has just been approved for the user.</param>
+        public void EvaluateBadges(Observation observation)
+            {
+            var userId = observation.UserId;
+            var challenge = observation.Challenge;
+            var track = challenge.MissionTrack;
+            var badgeForTrack = track.Badge;
+            var alreadyHasBadge = badgeForTrack.Users.Any(p => p.Id == userId);
+            if (alreadyHasBadge)
+                return;
+            var eligibleObservationsSpec = new EligibleObservationsForChallenges(track.Challenges, userId);
+            var eligibleObservations = unitOfWork.Observations.AllSatisfying(eligibleObservationsSpec);
+            var percentComplete = ComputePercentComplete(track.Challenges, eligibleObservations);
+            if (percentComplete < 100)
+                return;
+            AwardBadge(badgeForTrack.Id, userId);
+            }
+
+        /// <summary>
+        ///     Awards a badge to a user.
+        /// </summary>
+        /// <param name="badgeId">The badge identifier.</param>
+        /// <param name="userId">The user identifier.</param>
+        private void AwardBadge(int badgeId, string userId)
+            {
+            var maybeBadge = unitOfWork.Badges.GetMaybe(badgeId);
+            if (maybeBadge.None)
+                {
+                Log.Warn($"Attempt to award badge {badgeId} to {userId} and the badge doesn't exist");
+                return;
+                }
+            var maybeUser = unitOfWork.Users.GetMaybe(userId);
+            if (maybeUser.None)
+                {
+                Log.Warn($"Attempt to award badge {badgeId} to user {userId} and the user doesn't exist");
+                return;
+                }
+            var badge = maybeBadge.Single();
+            if (badge.Users.Any(p => p.Id == userId))
+                {
+                Log.Warn($"Attempt to award badge {badgeId} to user {userId} but the user already has the badge");
+                return;
+                }
+            badge.Users.Add(maybeUser.Single());
+            unitOfWork.Commit();
+            }
+
+        /// <summary>
         ///     Determines whether the supplied set of observations are sufficient to complete the given level.
         /// </summary>
         /// <param name="level">The level.</param>
@@ -118,6 +169,26 @@ namespace MS.Gamification.GameLogic
                 if (percentComplete == 100) return true;
                 }
             return false;
+            }
+
+        /// <summary>
+        ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <param name="user">The user.</param>
+        /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        public bool IsLevelUnlockedForUser(MissionLevel level, string userId)
+            {
+            var preconditionXml = level.Precondition ?? string.Empty;
+            var parser = new LevelPreconditionParser();
+            var rules = parser.ParsePreconditionXml(preconditionXml);
+            var specification = new SingleUserWithBadges(userId);
+            var maybeUser = unitOfWork.Users.GetMaybe(specification);
+            if (maybeUser.None)
+                return false;
+            if (string.IsNullOrWhiteSpace(preconditionXml))
+                return true; // No rules = unlocked
+            return rules.Evaluate(maybeUser.Single());
             }
         }
     }

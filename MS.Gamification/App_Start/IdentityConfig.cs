@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IdentityConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@11:32
+// Last modified: 2016-07-24@15:42
 
 using System;
 using System.Configuration;
@@ -45,7 +45,7 @@ namespace MS.Gamification
             var credentials = new NetworkCredential(
                 ConfigurationManager.AppSettings["mailAccount"],
                 ConfigurationManager.AppSettings["mailPassword"]
-            );
+                );
 
             // Create a Web transport for sending email.
             try

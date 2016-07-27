@@ -12,7 +12,7 @@
     @foreach (var level in levels)
         {
         var liClass = level.Level == 1 ? "active" : string.Empty;
-        var liDataToggle = level.Unlocked ? "data-toggle='tab'" : string.Empty;
+        var liDataToggle = level.Unlocked ? "data-toggle=tab" : string.Empty;
         var levelId = $"#level{level.Level}";
         <li class="@liClass" >
             <a @liDataToggle href="@levelId">@level.Level</a>

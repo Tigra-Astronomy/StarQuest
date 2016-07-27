@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTrack.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-22@05:20
+// Last modified: 2016-07-27@19:56
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,11 +22,12 @@ namespace MS.Gamification.Models
         [Required]
         public string AwardTitle { get; set; }
 
-        public Badge Badge { get; set; }
+        [ForeignKey("BadgeId")]
+        public virtual Badge Badge { get; set; }
 
-        public int? BadgeId { get; set; }
+        public virtual int BadgeId { get; set; }
 
-        public int MissionLevelId { get; set; }
+        public virtual int MissionLevelId { get; set; }
 
         public virtual MissionLevel MissionLevel { get; set; }
 

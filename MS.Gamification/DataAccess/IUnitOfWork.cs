@@ -23,7 +23,7 @@ namespace MS.Gamification.DataAccess
         ///     Gets the users repository.
         /// </summary>
         /// <value>The users.</value>
-        IRepository<ApplicationUser, string> UsersRepository { get; }
+        IRepository<ApplicationUser, string> Users { get; }
 
         /// <summary>
         ///     Gets the categories repository.
