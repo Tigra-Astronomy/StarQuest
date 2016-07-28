@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-26@13:35
+// Last modified: 2016-07-28@13:19
 
 using System;
 using System.Collections.Generic;
@@ -138,7 +138,8 @@ namespace MS.Gamification.Tests.TestHelpers
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
             var mapper = mapperConfiguration.CreateMapper();
-            RulesService = new GameRulesService(UnitOfWork, mapper);
+            var notifier = new FakeNotificationService();
+            RulesService = new GameRulesService(UnitOfWork, mapper, notifier);
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);
@@ -181,6 +182,7 @@ namespace MS.Gamification.Tests.TestHelpers
             kernel.Bind<ICurrentUser>().ToMethod(u => new FakeCurrentUser(identity, requestUserId));
             kernel.Bind<TController>().ToSelf().InTransientScope();
             kernel.Bind<IGameEngineService>().ToMethod(u => rulesService).InTransientScope();
+            kernel.Bind<IGameNotificationService>().To<FakeNotificationService>().InTransientScope();
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
             kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
             return kernel;

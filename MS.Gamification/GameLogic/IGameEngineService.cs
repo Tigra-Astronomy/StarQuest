@@ -4,6 +4,7 @@
 // Last modified: 2016-07-27@19:03
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.GameLogic
@@ -34,6 +35,6 @@ namespace MS.Gamification.GameLogic
         ///     Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
         /// </summary>
         /// <param name="observation">The observation that has just been approved for the user.</param>
-        void EvaluateBadges(Observation observation);
+        Task EvaluateBadges(Observation observation);
         }
     }

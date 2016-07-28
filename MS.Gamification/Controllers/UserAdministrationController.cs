@@ -136,7 +136,6 @@ namespace MS.Gamification.Controllers
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var emailModel = new VerificationTokenEmailModel
                 {
-                ApplicationName = "Star Quest",
                 CallbackUrl = Url.Action("ConfirmEmail", "UserAdministration", new {userId, code}, Request.Url.Scheme),
                 InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
                 VerificationToken = code,

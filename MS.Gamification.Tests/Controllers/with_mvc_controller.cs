@@ -36,5 +36,6 @@ namespace MS.Gamification.Tests.Controllers
         protected static IUnitOfWork UnitOfWork => ContextBuilder.UnitOfWork;
 
         protected static GameRulesService RulesService => ContextBuilder.RulesService;
+
         }
     }

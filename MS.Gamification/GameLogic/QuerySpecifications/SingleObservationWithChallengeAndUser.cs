@@ -1,18 +1,18 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: SingleObservationWithNavigationProperties.cs  Created: 2016-05-26@01:59
-// Last modified: 2016-05-26@02:04
+// File: SingleObservationWithChallengeAndUser.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-07-28@10:48
 
 using System.Linq;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.GameLogic.QuerySpecifications
     {
-    public class SingleObservationWithNavigationProperties : QuerySpecification<Observation>
+    public class SingleObservationWithChallengeAndUser : QuerySpecification<Observation>
         {
-        readonly int observationId;
+        private readonly int observationId;
 
-        public SingleObservationWithNavigationProperties(int observationId)
+        public SingleObservationWithChallengeAndUser(int observationId)
             {
             this.observationId = observationId;
             FetchStrategy.Include(p => p.Challenge);

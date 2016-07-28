@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModerationControllerSpecs.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-04@01:15
+// Last modified: 2016-07-28@13:42
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Machine.Specifications;
 using MS.Gamification.Controllers;
+using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels;
@@ -83,10 +84,14 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")
             .WithEntity(new Category {Id = 1, Name = "Category"})
-            .WithEntity(new Challenge {Id = 1, Name = "Unit Test Challenge", CategoryId = 1})
+            .WithEntity(new Badge {Id = 1, Name = "Badge 1"})
+            .WithEntity(new Mission {Id = 1, Title = "Unit Test Mission"})
+            .WithEntity(new MissionLevel {Id = 1, MissionId = 1})
+            .WithEntity(new MissionTrack {Id = 1, Number = 1, Name = "Track 1", BadgeId = 1, MissionLevelId = 1})
+            .WithEntity(new Challenge {Id = 1, Name = "Unit Test Challenge", CategoryId = 1, MissionTrackId = 1})
             .WithEntity(new Observation {Id = 2, Status = ModerationState.AwaitingModeration, UserId = "user", ChallengeId = 1})
             .Build();
-        Because of = () => Result = ControllerUnderTest.Approve(99);
+        Because of = () => Result = ControllerUnderTest.Approve(99).WaitForResult();
         It should_return_404_not_found = () => Result.ShouldBeOfExactType<HttpNotFoundResult>();
         static ActionResult Result;
         }
@@ -112,7 +117,7 @@ namespace MS.Gamification.Tests.Controllers
             .WithStandardUser("user", "Joe User")
             .WithObservation().ForChallenge(100).WithId(2).ForUserId("user").AwaitingModeration().BuildObservation()
             .Build();
-        Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Approve(2);
+        Because of = () => Result = (RedirectToRouteResult) ControllerUnderTest.Approve(2).WaitForResult();
         It should_change_the_observation_status_to_approved =
             () => UnitOfWork.Observations.Get(2).Status.ShouldEqual(ModerationState.Approved);
         It should_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");

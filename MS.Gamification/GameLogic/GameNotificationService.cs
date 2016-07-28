@@ -1,0 +1,82 @@
+// This file is part of the MS.Gamification project
+// 
+// File: GameNotificationService.cs  Created: 2016-07-28@10:16
+// Last modified: 2016-07-28@12:39
+
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using MS.Gamification.EmailTemplates;
+using MS.Gamification.Models;
+using NLog;
+using RazorEngine.Templating;
+
+namespace MS.Gamification.GameLogic
+    {
+    /// <summary>
+    ///     Notifies users of game events by email.
+    /// </summary>
+    /// <seealso cref="MS.Gamification.GameLogic.IGameNotificationService" />
+    internal class GameNotificationService : IGameNotificationService
+        {
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+        private readonly IRazorEngineService razor;
+        private readonly UrlHelper url;
+        private readonly ApplicationUserManager userManager;
+
+
+        public GameNotificationService(IRazorEngineService razor, ApplicationUserManager userManager, UrlHelper url)
+            {
+            this.razor = razor;
+            this.userManager = userManager;
+            this.url = url;
+            }
+
+        public string HomePage
+            {
+            get
+                {
+                var requestUrl = url.RequestContext.HttpContext.Request.Url;
+                var fqUrl = url.Action("Index", "Home", null, requestUrl.Scheme);
+                //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
+                return fqUrl;
+                }
+            }
+
+        /// <summary>
+        ///     Notifies the user that an observation they submitted has been approved by a moderator.
+        /// </summary>
+        /// <param name="observation">The observation that has been approved.</param>
+        /// <returns>An awaitable Task.</returns>
+        public async Task ObservationApproved(Observation observation)
+            {
+            Log.Info($"Notifying user {observation.UserId} of observation approval for observation ID {observation.Id}");
+            var model = new ModerationEmailModel
+                {
+                ChallengeName = observation.Challenge.Name,
+                Points = observation.Challenge.Points,
+                InformationUrl = HomePage,
+                Recipient = observation.User.Email
+                };
+            var emailBody = razor.RunCompile("ObservationApproved.cshtml", typeof(ModerationEmailModel), model);
+            await userManager.SendEmailAsync(observation.UserId, "Observation approved", emailBody);
+            Log.Info($"Successfully notified user {observation.UserId} of observation approval");
+            }
+
+        public async Task BadgeAwarded(Badge badge, ApplicationUser user, MissionTrack track)
+            {
+            Log.Info($"Notifying user {user.Id} <{user.UserName}> of awarded badge id={badge.Id} name={badge.Name}");
+            var model = new BadgeAwardedEmailModel
+                {
+                Recipient = user.Email,
+                MissionTitle = track.MissionLevel.Mission.Title,
+                InformationUrl = HomePage,
+                BadgeName = badge.Name,
+                LevelAwardTitle = track.MissionLevel.AwardTitle,
+                TrackName = track.Name
+                };
+            var emailBody = razor.RunCompile("BadgeAwarded.cshtml", typeof(BadgeAwardedEmailModel), model);
+            await userManager.SendEmailAsync(user.Id, "Badge Awarded", emailBody);
+            Log.Info($"Successfully notified user {user.Id} <{user.UserName}> of awarded badge id={badge.Id} name={badge.Name}");
+            }
+        }
+    }

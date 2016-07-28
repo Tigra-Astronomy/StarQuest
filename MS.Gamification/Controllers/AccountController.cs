@@ -265,7 +265,6 @@ namespace MS.Gamification.Controllers
             {
             var emailModel = new VerificationTokenEmailModel
                 {
-                ApplicationName = "Star Quest",
                 CallbackUrl = callbackUrl,
                 InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
                 VerificationToken = code,

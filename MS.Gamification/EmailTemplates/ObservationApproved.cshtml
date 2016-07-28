@@ -1,0 +1,21 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<ModerationEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+
+<h2>Observation Approved</h2>
+<p>
+    Congratulations!
+    An observation you submitted has been approved by the moderator.
+</p>
+<p>
+    Challenge: @Model.ChallengeName<br/>
+    Points earned: @Model.Points
+</p>
+
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

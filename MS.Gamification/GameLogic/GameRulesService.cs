@@ -1,11 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-27@19:22
+// Last modified: 2016-07-28@13:42
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.Preconditions;
@@ -19,12 +20,14 @@ namespace MS.Gamification.GameLogic
         {
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
         private readonly IMapper mapper;
+        private readonly IGameNotificationService notifier;
         private readonly IUnitOfWork unitOfWork;
 
-        public GameRulesService(IUnitOfWork unitOfWork, IMapper mapper)
+        public GameRulesService(IUnitOfWork unitOfWork, IMapper mapper, IGameNotificationService notifier)
             {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            this.notifier = notifier;
             }
 
         /// <summary>
@@ -107,21 +110,30 @@ namespace MS.Gamification.GameLogic
         ///     Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
         /// </summary>
         /// <param name="observation">The observation that has just been approved for the user.</param>
-        public void EvaluateBadges(Observation observation)
+        public async Task EvaluateBadges(Observation observation)
             {
             var userId = observation.UserId;
-            var challenge = observation.Challenge;
-            var track = challenge.MissionTrack;
-            var badgeForTrack = track.Badge;
-            var alreadyHasBadge = badgeForTrack.Users.Any(p => p.Id == userId);
-            if (alreadyHasBadge)
-                return;
-            var eligibleObservationsSpec = new EligibleObservationsForChallenges(track.Challenges, userId);
-            var eligibleObservations = unitOfWork.Observations.AllSatisfying(eligibleObservationsSpec);
-            var percentComplete = ComputePercentComplete(track.Challenges, eligibleObservations);
-            if (percentComplete < 100)
-                return;
-            AwardBadge(badgeForTrack.Id, userId);
+            Log.Info($"Evaluating badges for user id={userId} name={observation.User.UserName}");
+            try
+                {
+                var challenge = observation.Challenge;
+                var track = challenge.MissionTrack;
+                var badgeForTrack = track.Badge;
+                var alreadyHasBadge = badgeForTrack.Users.Any(p => p.Id == userId);
+                if (alreadyHasBadge)
+                    return;
+                var eligibleObservationsSpec = new EligibleObservationsForChallenges(track.Challenges, userId);
+                var eligibleObservations = unitOfWork.Observations.AllSatisfying(eligibleObservationsSpec);
+                var percentComplete = ComputePercentComplete(track.Challenges, eligibleObservations);
+                if (percentComplete < 100)
+                    return;
+                AwardBadge(badgeForTrack.Id, userId);
+                await notifier.BadgeAwarded(badgeForTrack, observation.User, track);
+                }
+            finally
+                {
+                Log.Info($"Completed evaluating badges for user id={userId} name={observation.User.UserName}");
+                }
             }
 
         /// <summary>

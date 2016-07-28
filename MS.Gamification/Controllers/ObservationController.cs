@@ -193,7 +193,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult Details(int id)
             {
-            var specification = new SingleObservationWithNavigationProperties(id);
+            var specification = new SingleObservationWithChallengeAndUser(id);
             var maybeObservation = uow.Observations.GetMaybe(specification);
             if (maybeObservation.None)
                 return HttpNotFound("There is no observation with the specified ID");
