@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-28@13:42
+// Last modified: 2016-07-28@16:35
 
 using System;
 using System.Collections.Generic;
@@ -189,17 +189,17 @@ namespace MS.Gamification.GameLogic
         /// <param name="level">The level.</param>
         /// <param name="user">The user.</param>
         /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
-        public bool IsLevelUnlockedForUser(MissionLevel level, string userId)
+        public bool IsLevelUnlockedForUser(IPreconditionXml level, string userId)
             {
             var preconditionXml = level.Precondition ?? string.Empty;
-            var parser = new LevelPreconditionParser();
-            var rules = parser.ParsePreconditionXml(preconditionXml);
             var specification = new SingleUserWithBadges(userId);
             var maybeUser = unitOfWork.Users.GetMaybe(specification);
             if (maybeUser.None)
                 return false;
             if (string.IsNullOrWhiteSpace(preconditionXml))
                 return true; // No rules = unlocked
+            var parser = new LevelPreconditionParser();
+            var rules = parser.ParsePreconditionXml(preconditionXml);
             return rules.Evaluate(maybeUser.Single());
             }
         }

@@ -1,14 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: LevelUnlockingSpecs.cs  Created: 2016-07-26@09:12
-// Last modified: 2016-07-27@18:10
+// Last modified: 2016-07-28@18:10
 
 using System;
 using Machine.Specifications;
 using MS.Gamification.GameLogic;
-using MS.Gamification.Models;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;
+using MS.Gamification.ViewModels.Mission;
 
 namespace MS.Gamification.Tests.GameLogic
     {
@@ -21,7 +21,7 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithStandardUser("user", "Joe User")
                 .Build();
 
-            Level = new MissionLevel
+            Level = new LevelProgressViewModel
                 {
                 Precondition = string.Empty
                 };
@@ -29,7 +29,7 @@ namespace MS.Gamification.Tests.GameLogic
         Because of = () => isUnlocked = RulesService.IsLevelUnlockedForUser(Level, "user");
         It should_be_unlocked = () => isUnlocked.ShouldBeTrue();
         static bool isUnlocked;
-        static MissionLevel Level;
+        static LevelProgressViewModel Level;
         }
 
     [Subject(typeof(GameRulesService), "Level unlocking")]
@@ -41,7 +41,7 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithStandardUser("user", "Joe User")
                 .Build();
 
-            Level = new MissionLevel
+            Level = new LevelProgressViewModel
                 {
                 Precondition = TestData.FromEmbeddedResource("PreconditionsEngine.HasAll-1-2-4.xml")
                 };
@@ -49,7 +49,7 @@ namespace MS.Gamification.Tests.GameLogic
         Because of = () => isUnlocked = RulesService.IsLevelUnlockedForUser(Level, "user");
         It should_be_locked = () => isUnlocked.ShouldBeFalse();
         static bool isUnlocked;
-        static MissionLevel Level;
+        static LevelProgressViewModel Level;
         }
 
     [Subject(typeof(GameRulesService), "Level unlocking")]
@@ -62,7 +62,7 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithUserAwardedBadges("user", "Joe User", 1, 2, 4)
                 .Build();
 
-            Level = new MissionLevel
+            Level = new LevelProgressViewModel
                 {
                 Precondition = TestData.FromEmbeddedResource("PreconditionsEngine.HasAll-1-2-4.xml")
                 };
@@ -70,7 +70,7 @@ namespace MS.Gamification.Tests.GameLogic
         Because of = () => isUnlocked = RulesService.IsLevelUnlockedForUser(Level, "user");
         It should_be_unlocked = () => isUnlocked.ShouldBeTrue();
         static bool isUnlocked;
-        static MissionLevel Level;
+        static LevelProgressViewModel Level;
         }
 
     [Subject(typeof(GameRulesService), "Level unlocking")]

@@ -4,27 +4,13 @@
 // Last modified: 2016-07-22@09:29
 
 using System.Collections.Generic;
-using MS.Gamification.Models;
 
-namespace MS.Gamification.ViewModels
+namespace MS.Gamification.ViewModels.Mission
     {
     public class MissionProgressViewModel
         {
         public string MissionTitle { get; set; }
 
         public List<LevelProgressViewModel> Levels { get; set; } = new List<LevelProgressViewModel>();
-        }
-
-    public class LevelProgressViewModel
-        {
-        public int Level { get; set; }
-
-        public bool Unlocked { get; set; }
-
-        public IEnumerable<MissionTrack> Tracks { get; set; }
-
-        public int OverallProgressPercent { get; set; }
-
-        public List<int> TrackProgress { get; set; }
         }
     }

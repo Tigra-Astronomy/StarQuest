@@ -1,5 +1,5 @@
 ﻿@using MS.Gamification.HtmlHelpers
-@model MissionProgressViewModel
+@model MS.Gamification.ViewModels.Mission.MissionProgressViewModel
 
 @{
     ViewBag.Title = "Mission Progress";
@@ -53,7 +53,6 @@
 
                 foreach (var track in level.Tracks)
                      {
-                     var trackPercentComplete = level.TrackProgress[track.Number - 1];
                      <div class="panel panel-info">
                          <div class="panel-heading track">
                              <div class="row trackHeader">
@@ -62,8 +61,8 @@
                                  </div>
                                  <div class="col-md-6">
                                      <div class="progress">
-                                         <div class="progress-bar progress-success" role="progressbar" style="width: @trackPercentComplete%">
-                                             @trackPercentComplete% complete
+                                         <div class="progress-bar progress-success" role="progressbar" style="width: @track.PercentComplete%">
+                                             @track.PercentComplete% complete
                                          </div>
                                      </div>
                                  </div>
@@ -80,7 +79,18 @@
                                                  <a>Details</a>
                                              </div>
                                              <div class="col-md-3">
-                                                 <i class="fa fa-square-o"></i>
+                                                 @if (challenge.HasObservation)
+                                                     {
+                                                     <span class="text-success">
+                                                        <i class="fa fa-check-square-o"></i>
+                                                    </span>
+                                                     }
+                                                 else
+                                                     {
+                                                    <span class="text-warning">
+                                                        <i class="fa fa-square-o"></i>
+                                                    </span>
+                                                     }
                                                  @challenge.Points points
                                              </div>
                                              <div class="col-md-1">
