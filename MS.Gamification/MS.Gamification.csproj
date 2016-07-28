@@ -95,6 +95,10 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.NLog, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.NLog.1.7.0\lib\net45\Glimpse.NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=10.1.5.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.10.1.5\lib\net\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
@@ -301,6 +305,7 @@
     <Compile Include="GameLogic\GameRulesService.cs" />
     <Compile Include="GameLogic\IGameEngineService.cs" />
     <Compile Include="GameLogic\IGameNotificationService.cs" />
+    <Compile Include="GameLogic\IPreconditionXml.cs" />
     <Compile Include="GameLogic\Preconditions\CompositePredicate.cs" />
     <Compile Include="GameLogic\Preconditions\HasAll.cs" />
     <Compile Include="GameLogic\Preconditions\HasAny.cs" />
@@ -415,7 +420,10 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ManageLoginsViewModel.cs" />
     <Compile Include="ViewModels\ManageUserViewModel.cs" />
-    <Compile Include="ViewModels\MissionProgressViewModel.cs" />
+    <Compile Include="ViewModels\Mission\ChallengeViewModel.cs" />
+    <Compile Include="ViewModels\Mission\LevelProgressViewModel.cs" />
+    <Compile Include="ViewModels\Mission\MissionProgressViewModel.cs" />
+    <Compile Include="ViewModels\Mission\TrackProgressViewModel.cs" />
     <Compile Include="ViewModels\ModerationQueueViewModel.cs" />
     <Compile Include="ViewModels\ObservationDetailsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />

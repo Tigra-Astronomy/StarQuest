@@ -28,19 +28,19 @@ namespace MS.Gamification
         public Task SendAsync(IdentityMessage message)
             {
             // Plug in your email service here to send an email.
-            return configSendGridasync(message);
+            return PostSendGridMessageAsync(message);
             }
 
-        private Task configSendGridasync(IdentityMessage message)
+        private Task PostSendGridMessageAsync(IdentityMessage message)
             {
-            var myMessage = new SendGridMessage();
-            myMessage.AddTo(message.Destination);
+            var sgMessage = new SendGridMessage();
+            sgMessage.AddTo(message.Destination);
             var fromAddress = ConfigurationManager.AppSettings["mailFromAddress"];
             var fromName = ConfigurationManager.AppSettings["mailFromName"];
-            myMessage.From = new MailAddress(fromAddress, fromName);
-            myMessage.Subject = message.Subject;
-            myMessage.Text = message.Body;
-            myMessage.Html = message.Body;
+            sgMessage.From = new MailAddress(fromAddress, fromName);
+            sgMessage.Subject = message.Subject;
+            sgMessage.Text = message.Body;
+            sgMessage.Html = message.Body;
 
             var credentials = new NetworkCredential(
                 ConfigurationManager.AppSettings["mailAccount"],
@@ -50,13 +50,14 @@ namespace MS.Gamification
             // Create a Web transport for sending email.
             try
                 {
-                log.Info($"Sending registration confirmation mail to {message.Destination}:\n{message.Body}");
+                log.Info($"Sending mail to {message.Destination}", message);
+                log.Debug($"Sending mail to {message.Destination}:\n{message.Body}", message);
                 var transportWeb = new Web(credentials);
-                return transportWeb.DeliverAsync(myMessage);
+                return transportWeb.DeliverAsync(sgMessage);
                 }
             catch (Exception ex)
                 {
-                log.Error(ex, $"Failed to send message to: {message.Destination}");
+                log.Error(ex, $"Failed to send message to: {message.Destination}", message);
                 return Task.FromResult(0);
                 }
             }

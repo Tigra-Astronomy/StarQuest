@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionControllerSpecs.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-22@10:11
+// Last modified: 2016-07-28@20:37
 
 using System.Linq;
 using System.Web.Mvc;
@@ -9,7 +9,7 @@ using Machine.Specifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
-using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.Mission;
 
 /*
  * Mission Controller Behaviours
@@ -82,7 +82,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_have_expected_challenges_in_track_2 = () => tracks[1].Challenges.Count.ShouldEqual(2);
         It should_have_expected_challenges_in_track_3 = () => tracks[2].Challenges.Count.ShouldEqual(2);
         static ViewResult result;
-        static MissionTrack[] tracks;
+        static TrackProgressViewModel[] tracks;
         static MissionProgressViewModel model;
         }
 
@@ -151,9 +151,9 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation() // Track 3 = 100%
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
-        It should_compute_progress_for_track_1 = () => Model.Levels[0].TrackProgress[0].ShouldEqual(0);
-        It should_compute_progress_for_track_2 = () => Model.Levels[0].TrackProgress[1].ShouldEqual(50);
-        It should_compute_progress_for_track_3 = () => Model.Levels[0].TrackProgress[2].ShouldEqual(100);
+        It should_compute_progress_for_track_1 = () => Model.Levels[0].Tracks[0].PercentComplete.ShouldEqual(0);
+        It should_compute_progress_for_track_2 = () => Model.Levels[0].Tracks[1].PercentComplete.ShouldEqual(50);
+        It should_compute_progress_for_track_3 = () => Model.Levels[0].Tracks[2].PercentComplete.ShouldEqual(100);
         It should_compute_overall_progress = () => Model.Levels[0].OverallProgressPercent.ShouldEqual(50);
         static MissionProgressViewModel Model;
         }
@@ -170,9 +170,9 @@ namespace MS.Gamification.Tests.Controllers
             .WithObservation().ForUserId("user").ForChallenge(300).Approved().BuildObservation()
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
-        It should_compute_progress_for_track_1 = () => Model.Levels[0].TrackProgress[0].ShouldEqual(0);
-        It should_compute_progress_for_track_2 = () => Model.Levels[0].TrackProgress[1].ShouldEqual(0);
-        It should_compute_progress_for_track_3 = () => Model.Levels[0].TrackProgress[2].ShouldEqual(50);
+        It should_compute_progress_for_track_1 = () => Model.Levels[0].Tracks[0].PercentComplete.ShouldEqual(0);
+        It should_compute_progress_for_track_2 = () => Model.Levels[0].Tracks[1].PercentComplete.ShouldEqual(0);
+        It should_compute_progress_for_track_3 = () => Model.Levels[0].Tracks[2].PercentComplete.ShouldEqual(50);
         It should_compute_overall_progress = () => Model.Levels[0].OverallProgressPercent.ShouldEqual(100 / 6);
         static MissionProgressViewModel Model;
         }

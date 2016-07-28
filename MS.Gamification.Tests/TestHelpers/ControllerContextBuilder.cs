@@ -137,6 +137,7 @@ namespace MS.Gamification.Tests.TestHelpers
             var dataLoader = new ObjectDataLoader(data);
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
+            mapperConfiguration.AssertConfigurationIsValid();
             var mapper = mapperConfiguration.CreateMapper();
             var notifier = new FakeNotificationService();
             RulesService = new GameRulesService(UnitOfWork, mapper, notifier);
