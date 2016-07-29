@@ -1,0 +1,125 @@
+﻿@using MS.Gamification.HtmlHelpers
+@model MS.Gamification.ViewModels.UserProfile.UserProfileViewModel
+
+@{
+    ViewBag.Title = "User Profile";
+}
+
+<h2>User Profile</h2>
+
+<div class="row" id="userDetails">
+    <div class="col-md-8" id="userDetails">
+        <h3>@Model.UserName</h3>
+        @foreach (var title in Model.Titles)
+            {
+            <span class="badge">@title</span>
+            }
+    </div>
+    <div class="col-md-4" id="avatar">
+        @Html.GravatarImage(Model.EmailAddress, 200, GravatarHtmlHelper.DefaultImage.MysteryMan, rating: GravatarHtmlHelper.Rating.G)
+    </div>
+</div>
+<div class="row" id="badgeRow">
+    <div class="col-md-6">
+        <div class="panel panel-info" id="badgePanel">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <h3 class="panel-title">Latest Badges</h3>
+                    </div>
+                    <div class="col-xs-3 pull-right">
+                        <button type="button" class="btn btn-sm btn-default">See all &raquo;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @if (Model.Badges.Any())
+                    {
+                    <div class="row" id="badgeGallery">
+                        @foreach (var badgeImage in Model.Badges)
+                        {
+                        <div class="col-xs-3">
+                             @Html.Badge(badgeImage, new {@class = "img-responsive"})
+                        </div> }
+                    </div>
+                    }
+                else
+                    {
+                    <span>You don't have any badges yet... keep going!</span>
+                    }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info" id="logPanel">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <h3 class="panel-title">Recent Observations</h3>
+                    </div>
+                    <div class="col-xs-3 pull-right">
+                        <button type="button" class="btn btn-sm btn-default">See all &raquo;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                @if (Model.Observations.Any())
+                    {
+                    <table class="table table-hover table-responsive">
+                        @foreach (var observation in Model.Observations)
+                            {
+                            <tr>
+                                <td>@observation.DateTimeUtc</td>
+                                <td>@observation.ChallengeTitle</td>
+                            </tr>
+                            }
+                    </table>
+                    }
+                else
+                    {
+                    <span>You haven't submitted any observations yet. Investigate the My Missions page.</span>
+                    }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="missionRow">
+    <div class="col-md-6">
+        <div class="panel panel-info" id="missionsPanel">
+            <div class="panel-heading">
+                <h3 class="panel-title">My Missions</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Alpha Test Mission</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>Level 1</div>
+                        <div>Level 2</div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Alpha Test Mission</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div>Level 1</div>
+                        <div>Level 2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info" id="overalProgressPanel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Overall Progress</h3>
+            </div>
+            <div class="panel-body">
+                A nice graph here
+            </div>
+        </div>
+    </div>
+</div>
+

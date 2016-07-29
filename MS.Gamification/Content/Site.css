@@ -114,20 +114,21 @@ textarea.form-control { min-height: 10em; }
 }
 
 /* adapted from http://maxwells.github.io/bootstrap-tags.html */
+
 .tag {
-  font-size: 14px;
-  padding: .5em;
-  margin: 0 .1em;
+    font-size: 14px;
+    margin: 0 .1em;
+    padding: .5em;
 }
+
 .tag a {
-  color: #bbb;
-  cursor: pointer;
-  opacity: 0.6;
-  margin: 0 0 0 .3em;
+    color: #bbb;
+    cursor: pointer;
+    margin: 0 0 0 .3em;
+    opacity: 0.6;
 }
-.tag a:hover {
-  opacity: 1.0
-}
+
+.tag a:hover { opacity: 1.0 }
 
 .tag .remove {
     top: 0;
@@ -138,3 +139,5 @@ textarea.form-control { min-height: 10em; }
     color: #fff;
     /*margin-bottom: 2px;*/
 }
+
+img.gravatar { margin-bottom: 12px; }

@@ -324,6 +324,7 @@
     <Compile Include="Controllers\BadgeImageController.cs" />
     <Compile Include="Controllers\StaticImageController.cs" />
     <Compile Include="Controllers\RequiresAuthorization.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="DataAccess\EntityFramework6\BadgeRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\MissionTrackRepository.cs" />
     <Compile Include="DataAccess\PickListExtensions.cs" />
@@ -355,6 +356,7 @@
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\SingleUserWithProfileInformation.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />
@@ -399,6 +401,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlHelpers\GravatarHtmlHelper.cs" />
     <Compile Include="HtmlHelpers\IFileSystemService.cs" />
     <Compile Include="HtmlHelpers\WebServerImageStore.cs" />
     <Compile Include="HtmlHelpers\IImageStore.cs" />
@@ -469,6 +472,7 @@
     <Compile Include="ViewModels\SubmitObservationViewModel.cs" />
     <Compile Include="ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
     <Compile Include="ViewModels\UserAdministration\BatchObservationViewModel.cs" />
+    <Compile Include="ViewModels\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
   </ItemGroup>
@@ -829,6 +833,7 @@
     <Content Include="Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
     <Content Include="Views\UserAdministration\BatchObservationDetails.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
