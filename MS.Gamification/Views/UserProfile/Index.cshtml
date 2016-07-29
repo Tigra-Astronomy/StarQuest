@@ -28,7 +28,7 @@
                         <h3 class="panel-title">Latest Badges</h3>
                     </div>
                     <div class="col-xs-3 pull-right">
-                        <button type="button" class="btn btn-sm btn-default">See all &raquo;</button>
+                        <button type="button" class="btn btn-xs btn-default">See all &raquo;</button>
                     </div>
                 </div>
             </div>
@@ -37,10 +37,11 @@
                     {
                     <div class="row" id="badgeGallery">
                         @foreach (var badgeImage in Model.Badges)
-                        {
-                        <div class="col-xs-3">
-                             @Html.Badge(badgeImage, new {@class = "img-responsive"})
-                        </div> }
+                            {
+                            <div class="col-xs-3">
+                                @Html.Badge(badgeImage, new {@class = "img-responsive"})
+                            </div>
+                            }
                     </div>
                     }
                 else
@@ -58,7 +59,7 @@
                         <h3 class="panel-title">Recent Observations</h3>
                     </div>
                     <div class="col-xs-3 pull-right">
-                        <button type="button" class="btn btn-sm btn-default">See all &raquo;</button>
+                        <button type="button" class="btn btn-xs btn-default">See all &raquo;</button>
                     </div>
                 </div>
             </div>
@@ -90,24 +91,38 @@
                 <h3 class="panel-title">My Missions</h3>
             </div>
             <div class="panel-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Alpha Test Mission</h3>
+                @foreach (var mission in Model.Missions)
+                    {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9">
+                                    <h3 class="panel-title">@mission.MissionTitle</h3>
+                                </div>
+                                <div class="col-xs-3 pull-right">
+                                    <button type="button" class="btn btn-xs btn-default">Details &raquo;</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                @foreach (var level in mission.Levels)
+                                    {
+                                    <div class="col-xs-3">
+                                        Level @level.Level
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <div class="progress" role="progressbar">
+                                            <div class="progress-bar-success" style="width: @level.OverallProgressPercent%;">
+                                                @level.OverallProgressPercent%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <div>Level 1</div>
-                        <div>Level 2</div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Alpha Test Mission</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div>Level 1</div>
-                        <div>Level 2</div>
-                    </div>
-                </div>
+                    }
             </div>
         </div>
     </div>
@@ -122,4 +137,3 @@
         </div>
     </div>
 </div>
-

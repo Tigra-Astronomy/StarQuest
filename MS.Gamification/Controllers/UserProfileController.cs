@@ -1,25 +1,33 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: UserProfileController.cs  Created: 2016-07-29@15:35
-// Last modified: 2016-07-29@17:03
+// Last modified: 2016-07-29@21:03
 
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
+using MS.Gamification.Models;
+using MS.Gamification.ViewModels.Mission;
 using MS.Gamification.ViewModels.UserProfile;
 
 namespace MS.Gamification.Controllers
     {
     public class UserProfileController : RequiresAuthorization
         {
+        private readonly IGameEngineService gameEngine;
+        private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
         private readonly ICurrentUser user;
 
-        public UserProfileController(ICurrentUser user, IUnitOfWork uow)
+        public UserProfileController(ICurrentUser user, IUnitOfWork uow, IMapper mapper, IGameEngineService gameEngine)
             {
             this.user = user;
             this.uow = uow;
+            this.mapper = mapper;
+            this.gameEngine = gameEngine;
             }
 
         // GET: UserProfile
@@ -31,6 +39,9 @@ namespace MS.Gamification.Controllers
                 return HttpNotFound("User not found in the database");
             var appUser = maybeUser.Single();
             var badges = appUser.Badges.Take(showBadges).Select(p => p.ImageIdentifier);
+            var missionSpec = new MissionProgressSummary();
+            var missions = uow.Missions.AllSatisfying(missionSpec);
+            var missionViewModel = missions.Select(p => mapper.Map<Mission, MissionProgressViewModel>(p)).ToList();
             var model = new UserProfileViewModel
                 {
                 UserName = user.DisplayName,
@@ -43,8 +54,21 @@ namespace MS.Gamification.Controllers
                         {
                         DateTimeUtc = p.ObservationDateTimeUtc,
                         ChallengeTitle = p.Challenge.Name
-                        })
+                        }),
+                Missions = missionViewModel
                 };
+
+            var allChallenges = uow.Challenges.GetAll();
+            foreach (var mission in model.Missions)
+                {
+                foreach (var level in mission.Levels)
+                    {
+                    var challengesForLevel = allChallenges.Where(p => p.MissionTrack.MissionLevelId == level.Id);
+                    var observationSpec = new EligibleObservationsForChallenges(challengesForLevel, user.UniqueId);
+                    var eligibleObservations = uow.Observations.AllSatisfying(observationSpec);
+                    level.OverallProgressPercent = gameEngine.ComputePercentComplete(challengesForLevel, eligibleObservations);
+                    }
+                }
             return View(model);
             }
         }
