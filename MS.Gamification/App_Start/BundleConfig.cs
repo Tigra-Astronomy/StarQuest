@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-18@17:52
+// Last modified: 2016-07-29@13:11
 
 using System.Web.Optimization;
 
@@ -20,8 +20,12 @@ namespace MS.Gamification
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/modernizr-*"));
+
+            // Scripts that go in the <head> section of the HTML document
+            bundles.Add(new ScriptBundle("~/bundles/header").Include(
+                "~/Scripts/applicationInsights.js",
+                "~/Scripts/modernizr-*"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
@@ -35,6 +39,7 @@ namespace MS.Gamification
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                 "~/Scripts/DataTables/jquery.dataTables.js",
                 "~/Scripts/DataTables/dataTables.bootstrap.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/dataTables").Include(
                 "~/Content/DataTables/jquery.dataTables.css",
