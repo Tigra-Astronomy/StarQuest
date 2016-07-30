@@ -546,6 +546,7 @@
     <Content Include="App_Data\Badges\star-red.png" />
     <Content Include="App_Data\Badges\star-yellow.png" />
     <Content Include="App_Data\Badges\tick.png" />
+    <Content Include="App_Data\MS.Gamification.xml" />
     <Content Include="App_Data\ValidationImages\Jupiter.png" />
     <Content Include="App_Data\ValidationImages\M31.png" />
     <Content Include="App_Data\ValidationImages\M45-Pleiades.png" />
