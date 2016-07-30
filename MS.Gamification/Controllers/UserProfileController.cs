@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: UserProfileController.cs  Created: 2016-07-29@15:35
-// Last modified: 2016-07-29@21:03
+// Last modified: 2016-07-30@19:39
 
 using System.Linq;
 using System.Web.Mvc;
@@ -44,6 +44,7 @@ namespace MS.Gamification.Controllers
             var missionViewModel = missions.Select(p => mapper.Map<Mission, MissionProgressViewModel>(p)).ToList();
             var model = new UserProfileViewModel
                 {
+                UserId = user.UniqueId,
                 UserName = user.DisplayName,
                 EmailAddress = user.LoginName,
                 Titles = new[] {"Big Cheese", "Top Cat", "Legendary Monkton Stargazer", "Teacher's Pet"},

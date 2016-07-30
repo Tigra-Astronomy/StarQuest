@@ -50,6 +50,7 @@
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
+    <DocumentationFile>App_Data\MS.Gamification.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +59,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\MS.Gamification.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -194,8 +196,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="SendGridMail, Version=3.0.3.0, Culture=neutral, PublicKeyToken=2361874b6a2fe056, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\SendGridMail.dll</HintPath>
+      <HintPath>..\packages\SendGridMail.net40.3.0.3.0\lib\net40\SendGridMail.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -514,6 +516,7 @@
     <Compile Include="ViewModels\SubmitObservationViewModel.cs" />
     <Compile Include="ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
     <Compile Include="ViewModels\UserAdministration\BatchObservationViewModel.cs" />
+    <Compile Include="ViewModels\UserProfile\ObservationSummaryViewModel.cs" />
     <Compile Include="ViewModels\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\VerifyPhoneNumberViewModel.cs" />
@@ -743,7 +746,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\starquest.monktonstargazers.org - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\applicationInsights.js" />
@@ -751,6 +753,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\c3.js" />
     <Content Include="Scripts\c3.min.js" />
+    <Content Include="Scripts\cumulativeScoreGraph.js" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\d3.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -818,7 +821,6 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\jira-web-collector.js" />
-    <Content Include="Scripts\jquery-2.2.3.js" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
@@ -907,6 +909,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
+    <TypeScriptCompile Include="Scripts\typings\c3\c3.d.ts" />
+    <None Include="Scripts\typings\d3\d3.d.ts" />
+    <None Include="Scripts\typings\d3\plugins\d3.superformula.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>

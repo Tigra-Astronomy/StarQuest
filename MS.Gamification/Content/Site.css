@@ -128,7 +128,7 @@ textarea.form-control { min-height: 10em; }
     opacity: 0.6;
 }
 
-.tag a:hover { opacity: 1.0 }
+.tag a:hover { opacity: 1.0; }
 
 .tag .remove {
     top: 0;
@@ -141,3 +141,10 @@ textarea.form-control { min-height: 10em; }
 }
 
 img.gravatar { margin-bottom: 12px; }
+
+#chart {
+    margin: 24px;
+    padding: 0px;
+}
+
+.panel-body.c3 { min-height: 400px; }

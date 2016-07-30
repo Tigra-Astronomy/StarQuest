@@ -1,9 +1,8 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserProfileViewModel.cs  Created: 2016-07-29@16:14
-// Last modified: 2016-07-29@20:01
+// Last modified: 2016-07-30@19:39
 
-using System;
 using System.Collections.Generic;
 using MS.Gamification.ViewModels.Mission;
 
@@ -22,12 +21,7 @@ namespace MS.Gamification.ViewModels.UserProfile
         public IEnumerable<ObservationSummaryViewModel> Observations { get; set; }
 
         public IEnumerable<MissionProgressViewModel> Missions { get; set; }
-        }
 
-    public class ObservationSummaryViewModel
-        {
-        public DateTime DateTimeUtc { get; set; }
-
-        public string ChallengeTitle { get; set; }
+        public string UserId { get; set; }
         }
     }

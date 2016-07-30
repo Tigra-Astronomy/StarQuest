@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-28@13:19
+// Last modified: 2016-07-30@13:39
 
 using System;
 using System.Collections.Generic;
@@ -37,9 +37,9 @@ namespace MS.Gamification.Tests.TestHelpers
         string requestUsername = string.Empty;
         string[] requestUserRoles;
 
-        public IUnitOfWork UnitOfWork { get; private set; }
+        public IUnitOfWork UnitOfWork { get; internal set; }
 
-        public GameRulesService RulesService { get; private set; }
+        public IGameEngineService RulesService { get; internal set; }
 
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace MS.Gamification.Tests.TestHelpers
             return this;
             }
 
-        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId, GameRulesService rulesService)
+        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId, IGameEngineService rulesService)
             {
             var requestUserId = userId;
             IKernel kernel = new StandardKernel();

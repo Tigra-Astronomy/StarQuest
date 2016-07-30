@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
-// Last modified: 2016-07-27@19:03
+// Last modified: 2016-07-30@13:47
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -36,5 +36,22 @@ namespace MS.Gamification.GameLogic
         /// </summary>
         /// <param name="observation">The observation that has just been approved for the user.</param>
         Task EvaluateBadges(Observation observation);
+
+        /// <summary>
+        ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <param name="user">The user.</param>
+        /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        bool IsLevelUnlockedForUser(IPreconditionXml level, string userId);
+
+        /// <summary>
+        ///     Determines whether the supplied set of observations are sufficient to complete the given level.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <param name="observations">The observations.</param>
+        /// <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        bool IsLevelComplete(MissionLevel level, IEnumerable<Observation> observations);
         }
     }

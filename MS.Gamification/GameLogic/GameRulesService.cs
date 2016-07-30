@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-28@16:35
+// Last modified: 2016-07-30@13:47
 
 using System;
 using System.Collections.Generic;
@@ -137,6 +137,52 @@ namespace MS.Gamification.GameLogic
             }
 
         /// <summary>
+        ///     Determines whether the supplied set of observations are sufficient to complete the given level.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <param name="observations">The observations.</param>
+        /// <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public bool IsLevelComplete(MissionLevel level, IEnumerable<Observation> observations)
+            {
+            var eligibleObservations = observations as IList<Observation> ?? observations.ToList();
+            foreach (var track in level.Tracks)
+                {
+                var percentComplete = ComputePercentComplete(track.Challenges, eligibleObservations);
+                if (percentComplete == 100) return true;
+                }
+            return false;
+            }
+
+        /// <summary>
+        ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <param name="user">The user.</param>
+        /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        public bool IsLevelUnlockedForUser(IPreconditionXml level, string userId)
+            {
+            try
+                {
+                var preconditionXml = level.Precondition ?? string.Empty;
+                var specification = new SingleUserWithBadges(userId);
+                var maybeUser = unitOfWork.Users.GetMaybe(specification);
+                if (maybeUser.None)
+                    return false;
+                if (string.IsNullOrWhiteSpace(preconditionXml))
+                    return true; // No rules = unlocked
+                var parser = new LevelPreconditionParser();
+                var rules = parser.ParsePreconditionXml(preconditionXml);
+                return rules.Evaluate(maybeUser.Single());
+                }
+            catch (Exception e)
+                {
+                Log.Error(e, $"Error while evaluating level access for user {userId}", level);
+                return false;
+                }
+            }
+
+        /// <summary>
         ///     Awards a badge to a user.
         /// </summary>
         /// <param name="badgeId">The badge identifier.</param>
@@ -163,44 +209,6 @@ namespace MS.Gamification.GameLogic
                 }
             badge.Users.Add(maybeUser.Single());
             unitOfWork.Commit();
-            }
-
-        /// <summary>
-        ///     Determines whether the supplied set of observations are sufficient to complete the given level.
-        /// </summary>
-        /// <param name="level">The level.</param>
-        /// <param name="observations">The observations.</param>
-        /// <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public bool IsLevelComplete(MissionLevel level, IEnumerable<Observation> observations)
-            {
-            var eligibleObservations = observations as IList<Observation> ?? observations.ToList();
-            foreach (var track in level.Tracks)
-                {
-                var percentComplete = ComputePercentComplete(track.Challenges, eligibleObservations);
-                if (percentComplete == 100) return true;
-                }
-            return false;
-            }
-
-        /// <summary>
-        ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
-        /// </summary>
-        /// <param name="level">The level.</param>
-        /// <param name="user">The user.</param>
-        /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
-        public bool IsLevelUnlockedForUser(IPreconditionXml level, string userId)
-            {
-            var preconditionXml = level.Precondition ?? string.Empty;
-            var specification = new SingleUserWithBadges(userId);
-            var maybeUser = unitOfWork.Users.GetMaybe(specification);
-            if (maybeUser.None)
-                return false;
-            if (string.IsNullOrWhiteSpace(preconditionXml))
-                return true; // No rules = unlocked
-            var parser = new LevelPreconditionParser();
-            var rules = parser.ParsePreconditionXml(preconditionXml);
-            return rules.Evaluate(maybeUser.Single());
             }
         }
     }

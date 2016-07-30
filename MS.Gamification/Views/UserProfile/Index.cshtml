@@ -4,6 +4,10 @@
 @{
     ViewBag.Title = "User Profile";
 }
+@section styles
+{
+    @Styles.Render("~/Content/c3Charts")
+}
 
 <h2>User Profile</h2>
 
@@ -131,9 +135,46 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Overall Progress</h3>
             </div>
-            <div class="panel-body">
-                A nice graph here
+            <div class="panel-body" id="chart">
             </div>
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/c3Charts")
+    @*<script src="~/Scripts/cumulativeScoreGraph.js"></script>*@
+    <script>
+        $(document)
+            .ready(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:11901/api/cumulativescore/@Model.UserId",
+                    dataType: "json",
+                    success: function(webData) {
+                        var chart = c3.generate({
+                            bindto: "#chart",
+                            data: {
+                                type:"spline",
+                                json: webData,
+                                x: "dates",
+                                y: "scores",
+                                names: {
+                                    scores: "Points"
+                                }
+                            },
+                            axis: {
+                                x: {
+                                    type: "timeseries",
+                                    tick: {
+                                        format: "%Y-%m-%d"
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+    </script>
+}

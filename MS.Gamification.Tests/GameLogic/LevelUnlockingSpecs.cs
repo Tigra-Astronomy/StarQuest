@@ -4,7 +4,9 @@
 // Last modified: 2016-07-28@18:10
 
 using System;
+using FakeItEasy;
 using Machine.Specifications;
+using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;
@@ -76,8 +78,23 @@ namespace MS.Gamification.Tests.GameLogic
     [Subject(typeof(GameRulesService), "Level unlocking")]
     class when_evaluating_level_preconditions_and_something_throws : with_standard_mission<DummyGameController>
         {
-        //ToDo - implement this test context
-        Because of = () => { throw new NotImplementedException(); };
-        It should_be_locked;
+        Establish context = () =>
+            {
+            var fakeUow = A.Fake<IUnitOfWork>();
+            A.CallTo(() => fakeUow.Users).Throws(new Exception("You've been unit tested"));
+            ContextBuilder.UnitOfWork = fakeUow;
+            ControllerUnderTest = ContextBuilder
+                .WithUserAwardedBadges("user", "Joe User", 1, 2, 4)
+                .Build();
+
+            Level = new LevelProgressViewModel
+                {
+                Precondition = TestData.FromEmbeddedResource("PreconditionsEngine.HasAll-1-2-4.xml")
+                };
+        };
+        Because of = () => isUnlocked = RulesService.IsLevelUnlockedForUser(Level, "user");
+        It should_be_locked = () => isUnlocked.ShouldBeFalse();
+        static LevelProgressViewModel Level;
+        static bool isUnlocked;
         }
     }

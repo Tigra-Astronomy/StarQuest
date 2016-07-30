@@ -6,6 +6,7 @@
 using Machine.Specifications;
 using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Tests.TestHelpers;
+using MS.Gamification.Tests.TestHelpers.Fakes;
 
 namespace MS.Gamification.Tests.HtmlHelpers
     {

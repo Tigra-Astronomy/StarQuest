@@ -187,12 +187,12 @@
     <Compile Include="TestHelpers\DummyController.cs" />
     <Compile Include="TestHelpers\EffortExtensions.cs" />
     <Compile Include="TestHelpers\EffortUnitOfWorkBuilder.cs" />
-    <Compile Include="TestHelpers\FakeFileSystem.cs" />
-    <Compile Include="TestHelpers\FakeHttpServerUtility.cs" />
     <Compile Include="TestHelpers\Fakes\FakeCurrentUser.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeFileSystem.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpContext.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpRequest.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpResponse.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpServerUtility.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpSessionState.cs" />
     <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
     <Compile Include="TestHelpers\Fakes\FakeNotificationService.cs" />
