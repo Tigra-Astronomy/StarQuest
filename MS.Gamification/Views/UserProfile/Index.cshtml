@@ -147,10 +147,11 @@
     @*<script src="~/Scripts/cumulativeScoreGraph.js"></script>*@
     <script>
         $(document)
-            .ready(function() {
+            .ready(function () {
+                var apiUrl = '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "CumulativeScore", id = Model.UserId })';
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:11901/api/cumulativescore/@Model.UserId",
+                    url: apiUrl,
                     dataType: "json",
                     success: function(webData) {
                         var chart = c3.generate({
