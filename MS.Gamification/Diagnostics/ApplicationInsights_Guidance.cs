@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ApplicationInsights_Guidance.cs  Created: 2016-07-29@12:12
-// Last modified: 2016-07-29@12:20
+// Last modified: 2016-07-29@16:21
 
 using System;
 using System.Diagnostics;
@@ -23,7 +23,7 @@ namespace MS.Gamification.Diagnostics
                 dependency();
                 success = true;
                 }
-            catch (Exception ex)
+            catch (Exception)
                 {
                 success = false;
                 throw;

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: LevelProgressViewModel.cs  Created: 2016-07-28@15:54
-// Last modified: 2016-07-28@20:36
+// Last modified: 2016-07-29@20:34
 
 using System.Collections.Generic;
 using MS.Gamification.GameLogic;
@@ -18,6 +18,8 @@ namespace MS.Gamification.ViewModels.Mission
         public List<TrackProgressViewModel> Tracks { get; set; }
 
         public int OverallProgressPercent { get; set; }
+
+        public int Id { get; set; }
 
         public string Precondition { get; set; }
         }

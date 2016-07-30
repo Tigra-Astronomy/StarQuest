@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace MS.Gamification.Tests.TestHelpers
+namespace MS.Gamification.Tests.TestHelpers.Fakes
     {
     class FakeHttpServerUtility : HttpServerUtilityBase
         {

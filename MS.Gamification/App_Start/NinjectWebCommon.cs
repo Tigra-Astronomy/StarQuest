@@ -1,13 +1,14 @@
 // This file is part of the MS.Gamification project
 // 
 // File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-27@22:05
+// Last modified: 2016-07-29@22:41
 
 using System;
 using System.Configuration;
 using System.Data.Entity;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -78,6 +79,8 @@ namespace MS.Gamification
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+                // Register Ninject as the resolver for WebAPI controllers
+                GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
                 return kernel;
                 }
             catch

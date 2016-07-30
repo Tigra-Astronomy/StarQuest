@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: NotificationController.cs  Created: 2016-06-06@21:07
-// Last modified: 2016-06-06@22:28
+// File: NotificationController.cs  Created: 2016-06-06@23:38
+// Last modified: 2016-07-30@20:04
 
 using System.Linq;
 using System.Web.Mvc;
@@ -14,7 +14,7 @@ namespace MS.Gamification.Controllers
     {
     public class NotificationController : Controller
         {
-        readonly IUnitOfWork uow;
+        private readonly IUnitOfWork uow;
 
         public NotificationController(IUnitOfWork uow)
             {
@@ -30,7 +30,10 @@ namespace MS.Gamification.Controllers
             var query = new ObservationsAwaitingModeration();
             query.FetchStrategy = new GenericFetchStrategy<Observation>();
             var results = uow.Observations.AllSatisfying(query);
-            return View(results.Count());
+            var count = results.Count();
+            if (count == 0)
+                return new EmptyResult();
+            return View(count);
             }
         }
     }

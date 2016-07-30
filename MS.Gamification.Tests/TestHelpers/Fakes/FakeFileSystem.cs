@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using MS.Gamification.HtmlHelpers;
 
-namespace MS.Gamification.Tests.TestHelpers
+namespace MS.Gamification.Tests.TestHelpers.Fakes
     {
     class FakeFileSystem : IFileSystemService
         {

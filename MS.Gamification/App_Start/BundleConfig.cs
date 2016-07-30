@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-29@13:11
+// Last modified: 2016-07-30@19:23
 
 using System.Web.Optimization;
 
@@ -50,6 +50,13 @@ namespace MS.Gamification
                 "~/Content/bootstrap.css",
                 "~/Content/font-awesome.css",
                 "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/c3Charts").Include(
+                "~/Scripts/d3.js",
+                "~/Scripts/c3.js"));
+
+            bundles.Add(new StyleBundle("~/Content/c3Charts").Include(
+                "~/Content/c3.css"));
             }
         }
     }
