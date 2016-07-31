@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: CumulativeScoreController.cs  Created: 2016-07-29@21:38
-// Last modified: 2016-07-30@19:48
+// Last modified: 2016-07-31@20:04
 
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +46,7 @@ namespace MS.Gamification.Controllers.Api
             var user = maybeUser.Single();
             var groupQuery = from observation in user.Observations
                              where observation.Status == ModerationState.Approved
+                             orderby observation.ObservationDateTimeUtc
                              let dt = observation.ObservationDateTimeUtc
                              let date = dt.Date
                              group observation by date
@@ -55,12 +56,12 @@ namespace MS.Gamification.Controllers.Api
             var dayCount = dailyScores.Count;
             var scores = new List<int>(dayCount);
             var dates = new List<string>(dayCount);
-            var runnintTotal = 0;
+            var runningTotal = 0;
             foreach (var day in dailyScores)
                 {
-                runnintTotal += day.Score;
-                scores.Add(runnintTotal);
-                dates.Add($"{day.Date:yyyy-mm-dd}");
+                runningTotal += day.Score;
+                scores.Add(runningTotal);
+                dates.Add($"{day.Date:yyyy-MM-dd}");
                 }
             var pointsJournal = new {dates, scores};
             return Ok(pointsJournal);
