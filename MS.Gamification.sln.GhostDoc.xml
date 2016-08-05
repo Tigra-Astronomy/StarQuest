@@ -16,7 +16,6 @@
     <OutputPath>.\Help</OutputPath>
     <CleanupOutputPath>true</CleanupOutputPath>
     <HelpFileName>MS.Gamification</HelpFileName>
-    <HelpFileNamingMethod>MemberName</HelpFileNamingMethod>
     <ImageFolderPath />
     <Theme>FlatGray</Theme>
     <HtmlFormats>
