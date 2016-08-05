@@ -14,6 +14,7 @@ using System.Web;
 using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess.EntityFramework6;
 

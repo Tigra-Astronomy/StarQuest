@@ -5,7 +5,7 @@
 
 using System.Web.Mvc;
 
-namespace MS.Gamification.Controllers
+namespace MS.Gamification.Areas.Admin.Controllers
     {
     [Authorize(Roles = AdministratorRoleName)]
     public class RequiresAdministratorRights : Controller

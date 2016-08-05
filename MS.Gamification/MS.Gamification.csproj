@@ -335,6 +335,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChallengeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -414,8 +418,6 @@
     <Compile Include="GameLogic\QuerySpecifications\SingleObservationWithChallengeAndUser.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\RequiresAdministratorRights.cs" />
-    <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\ChallengesInMissionLevel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -423,7 +425,6 @@
     <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
-    <Compile Include="Controllers\UserAdministrationController.cs" />
     <Compile Include="Controllers\ValidationImageController.cs" />
     <Compile Include="DataAccess\AsyncExtensions.cs" />
     <Compile Include="DataAccess\AspNetIdentityCurrentUser.cs" />
@@ -744,6 +745,23 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="EmailTemplates\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Challenge\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenge\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenge\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenge\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\BatchObservationDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\BatchObservations.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\CreateUserAccounts.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ManageUser.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ManageUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ReplacementToken.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ResendInvitation.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\TokenExpired.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\UserProfile.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -874,10 +892,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Challenge\Index.cshtml" />
-    <Content Include="Views\Challenge\Create.cshtml" />
-    <Content Include="Views\Challenge\Delete.cshtml" />
-    <Content Include="Views\Challenge\Edit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
@@ -894,18 +908,6 @@
     <Content Include="Views\Mission\Progress.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Observation\Details.cshtml" />
-    <Content Include="Views\UserAdministration\UserProfile.cshtml" />
-    <Content Include="Views\UserAdministration\Index.cshtml" />
-    <Content Include="Views\UserAdministration\CreateUserAccounts.cshtml" />
-    <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
-    <Content Include="Views\UserAdministration\ManageUsers.cshtml" />
-    <Content Include="Views\UserAdministration\ManageUser.cshtml" />
-    <Content Include="Views\UserAdministration\TokenExpired.cshtml" />
-    <Content Include="Views\UserAdministration\ReplacementToken.cshtml" />
-    <Content Include="Views\UserAdministration\ResendInvitation.cshtml" />
-    <Content Include="Views\UserAdministration\BatchObservations.cshtml" />
-    <Content Include="Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
-    <Content Include="Views\UserAdministration\BatchObservationDetails.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
@@ -932,6 +934,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="IdentityHelpers\" />
   </ItemGroup>
   <PropertyGroup>

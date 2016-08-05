@@ -23,7 +23,7 @@ using NLog;
 using RazorEngine.Templating;
 using Constants = MS.Gamification.GameLogic.Constants;
 
-namespace MS.Gamification.Controllers
+namespace MS.Gamification.Areas.Admin.Controllers
     {
     [Authorize]
     public class UserAdministrationController : RequiresAdministratorRights

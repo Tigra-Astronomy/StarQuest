@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Machine.Specifications;
+using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.Controllers;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;

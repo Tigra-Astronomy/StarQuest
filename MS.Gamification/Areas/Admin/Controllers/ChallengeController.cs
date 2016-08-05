@@ -10,7 +10,7 @@ using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 
-namespace MS.Gamification.Controllers
+namespace MS.Gamification.Areas.Admin.Controllers
     {
     public class ChallengeController : RequiresAdministratorRights
         {
