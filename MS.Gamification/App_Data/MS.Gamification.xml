@@ -26,6 +26,12 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="T:MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BatchObservationViewModel">
+            <summary>
+                Contains all of the details for an observation, plus a list of users.
+            </summary>
+            <seealso cref="T:MS.Gamification.ViewModels.ObservationDetailsViewModel" />
+        </member>
         <member name="M:MS.Gamification.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
             <summary>
             Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
@@ -1518,12 +1524,6 @@
             <summary>
                 Data transfer object used to display the moderation queue
             </summary>
-        </member>
-        <member name="T:MS.Gamification.ViewModels.UserAdministration.BatchObservationViewModel">
-            <summary>
-                Contains all of the details for an observation, plus a list of users.
-            </summary>
-            <seealso cref="T:MS.Gamification.ViewModels.ObservationDetailsViewModel" />
         </member>
     </members>
 </doc>

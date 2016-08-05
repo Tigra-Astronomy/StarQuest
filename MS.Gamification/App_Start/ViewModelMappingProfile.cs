@@ -4,10 +4,11 @@
 // Last modified: 2016-07-28@18:11
 
 using AutoMapper;
+using MS.Gamification.Areas.Admin.ViewModels;
+using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using MS.Gamification.ViewModels.Mission;
-using MS.Gamification.ViewModels.UserAdministration;
 
 namespace MS.Gamification.App_Start
     {

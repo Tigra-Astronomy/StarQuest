@@ -4,8 +4,9 @@
 // Last modified: 2016-07-24@03:54
 
 using System.Collections.Generic;
+using MS.Gamification.ViewModels;
 
-namespace MS.Gamification.ViewModels.UserAdministration
+namespace MS.Gamification.Areas.Admin.ViewModels.UserAdministration
     {
     /// <summary>
     ///     Contains all of the details for an observation, plus a list of users.

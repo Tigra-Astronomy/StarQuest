@@ -1,4 +1,4 @@
-﻿// This file is part of the MS.Gamification project
+// This file is part of the MS.Gamification project
 // 
 // File: ManageUserViewModel.cs  Created: 2016-07-18@16:30
 // Last modified: 2016-07-18@22:23
@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MS.Gamification.ViewModels
+namespace MS.Gamification.Areas.Admin.ViewModels
     {
     public class ManageUserViewModel
         {

@@ -16,11 +16,13 @@
                 <li>@Html.ActionLink("My Observations", "Index", "Observation")</li>
                 @if (User.IsInRole("Administrator"))
                     {
-                    <li>@Html.ActionLink("Admin Dashboard", "Index", "UserAdministration")</li>
+                    <li>
+                        @Html.RouteLink("Admin Dashboard", "Admin_default", new {controller="UserAdministration", action="Index"})
+                    </li>
                     }
             </ul>
             @{
-                Html.RenderAction("ModerationQueue", "Notification");
+                Html.RenderAction("ModerationQueue", "Notification", new {area=string.Empty});
             }
             @Html.Partial("_LoginPartial")
         </div>

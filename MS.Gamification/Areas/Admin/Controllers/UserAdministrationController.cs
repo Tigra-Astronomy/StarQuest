@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-07-18@16:18
-// Last modified: 2016-07-24@14:04
+// File: UserAdministrationController.cs  Created: 2016-08-05@19:34
+// Last modified: 2016-08-05@20:35
 
 using System;
 using System.Collections.Generic;
@@ -13,12 +13,13 @@ using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MS.Gamification.Areas.Admin.ViewModels;
+using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
-using MS.Gamification.ViewModels.UserAdministration;
 using NLog;
 using RazorEngine.Templating;
 using Constants = MS.Gamification.GameLogic.Constants;
@@ -167,7 +168,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ReplacementToken(ForgotViewModel model)
+        public async Task<ActionResult> ReplacementToken(ResendInvitationViewModel model)
             {
             if (!ModelState.IsValid)
                 {
@@ -192,7 +193,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> ResendInvitation(ForgotViewModel model)
+        public async Task<ActionResult> ResendInvitation(ResendInvitationViewModel model)
             {
             if (!ModelState.IsValid)
                 {
@@ -201,6 +202,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             try
                 {
                 var user = await userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                    throw new ArgumentException("No such user");
                 await SendNotificationEmail(user.Id, model.Email);
                 }
             catch (Exception e)

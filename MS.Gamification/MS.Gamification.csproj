@@ -339,6 +339,10 @@
     <Compile Include="Areas\Admin\Controllers\ChallengeController.cs" />
     <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
     <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ManageUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ResendInvitationViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -502,7 +506,6 @@
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ManageLoginsViewModel.cs" />
-    <Compile Include="ViewModels\ManageUserViewModel.cs" />
     <Compile Include="ViewModels\Mission\ChallengeViewModel.cs" />
     <Compile Include="ViewModels\Mission\LevelProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\MissionProgressViewModel.cs" />
@@ -515,8 +518,6 @@
     <Compile Include="ViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SubmitObservationViewModel.cs" />
-    <Compile Include="ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
-    <Compile Include="ViewModels\UserAdministration\BatchObservationViewModel.cs" />
     <Compile Include="ViewModels\UserProfile\ObservationSummaryViewModel.cs" />
     <Compile Include="ViewModels\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
@@ -762,6 +763,7 @@
     <Content Include="Areas\Admin\Views\UserAdministration\ResendInvitation.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\TokenExpired.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\UserProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
