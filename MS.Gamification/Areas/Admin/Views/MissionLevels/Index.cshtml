@@ -44,7 +44,10 @@
             @Html.DisplayFor(modelItem => item.AwardTitle)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Precondition)
+            @if (!string.IsNullOrWhiteSpace(item.Precondition))
+                {
+                <i class="fa fa-lock"></i>
+                }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

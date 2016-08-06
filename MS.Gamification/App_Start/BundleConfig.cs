@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-30@19:23
+// Last modified: 2016-08-06@17:01
 
 using System.Web.Optimization;
 
@@ -57,6 +57,22 @@ namespace MS.Gamification
 
             bundles.Add(new StyleBundle("~/Content/c3Charts").Include(
                 "~/Content/c3.css"));
+
+            bundles.Add(new ScriptBundle("~/Scripts/preconditionReadOnly").Include(
+                "~/Scripts/codemirror-3.01/codemirror.js",
+                "~/Scripts/codemirror-3.01/mode/xml.js",
+                "~/Scripts/preconditionReadonly.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Scripts/preconditionEditor").Include(
+                "~/Scripts/codemirror-3.01/codemirror.js",
+                "~/Scripts/codemirror-3.01/mode/xml.js",
+                "~/Scripts/preconditionEditable.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/codeMirror.css").Include(
+                "~/Content/codemirror-3.01/codemirror.css",
+                "~/Content/codemirror-3.0/theme/ambiance.css"));
             }
         }
     }

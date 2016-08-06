@@ -1128,6 +1128,13 @@
             <returns>Task.</returns>
             <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
         </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteLevelAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
+        </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
             <summary>
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
@@ -1193,6 +1200,13 @@
             <param name="id">The identifier.</param>
             <returns>Task.</returns>
             <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteLevelAsync(System.Int32)">
+            <summary>
+            Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the level could not be deleted.</exception>
         </member>
         <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
             <summary>

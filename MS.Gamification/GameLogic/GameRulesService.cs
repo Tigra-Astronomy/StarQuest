@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-06@10:59
+// Last modified: 2016-08-06@16:24
 
 using System;
 using System.Collections.Generic;
@@ -180,6 +180,16 @@ namespace MS.Gamification.GameLogic
             unitOfWork.Missions.Remove(mission);
             await unitOfWork.CommitAsync();
             Log.Info($"Delete mission id={mission.Id} title={mission.Title} SUCCEEDED");
+            }
+
+        /// <summary>
+        ///     Deletes the specified mission level, if it is safe to do so.
+        /// </summary>
+        /// <param name="levelId">The ID of the level to be deleted.</param>
+        /// <exception cref="InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
+        public Task DeleteLevelAsync(int levelId)
+            {
+            throw new InvalidOperationException("Deleting levels is not currently supported");
             }
 
         /// <summary>

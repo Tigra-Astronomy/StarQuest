@@ -62,5 +62,12 @@ namespace MS.Gamification.GameLogic
         /// <returns>Task.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the mission could not be deleted.</exception>
         Task DeleteMissionAsync(int id);
+
+        /// <summary>
+        /// Deletes the specified mission level, if it is safe to do so.
+        /// </summary>
+        /// <param name="levelId">The ID of the level to be deleted.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the level could not be deleted.</exception>
+        Task DeleteLevelAsync(int levelId);
         }
     }

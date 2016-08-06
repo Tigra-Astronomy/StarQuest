@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-07-28@18:11
+// Last modified: 2016-08-06@17:36
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -41,15 +41,16 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.User, m => m.Ignore())
                 .ForMember(m => m.UserId, m => m.Ignore());
             CreateMap<Challenge, ChallengeViewModel>()
-                .ForMember(m=>m.HasObservation,m=>m.Ignore());
+                .ForMember(m => m.HasObservation, m => m.Ignore());
             CreateMap<MissionTrack, TrackProgressViewModel>()
-                .ForMember(m=>m.PercentComplete,m=>m.Ignore());
+                .ForMember(m => m.PercentComplete, m => m.Ignore());
             CreateMap<MissionLevel, LevelProgressViewModel>()
-                .ForMember(m=>m.Unlocked,m=>m.Ignore())
-                .ForMember(m=>m.OverallProgressPercent,m=>m.Ignore());
+                .ForMember(m => m.Unlocked, m => m.Ignore())
+                .ForMember(m => m.OverallProgressPercent, m => m.Ignore());
             CreateMap<Mission, MissionProgressViewModel>()
                 .ForMember(m => m.MissionTitle, m => m.MapFrom(s => s.Title))
                 .ForMember(m => m.Levels, m => m.MapFrom(s => s.MissionLevels));
+            CreateMap<MissionLevel, MissionLevel>();
             }
         }
     }

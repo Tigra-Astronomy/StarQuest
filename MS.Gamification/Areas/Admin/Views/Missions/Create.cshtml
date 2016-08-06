@@ -45,27 +45,11 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/codemirror-3.01/codemirror.js"></script>
-    <script src="~/Scripts/codemirror-3.01/mode/xml.js" type="text/javascript"></script>
-    <script type="text/javascript" language="javascript">
-        var editor = CodeMirror.fromTextArea(document.getElementById("precondition"),
-            {
-                mode: "xml",
-                matchClosing: true,
-                smartIndent: true,
-                electricChars: true,
-                value:
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\r\n<LevelPrecondition xmlns=\"http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd\"\r\n                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n                   xsi:schemaLocation=\"http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd LevelPreconditionSchema.xsd\">\r\n\r\n</LevelPrecondition>"
-            });
-    </script>
+    @Scripts.Render("~/Scripts/preconditionEditor");
 }
 @section styles
 {
-    <link href="~/Content/codemirror-3.01/codemirror.css" rel="stylesheet" type="text/css"/>
-    <style>
-        .CodeMirror {
-            border: 1px solid #334;
-            /*width: 800px;*/
-        }
-    </style>
+    @Styles.Render("~/Content/codeMirror.css");
 }
+
+

@@ -47,12 +47,21 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Precondition)
-        </dd>
-
+            <textarea id="precondition">
+                @Html.DisplayFor(model => model.Precondition)
+            </textarea> </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts
+{
+    @Scripts.Render("~/Scripts/preconditionReadOnly");
+}
+@section styles
+{
+    @Styles.Render("~/Content/codeMirror.css");
+}
