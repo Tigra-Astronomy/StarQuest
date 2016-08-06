@@ -111,7 +111,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
-        public IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification)
+        public IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut:class
             {
             var query = QueryWithFetchStrategy(specification);
             return query.ToList(); // Materialize the query to an enumerable list.
@@ -122,7 +122,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="specification"></param>
         /// <returns>A query that includes eager loading of specified related entities.</returns>
-        IQueryable<TEntity> QueryWithFetchStrategy(IQuerySpecification<TEntity> specification)
+        IQueryable<TOut> QueryWithFetchStrategy<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut : class
             {
             var query = specification.GetQuery(Context.Set<TEntity>());
             foreach (var includePath in specification.FetchStrategy.IncludePaths)
@@ -141,14 +141,14 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <exception cref="InvalidOperationException">
         ///     More than one result was returned; check your specification!
         /// </exception>
-        public Maybe<TEntity> GetMaybe(IQuerySpecification<TEntity> specification)
+        public Maybe<TOut> GetMaybe<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut : class
             {
             var query = QueryWithFetchStrategy(specification);
             var results = query.ToList();
             var count = results.Count;
             if (count > 1)
                 throw new InvalidOperationException("More than one result was returned; check your specification!");
-            return count == 0 ? Maybe<TEntity>.Empty : new Maybe<TEntity>(results.Single());
+            return count == 0 ? Maybe<TOut>.Empty : new Maybe<TOut>(results.Single());
             }
 
         /// <summary>

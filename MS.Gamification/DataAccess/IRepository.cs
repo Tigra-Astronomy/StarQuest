@@ -48,6 +48,7 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <param name="predicate">A predicate expression tree.</param>
         /// <returns>An <see cref="IEnumerable{TEntity}" /> containing all entities that satisfy the predicate.</returns>
+        [Obsolete("Define a Query Specification and use AllSatisfying(specification)")] 
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
@@ -88,13 +89,13 @@ namespace MS.Gamification.DataAccess
         /// <param name="specification">A query specification for the desired entity</param>
         /// <returns>Zero or one items in a <see cref="Maybe{TEntity}" />.</returns>
         /// <exception cref="InvalidOperationException">Thrown if there is not exactly one match.</exception>
-        Maybe<TEntity> GetMaybe(IQuerySpecification<TEntity> specification);
+        Maybe<TOut> GetMaybe<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut:class;
 
         /// <summary>
         ///     Gets all entities that satisfy the supplied specification.
         /// </summary>
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
-        IEnumerable<TEntity> AllSatisfying(IQuerySpecification<TEntity> specification);
+        IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity, TOut> specification) where TOut : class;
         }
     }
