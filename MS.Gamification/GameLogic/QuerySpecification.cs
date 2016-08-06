@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: QuerySpecification.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-06@09:03
+// Last modified: 2016-08-06@10:07
 
 using System.Linq;
 
@@ -24,7 +24,7 @@ namespace MS.Gamification.GameLogic
     /// <seealso cref="GameLogic.IQuerySpecification{TIn, TOut}" />
     public abstract class QuerySpecification<TIn, TOut> : IQuerySpecification<TIn, TOut>
         where TIn : class
-        where TOut : class
+        //where TOut : class
         {
         /// <summary>
         ///     Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.

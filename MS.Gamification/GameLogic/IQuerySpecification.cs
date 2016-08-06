@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IQuerySpecification.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-06@08:49
+// Last modified: 2016-08-06@10:07
 
 using System.Linq;
 
@@ -13,7 +13,7 @@ namespace MS.Gamification.GameLogic
     /// </summary>
     /// <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
     /// <typeparam name="TOut">The type of the projected output entities.</typeparam>
-    public interface IQuerySpecification<TIn, out TOut> where TIn : class where TOut : class
+    public interface IQuerySpecification<TIn, out TOut> where TIn : class //where TOut : class
         {
         /// <summary>
         ///     Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use

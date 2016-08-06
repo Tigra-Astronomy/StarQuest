@@ -13,22 +13,22 @@
     <div class="col-md-6">
         <h2>User administration</h2>
         <p>
-            @Html.ActionLink("Invite Users »", "CreateUserAccounts", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Invite Users »", "CreateUserAccounts", new {}, new {@class = "btn btn-default"})
         </p>
         <p>
-            @Html.ActionLink("Resend Invitation »", "ResendInvitation", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Resend Invitation »", "ResendInvitation", new {}, new {@class = "btn btn-default"})
         </p>
         <p>
-            @Html.ActionLink("See Account Status »", "ManageUsers", new {},new {@class="btn btn-default"})
+            @Html.ActionLink("See Account Status »", "ManageUsers", new {}, new {@class = "btn btn-default"})
         </p>
         <p>
-            @Html.ActionLink("Set User Permissions »", "ManageUsers", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Set User Permissions »", "ManageUsers", new {}, new {@class = "btn btn-default"})
         </p>
     </div>
     <div class="col-md-6">
         <h2>Mission control</h2>
         <p>
-            <a class="btn btn-default" href="#">Manage missions &raquo;</a>
+            @Html.RouteLink("Manage Missions »", "Admin", new {controller = "Missions"}, new {@class = "btn btn-default"})
         </p>
         <p>
             <a class="btn btn-default" href="#">Manage levels &raquo;</a>
@@ -45,10 +45,10 @@
     <div class="col-md-6">
         <h2>Moderation</h2>
         <p>
-            @Html.ActionLink("Moderation Queue »", "Index","Moderation", new {area=string.Empty }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Moderation Queue »", "Index", "Moderation", new {area = string.Empty}, new {@class = "btn btn-default"})
         </p>
         <p>
-            @Html.ActionLink("Observation Batch Entry »", "BatchObservations", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Observation Batch Entry »", "BatchObservations", new {}, new {@class = "btn btn-default"})
         </p>
     </div>
 </div>

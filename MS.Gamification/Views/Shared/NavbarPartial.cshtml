@@ -10,14 +10,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("My Profile", "Index", "UserProfile")</li>
-                <li>@Html.ActionLink("My Missions", "Progress", new {controller = "Mission", id = 1})</li>
-                <li>@Html.ActionLink("My Observations", "Index", "Observation")</li>
+                <li>@Html.ActionLink("Home", "Index", "Home", new { area = string.Empty },new {})</li>
+                <li>@Html.ActionLink("My Profile", "Index", "UserProfile", new { area = string.Empty },new {})</li>
+                <li>@Html.ActionLink("My Missions", "Progress", new {controller = "Mission", id = 1, area=string.Empty}, new {})</li>
+                <li>@Html.ActionLink("My Observations", "Index", "Observation", new { area = string.Empty }, new {})</li>
                 @if (User.IsInRole("Administrator"))
                     {
                     <li>
-                        @Html.RouteLink("Admin Dashboard", "Admin_default", new {controller="UserAdministration", action="Index"})
+                        @Html.RouteLink("Admin Dashboard", "Admin", new {controller="UserAdministration", action="Index"})
                     </li>
                     }
             </ul>

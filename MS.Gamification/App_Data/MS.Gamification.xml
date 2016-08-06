@@ -673,7 +673,7 @@
             <param name="predicate">A predicate expression tree.</param>
             <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> containing all entities that satisfy the predicate.</returns>
         </member>
-        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.AllSatisfying(MS.Gamification.GameLogic.IQuerySpecification{`0})">
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.AllSatisfying``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
             <summary>
                 Gets all entities that satisfy the supplied specification. If a <see cref="T:MS.Gamification.GameLogic.IFetchStrategy`1" /> is
                 present, then the specified related entities are loaded eagerly.
@@ -681,14 +681,14 @@
             <param name="specification">A specification that determines which entities should be returned.</param>
             <returns>A collection of all entities satisfying the specification.</returns>
         </member>
-        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.QueryWithFetchStrategy(MS.Gamification.GameLogic.IQuerySpecification{`0})">
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.QueryWithFetchStrategy``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
             <summary>
                 Builds an <see cref="T:System.Data.Entity.Core.Objects.ObjectQuery`1" /> that takes account of the eager loading fetch strategy.
             </summary>
             <param name="specification"></param>
             <returns>A query that includes eager loading of specified related entities.</returns>
         </member>
-        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.GetMaybe(MS.Gamification.GameLogic.IQuerySpecification{`0})">
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.GetMaybe``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
             <summary>
                 Gets zero or one items that matches a specification. Throws an exception if there is more than one
                 match.
@@ -902,7 +902,7 @@
             <param name="id">The entity ID.</param>
             <returns>A <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> that either contains the matched entity, or is empty.</returns>
         </member>
-        <member name="M:MS.Gamification.DataAccess.IRepository`2.GetMaybe(MS.Gamification.GameLogic.IQuerySpecification{`0})">
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.GetMaybe``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
             <summary>
                 Gets at most one item that matches a query specification. Throws an exception if there is more than one
                 one matching item.
@@ -911,7 +911,7 @@
             <returns>Zero or one items in a <see cref="T:MS.Gamification.DataAccess.Maybe`1" />.</returns>
             <exception cref="T:System.InvalidOperationException">Thrown if there is not exactly one match.</exception>
         </member>
-        <member name="M:MS.Gamification.DataAccess.IRepository`2.AllSatisfying(MS.Gamification.GameLogic.IQuerySpecification{`0})">
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.AllSatisfying``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
             <summary>
                 Gets all entities that satisfy the supplied specification.
             </summary>
@@ -1122,10 +1122,11 @@
         </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteMissionAsync(System.Int32)">
             <summary>
-            Deletes the specified mission, if it is safe to do so.
+                Deletes the specified mission, if it is safe to do so.
             </summary>
             <param name="id">The identifier.</param>
             <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
         </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
             <summary>
@@ -1319,6 +1320,63 @@
             <remarks>
             Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
             </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IQuerySpecification`2">
+            <summary>
+                Represents a query that filters a set of input entities and projects the results onto a set of output
+                entities.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The type of the projected output entities.</typeparam>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.IQuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IQuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`1">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="T">The type of the input entities to be filtered and of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`2">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The projected type of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.QuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.QuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
         </member>
         <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
             <summary>

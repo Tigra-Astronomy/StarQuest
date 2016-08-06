@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-30@13:47
+// Last modified: 2016-08-06@10:59
 
 using System;
 using System.Collections.Generic;
@@ -155,13 +155,31 @@ namespace MS.Gamification.GameLogic
             }
 
         /// <summary>
-        /// Deletes the specified mission, if it is safe to do so.
+        ///     Deletes the specified mission, if it is safe to do so.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task.</returns>
-        public Task DeleteMissionAsync(int id)
+        /// <exception cref="InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        public async Task DeleteMissionAsync(int id)
             {
-            throw new InvalidOperationException("Deleting missions is not currently supported");
+            Log.Info($"Attempting to delete mission id={id}");
+            var associatedObservationsSpec = new MissionHasAssociatedObservations(id);
+            var maybeObservations = unitOfWork.Observations.GetMaybe(associatedObservationsSpec);
+            if (maybeObservations.Any())
+                {
+                Log.Warn($"Delete mission id={id} PREVENTED because of associated observations");
+                throw new InvalidOperationException("Delete prevented: there are observations associated with this mission");
+                }
+            var maybeMission = unitOfWork.Missions.GetMaybe(id);
+            if (maybeMission.None)
+                {
+                Log.Error($"Delete mission id={id} FAILED because the mission was not found in the database");
+                throw new InvalidOperationException("Unable to locate the mission in the database");
+                }
+            var mission = maybeMission.Single();
+            unitOfWork.Missions.Remove(mission);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Delete mission id={mission.Id} title={mission.Title} SUCCEEDED");
             }
 
         /// <summary>

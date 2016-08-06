@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Repository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-26@02:38
+// Last modified: 2016-08-06@10:14
 
 using System;
 using System.Collections.Generic;
@@ -111,7 +111,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
-        public IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut:class
+        public IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity, TOut> specification) where TOut : class
             {
             var query = QueryWithFetchStrategy(specification);
             return query.ToList(); // Materialize the query to an enumerable list.
@@ -122,7 +122,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// </summary>
         /// <param name="specification"></param>
         /// <returns>A query that includes eager loading of specified related entities.</returns>
-        IQueryable<TOut> QueryWithFetchStrategy<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut : class
+        private IQueryable<TOut> QueryWithFetchStrategy<TOut>(IQuerySpecification<TEntity, TOut> specification)
             {
             var query = specification.GetQuery(Context.Set<TEntity>());
             foreach (var includePath in specification.FetchStrategy.IncludePaths)
@@ -141,7 +141,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <exception cref="InvalidOperationException">
         ///     More than one result was returned; check your specification!
         /// </exception>
-        public Maybe<TOut> GetMaybe<TOut>(IQuerySpecification<TEntity,TOut> specification) where TOut : class
+        public Maybe<TOut> GetMaybe<TOut>(IQuerySpecification<TEntity, TOut> specification)
             {
             var query = QueryWithFetchStrategy(specification);
             var results = query.ToList();
