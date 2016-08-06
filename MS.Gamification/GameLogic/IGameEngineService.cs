@@ -3,6 +3,7 @@
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
 // Last modified: 2016-07-30@13:47
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MS.Gamification.Models;
@@ -53,5 +54,13 @@ namespace MS.Gamification.GameLogic
         /// <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
         /// <exception cref="System.NotImplementedException"></exception>
         bool IsLevelComplete(MissionLevel level, IEnumerable<Observation> observations);
+
+        /// <summary>
+        /// Deletes the specified mission, if it is safe to do so.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        Task DeleteMissionAsync(int id);
         }
     }

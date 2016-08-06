@@ -26,6 +26,12 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="T:MS.Gamification.Areas.Admin.Controllers.MissionsController">
+            <summary>
+                CRUD operations on Missions.
+            </summary>
+            <seealso cref="T:MS.Gamification.Areas.Admin.Controllers.RequiresAdministratorRights" />
+        </member>
         <member name="T:MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BatchObservationViewModel">
             <summary>
                 Contains all of the details for an observation, plus a list of users.
@@ -571,13 +577,13 @@
         </member>
         <member name="T:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository">
             <summary>
-              Stores the challenges.
+                Stores the challenges.
             </summary>
-            <seealso cref="!:EntityFramework6.Repository&lt;Challenge, int&gt;" />
+            <seealso cref="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2" />
         </member>
         <member name="M:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository.#ctor(MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext)">
             <summary>
-              Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository" /> class.
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository" /> class.
             </summary>
             <param name="dbContext">The database context.</param>
         </member>
@@ -727,7 +733,7 @@
             <summary>
                 Stores all of the registered users, their passwords, claims and other details.
             </summary>
-            <seealso cref="!:EntityFramework6.Repository&lt;ApplicationUser, string&gt;" />
+            <seealso cref="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2" />
         </member>
         <member name="M:MS.Gamification.DataAccess.EntityFramework6.UserRepository.#ctor(MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext)">
             <summary>
@@ -970,6 +976,11 @@
                 Commits changes to the database and completes the transaction.
             </summary>
         </member>
+        <member name="M:MS.Gamification.DataAccess.IUnitOfWork.CommitAsync">
+            <summary>
+                Asynchronously commits changes to the database and completes the transaction.
+            </summary>
+        </member>
         <member name="M:MS.Gamification.DataAccess.IUnitOfWork.Cancel">
             <summary>
                 Cancels the transaction and undoes any pending changes.
@@ -1109,6 +1120,13 @@
             <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteMissionAsync(System.Int32)">
+            <summary>
+            Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+        </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
             <summary>
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
@@ -1166,6 +1184,14 @@
             <param name="observations">The observations.</param>
             <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
             <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteMissionAsync(System.Int32)">
+            <summary>
+            Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
         </member>
         <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
             <summary>

@@ -155,6 +155,16 @@ namespace MS.Gamification.GameLogic
             }
 
         /// <summary>
+        /// Deletes the specified mission, if it is safe to do so.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Task.</returns>
+        public Task DeleteMissionAsync(int id)
+            {
+            throw new InvalidOperationException("Deleting missions is not currently supported");
+            }
+
+        /// <summary>
         ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
         /// </summary>
         /// <param name="level">The level.</param>

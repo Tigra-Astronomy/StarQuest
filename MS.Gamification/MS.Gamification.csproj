@@ -337,6 +337,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ChallengeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionLevelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionTracksController.cs" />
     <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
     <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ManageUserViewModel.cs" />
@@ -764,6 +767,21 @@
     <Content Include="Areas\Admin\Views\UserAdministration\TokenExpired.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\UserProfile.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

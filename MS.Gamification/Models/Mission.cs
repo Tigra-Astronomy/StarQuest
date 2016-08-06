@@ -1,12 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Mission.cs  Created: 2016-07-06@22:15
-// Last modified: 2016-07-22@04:09
+// Last modified: 2016-08-06@00:10
 
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 using JetBrains.Annotations;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Properties;
@@ -22,6 +23,7 @@ namespace MS.Gamification.Models
 
         [DefaultValue("")]
         [NotNull]
+        [AllowHtml]
         [XmlDocument("PreconditionSchema", typeof(Resources))]
         public string Precondition { get; set; } = string.Empty;
 

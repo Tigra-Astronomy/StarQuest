@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: XmlDocumentAttribute.cs  Created: 2016-07-21@12:10
-// Last modified: 2016-07-22@04:51
+// Last modified: 2016-08-06@00:45
 
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,16 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using JetBrains.Annotations;
 using MS.Gamification.DataAccess;
+using NLog;
 
 namespace MS.Gamification.ViewModels.CustomValidation
     {
     [AttributeUsage(AttributeTargets.Property)]
     internal class XmlDocumentAttribute : ValidationAttribute
         {
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
         private readonly Maybe<string> maybeXsdResourceName = Maybe<string>.Empty;
         private readonly Maybe<Type> maybeXsdResourceType = Maybe<Type>.Empty;
-        private bool error;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="XmlDocumentAttribute" /> class with no schema. No schema
@@ -54,41 +55,50 @@ namespace MS.Gamification.ViewModels.CustomValidation
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
-            error = false;
             // An empty or null object should pass validation. 
             // [Required] attribute can be used to ensure a non-empty item.
             if (string.IsNullOrEmpty(value as string))
                 {
                 return ValidationResult.Success;
                 }
+            var xmlString = (string) value;
             XDocument xmlDocument;
             try
                 {
-                var xmlString = (string) value;
                 xmlDocument = XDocument.Parse(xmlString);
+                Log.Debug("Loaded valid XML document", xmlDocument);
                 }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
                 {
+                Log.Warn(e, "Failing XML validation due to invalid XML markup", xmlString);
                 return FailureResult(validationContext, "Invalid XML markup");
                 }
-            catch (Exception)
+            catch (Exception e)
                 {
+                Log.Warn(e, "Failing XML validation due to an unexpected error parsing the XML markup", xmlString);
                 return FailureResult(validationContext, "Unable to parse the XML document");
                 }
-            try // to validate the XML document against a schema
+            try // to load the XML schema from a resource
                 {
                 var maybeSchema = GetSchema();
                 if (maybeSchema.None)
                     return ValidationResult.Success; // No schema validation
                 var schemaSet = new XmlSchemaSet();
                 schemaSet.Add(maybeSchema.Single());
-                xmlDocument.Validate(schemaSet, (sender, e) => error = true);
-                return error
-                    ? FailureResult(validationContext, "XML does not conform to the required schema")
-                    : ValidationResult.Success;
+                try // to validate the XML document against the schema
+                    {
+                    xmlDocument.Validate(schemaSet, null); // rely on exceptions rather than event handlers
+                    return ValidationResult.Success;
+                    }
+                catch (XmlSchemaException e)
+                    {
+                    Log.Warn(e, "Failing XML schema validation", xmlDocument);
+                    return FailureResult(validationContext, "XML does not conform to the required schema");
+                    }
                 }
-            catch (Exception)
+            catch (Exception e)
                 {
+                Log.Error(e, "Failing XML validation due to a schema resource error");
                 return FailureResult(validationContext, "Error validating schema resource");
                 }
             }

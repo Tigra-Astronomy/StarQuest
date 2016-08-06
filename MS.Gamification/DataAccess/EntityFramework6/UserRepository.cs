@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserRepository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-05-22@07:09
+// Last modified: 2016-08-05@23:54
 
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     /// <summary>
     ///     Stores all of the registered users, their passwords, claims and other details.
     /// </summary>
-    /// <seealso cref="EntityFramework6.Repository{ApplicationUser, string}" />
+    /// <seealso cref="Repository{TEntity,TKey}" />
     public class UserRepository : Repository<ApplicationUser, string>
         {
         /// <summary>
