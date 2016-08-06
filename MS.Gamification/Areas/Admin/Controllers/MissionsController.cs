@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionsController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-05@23:55
+// Last modified: 2016-08-06@03:22
 
 using System;
 using System.Linq;
@@ -149,7 +149,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             catch (Exception e)
                 {
                 Log.Error(e, $"Deleting mission id={id} Title={mission.Title}");
-                ModelState.AddModelError("", $"Delete failed: {e.Message}");
+                ModelState.AddModelError(string.Empty, $"Delete failed: {e.Message}");
                 return View("Delete", mission);
                 }
             }

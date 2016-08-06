@@ -25,6 +25,7 @@ namespace MS.Gamification.Models
         [NotNull]
         [AllowHtml]
         [XmlDocument("PreconditionSchema", typeof(Resources))]
+        [DataType(DataType.MultilineText)]
         public string Precondition { get; set; } = string.Empty;
 
         public virtual List<MissionLevel> MissionLevels { get; set; }

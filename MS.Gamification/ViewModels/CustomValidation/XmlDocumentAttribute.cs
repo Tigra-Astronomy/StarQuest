@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: XmlDocumentAttribute.cs  Created: 2016-07-21@12:10
-// Last modified: 2016-08-06@00:45
+// Last modified: 2016-08-06@03:02
 
 using System;
 using System.Collections.Generic;
@@ -62,45 +62,58 @@ namespace MS.Gamification.ViewModels.CustomValidation
                 return ValidationResult.Success;
                 }
             var xmlString = (string) value;
-            XDocument xmlDocument;
             try
                 {
-                xmlDocument = XDocument.Parse(xmlString);
-                Log.Debug("Loaded valid XML document", xmlDocument);
+                var xmlDocument = XDocument.Parse(xmlString);
                 }
-            catch (InvalidOperationException e)
+            catch (XmlException e)
                 {
-                Log.Warn(e, "Failing XML validation due to invalid XML markup", xmlString);
+                Log.Warn(e, "Failing XML validation due to invalid markup", xmlString);
                 return FailureResult(validationContext, "Invalid XML markup");
                 }
-            catch (Exception e)
-                {
-                Log.Warn(e, "Failing XML validation due to an unexpected error parsing the XML markup", xmlString);
-                return FailureResult(validationContext, "Unable to parse the XML document");
-                }
-            try // to load the XML schema from a resource
+            var schemaSet = new XmlSchemaSet();
+            try
                 {
                 var maybeSchema = GetSchema();
                 if (maybeSchema.None)
                     return ValidationResult.Success; // No schema validation
-                var schemaSet = new XmlSchemaSet();
                 schemaSet.Add(maybeSchema.Single());
-                try // to validate the XML document against the schema
+                }
+            catch (XmlException e)
+                {
+                Log.Error(e, "Failing validation due to an error loading XML schema");
+                return FailureResult(validationContext,
+                    "Unable to load the XML schema for validation (please report this as a bug)");
+                }
+            var xmlReaderSettings = new XmlReaderSettings
+                {
+                DtdProcessing = DtdProcessing.Prohibit,
+                CheckCharacters = true,
+                ValidationType = ValidationType.Schema,
+                Schemas = schemaSet,
+                ConformanceLevel = ConformanceLevel.Document,
+                ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings,
+                CloseInput = true
+                };
+            xmlReaderSettings.ValidationEventHandler += ValidationEventHandler;
+
+            using (var stream = GenerateStreamFromString(xmlString))
+            using (var xmlReader = XmlReader.Create(stream, xmlReaderSettings))
+                try
                     {
-                    xmlDocument.Validate(schemaSet, null); // rely on exceptions rather than event handlers
+                    while (xmlReader.Read()) {}
                     return ValidationResult.Success;
                     }
                 catch (XmlSchemaException e)
                     {
-                    Log.Warn(e, "Failing XML schema validation", xmlDocument);
-                    return FailureResult(validationContext, "XML does not conform to the required schema");
+                    Log.Warn(e, "Failing XML validation due to schema validation error", xmlString);
+                    return FailureResult(validationContext, e.Message);
                     }
-                }
-            catch (Exception e)
-                {
-                Log.Error(e, "Failing XML validation due to a schema resource error");
-                return FailureResult(validationContext, "Error validating schema resource");
-                }
+            }
+
+        private void ValidationEventHandler(object sender, ValidationEventArgs validationEventArgs)
+            {
+            throw validationEventArgs.Exception ?? new XmlSchemaException(validationEventArgs.Message);
             }
 
         private ValidationResult FailureResult(ValidationContext validationContext, string message = null)
@@ -115,24 +128,27 @@ namespace MS.Gamification.ViewModels.CustomValidation
 
         private Maybe<XmlSchema> GetSchema()
             {
-            try
-                {
-                if (maybeXsdResourceName.None || maybeXsdResourceType.None)
-                    return Maybe<XmlSchema>.Empty;
-                var manager = new ResourceManager(maybeXsdResourceType.Single());
-                var xsdString = manager.GetString(maybeXsdResourceName.Single());
-                using (var textReader = new StringReader(xsdString))
-                using (var xmlReader = XmlReader.Create(textReader))
-                    {
-                    var xsd = XmlSchema.Read(xmlReader,
-                        (o, e) => { throw new ArgumentException("Unable to load the schema document"); });
-                    return new Maybe<XmlSchema>(xsd);
-                    }
-                }
-            catch (Exception)
-                {
+            if (maybeXsdResourceName.None || maybeXsdResourceType.None)
                 return Maybe<XmlSchema>.Empty;
+            var manager = new ResourceManager(maybeXsdResourceType.Single());
+            var xsdString = manager.GetString(maybeXsdResourceName.Single());
+            using (var textReader = new StringReader(xsdString))
+            using (var xmlReader = XmlReader.Create(textReader))
+                {
+                var xsd = XmlSchema.Read(xmlReader,
+                    (o, e) => { throw new XmlException("Unable to load the schema"); });
+                return new Maybe<XmlSchema>(xsd);
                 }
+            }
+
+        private Stream GenerateStreamFromString(string s)
+            {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
             }
         }
     }

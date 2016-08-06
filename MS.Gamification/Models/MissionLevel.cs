@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionLevel.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-06@00:09
+// Last modified: 2016-08-06@03:12
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +29,7 @@ namespace MS.Gamification.Models
         [NotNull]
         [AllowHtml]
         [XmlDocument("PreconditionSchema", typeof(Resources))]
+        [DataType(DataType.MultilineText)]
         public string Precondition { get; set; } = string.Empty;
 
         [Key]
