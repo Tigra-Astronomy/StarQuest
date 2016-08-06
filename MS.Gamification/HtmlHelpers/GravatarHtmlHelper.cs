@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GravatarHtmlHelper.cs  Created: 2016-07-29@15:54
-// Last modified: 2016-07-29@16:04
+// Last modified: 2016-08-06@13:33
 
 using System;
 using System.ComponentModel;
@@ -105,8 +105,8 @@ namespace MS.Gamification.HtmlHelpers
                     )
                 );
 
-            imgTag.Attributes.Add("class", "gravatar img-responsive img-circle");
-            imgTag.Attributes.Add("alt", "Gravatar image");
+            imgTag.Attributes.Add("class", "img img-responsive img-circle gravatar");
+            imgTag.Attributes.Add("alt", "Change your profile image at http://gravatar.com");
             return new HtmlString(imgTag.ToString(TagRenderMode.SelfClosing));
             }
 
