@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AssemblyInfo.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-14@01:10
+// Last modified: 2016-08-06@05:29
 
 using System.Reflection;
 using System.Runtime.CompilerServices;

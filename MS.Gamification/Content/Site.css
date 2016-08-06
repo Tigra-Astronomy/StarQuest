@@ -148,3 +148,5 @@ img.gravatar { margin-bottom: 12px; }
 }
 
 .panel-body.c3 { min-height: 400px; }
+
+.CodeMirror { border: 1px solid #334; }

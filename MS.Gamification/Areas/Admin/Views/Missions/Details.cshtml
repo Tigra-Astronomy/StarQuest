@@ -1,4 +1,4 @@
-﻿@model MS.Gamification.Models.Mission
+﻿@model Mission
 
 @{
     ViewBag.Title = "Details";
@@ -23,12 +23,36 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Precondition)
+            <textarea id="precondition">
+                @Html.DisplayFor(model => model.Precondition)
+            </textarea>
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/codemirror-3.01/codemirror.js"></script>
+    <script src="~/Scripts/codemirror-3.01/mode/xml.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript">
+        var editor = CodeMirror.fromTextArea(document.getElementById("precondition"),
+            {
+                mode: "xml",
+                matchClosing: true,
+                smartIndent: true,
+                electricChars: true,
+                readonly: true
+            });
+    </script>
+}
+@section styles
+{
+    <link href="~/Content/codemirror-3.01/codemirror.css" rel="stylesheet" type="text/css" />
+}
+
+
