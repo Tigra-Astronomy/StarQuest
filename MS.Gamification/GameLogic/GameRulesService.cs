@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-06@16:24
+// Last modified: 2016-08-09@00:30
 
 using System;
 using System.Collections.Generic;
@@ -187,9 +187,83 @@ namespace MS.Gamification.GameLogic
         /// </summary>
         /// <param name="levelId">The ID of the level to be deleted.</param>
         /// <exception cref="InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
-        public Task DeleteLevelAsync(int levelId)
+        public async Task DeleteLevelAsync(int levelId)
             {
-            throw new InvalidOperationException("Deleting levels is not currently supported");
+            Log.Info($"Deleting level id={levelId}");
+            var maybeLevel = unitOfWork.MissionLevels.GetMaybe(levelId);
+            if (maybeLevel.None)
+                {
+                Log.Error($"Delete failed because level id {levelId} was not found in the database");
+                throw new ArgumentException("Level not found");
+                }
+            var level = maybeLevel.Single();
+            if (LevelHasAssociatedObservations(level))
+                {
+                Log.Warn($"Delete blocked because level {levelId} has associated observations");
+                throw new InvalidOperationException("Cannot delete a level that has observations associated with it");
+                }
+            unitOfWork.MissionLevels.Remove(level);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully deleted level id={levelId}");
+            }
+
+        /// <summary>
+        ///     Creates the specified level according to game rules.
+        ///     Throws an exception if the level was invalid or could not be created.
+        /// </summary>
+        /// <param name="newLevel">The new level.</param>
+        public async Task CreateLevelAsync(MissionLevel newLevel)
+            {
+            Log.Info($"Creating new level id={newLevel.Id} name={newLevel.Name} in mission {newLevel.MissionId}");
+            var specification = new LevelExistsInMission(newLevel.Level, newLevel.MissionId);
+            var maybeHasLevel = unitOfWork.MissionLevels.GetMaybe(specification);
+            if (maybeHasLevel.Any())
+                {
+                Log.Warn($"Create failed because mission {newLevel.MissionId} already has a level {newLevel.Level}");
+                throw new InvalidOperationException($"There is already a level number {newLevel.Level} in the mission");
+                }
+            unitOfWork.MissionLevels.Add(newLevel);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully created level id={newLevel.Id} name={newLevel.Name} in mission {newLevel.MissionId}");
+            }
+
+        /// <summary>
+        ///     Updates the level in the database with the supplied values, provided
+        ///     that no game rules are violated.
+        /// </summary>
+        /// <param name="updatedLevel">The updated level (which must include the ID).</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the level update failed for any reason.</exception>
+        public async Task UpdateLevelAsync(MissionLevel updatedLevel)
+            {
+            Log.Info($"Updating level id={updatedLevel.Id} name={updatedLevel.Name} mission={updatedLevel.MissionId}");
+            var maybeLevel = unitOfWork.MissionLevels.GetMaybe(updatedLevel.Id);
+            if (maybeLevel.None)
+                {
+                Log.Error($"Update failed because level {updatedLevel.Id} was not found in the database");
+                throw new InvalidOperationException("The mission to be updated was not found in the database");
+                }
+            var dbLevel = maybeLevel.Single();
+            var maybeMission = unitOfWork.Missions.GetMaybe(updatedLevel.MissionId);
+            if (maybeMission.None)
+                {
+                Log.Error($"Update failed because mission {updatedLevel.MissionId} was not found in the database");
+                throw new InvalidOperationException("The target mission does not exist in the database");
+                }
+            var targetMission = maybeMission.Single();
+            if (targetMission.MissionLevels.Any(p => p.Level == updatedLevel.Level))
+                {
+                Log.Warn($"Update blocked because the target mission {targetMission.Id} already had level {updatedLevel.Level}");
+                throw new InvalidOperationException($"The target mission already has a level {updatedLevel.Level}");
+                }
+            if (LevelHasAssociatedObservations(updatedLevel))
+                {
+                Log.Warn($"Update blocked because the level has associated observations");
+                throw new InvalidOperationException("Cannot move a level that has observations associated with it");
+                }
+            mapper.Map(updatedLevel, dbLevel);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully updated level id={dbLevel.Id}");
             }
 
         /// <summary>
@@ -218,6 +292,13 @@ namespace MS.Gamification.GameLogic
                 Log.Error(e, $"Error while evaluating level access for user {userId}", level);
                 return false;
                 }
+            }
+
+        private bool LevelHasAssociatedObservations(MissionLevel level)
+            {
+            var observationSpec = new LevelHasAssociatedObservations(level.Id);
+            var maybeHasObservations = unitOfWork.Observations.GetMaybe(observationSpec);
+            return maybeHasObservations.Any();
             }
 
         /// <summary>

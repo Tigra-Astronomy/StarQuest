@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-30@13:39
+// Last modified: 2016-08-08@23:04
 
 using System;
 using System.Collections.Generic;
@@ -40,6 +40,8 @@ namespace MS.Gamification.Tests.TestHelpers
         public IUnitOfWork UnitOfWork { get; internal set; }
 
         public IGameEngineService RulesService { get; internal set; }
+
+        public IMapper Mapper { get; internal set; }
 
 
         /// <summary>
@@ -138,9 +140,9 @@ namespace MS.Gamification.Tests.TestHelpers
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
             mapperConfiguration.AssertConfigurationIsValid();
-            var mapper = mapperConfiguration.CreateMapper();
+            Mapper = mapperConfiguration.CreateMapper();
             var notifier = new FakeNotificationService();
-            RulesService = new GameRulesService(UnitOfWork, mapper, notifier);
+            RulesService = new GameRulesService(UnitOfWork, Mapper, notifier);
             var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);

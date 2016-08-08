@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: with_standard_mission.cs  Created: 2016-07-02@17:27
-// Last modified: 2016-07-06@23:39
+// File: with_standard_mission.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-08-08@22:57
 
 using System.Web.Mvc;
 using Machine.Specifications;
@@ -19,7 +19,7 @@ namespace MS.Gamification.Tests.Controllers
      * Category 40 - Galaxy
      * 
      * Mission "Unit Test Mission" Id=1 
-     * Progress=1
+     * Level=1
      *  Track 1 - Lunar Observer
      *      100 See the New Moon    1 point     Category 10
      *      101 See the Full Moon   1 point     Category 10

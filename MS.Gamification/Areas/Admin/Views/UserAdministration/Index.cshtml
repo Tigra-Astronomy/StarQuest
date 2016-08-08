@@ -31,7 +31,7 @@
             @Html.RouteLink("Manage Missions »", "Admin", new {controller = "Missions"}, new {@class = "btn btn-default"})
         </p>
         <p>
-            <a class="btn btn-default" href="#">Manage levels &raquo;</a>
+            @Html.RouteLink("Manage Levels »", "Admin", new { controller = "MissionLevels" }, new { @class = "btn btn-default" })
         </p>
         <p>
             <a class="btn btn-default" href="#">Manage tracks &raquo;</a>

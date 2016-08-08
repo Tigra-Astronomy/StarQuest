@@ -162,6 +162,7 @@
     <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
     <Compile Include="Controllers\MissionControllerSpecs.cs" />
+    <Compile Include="Controllers\MissionLevelsControllerSpecs.cs" />
     <Compile Include="Controllers\ModerationControllerSpecs.cs" />
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="GameLogic\DummyGameController.cs" />
     <Compile Include="GameLogic\LevelPreconditionEngineSpecs.cs" />
     <Compile Include="GameLogic\LevelUnlockingSpecs.cs" />
+    <Compile Include="GameLogic\MissionLevelsSpecs.cs" />
     <Compile Include="GameLogic\with_game_logic_context.cs" />
     <Compile Include="GameRulesServiceSpecs.cs" />
     <Compile Include="HtmlHelpers\WebServerImageStoreSpecs.cs" />

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
-// Last modified: 2016-07-30@13:47
+// Last modified: 2016-08-08@23:12
 
 using System;
 using System.Collections.Generic;
@@ -56,7 +56,7 @@ namespace MS.Gamification.GameLogic
         bool IsLevelComplete(MissionLevel level, IEnumerable<Observation> observations);
 
         /// <summary>
-        /// Deletes the specified mission, if it is safe to do so.
+        ///     Deletes the specified mission, if it is safe to do so.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Task.</returns>
@@ -64,10 +64,25 @@ namespace MS.Gamification.GameLogic
         Task DeleteMissionAsync(int id);
 
         /// <summary>
-        /// Deletes the specified mission level, if it is safe to do so.
+        ///     Deletes the specified mission level, if it is safe to do so.
         /// </summary>
         /// <param name="levelId">The ID of the level to be deleted.</param>
         /// <exception cref="InvalidOperationException">Thrown if the level could not be deleted.</exception>
         Task DeleteLevelAsync(int levelId);
+
+        /// <summary>
+        ///     Creates the specified level according to game rules.
+        ///     Throws an exception if the level was invalid or could not be created.
+        /// </summary>
+        /// <param name="newLevel">The new level.</param>
+        /// <exception cref="ArgumentException">Thrown if the level could not be created for any reason.</exception>
+        Task CreateLevelAsync(MissionLevel newLevel);
+
+        /// <summary>
+        ///     Updates the level in the database with the supplied values, provided
+        ///     that no game rules are violated.
+        /// </summary>
+        /// <param name="updatedLevel">The updated level (which must include the ID).</param>
+        Task UpdateLevelAsync(MissionLevel updatedLevel);
         }
     }

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionLevelsController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-06@17:27
+// Last modified: 2016-08-09@00:30
 
 using System;
 using System.Linq;
@@ -78,15 +78,22 @@ namespace MS.Gamification.Areas.Admin.Controllers
         public async Task<ActionResult> Create(
             [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevel missionLevel)
             {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 {
-                uow.MissionLevels.Add(missionLevel);
-                await uow.CommitAsync();
+                PopulateMissionPicker();
+                return View(missionLevel);
+                }
+            try
+                {
+                await gameEngine.CreateLevelAsync(missionLevel);
                 return RedirectToAction("Index");
                 }
-
-            PopulateMissionPicker();
-            return View(missionLevel);
+            catch (InvalidOperationException e)
+                {
+                ModelState.AddModelError(string.Empty, e.Message);
+                PopulateMissionPicker();
+                return View(missionLevel);
+                }
             }
 
         // GET: Admin/MissionLevels/Edit/5
@@ -114,15 +121,22 @@ namespace MS.Gamification.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(
             [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevel missionLevel)
             {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 {
-                var dbLevel = uow.MissionLevels.Get(missionLevel.Id);
-                mapper.Map(missionLevel, dbLevel);
-                await uow.CommitAsync();
+                PopulateMissionPicker(missionLevel.MissionId);
+                return View(missionLevel);
+                }
+            try
+                {
+                await gameEngine.UpdateLevelAsync(missionLevel);
                 return RedirectToAction("Index");
                 }
-            PopulateMissionPicker(missionLevel.MissionId);
-            return View(missionLevel);
+            catch (InvalidOperationException e)
+                {
+                ModelState.AddModelError(string.Empty, e.Message);
+                PopulateMissionPicker();
+                return View(missionLevel);
+                }
             }
 
         // GET: Admin/MissionLevels/Delete/5
