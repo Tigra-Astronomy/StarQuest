@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: PickListExtensions.cs  Created: 2016-07-19@01:02
-// Last modified: 2016-08-06@16:04
+// Last modified: 2016-08-09@22:54
 
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,12 @@ namespace MS.Gamification.DataAccess
     {
     public static class PickListExtensions
         {
-        public static IEnumerable<SelectListItem> ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items)
-            => items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
+        public static SelectList ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items)
+            {
+            var selectListItems = items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
+            var selectList = new SelectList(selectListItems);
+            return selectList;
+            }
 
         public static SelectList ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items, TKey selectedItem)
             {

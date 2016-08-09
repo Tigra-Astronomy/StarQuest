@@ -409,6 +409,7 @@
     <Compile Include="GameLogic\QuerySpecifications\LevelHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionProgressSummary.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\MissionTrackWithBadgeAndLevel.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForChallenge.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
