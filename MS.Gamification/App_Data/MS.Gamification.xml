@@ -1151,6 +1151,15 @@
             <returns>Task.</returns>
             <exception cref="T:System.InvalidOperationException">Thrown if the level update failed for any reason.</exception>
         </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not created for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+        </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
             <summary>
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
@@ -1238,6 +1247,20 @@
                 that no game rules are violated.
             </summary>
             <param name="updatedLevel">The updated level (which must include the ID).</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Creates a new mission track, subject to game logic rules.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track is not created for any reason.</exception>
+            <param name="newTrack">The new track.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
         </member>
         <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
             <summary>
@@ -1584,6 +1607,12 @@
             <summary>
                 The date and time on which the user account was provisioned.
             </summary>
+        </member>
+        <member name="P:MS.Gamification.Models.MissionTrack.Number">
+            <summary>
+            Track number determines the order in which tracks are displayed.
+            </summary>
+            <value>The number.</value>
         </member>
         <member name="T:MS.Gamification.Properties.Resources">
             <summary>

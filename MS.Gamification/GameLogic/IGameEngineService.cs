@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
-// Last modified: 2016-08-08@23:12
+// Last modified: 2016-08-10@20:38
 
 using System;
 using System.Collections.Generic;
@@ -84,5 +84,19 @@ namespace MS.Gamification.GameLogic
         /// </summary>
         /// <param name="updatedLevel">The updated level (which must include the ID).</param>
         Task UpdateLevelAsync(MissionLevel updatedLevel);
+
+        /// <summary>
+        ///     Creates a new mission track, subject to game logic rules.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if the track is not created for any reason.</exception>
+        /// <param name="newTrack">The new track.</param>
+        Task CreateTrackAsync(MissionTrack newTrack);
+
+        /// <summary>
+        ///     Deletes the track provided game rules allow it.
+        /// </summary>
+        /// <param name="id">The track ID.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
+        void DeleteTrackAsync(int id);
         }
     }

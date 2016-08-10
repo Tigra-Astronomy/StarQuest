@@ -336,7 +336,7 @@
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\ChallengeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChallengesController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionLevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionTracksController.cs" />
@@ -773,10 +773,10 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="EmailTemplates\ResetPassword.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Challenge\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\BatchObservationDetails.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\BatchObservations.cshtml" />

@@ -15,6 +15,10 @@ namespace MS.Gamification.Models
         [Required]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Track number determines the order in which tracks are displayed.
+        /// </summary>
+        /// <value>The number.</value>
         public int Number { get; set; }
 
         public virtual List<Challenge> Challenges { get; set; }

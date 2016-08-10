@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-09@00:30
+// Last modified: 2016-08-10@20:32
 
 using System;
 using System.Collections.Generic;
@@ -264,6 +264,43 @@ namespace MS.Gamification.GameLogic
             mapper.Map(updatedLevel, dbLevel);
             await unitOfWork.CommitAsync();
             Log.Info($"Successfully updated level id={dbLevel.Id}");
+            }
+
+        /// <exception cref="InvalidOperationException">Thrown if the track was not created for any reason.</exception>
+        public async Task CreateTrackAsync(MissionTrack newTrack)
+            {
+            Log.Info(
+                $"Creating new Mission Track id={newTrack.Id} Name={newTrack.Name} in mission {newTrack.MissionLevelId} with badge id={newTrack.BadgeId}");
+            var maybeBadge = unitOfWork.Badges.GetMaybe(newTrack.BadgeId);
+            if (maybeBadge.None)
+                {
+                Log.Error($"Create blocked because the target badge id={newTrack.BadgeId} does not exist");
+                throw new InvalidOperationException("The associated Mission Level could not be found");
+                }
+            var targetLevel = unitOfWork.MissionLevels.GetMaybe(newTrack.MissionLevelId);
+            if (targetLevel.None)
+                {
+                Log.Error($"Create blocked because the target level id={newTrack.MissionLevelId} does not exist");
+                throw new InvalidOperationException("The associated Mission Level could not be found");
+                }
+            var missionTracks = unitOfWork.MissionTracks.GetAll();
+            if (missionTracks.Any(p => p.MissionLevelId == newTrack.MissionLevelId && p.Number == newTrack.Number))
+                {
+                Log.Warn("Create blocked because the track already exists");
+                throw new InvalidOperationException("That track number already exists");
+                }
+            unitOfWork.MissionTracks.Add(newTrack);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully added track id={newTrack.Id}");
+            }
+
+        /// <summary>
+        ///     Deletes the track provided game rules allow it.
+        /// </summary>
+        /// <param name="id">The track ID.</param>
+        public void DeleteTrackAsync(int id)
+            {
+            throw new NotSupportedException("Deleting of tracks is not currently supported");
             }
 
         /// <summary>

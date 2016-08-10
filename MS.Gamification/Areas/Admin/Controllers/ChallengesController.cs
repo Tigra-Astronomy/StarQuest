@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-13@23:33
+// File: ChallengesController.cs  Created: 2016-08-05@19:34
+// Last modified: 2016-08-10@20:38
 
 using System.Linq;
 using System.Web.Mvc;
@@ -12,12 +12,12 @@ using MS.Gamification.ViewModels;
 
 namespace MS.Gamification.Areas.Admin.Controllers
     {
-    public class ChallengeController : RequiresAdministratorRights
+    public class ChallengesController : RequiresAdministratorRights
         {
         private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
 
-        public ChallengeController(IUnitOfWork uow, IMapper mapper)
+        public ChallengesController(IUnitOfWork uow, IMapper mapper)
             {
             this.uow = uow;
             this.mapper = mapper;

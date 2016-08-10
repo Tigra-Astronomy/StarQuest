@@ -1,24 +1,29 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTracksController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-09@22:32
+// Last modified: 2016-08-10@21:11
 
+using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
-namespace WebApplication2.Areas.Admin.Controllers
+namespace MS.Gamification.Areas.Admin.Controllers
     {
-    public class MissionTracksController : Controller
+    public class MissionTracksController : RequiresAdministratorRights
         {
+        private readonly IGameEngineService gameEngine;
         private readonly IUnitOfWork uow;
 
-        public MissionTracksController(IUnitOfWork uow)
+        public MissionTracksController(IUnitOfWork uow, IGameEngineService gameEngine)
             {
             this.uow = uow;
+            this.gameEngine = gameEngine;
             }
 
         // GET: Admin/MissionTracks
@@ -67,15 +72,22 @@ namespace WebApplication2.Areas.Admin.Controllers
         public async Task<ActionResult> Create(
             [Bind(Include = "Id,Name,Number,AwardTitle,BadgeId,MissionLevelId")] MissionTrack missionTrack)
             {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 {
-                //ToDo: delegate to game engine
-                uow.MissionTracks.Add(missionTrack);
-                await uow.CommitAsync();
+                PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
+                return View(missionTrack);
+                }
+            try
+                {
+                await gameEngine.CreateTrackAsync(missionTrack);
                 return RedirectToAction("Index");
                 }
-            PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
-            return View(missionTrack);
+            catch (InvalidOperationException e)
+                {
+                ModelState.AddModelError(string.Empty, e.Message);
+                PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
+                return View(missionTrack);
+                }
             }
 
         // GET: Admin/MissionTracks/Edit/5
@@ -85,11 +97,12 @@ namespace WebApplication2.Areas.Admin.Controllers
                 {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-            var missionTrack = uow.MissionTracks.Get(id.Value);
-            if (missionTrack == null)
+            var maybeTrack = uow.MissionTracks.GetMaybe(id.Value);
+            if (maybeTrack.None)
                 {
                 return HttpNotFound();
                 }
+            var missionTrack = maybeTrack.Single();
             PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
             return View(missionTrack);
             }
@@ -118,11 +131,12 @@ namespace WebApplication2.Areas.Admin.Controllers
                 {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-            var missionTrack = uow.MissionTracks.Get(id.Value);
-            if (missionTrack == null)
+            var maybeTrack = uow.MissionTracks.GetMaybe(id.Value);
+            if (maybeTrack.None)
                 {
                 return HttpNotFound();
                 }
+            var missionTrack = maybeTrack.Single();
             return View(missionTrack);
             }
 
@@ -131,7 +145,7 @@ namespace WebApplication2.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
             {
-            //ToDo: delegate the delete operation to the game engine
+            gameEngine.DeleteTrackAsync(id);
             return RedirectToAction("Index");
             }
         }

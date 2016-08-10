@@ -14,7 +14,7 @@ using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.QuerySpecifications
     {
-    class when_querying_the_challenges_for_a_mission : with_standard_mission<ChallengeController>
+    class when_querying_the_challenges_for_a_mission : with_standard_mission<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithMissionLevel(2).Level(1).WithId(99)
