@@ -1,11 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SubmitObservationViewModel.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-22@13:04
+// Last modified: 2016-08-11@00:42
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels.CustomValidation;
 
@@ -41,5 +42,11 @@ namespace MS.Gamification.ViewModels
         public string SubmittedImage { get; set; }
 
         public List<string> ValidationImages { get; set; }
+
+        public IEnumerable<SelectListItem> EquipmentPicker { get; set; }
+
+        public IEnumerable<SelectListItem> SeeingPicker { get; set; }
+
+        public IEnumerable<SelectListItem> TransparencyPicker { get; set; }
         }
     }

@@ -13,14 +13,14 @@ namespace MS.Gamification.DataAccess
     {
     public static class PickListExtensions
         {
-        public static SelectList ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items)
+        public static IEnumerable<SelectListItem> ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items)
             {
             var selectListItems = items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
             var selectList = new SelectList(selectListItems);
             return selectList;
             }
 
-        public static SelectList ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items, TKey selectedItem)
+        public static IEnumerable<SelectListItem> ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items, TKey selectedItem)
             {
             var selectListItems = items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
             var selectList = new SelectList(selectListItems, selectedItem);

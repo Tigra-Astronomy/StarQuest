@@ -343,6 +343,7 @@
     <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
     <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ManageUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MissionTracks\MissionTrackViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ResendInvitationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationViewModel.cs" />

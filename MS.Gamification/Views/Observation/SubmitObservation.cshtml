@@ -28,7 +28,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Equipment, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Equipment, (SelectList) ViewBag.Equipment, controlStyle)
+                        @Html.DropDownListFor(model => model.Equipment, Model.EquipmentPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
                     </div>
                 </div>
@@ -42,14 +42,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Seeing, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Seeing, (SelectList) ViewBag.Seeing, controlStyle)
+                        @Html.DropDownListFor(model => model.Seeing, Model.SeeingPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Transparency, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Transparency, (SelectList) ViewBag.Transparency, controlStyle)
+                        @Html.DropDownListFor(model => model.Transparency, Model.TransparencyPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
                     </div>
                 </div>

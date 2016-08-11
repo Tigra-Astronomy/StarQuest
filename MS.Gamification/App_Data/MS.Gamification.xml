@@ -32,6 +32,12 @@
             </summary>
             <seealso cref="T:MS.Gamification.Areas.Admin.Controllers.RequiresAdministratorRights" />
         </member>
+        <member name="P:MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel.Number">
+            <summary>
+                Track number determines the order in which tracks are displayed.
+            </summary>
+            <value>The number.</value>
+        </member>
         <member name="T:MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BatchObservationViewModel">
             <summary>
                 Contains all of the details for an observation, plus a list of users.
@@ -1371,19 +1377,19 @@
         </member>
         <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions">
             <summary>
-            Extension methods used by <see cref="T:MS.Gamification.GameLogic.GenericFetchStrategy`1"/>
+                Extension methods used by <see cref="T:MS.Gamification.GameLogic.GenericFetchStrategy`1" />
             </summary>
             <remarks>
-            Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
             </remarks>
         </member>
         <member name="T:MS.Gamification.GameLogic.GenericFetchStrategy`1">
             <summary>
-            A default Fetch Strategy that will be suitable for most simple situations.
+                A default Fetch Strategy that will be suitable for most simple situations.
             </summary>
             <typeparam name="TEntity">Tee type of the root entity being queried</typeparam>
             <remarks>
-            Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
             </remarks>
         </member>
         <member name="T:MS.Gamification.GameLogic.IFetchStrategy`1">

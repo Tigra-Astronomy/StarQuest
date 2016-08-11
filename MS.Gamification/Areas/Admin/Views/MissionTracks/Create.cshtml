@@ -1,4 +1,4 @@
-﻿@model MissionTrack
+﻿@model MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -42,15 +42,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BadgeId, "BadgeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("BadgeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BadgeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model=>model.BadgeId, Model.BadgePicker, new {@class="form-control"})
+                @*@Html.DropDownList("BadgeId", (SelectList) ViewBag.BadgePicker, htmlAttributes: new {@class = "form-control"})*@
+                @Html.ValidationMessageFor(model => model.BadgeId, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MissionLevelId, "MissionLevelId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MissionLevelId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model=>model.MissionLevelId, Model.LevelPicker, htmlAttributes: new { @class = "form-control" })
+                @*@Html.DropDownList("MissionLevelId", (SelectList)ViewBag.MissionLevelPicker, htmlAttributes: new { @class = "form-control" })*@
                 @Html.ValidationMessageFor(model => model.MissionLevelId, "", new { @class = "text-danger" })
             </div>
         </div>

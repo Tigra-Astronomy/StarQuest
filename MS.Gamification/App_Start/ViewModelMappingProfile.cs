@@ -24,7 +24,11 @@ namespace MS.Gamification.App_Start
             CreateMap<Observation, SubmitObservationViewModel>()
                 .ForMember(m => m.ObservationDateTimeLocal, m => m.MapFrom(s => s.ObservationDateTimeUtc.ToLocalTime()))
                 .ForMember(m => m.ValidationImages, m => m.Ignore())
-                .ReverseMap();
+                .ForMember(m => m.EquipmentPicker, m => m.Ignore())
+                .ForMember(m => m.SeeingPicker, m => m.Ignore())
+                .ForMember(m => m.TransparencyPicker, m => m.Ignore())
+                .ReverseMap()
+                .ForMember(m=>m.ObservationDateTimeUtc,m=>m.MapFrom(s=>s.ObservationDateTimeLocal.ToUniversalTime()));
             CreateMap<Observation, ObservationDetailsViewModel>()
                 .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
             CreateMap<ApplicationUser, ManageUserViewModel>()

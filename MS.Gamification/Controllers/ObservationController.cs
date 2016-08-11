@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-07-14@00:33
+// Last modified: 2016-08-11@00:53
 
 using System;
 using System.Collections.Generic;
@@ -50,12 +50,9 @@ namespace MS.Gamification.Controllers
             model.ValidationImages = validationImages.ToList();
 
 
-            var equipmentPicklist = PickListExtensions.FromEnum<ObservingEquipment>();
-            ViewBag.Equipment = equipmentPicklist.ToSelectList();
-            var seeingPicklist = PickListExtensions.FromEnum<AntoniadiScale>();
-            ViewBag.Seeing = seeingPicklist.ToSelectList();
-            var transparencyPicklist = PickListExtensions.FromEnum<TransparencyLevel>();
-            ViewBag.Transparency = transparencyPicklist.ToSelectList();
+            model.EquipmentPicker = PickListExtensions.FromEnum<ObservingEquipment>().ToSelectList();
+            model.SeeingPicker = PickListExtensions.FromEnum<AntoniadiScale>().ToSelectList();
+            model.TransparencyPicker = PickListExtensions.FromEnum<TransparencyLevel>().ToSelectList();
             TempData[nameof(Challenge)] = maybeChallenge.Single();
             return View(model);
             }
@@ -158,24 +155,7 @@ namespace MS.Gamification.Controllers
             // ToDo: Get the currently logged-in user.
             var userId = User.Identity.GetUserId();
             var user = uow.Users.Get(userId);
-
-            var observation = new Observation
-                {
-                // ToDo: Set User and UserId
-                UserId = userId,
-                User = user,
-                ChallengeId = challenge.Id,
-                Challenge = challenge,
-                Equipment = model.Equipment,
-                Notes = model.Notes,
-                ObservationDateTimeUtc = model.ObservationDateTimeLocal.ToUniversalTime(),
-                ObservingSite = model.ObservingSite,
-                Seeing = model.Seeing,
-                Status = ModerationState.AwaitingModeration,
-                SubmittedImage = model.SubmittedImage,
-                ExpectedImage = challenge.ValidationImage,
-                Transparency = model.Transparency
-                };
+            var observation = mapper.Map<SubmitObservationViewModel, Observation>(model);
             uow.Observations.Add(observation);
             uow.Commit();
             // ToDo: should redirect to a confirmation screen rather than the home page

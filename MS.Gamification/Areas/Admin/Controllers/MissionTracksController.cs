@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTracksController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-10@21:11
+// Last modified: 2016-08-11@00:14
 
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
@@ -52,16 +53,20 @@ namespace MS.Gamification.Areas.Admin.Controllers
         // GET: Admin/MissionTracks/Create
         public ActionResult Create()
             {
-            PopulatePickLists();
-            return View();
+            //PopulatePickLists();
+            var model = new MissionTrackViewModel();
+            model.BadgePicker = uow.Badges.PickList.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
+            model.LevelPicker =
+                uow.MissionLevels.PickList.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
+            return View(model);
             }
 
         private void PopulatePickLists(int selectedBadge = 1, int selectedLevel = 1)
             {
             var badgeSelector = uow.Badges.PickList.ToSelectList(selectedBadge);
             var levelSelector = uow.MissionLevels.PickList.ToSelectList(selectedLevel);
-            ViewBag.BadgeId = badgeSelector;
-            ViewBag.MissionLevelId = levelSelector;
+            ViewBag.BadgePicker = badgeSelector;
+            ViewBag.MissionLevelPicker = levelSelector;
             }
 
         // POST: Admin/MissionTracks/Create

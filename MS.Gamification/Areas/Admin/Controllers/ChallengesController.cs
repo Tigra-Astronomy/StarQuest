@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengesController.cs  Created: 2016-08-05@19:34
-// Last modified: 2016-08-10@20:38
+// Last modified: 2016-08-11@00:53
 
 using System.Linq;
 using System.Web.Mvc;
@@ -32,8 +32,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
 
         public ActionResult Create()
             {
-            PopulateViewDataForCreateChallenge();
-            return View();
+            var model = PopulateViewDataForCreateChallenge();
+            return View(model);
             }
 
         public ActionResult Details(int id)
@@ -42,12 +42,12 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View(model);
             }
 
-        private void PopulateViewDataForCreateChallenge()
+        private CreateChallengeViewModel PopulateViewDataForCreateChallenge(CreateChallengeViewModel viewModel = null)
             {
-            var pickListItems = uow.CategoriesRepository.PickList;
-            var tracks = uow.MissionTracks.PickList;
-            ViewBag.Categories = pickListItems.ToSelectList();
-            ViewBag.Tracks = tracks.ToSelectList();
+            var model = viewModel ?? new CreateChallengeViewModel();
+            model.CategoryPicker = uow.CategoriesRepository.PickList.ToSelectList();
+            model.TrackPicker = uow.MissionTracks.PickList.ToSelectList();
+            return model;
             }
 
         [HttpPost]
@@ -55,8 +55,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             {
             if (!ModelState.IsValid)
                 {
-                PopulateViewDataForCreateChallenge();
-                return View(model);
+                return View(PopulateViewDataForCreateChallenge(model));
                 }
             var challenge = mapper.Map<CreateChallengeViewModel, Challenge>(model);
             uow.Challenges.Add(challenge);

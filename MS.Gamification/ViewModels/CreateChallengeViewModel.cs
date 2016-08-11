@@ -1,9 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: CreateChallengeViewModel.cs  Created: 2016-07-09@20:19
-// Last modified: 2016-07-22@13:20
+// Last modified: 2016-08-11@00:53
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MS.Gamification.ViewModels
     {
@@ -32,5 +34,9 @@ namespace MS.Gamification.ViewModels
         public int MissionTrackId { get; set; }
 
         public string ValidationImage { get; set; } = string.Empty;
+
+        public IEnumerable<SelectListItem> CategoryPicker { get; set; }
+
+        public IEnumerable<SelectListItem> TrackPicker { get; set; }
         }
     }
