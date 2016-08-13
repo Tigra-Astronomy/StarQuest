@@ -1,10 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-08-06@17:36
+// Last modified: 2016-08-11@20:13
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
+using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
@@ -28,7 +29,7 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.SeeingPicker, m => m.Ignore())
                 .ForMember(m => m.TransparencyPicker, m => m.Ignore())
                 .ReverseMap()
-                .ForMember(m=>m.ObservationDateTimeUtc,m=>m.MapFrom(s=>s.ObservationDateTimeLocal.ToUniversalTime()));
+                .ForMember(m => m.ObservationDateTimeUtc, m => m.MapFrom(s => s.ObservationDateTimeLocal.ToUniversalTime()));
             CreateMap<Observation, ObservationDetailsViewModel>()
                 .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
             CreateMap<ApplicationUser, ManageUserViewModel>()
@@ -55,6 +56,10 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.MissionTitle, m => m.MapFrom(s => s.Title))
                 .ForMember(m => m.Levels, m => m.MapFrom(s => s.MissionLevels));
             CreateMap<MissionLevel, MissionLevel>();
+            CreateMap<MissionTrackViewModel, MissionTrack>()
+                .ForMember(m => m.Challenges, m => m.Ignore())
+                .ForMember(m => m.Id, m => m.Ignore())
+                .ReverseMap();
             }
         }
     }

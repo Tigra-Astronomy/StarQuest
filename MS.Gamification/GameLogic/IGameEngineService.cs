@@ -1,11 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
-// Last modified: 2016-08-10@20:38
+// Last modified: 2016-08-11@20:14
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.GameLogic
@@ -98,5 +99,13 @@ namespace MS.Gamification.GameLogic
         /// <param name="id">The track ID.</param>
         /// <exception cref="InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
         void DeleteTrackAsync(int id);
+
+        /// <summary>
+        ///     Updates a mission track from values in the submitted model, provided that game rules allow it.
+        /// </summary>
+        /// <param name="model">The model containing new values.</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        Task UpdateTrackAsync(MissionTrackViewModel model);
         }
     }

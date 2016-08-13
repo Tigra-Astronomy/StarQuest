@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-10@20:32
+// Last modified: 2016-08-13@20:08
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.Preconditions;
 using MS.Gamification.GameLogic.QuerySpecifications;
@@ -301,6 +302,40 @@ namespace MS.Gamification.GameLogic
         public void DeleteTrackAsync(int id)
             {
             throw new NotSupportedException("Deleting of tracks is not currently supported");
+            }
+
+        /// <summary>
+        ///     Updates a mission track from values in the submitted model, provided that game rules allow it.
+        /// </summary>
+        /// <param name="model">The model containing new values.</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        public async Task UpdateTrackAsync(MissionTrackViewModel model)
+            {
+            Log.Info($"Updating track {model}");
+            var maybeTrack = unitOfWork.MissionTracks.GetMaybe(model.Id);
+            if (maybeTrack.None)
+                {
+                Log.Error($"The target track id={model.Id} was not found in the database");
+                throw new InvalidOperationException("The track was not found in the database");
+                }
+            var targetLevel = model.MissionLevelId;
+            var maybeLevel = unitOfWork.MissionLevels.GetMaybe(targetLevel);
+            if (maybeLevel.None)
+                {
+                Log.Error($"Update blocked because the target level id={targetLevel} was not found");
+                throw new InvalidOperationException("Can't move the track to a non-existent level");
+                }
+            var dbLevel = maybeLevel.Single();
+            if (dbLevel.Tracks.Any(p => p.Number == model.Number && p.Id != model.Id))
+                {
+                Log.Warn($"Update blocked because destination level id={targetLevel} already has a track number={model.Number}");
+                throw new InvalidOperationException("The destination track already has that level number");
+                }
+            var dbTrack = maybeTrack.Single();
+
+            mapper.Map(model, dbTrack);
+            await unitOfWork.CommitAsync();
             }
 
         /// <summary>

@@ -1166,6 +1166,14 @@
             </summary>
             <param name="id">The track ID.</param>
         </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
             <summary>
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
@@ -1267,6 +1275,14 @@
             </summary>
             <param name="id">The track ID.</param>
             <exception cref="T:System.InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
         </member>
         <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
             <summary>
@@ -1382,6 +1398,12 @@
             <remarks>
                 Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
             </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions.FetchPathExpressionVisitor">
+            <summary>
+                Visits MemberExpression nodes in an expression tree and extracts the member names.
+            </summary>
+            <seealso cref="T:System.Linq.Expressions.ExpressionVisitor" />
         </member>
         <member name="T:MS.Gamification.GameLogic.GenericFetchStrategy`1">
             <summary>
