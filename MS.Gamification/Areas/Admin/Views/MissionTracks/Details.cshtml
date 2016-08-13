@@ -10,10 +10,6 @@
     <h4>MissionTrack</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Badge.ImageIdentifier)
-        </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Badge.ImageIdentifier)
         </dd>
@@ -49,7 +45,9 @@
         <dd>
             @Html.DisplayFor(model => model.AwardTitle)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.Badge.ImageIdentifier)
+        </dt>
     </dl>
 </div>
 <p>

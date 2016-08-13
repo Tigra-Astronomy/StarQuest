@@ -417,6 +417,7 @@
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithProfileInformation.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\TrackHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />

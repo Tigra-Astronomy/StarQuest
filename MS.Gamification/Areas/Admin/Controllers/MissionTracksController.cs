@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTracksController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-11@00:14
+// Last modified: 2016-08-13@21:04
 
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
@@ -19,12 +20,14 @@ namespace MS.Gamification.Areas.Admin.Controllers
     public class MissionTracksController : RequiresAdministratorRights
         {
         private readonly IGameEngineService gameEngine;
+        private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
 
-        public MissionTracksController(IUnitOfWork uow, IGameEngineService gameEngine)
+        public MissionTracksController(IUnitOfWork uow, IGameEngineService gameEngine, IMapper mapper)
             {
             this.uow = uow;
             this.gameEngine = gameEngine;
+            this.mapper = mapper;
             }
 
         // GET: Admin/MissionTracks
@@ -53,20 +56,17 @@ namespace MS.Gamification.Areas.Admin.Controllers
         // GET: Admin/MissionTracks/Create
         public ActionResult Create()
             {
-            //PopulatePickLists();
             var model = new MissionTrackViewModel();
-            model.BadgePicker = uow.Badges.PickList.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
-            model.LevelPicker =
-                uow.MissionLevels.PickList.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
+            PopulatePickLists(model);
             return View(model);
             }
 
-        private void PopulatePickLists(int selectedBadge = 1, int selectedLevel = 1)
+        private void PopulatePickLists(MissionTrackViewModel model)
             {
-            var badgeSelector = uow.Badges.PickList.ToSelectList(selectedBadge);
-            var levelSelector = uow.MissionLevels.PickList.ToSelectList(selectedLevel);
-            ViewBag.BadgePicker = badgeSelector;
-            ViewBag.MissionLevelPicker = levelSelector;
+            var badgeSelector = uow.Badges.PickList.ToSelectList();
+            var levelSelector = uow.MissionLevels.PickList.ToSelectList();
+            model.BadgePicker = badgeSelector;
+            model.LevelPicker = levelSelector;
             }
 
         // POST: Admin/MissionTracks/Create
@@ -75,22 +75,23 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(
-            [Bind(Include = "Id,Name,Number,AwardTitle,BadgeId,MissionLevelId")] MissionTrack missionTrack)
+            [Bind(Include = "Id,Name,Number,AwardTitle,BadgeId,MissionLevelId")] MissionTrackViewModel missionTrack)
             {
             if (!ModelState.IsValid)
                 {
-                PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
+                PopulatePickLists(missionTrack);
                 return View(missionTrack);
                 }
             try
                 {
-                await gameEngine.CreateTrackAsync(missionTrack);
+                var track = mapper.Map<MissionTrackViewModel, MissionTrack>(missionTrack);
+                await gameEngine.CreateTrackAsync(track);
                 return RedirectToAction("Index");
                 }
             catch (InvalidOperationException e)
                 {
                 ModelState.AddModelError(string.Empty, e.Message);
-                PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
+                PopulatePickLists(missionTrack);
                 return View(missionTrack);
                 }
             }
@@ -108,8 +109,9 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 return HttpNotFound();
                 }
             var missionTrack = maybeTrack.Single();
-            PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
-            return View(missionTrack);
+            var model = mapper.Map<MissionTrack, MissionTrackViewModel>(missionTrack);
+            PopulatePickLists(model);
+            return View(model);
             }
 
         // POST: Admin/MissionTracks/Edit/5
@@ -118,15 +120,24 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(
-            [Bind(Include = "Id,Name,Number,AwardTitle,BadgeId,MissionLevelId")] MissionTrack missionTrack)
+            [Bind(Include = "Id,Name,Number,AwardTitle,BadgeId,MissionLevelId")] MissionTrackViewModel missionTrack)
             {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
                 {
-                //ToDo: delegate the update operation to the game engine
+                PopulatePickLists(missionTrack);
+                return View(missionTrack);
+                }
+            try
+                {
+                await gameEngine.UpdateTrackAsync(missionTrack);
                 return RedirectToAction("Index");
                 }
-            PopulatePickLists(missionTrack.BadgeId, missionTrack.MissionLevelId);
-            return View(missionTrack);
+            catch (Exception e)
+                {
+                ModelState.AddModelError(string.Empty, e.Message);
+                PopulatePickLists(missionTrack);
+                return View(missionTrack);
+                }
             }
 
         // GET: Admin/MissionTracks/Delete/5
