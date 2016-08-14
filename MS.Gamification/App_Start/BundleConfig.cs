@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-06@17:01
+// Last modified: 2016-08-13@22:15
 
 using System.Web.Optimization;
 
@@ -73,6 +73,11 @@ namespace MS.Gamification
             bundles.Add(new StyleBundle("~/Content/codeMirror.css").Include(
                 "~/Content/codemirror-3.01/codemirror.css",
                 "~/Content/codemirror-3.0/theme/ambiance.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                "~/Scripts/dropzone/dropzone.js"));
+            bundles.Add(new StyleBundle("~/Content/dropzone").Include(
+                "~/Scripts/dropzone/dropzone.css"));
             }
         }
     }

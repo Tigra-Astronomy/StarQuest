@@ -150,3 +150,13 @@ img.gravatar { margin-bottom: 12px; }
 .panel-body.c3 { min-height: 400px; }
 
 .CodeMirror { border: 1px solid #334; }
+
+/*.dropzone .dz-preview .dz-image {
+    border-radius: 20px;
+    display: block;
+    height: 240px !important;
+    overflow: hidden;
+    position: relative;
+    width: 240px !important;
+    z-index: 10;
+}*/
