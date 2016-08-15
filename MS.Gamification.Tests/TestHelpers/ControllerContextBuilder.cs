@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-08-15@00:15
+// Last modified: 2016-08-15@05:28
 
 using System;
 using System.Collections.Generic;
@@ -200,7 +200,9 @@ namespace MS.Gamification.Tests.TestHelpers
             kernel.Bind<TController>().ToSelf().InTransientScope();
             kernel.Bind<IGameEngineService>().ToMethod(u => rulesService).InTransientScope();
             kernel.Bind<IGameNotificationService>().To<FakeNotificationService>().InTransientScope();
-            kernel.Bind<IImageStore>().ToMethod(u => ImageStore).InTransientScope();
+            kernel.Bind<IImageStore>().ToMethod(u => ImageStore).InTransientScope().Named("BadgeImageStore");
+            kernel.Bind<IImageStore>().ToMethod(u => ImageStore).InTransientScope().Named("ValidationImageStore");
+            kernel.Bind<IImageStore>().ToMethod(u => ImageStore).InTransientScope().Named("StaticImageStore");
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
             kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
             return kernel;
