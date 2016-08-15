@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: PickListExtensions.cs  Created: 2016-07-19@01:02
-// Last modified: 2016-08-09@22:54
+// Last modified: 2016-08-15@01:56
 
 using System;
 using System.Collections.Generic;
@@ -16,15 +16,13 @@ namespace MS.Gamification.DataAccess
         public static IEnumerable<SelectListItem> ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items)
             {
             var selectListItems = items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
-            var selectList = new SelectList(selectListItems);
-            return selectList;
+            return selectListItems;
             }
 
         public static IEnumerable<SelectListItem> ToSelectList<TKey>(this IEnumerable<PickListItem<TKey>> items, TKey selectedItem)
             {
             var selectListItems = items.Select(p => new SelectListItem {Value = p.Id.ToString(), Text = p.DisplayName});
-            var selectList = new SelectList(selectListItems, selectedItem);
-            return selectList;
+            return selectListItems;
             }
 
         /// <exception cref="InvalidOperationException">Only valid on enum types</exception>

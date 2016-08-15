@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BadgesController.cs  Created: 2016-08-13@22:24
-// Last modified: 2016-08-15@01:28
+// Last modified: 2016-08-15@02:10
 
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                     };
                 uow.Badges.Add(badge);
                 await uow.CommitAsync();
-                return Json(new {imageIdentifier = identifier});
+                return Json(new {imageIdentifier = identifier, badgeId = badge.Id});
                 }
             catch (Exception e)
                 {

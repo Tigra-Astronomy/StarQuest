@@ -57,7 +57,7 @@
         <div class="form-group">
             <div id="badgeDropzone" class="dropzone col-md-offset-2 col-md-4">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <p>
                     Select an existing badge in the drop-down above. To upload a new badge,
                     drop it in the box, or click in the box to browse for a file.
@@ -90,10 +90,21 @@
             maxFileSize: 0.5, // Mb
             maxFiles: 1,
             acceptedFiles: ".png,.gif,.jpg,.bmp",
-            init: function () {
+            init: function() {
                 this.on("maxfilesexceeded",
-                    function (file) {
+                    function(file) {
                         this.removeFile(file);
+                    });
+                this.on("success",
+                    function(file, response) {
+                        var option = $("<option>",
+                            {
+                                value: response.badgeId,
+                                text: response.imageIdentifier,
+                                selected: true
+                            });
+                        $("#BadgeId")
+                            .append(option);
                     });
             }
         };
