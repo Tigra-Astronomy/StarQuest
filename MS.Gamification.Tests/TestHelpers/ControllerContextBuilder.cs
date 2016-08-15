@@ -1,11 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ControllerContextBuilder.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-08-08@23:04
+// Last modified: 2016-08-15@00:15
 
 using System;
 using System.Collections.Generic;
 using System.Security.Principal;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Effort.Extra;
@@ -14,6 +15,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
+using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers.Fakes;
 using Ninject;
@@ -31,6 +33,7 @@ namespace MS.Gamification.Tests.TestHelpers
         readonly TempDataDictionary tempdata = new TempDataDictionary();
         readonly EffortUnitOfWorkBuilder uowBuilder = new EffortUnitOfWorkBuilder();
         Uri baseUri = new Uri("http://localhost:9876");
+        HttpPostedFileBase postedFile;
         HttpVerbs requestMethod = HttpVerbs.Get;
         string requestPath = "/";
         string requestUserId = string.Empty;
@@ -42,6 +45,8 @@ namespace MS.Gamification.Tests.TestHelpers
         public IGameEngineService RulesService { get; internal set; }
 
         public IMapper Mapper { get; internal set; }
+
+        public IImageStore ImageStore { get; set; } = new UnitTestImageStore(@"C:\UnitTestStore");
 
 
         /// <summary>
@@ -143,7 +148,16 @@ namespace MS.Gamification.Tests.TestHelpers
             Mapper = mapperConfiguration.CreateMapper();
             var notifier = new FakeNotificationService();
             RulesService = new GameRulesService(UnitOfWork, Mapper, notifier);
-            var httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
+            HttpContextBase httpContext;
+            if (postedFile == null)
+                {
+                httpContext = new FakeHttpContext(requestPath, requestMethod.ToString("G"));
+                }
+            else
+                {
+                var filesCollection = new FakeHttpFileCollection(postedFile);
+                httpContext = new FakeHttpContext(requestPath, filesCollection);
+                }
             var fakeIdentity = new FakeIdentity(requestUsername);
             var fakePrincipal = new FakePrincipal(fakeIdentity, requestUserRoles);
             httpContext.User = fakePrincipal;
@@ -152,7 +166,7 @@ namespace MS.Gamification.Tests.TestHelpers
              * Use Ninject to create the controller, as we don't know in advance what
              * type of controller or how many constructor parameters it has.
              */
-            var kernel = BuildNinjectKernel(UnitOfWork, fakeIdentity, requestUserId, RulesService);
+            var kernel = BuildNinjectKernel(fakeIdentity, requestUserId, RulesService);
             var controller = kernel.Get<TController>();
             if (controller == null)
                 throw new SpecificationException(
@@ -177,7 +191,7 @@ namespace MS.Gamification.Tests.TestHelpers
             return this;
             }
 
-        IKernel BuildNinjectKernel(IUnitOfWork uow, IIdentity identity, string userId, IGameEngineService rulesService)
+        IKernel BuildNinjectKernel(IIdentity identity, string userId, IGameEngineService rulesService)
             {
             var requestUserId = userId;
             IKernel kernel = new StandardKernel();
@@ -186,6 +200,7 @@ namespace MS.Gamification.Tests.TestHelpers
             kernel.Bind<TController>().ToSelf().InTransientScope();
             kernel.Bind<IGameEngineService>().ToMethod(u => rulesService).InTransientScope();
             kernel.Bind<IGameNotificationService>().To<FakeNotificationService>().InTransientScope();
+            kernel.Bind<IImageStore>().ToMethod(u => ImageStore).InTransientScope();
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
             kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
             return kernel;
@@ -209,6 +224,18 @@ namespace MS.Gamification.Tests.TestHelpers
                 }
             data.Table<ApplicationUser>("AspNetUsers").Add(user);
 
+            return this;
+            }
+
+        public ControllerContextBuilder<TController> WithPostedFile(HttpPostedFileBase postedFile)
+            {
+            this.postedFile = postedFile;
+            return this;
+            }
+
+        public ControllerContextBuilder<TController> WithImageStore(IImageStore store)
+            {
+            ImageStore = store;
             return this;
             }
         }

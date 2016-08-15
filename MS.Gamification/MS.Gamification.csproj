@@ -456,6 +456,7 @@
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="DataAccess\PicklistItem.cs" />
+    <Compile Include="GameLogic\StringExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

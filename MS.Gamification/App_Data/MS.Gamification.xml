@@ -1483,6 +1483,99 @@
             </summary>
             <value>The fetch strategy.</value>
         </member>
+        <member name="T:MS.Gamification.GameLogic.StringExtensions">
+            <summary>
+                String extension methods.
+            </summary>
+            <remarks>
+                Internal use only. Driver and application developers should not rely on this class, because the interface
+                and method signatures may change at any time.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Head(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the head of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the head of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Tail(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the tail of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the tail of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)">
+            <summary>
+                Keeps only the wanted (that is, removes all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">A list of the wanted characters. All other characters will be removed.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all
+                the characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String,System.Char)">
+            <summary>
+                Keeps only the wanted (that is, replaces all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">
+                A list of the wanted characters. All other characters will be replaced with
+                <paramref name="substitute" />.
+            </param>
+            <param name="substitute">The character that will replace all unwanted characters.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all the
+                characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)">
+            <summary>
+                Removes all unwanted characters from a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="clean">A list of the unwanted characters. All other characters will be preserved.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" />
+                if all of the characters were deleted or if the source string was null or empty.
+            </returns>
+            <remarks>
+                Contrast with <see cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+            </remarks>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveHead(System.String,System.Int32)">
+            <summary>
+                Remove the head of the string, leaving the tail.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the head.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the head.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveTail(System.String,System.Int32)">
+            <summary>
+                Remove the tail of the string, leaving the head.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the tail.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the tail.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.ToHex(System.String)">
+            <summary>
+                Converts a tring to a hex representation, suitable for display in a debugger.
+            </summary>
+            <param name="source">The source string.</param>
+            <returns>A new string showing each character of the source string as a hex digit.</returns>
+        </member>
         <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
             <summary>
                 Globally Recognised Avatar - http://gravatar.com
@@ -1582,9 +1675,8 @@
         </member>
         <member name="T:MS.Gamification.HtmlHelpers.WebServerImageStore">
             <summary>
-              Maps image names to static image files that are store on a web server,
-              where the path to the images comes from a setting in the Web.config
-              file.
+                Maps image names to static image files that are store on a web server, where the path to the images comes
+                from a setting in the Web.config file.
             </summary>
             <seealso cref="T:MS.Gamification.HtmlHelpers.IImageStore" />
         </member>
@@ -1613,6 +1705,13 @@
             </summary>
             <param name="identifier">The image identifier.</param>
             <returns>The MIME type of the identified image, for example, "image/png".</returns>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.IImageStore.Save(System.IO.Stream,System.String)">
+            <summary>
+            Persists the image bitmap into the image store, using the <paramref name="identifier"/> as the key.
+            </summary>
+            <param name="imageStream">The image bitmap.</param>
+            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
         </member>
         <member name="P:MS.Gamification.Models.Badge.ImageIdentifier">
             <summary>
