@@ -828,14 +828,14 @@
         </member>
         <member name="T:MS.Gamification.DataAccess.IDomainEntity`1">
             <summary>
-              A marker interface that must be present on all domain entities. This ensures that all domain entities
-              contain an <see cref="P:MS.Gamification.DataAccess.IDomainEntity`1.Id" /> property and also serves as a constraint on the types that can be used with the
-              <see cref="!:IRepository&lt;TEntity&gt;" /> interface.
+                A marker interface that must be present on all domain entities. This ensures that all domain entities contain
+                an <see cref="P:MS.Gamification.DataAccess.IDomainEntity`1.Id" /> property and also serves as a constraint on the types that can be used with the
+                <see cref="T:MS.Gamification.DataAccess.IRepository`2" /> interface.
             </summary>
         </member>
         <member name="P:MS.Gamification.DataAccess.IDomainEntity`1.Id">
             <summary>
-              Gets an identifier that uniquely identifies this entity from all other entities of the same type.
+                Gets an identifier that uniquely identifies this entity from all other entities of the same type.
             </summary>
             <value>The identifier.</value>
         </member>
@@ -851,6 +851,7 @@
                 required by the business logic.
             </remarks>
             <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
+            <typeparam name="TKey">The type of the primary key.</typeparam>
         </member>
         <member name="P:MS.Gamification.DataAccess.IRepository`2.PickList">
             <summary>
@@ -1091,6 +1092,14 @@
             <param name="observation">The observation that has been approved.</param>
             <returns>An awaitable Task.</returns>
         </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.BadgeAwarded(MS.Gamification.Models.Badge,MS.Gamification.Models.ApplicationUser,MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Notifies the user that they have been awarded a badge.
+            </summary>
+            <param name="badge">The badge that was awarded.</param>
+            <param name="user">The recipient user.</param>
+            <param name="track">The track that was completed resulting in the award.</param>
+        </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
             <summary>
                 Computes the percent complete for a set of challenges, given a set of eligible observations. The
@@ -1101,7 +1110,7 @@
             <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
             <remarks>
                 It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-                <see cref="!:EligibleObservations" />.
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
             </remarks>
         </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
@@ -1180,7 +1189,7 @@
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
             </summary>
             <param name="level">The level.</param>
-            <param name="user">The user.</param>
+            <param name="userId">The user.</param>
             <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
         </member>
         <member name="M:MS.Gamification.GameLogic.GameRulesService.AwardBadge(System.Int32,System.String)">
@@ -1200,7 +1209,7 @@
             <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
             <remarks>
                 It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-                <see cref="!:EligibleObservations" />.
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
             </remarks>
         </member>
         <member name="M:MS.Gamification.GameLogic.IGameEngineService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
@@ -1221,7 +1230,7 @@
                 Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
             </summary>
             <param name="level">The level.</param>
-            <param name="user">The user.</param>
+            <param name="userId">The user.</param>
             <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
         </member>
         <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
@@ -1639,6 +1648,7 @@
             <summary>
                 Returns a Globally Recognised Avatar as an &lt;img /&gt; - http://gravatar.com
             </summary>
+            <param name="htmlHelper">The HTML Helper object</param>
             <param name="emailAddress">Email Address for the Gravatar</param>
             <param name="defaultImage">Default image if user hasn't created a Gravatar</param>
             <param name="size">Size in pixels (default: 80)</param>
@@ -1814,7 +1824,7 @@
                 An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
             </returns>
         </member>
-        <member name="T:MS.Gamification.ViewModels.ModerationQueueItem">
+        <member name="T:MS.Gamification.ViewModels.Moderation.ModerationQueueItem">
             <summary>
                 Data transfer object used to display the moderation queue
             </summary>

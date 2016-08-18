@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-08-11@00:53
+// Last modified: 2016-08-18@23:07
 
 using System;
 using System.Collections.Generic;
@@ -20,11 +20,13 @@ namespace MS.Gamification.Controllers
         {
         private readonly IMapper mapper;
         private readonly IUnitOfWork uow;
+        private readonly ICurrentUser webUser;
 
-        public ObservationController(IUnitOfWork uow, IMapper mapper)
+        public ObservationController(IUnitOfWork uow, IMapper mapper, ICurrentUser webUser)
             {
             this.uow = uow;
             this.mapper = mapper;
+            this.webUser = webUser;
             }
 
         // GET: Observation/Create
@@ -35,9 +37,11 @@ namespace MS.Gamification.Controllers
             var maybeChallenge = uow.Challenges.GetMaybe(id.Value);
             if (maybeChallenge.None)
                 return HttpNotFound();
+            var challenge = maybeChallenge.Single();
             var model = new SubmitObservationViewModel
                 {
-                Challenge = maybeChallenge.Single(),
+                ChallengeId = challenge.Id,
+                ChallengeName = challenge.Name,
                 ObservationDateTimeLocal = DateTime.UtcNow,
                 Seeing = AntoniadiScale.Unknown,
                 Transparency = TransparencyLevel.Unknown
@@ -46,14 +50,13 @@ namespace MS.Gamification.Controllers
             // Set validation images
             // ToDo - randomly choose 3 incorrect images and obtain the 1 correct image from the challenge data
             // For now, just use the NoImage.png placeholder
-            var validationImages = GetValidationImages(model.Challenge);
+            var validationImages = GetValidationImages(challenge);
             model.ValidationImages = validationImages.ToList();
 
 
             model.EquipmentPicker = PickListExtensions.FromEnum<ObservingEquipment>().ToSelectList();
             model.SeeingPicker = PickListExtensions.FromEnum<AntoniadiScale>().ToSelectList();
             model.TransparencyPicker = PickListExtensions.FromEnum<TransparencyLevel>().ToSelectList();
-            TempData[nameof(Challenge)] = maybeChallenge.Single();
             return View(model);
             }
 
@@ -149,13 +152,13 @@ namespace MS.Gamification.Controllers
         [HttpPost]
         public ActionResult SubmitObservation(SubmitObservationViewModel model)
             {
-            var postedChallenge = TempData[nameof(Challenge)] as Challenge;
-            var maybeChallenge = uow.Challenges.GetMaybe(postedChallenge.Id);
-            var challenge = maybeChallenge.Single();
-            // ToDo: Get the currently logged-in user.
-            var userId = User.Identity.GetUserId();
-            var user = uow.Users.Get(userId);
             var observation = mapper.Map<SubmitObservationViewModel, Observation>(model);
+            observation.UserId = webUser.UniqueId;
+            var maybeChallenge = uow.Challenges.GetMaybe(model.ChallengeId);
+            if(maybeChallenge.None)
+                throw new ArgumentException("Invalid challenge ID specified");
+            observation.ExpectedImage = maybeChallenge.Single().ValidationImage;
+            observation.Status = ModerationState.AwaitingModeration;
             uow.Observations.Add(observation);
             uow.Commit();
             // ToDo: should redirect to a confirmation screen rather than the home page
@@ -167,7 +170,7 @@ namespace MS.Gamification.Controllers
             var userId = User.Identity.GetUserId();
             var specification = new SingleUserWithObservations(userId);
             var maybeUser = uow.Users.GetMaybe(specification);
-            if (maybeUser.None) return new HttpStatusCodeResult(500, "Unable to retrieve user details. Sorry!");
+            if (maybeUser.None) return new HttpStatusCodeResult(500, "Unable to retrieve webUser details. Sorry!");
             return View(maybeUser.Single().Observations);
             }
 

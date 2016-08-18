@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-08-11@20:13
+// Last modified: 2016-08-18@04:38
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -10,6 +10,7 @@ using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using MS.Gamification.ViewModels.Mission;
+using MS.Gamification.ViewModels.Moderation;
 
 namespace MS.Gamification.App_Start
     {
@@ -32,12 +33,17 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.ObservationDateTimeUtc, m => m.MapFrom(s => s.ObservationDateTimeLocal.ToUniversalTime()));
             CreateMap<Observation, ObservationDetailsViewModel>()
                 .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
+            CreateMap<Observation, ModerationQueueItem>()
+                .ForMember(m => m.DateTime, m => m.MapFrom(s => s.ObservationDateTimeUtc))
+                .ForMember(m => m.ObservationId, m => m.MapFrom(s => s.Id))
+                .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
             CreateMap<ApplicationUser, ManageUserViewModel>()
                 .ForMember(m => m.AccountLocked, m => m.MapFrom(s => s.LockoutEnabled))
                 .ForMember(m => m.EmailVerified, m => m.MapFrom(s => s.EmailConfirmed))
                 .ForMember(m => m.HasValidPassword, m => m.ResolveUsing(r => !string.IsNullOrWhiteSpace(r.PasswordHash)))
                 .ForMember(m => m.Roles, m => m.Ignore())
-                .ForMember(m => m.RoleToAdd, m => m.Ignore());
+                .ForMember(m => m.RoleToAdd, m => m.Ignore())
+                .ForMember(m => m.RolePicker, m => m.Ignore());
             CreateMap<BatchObservationViewModel, Observation>()
                 .ForMember(m => m.Challenge, m => m.Ignore())
                 .ForMember(m => m.ExpectedImage, m => m.Ignore())

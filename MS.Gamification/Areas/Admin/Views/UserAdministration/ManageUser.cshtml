@@ -71,7 +71,7 @@
                 @Html.ValidationSummary()
                 <div class="col-xs-3">
                     <div class="form-group">
-                        @Html.DropDownListFor(m => m.RoleToAdd, (SelectList) ViewBag.Roles, new {@class = "form-control"})
+                        @Html.DropDownListFor(m => m.RoleToAdd, Model.RolePicker, new {@class = "form-control"})
                     </div>
                     @Html.HiddenFor(m => m.Id)
                 </div>

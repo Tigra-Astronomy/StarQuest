@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationControllerSpecs.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-07-04@22:29
+// Last modified: 2016-08-18@02:28
 
 using System;
 using System.Linq;
@@ -55,10 +55,8 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.SubmitObservation(100) as ViewResult;
         It should_return_the_default_view_by_convention = () => Result.ViewName.ShouldBeEmpty();
-        It should_include_the_challenge_in_the_view_model =
-            () => ((SubmitObservationViewModel) Result.Model).Challenge.Id.ShouldEqual(100);
-        It should_put_the_challenge_into_tempdata =
-            () => ((Challenge) Result.TempData[nameof(Challenge)]).Id.ShouldEqual(100);
+        It should_include_the_challenge_id_in_the_view_model =
+            () => ((SubmitObservationViewModel) Result.Model).ChallengeId.ShouldEqual(100);
         static ViewResult Result;
         }
 

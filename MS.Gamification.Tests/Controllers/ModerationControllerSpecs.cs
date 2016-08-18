@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModerationControllerSpecs.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-28@13:42
+// Last modified: 2016-08-18@03:40
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
-using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.Moderation;
 
 namespace MS.Gamification.Tests.Controllers
     {

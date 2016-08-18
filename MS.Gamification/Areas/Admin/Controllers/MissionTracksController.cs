@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTracksController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-18@01:37
+// Last modified: 2016-08-18@02:47
 
 using System;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionTracks
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
             {
             var trackSpecification = new MissionTrackWithBadgeAndLevel();
             var missionTracks = uow.MissionTracks.AllSatisfying(trackSpecification);
@@ -39,7 +39,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionTracks/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
             {
             if (id == null)
                 {
@@ -98,7 +98,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionTracks/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
             {
             if (id == null)
                 {
@@ -142,7 +142,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionTracks/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
             {
             if (id == null)
                 {
@@ -163,7 +163,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
             {
-            gameEngine.DeleteTrackAsync(id);
+            await gameEngine.DeleteTrackAsync(id);
             return RedirectToAction("Index");
             }
         }

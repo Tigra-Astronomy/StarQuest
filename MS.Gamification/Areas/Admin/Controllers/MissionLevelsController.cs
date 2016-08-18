@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionLevelsController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-11@00:56
+// Last modified: 2016-08-18@02:47
 
 using System;
 using System.Linq;
@@ -36,7 +36,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionLevels/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
             {
             if (id == null)
                 {
@@ -97,7 +97,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionLevels/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
             {
             if (id == null)
                 {
@@ -140,7 +140,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: Admin/MissionLevels/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
             {
             if (id == null)
                 {

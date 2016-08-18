@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: StringExtensions.cs  Created: 2016-08-14@19:46
-// Last modified: 2016-08-14@19:51
+// Last modified: 2016-08-18@02:45
 
 using System;
 using System.Linq;
@@ -112,9 +112,9 @@ namespace MS.Gamification.GameLogic
         ///     if all of the characters were deleted or if the source string was null or empty.
         /// </returns>
         /// <remarks>
-        ///     Contrast with <see cref="Keep" />
+        ///     Contrast with <see cref="Keep(string,string)" />
         /// </remarks>
-        /// <seealso cref="Keep" />
+        /// <seealso cref="Keep(string,string)" />
         public static string Clean(this string source, string clean)
             {
             if (string.IsNullOrEmpty(source))

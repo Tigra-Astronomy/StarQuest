@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-13@21:42
+// Last modified: 2016-08-18@02:47
 
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace MS.Gamification.GameLogic
         /// <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
         /// <remarks>
         ///     It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-        ///     <see cref="EligibleObservations" />.
+        ///     <see cref="EligibleObservationsForChallenges" />.
         /// </remarks>
         public int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations)
             {
@@ -359,7 +359,7 @@ namespace MS.Gamification.GameLogic
         ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
         /// </summary>
         /// <param name="level">The level.</param>
-        /// <param name="user">The user.</param>
+        /// <param name="userId">The user.</param>
         /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
         public bool IsLevelUnlockedForUser(IPreconditionXml level, string userId)
             {

@@ -51,6 +51,7 @@
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
     <DocumentationFile>App_Data\MS.Gamification.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -479,6 +480,10 @@
     <Compile Include="Migrations\201607271900449_BadgesRequired.Designer.cs">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.cs" />
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.Designer.cs">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
     <Compile Include="Models\Badge.cs" />
@@ -521,7 +526,7 @@
     <Compile Include="ViewModels\Mission\LevelProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\MissionProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\TrackProgressViewModel.cs" />
-    <Compile Include="ViewModels\ModerationQueueViewModel.cs" />
+    <Compile Include="ViewModels\Moderation\ModerationQueueItem.cs" />
     <Compile Include="ViewModels\ObservationDetailsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
@@ -722,6 +727,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607271900449_BadgesRequired.resx">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608182157291_ObservationsRequireUsers.resx">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

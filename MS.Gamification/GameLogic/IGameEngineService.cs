@@ -1,12 +1,13 @@
 // This file is part of the MS.Gamification project
 // 
 // File: IGameEngineService.cs  Created: 2016-07-26@07:01
-// Last modified: 2016-08-13@21:47
+// Last modified: 2016-08-18@02:47
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
+using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.GameLogic
@@ -22,7 +23,7 @@ namespace MS.Gamification.GameLogic
         /// <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
         /// <remarks>
         ///     It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-        ///     <see cref="EligibleObservations" />.
+        ///     <see cref="EligibleObservationsForChallenges" />.
         /// </remarks>
         int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations);
 
@@ -43,7 +44,7 @@ namespace MS.Gamification.GameLogic
         ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
         /// </summary>
         /// <param name="level">The level.</param>
-        /// <param name="user">The user.</param>
+        /// <param name="userId">The user.</param>
         /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
         bool IsLevelUnlockedForUser(IPreconditionXml level, string userId);
 

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SubmitObservationViewModel.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-11@00:42
+// Last modified: 2016-08-18@02:09
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,12 @@ namespace MS.Gamification.ViewModels
     {
     public class SubmitObservationViewModel
         {
-        public virtual Challenge Challenge { get; set; }
+        //public virtual Challenge Challenge { get; set; }
+
+        public int ChallengeId { get; set; }
+
+        [Display(Name = "Challenge")]
+        public string ChallengeName { get; set; }
 
         [Required]
         [Display(Name = "Observation date and time")]
