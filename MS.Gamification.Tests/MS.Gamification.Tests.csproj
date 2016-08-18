@@ -118,6 +118,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblySetup.cs" />
+    <Compile Include="Controllers\BadgesControllerSpecs.cs" />
     <Compile Include="Controllers\ChallengeControllerSpecs.cs" />
     <Compile Include="Controllers\HomeControllerSpecs.cs" />
     <Compile Include="Controllers\MissionControllerSpecs.cs" />
@@ -174,6 +176,7 @@
     <Compile Include="GameLogic\LevelPreconditionEngineSpecs.cs" />
     <Compile Include="GameLogic\LevelUnlockingSpecs.cs" />
     <Compile Include="GameLogic\MissionLevelsSpecs.cs" />
+    <Compile Include="GameLogic\MissionTrackSpecs.cs" />
     <Compile Include="GameLogic\with_game_logic_context.cs" />
     <Compile Include="GameRulesServiceSpecs.cs" />
     <Compile Include="HtmlHelpers\WebServerImageStoreSpecs.cs" />
@@ -192,6 +195,7 @@
     <Compile Include="TestHelpers\Fakes\FakeCurrentUser.cs" />
     <Compile Include="TestHelpers\Fakes\FakeFileSystem.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpContext.cs" />
+    <Compile Include="TestHelpers\Fakes\FakeHttpFileCollection.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpRequest.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpResponse.cs" />
     <Compile Include="TestHelpers\Fakes\FakeHttpServerUtility.cs" />

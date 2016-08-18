@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IRepository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-06@10:07
+// Last modified: 2016-08-18@02:42
 
 using System;
 using System.Collections.Generic;
@@ -22,6 +22,7 @@ namespace MS.Gamification.DataAccess
     ///     required by the business logic.
     /// </remarks>
     /// <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
+    /// <typeparam name="TKey">The type of the primary key.</typeparam>
     public interface IRepository<TEntity, TKey> where TEntity : class, IDomainEntity<TKey>
         {
         /// <summary>

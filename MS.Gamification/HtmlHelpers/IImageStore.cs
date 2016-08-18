@@ -3,6 +3,9 @@
 // File: IImageStore.cs  Created: 2016-07-10@00:07
 // Last modified: 2016-07-16@00:46
 
+using System.Drawing;
+using System.IO;
+
 namespace MS.Gamification.HtmlHelpers
     {
     /// <summary>
@@ -30,5 +33,12 @@ namespace MS.Gamification.HtmlHelpers
         /// <param name="identifier">The image identifier.</param>
         /// <returns>The MIME type of the identified image, for example, "image/png".</returns>
         string MimeType(string identifier);
+
+        /// <summary>
+        /// Persists the image bitmap into the image store, using the <paramref name="identifier"/> as the key.
+        /// </summary>
+        /// <param name="imageStream">The image bitmap.</param>
+        /// <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
+        void Save(Stream imageStream, string identifier);
         }
     }

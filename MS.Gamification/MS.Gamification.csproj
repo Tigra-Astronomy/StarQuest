@@ -51,6 +51,7 @@
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
     <DocumentationFile>App_Data\MS.Gamification.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -336,13 +337,15 @@
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\ChallengeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BadgesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChallengesController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionLevelsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MissionTracksController.cs" />
     <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
     <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ManageUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MissionTracks\MissionTrackViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ResendInvitationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationViewModel.cs" />
@@ -409,12 +412,14 @@
     <Compile Include="GameLogic\QuerySpecifications\LevelHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionProgressSummary.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\MissionTrackWithBadgeAndLevel.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForChallenge.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithProfileInformation.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\TrackHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />
@@ -452,6 +457,7 @@
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="DataAccess\PicklistItem.cs" />
+    <Compile Include="GameLogic\StringExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -473,6 +479,10 @@
     <Compile Include="Migrations\201607271900449_BadgesRequired.cs" />
     <Compile Include="Migrations\201607271900449_BadgesRequired.Designer.cs">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.cs" />
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.Designer.cs">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -516,7 +526,7 @@
     <Compile Include="ViewModels\Mission\LevelProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\MissionProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\TrackProgressViewModel.cs" />
-    <Compile Include="ViewModels\ModerationQueueViewModel.cs" />
+    <Compile Include="ViewModels\Moderation\ModerationQueueItem.cs" />
     <Compile Include="ViewModels\ObservationDetailsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
@@ -533,27 +543,7 @@
     <Content Include="App_Data\Badges\alpha-deep-space-explorer-1.png" />
     <Content Include="App_Data\Badges\alpha-lunar-observer-1.png" />
     <Content Include="App_Data\Badges\alpha-planetologist-1.png" />
-    <Content Include="App_Data\Badges\alpha-tester.png" />
-    <Content Include="App_Data\Badges\badge-purple.png" />
-    <Content Include="App_Data\Badges\clock.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-2.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-3.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-1.png" />
-    <Content Include="App_Data\Badges\fire.png" />
-    <Content Include="App_Data\Badges\glass-empty.png" />
-    <Content Include="App_Data\Badges\lightbulb.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-1.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-2.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-3.png" />
     <Content Include="App_Data\Badges\NoImage.png" />
-    <Content Include="App_Data\Badges\person.png" />
-    <Content Include="App_Data\Badges\Planetologist-1.png" />
-    <Content Include="App_Data\Badges\speech-happy.png" />
-    <Content Include="App_Data\Badges\sprinter.png" />
-    <Content Include="App_Data\Badges\star-green.png" />
-    <Content Include="App_Data\Badges\star-red.png" />
-    <Content Include="App_Data\Badges\star-yellow.png" />
-    <Content Include="App_Data\Badges\tick.png" />
     <Content Include="App_Data\MS.Gamification.xml" />
     <Content Include="App_Data\ValidationImages\Jupiter.png" />
     <Content Include="App_Data\ValidationImages\M31.png" />
@@ -738,6 +728,9 @@
     <EmbeddedResource Include="Migrations\201607271900449_BadgesRequired.resx">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608182157291_ObservationsRequireUsers.resx">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -772,10 +765,10 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="EmailTemplates\ResetPassword.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Challenge\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Challenge\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\BatchObservationDetails.cshtml" />
     <Content Include="Areas\Admin\Views\UserAdministration\BatchObservations.cshtml" />
@@ -975,6 +968,14 @@
     <Content Include="Scripts\DataTables\responsive.foundation.min.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\jira-web-collector.js" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />

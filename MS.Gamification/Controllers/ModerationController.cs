@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModerationController.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-28@10:52
+// Last modified: 2016-08-18@05:00
 
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +10,6 @@ using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
-using MS.Gamification.ViewModels;
 using NLog;
 
 namespace MS.Gamification.Controllers
@@ -34,14 +33,7 @@ namespace MS.Gamification.Controllers
         public ActionResult Index()
             {
             var query = new ObservationsAwaitingModeration();
-            var queue = uow.Observations.AllSatisfying(query);
-            var model = queue.Select(q => new ModerationQueueItem
-                {
-                ObservationId = q.Id,
-                DateTime = q.ObservationDateTimeUtc,
-                ChallengeName = q.Challenge.Name,
-                UserName = q.User.UserName
-                });
+            var model = uow.Observations.AllSatisfying(query);
             return View(model);
             }
 

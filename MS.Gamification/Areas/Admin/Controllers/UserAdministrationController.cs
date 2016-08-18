@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-08-05@19:34
-// Last modified: 2016-08-05@20:35
+// Last modified: 2016-08-18@02:58
 
 using System;
 using System.Collections.Generic;
@@ -137,8 +137,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var emailModel = new VerificationTokenEmailModel
                 {
-                CallbackUrl = Url.Action("ConfirmEmail", "UserAdministration", new {userId, code}, Request.Url.Scheme),
-                InformationUrl = Url.Action("Index", "Home", new {}, Request.Url.Scheme),
+                CallbackUrl = Url.Action("ConfirmEmail", "UserAdministration", new {userId, code, area=string.Empty}, Request.Url.Scheme),
+                InformationUrl = Url.Action("Index", "Home", new {area=string.Empty}, Request.Url.Scheme),
                 VerificationToken = code,
                 Recipient = email
                 };
@@ -250,7 +250,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 var roles = await userManager.GetRolesAsync(id);
                 var model = mapper.Map<ApplicationUser, ManageUserViewModel>(user);
                 model.Roles = roles;
-                AddAvailableRolesToViewData();
+                AddAvailableRolesToModel(model);
                 return View(model);
                 }
             catch (Exception ex)
@@ -261,13 +261,12 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 }
             }
 
-        private void AddAvailableRolesToViewData()
+        private void AddAvailableRolesToModel(ManageUserViewModel model)
             {
             var availableRoles = roleManager.Roles
                 .Select(p => new PickListItem<string> {Id = p.Name, DisplayName = p.Name})
                 .ToList();
-            var rolePicker = availableRoles.ToSelectList();
-            ViewData["Roles"] = rolePicker;
+            model.RolePicker = availableRoles.ToSelectList();
             }
 
         [HttpPost]

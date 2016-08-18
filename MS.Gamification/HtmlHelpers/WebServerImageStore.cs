@@ -1,9 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: WebServerImageStore.cs  Created: 2016-07-10@00:07
-// Last modified: 2016-07-16@02:13
+// File: WebServerImageStore.cs  Created: 2016-05-19@01:48
+// Last modified: 2016-08-15@00:58
 
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -12,17 +14,16 @@ using MS.Gamification.DataAccess;
 namespace MS.Gamification.HtmlHelpers
     {
     /// <summary>
-    ///   Maps image names to static image files that are store on a web server,
-    ///   where the path to the images comes from a setting in the Web.config
-    ///   file.
+    ///     Maps image names to static image files that are store on a web server, where the path to the images comes
+    ///     from a setting in the Web.config file.
     /// </summary>
     /// <seealso cref="MS.Gamification.HtmlHelpers.IImageStore" />
-    class WebServerImageStore : IImageStore
+    internal class WebServerImageStore : IImageStore
         {
-        readonly List<string> acceptedExtensions = new List<string> {"png", "gif", "jpg", "bmp"};
-        readonly IFileSystemService fileService;
-        readonly string rootPath;
-        readonly HttpServerUtilityBase webhost;
+        private readonly List<string> acceptedExtensions = new List<string> {"png", "gif", "jpg", "bmp"};
+        private readonly IFileSystemService fileService;
+        private readonly string rootPath;
+        private readonly HttpServerUtilityBase webhost;
 
         public WebServerImageStore(HttpServerUtilityBase webhost,
             IFileSystemService fileService,
@@ -52,6 +53,14 @@ namespace MS.Gamification.HtmlHelpers
                 return "image/png";
             var ext = Path.GetExtension(maybeImage.Single())?.TrimStart('.');
             return $"image/{ext}";
+            }
+
+        public void Save(Stream imageStream, string identifier)
+            {
+            var bitmap = Image.FromStream(imageStream);
+            var filename = FullyQualifiedFileName(identifier + ".png");
+            //ToDo: Use the IFileSystemService to save the file, and unit test it.
+            bitmap.Save(filename, ImageFormat.Png);
             }
 
         private string FullyQualifiedFileName(string filename)

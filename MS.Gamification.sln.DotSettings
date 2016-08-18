@@ -36,6 +36,7 @@
 &#xD;
 File: $FILENAME$  Created: $CREATED_YEAR$-$CREATED_MONTH$-$CREATED_DAY$@$CREATED_TIME$&#xD;
 Last modified: $CURRENT_YEAR$-$CURRENT_MONTH$-$CURRENT_DAY$@$CURRENT_TIME$</s:String>
+	<s:String x:Key="/Default/Environment/Hierarchy/Build/SolutionBuilderNext/NeverBuildProjects/@EntryValue">672139d3-65f2-4cf5-a456-c7e5884a4896;eaf0b43d-abdd-4102-a638-f1303ef029b7</s:String>
 	<s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/AbsolutePath/@EntryValue">C:\Users\Fern\Visual Studio Projects\MS.Gamification\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>
 	<s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=712682D6E5BE084D824198D504540544/RelativePath/@EntryValue">..\MS.Gamification.Tests\MS.Gamification.Specifications.DotSettings</s:String>

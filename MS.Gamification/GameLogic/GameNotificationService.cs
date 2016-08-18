@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: GameNotificationService.cs  Created: 2016-07-28@10:16
-// Last modified: 2016-07-28@12:39
+// Last modified: 2016-08-18@23:37
 
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -36,7 +36,7 @@ namespace MS.Gamification.GameLogic
             get
                 {
                 var requestUrl = url.RequestContext.HttpContext.Request.Url;
-                var fqUrl = url.Action("Index", "Home", null, requestUrl.Scheme);
+                var fqUrl = url.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
                 //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
                 return fqUrl;
                 }
@@ -62,6 +62,12 @@ namespace MS.Gamification.GameLogic
             Log.Info($"Successfully notified user {observation.UserId} of observation approval");
             }
 
+        /// <summary>
+        ///     Notifies the user that they have been awarded a badge.
+        /// </summary>
+        /// <param name="badge">The badge that was awarded.</param>
+        /// <param name="user">The recipient user.</param>
+        /// <param name="track">The track that was completed resulting in the award.</param>
         public async Task BadgeAwarded(Badge badge, ApplicationUser user, MissionTrack track)
             {
             Log.Info($"Notifying user {user.Id} <{user.UserName}> of awarded badge id={badge.Id} name={badge.Name}");

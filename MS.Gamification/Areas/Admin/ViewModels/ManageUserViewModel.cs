@@ -1,10 +1,11 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ManageUserViewModel.cs  Created: 2016-07-18@16:30
-// Last modified: 2016-07-18@22:23
+// File: ManageUserViewModel.cs  Created: 2016-08-05@20:37
+// Last modified: 2016-08-18@02:59
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MS.Gamification.Areas.Admin.ViewModels
     {
@@ -32,5 +33,7 @@ namespace MS.Gamification.Areas.Admin.ViewModels
         public IList<string> Roles { get; set; }
 
         public string RoleToAdd { get; set; }
+
+        public IEnumerable<SelectListItem> RolePicker { get; set; }
         }
     }

@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-09@00:30
+// Last modified: 2016-08-18@02:47
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.Preconditions;
 using MS.Gamification.GameLogic.QuerySpecifications;
@@ -39,7 +40,7 @@ namespace MS.Gamification.GameLogic
         /// <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
         /// <remarks>
         ///     It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-        ///     <see cref="EligibleObservations" />.
+        ///     <see cref="EligibleObservationsForChallenges" />.
         /// </remarks>
         public int ComputePercentComplete(IEnumerable<Challenge> challenges, IEnumerable<Observation> eligibleObservations)
             {
@@ -266,11 +267,99 @@ namespace MS.Gamification.GameLogic
             Log.Info($"Successfully updated level id={dbLevel.Id}");
             }
 
+        /// <exception cref="InvalidOperationException">Thrown if the track was not created for any reason.</exception>
+        public async Task CreateTrackAsync(MissionTrack newTrack)
+            {
+            Log.Info(
+                $"Creating new Mission Track id={newTrack.Id} Name={newTrack.Name} in mission {newTrack.MissionLevelId} with badge id={newTrack.BadgeId}");
+            var maybeBadge = unitOfWork.Badges.GetMaybe(newTrack.BadgeId);
+            if (maybeBadge.None)
+                {
+                Log.Error($"Create blocked because the target badge id={newTrack.BadgeId} does not exist");
+                throw new InvalidOperationException("The associated Mission Level could not be found");
+                }
+            var targetLevel = unitOfWork.MissionLevels.GetMaybe(newTrack.MissionLevelId);
+            if (targetLevel.None)
+                {
+                Log.Error($"Create blocked because the target level id={newTrack.MissionLevelId} does not exist");
+                throw new InvalidOperationException("The associated Mission Level could not be found");
+                }
+            var missionTracks = unitOfWork.MissionTracks.GetAll();
+            if (missionTracks.Any(p => p.MissionLevelId == newTrack.MissionLevelId && p.Number == newTrack.Number))
+                {
+                Log.Warn("Create blocked because the track already exists");
+                throw new InvalidOperationException("That track number already exists");
+                }
+            unitOfWork.MissionTracks.Add(newTrack);
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully added track id={newTrack.Id}");
+            }
+
+        /// <summary>
+        ///     Deletes the track provided game rules allow it.
+        /// </summary>
+        /// <param name="id">The track ID.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the track could not be deleted for any reason.</exception>
+        public async Task DeleteTrackAsync(int id)
+            {
+            Log.Info($"Deleting mission track id={id}");
+            var maybeTrack = unitOfWork.MissionTracks.GetMaybe(id);
+            if (maybeTrack.None)
+                {
+                Log.Error($"Delete failed, track id={id} was not found in the database");
+                throw new InvalidOperationException("Track not found in the database");
+                }
+            var observationSpec = new TrackHasAssociatedObservations(id);
+            var maybeHasObservations = unitOfWork.Observations.GetMaybe(observationSpec);
+            if (maybeHasObservations.Any())
+                {
+                Log.Warn($"Delete of track id={id} blocked because there are associated observations");
+                throw new InvalidOperationException("Cannot delete a track that has observations associated with it");
+                }
+            unitOfWork.MissionTracks.Remove(maybeTrack.Single());
+            await unitOfWork.CommitAsync();
+            Log.Info($"Successfully deleted track id={id}");
+            }
+
+        /// <summary>
+        ///     Updates a mission track from values in the submitted model, provided that game rules allow it.
+        /// </summary>
+        /// <param name="model">The model containing new values.</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        public async Task UpdateTrackAsync(MissionTrackViewModel model)
+            {
+            Log.Info($"Updating track {model}");
+            var maybeTrack = unitOfWork.MissionTracks.GetMaybe(model.Id);
+            if (maybeTrack.None)
+                {
+                Log.Error($"The target track id={model.Id} was not found in the database");
+                throw new InvalidOperationException("The track was not found in the database");
+                }
+            var targetLevel = model.MissionLevelId;
+            var maybeLevel = unitOfWork.MissionLevels.GetMaybe(targetLevel);
+            if (maybeLevel.None)
+                {
+                Log.Error($"Update blocked because the target level id={targetLevel} was not found");
+                throw new InvalidOperationException("Can't move the track to a non-existent level");
+                }
+            var dbLevel = maybeLevel.Single();
+            if (dbLevel.Tracks.Any(p => p.Number == model.Number && p.Id != model.Id))
+                {
+                Log.Warn($"Update blocked because destination level id={targetLevel} already has a track number={model.Number}");
+                throw new InvalidOperationException("The destination track already has that level number");
+                }
+            var dbTrack = maybeTrack.Single();
+
+            mapper.Map(model, dbTrack);
+            await unitOfWork.CommitAsync();
+            }
+
         /// <summary>
         ///     Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
         /// </summary>
         /// <param name="level">The level.</param>
-        /// <param name="user">The user.</param>
+        /// <param name="userId">The user.</param>
         /// <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
         public bool IsLevelUnlockedForUser(IPreconditionXml level, string userId)
             {

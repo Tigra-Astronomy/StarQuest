@@ -35,7 +35,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.ChallengeId, labelStyle)
                 <div class="@inputColumns">
-                    @Html.DropDownListFor(m => m.ChallengeId, (IEnumerable<SelectListItem>) ViewData["ChallengeSelector"])
+                    @Html.DropDownListFor(m => m.ChallengeId, (SelectList) ViewData["ChallengeSelector"])
                 </div>
             </div>
             <div class="form-group">

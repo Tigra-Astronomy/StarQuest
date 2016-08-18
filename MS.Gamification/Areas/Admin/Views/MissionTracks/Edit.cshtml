@@ -1,4 +1,4 @@
-﻿@model MissionTrack
+﻿@model MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -42,18 +42,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BadgeId, "BadgeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.MissionLevelId, "MissionLevelId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("BadgeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BadgeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model=>model.MissionLevelId, Model.LevelPicker, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MissionLevelId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MissionLevelId, "MissionLevelId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BadgeId, "BadgeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MissionLevelId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MissionLevelId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model=>model.BadgeId, Model.BadgePicker, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BadgeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="badgeDropzone" class="dropzone col-md-offset-2 col-md-4">
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Select an existing badge in the drop-down above. To upload a new badge,
+                    drop it in the box, or click in the box to browse for a file.
+                </p>
+                <p>
+                    Badge images should be encoded as PNG, JPG or GIF and ideally sized to 240x240 pixels.
+                </p>
             </div>
         </div>
 
@@ -71,4 +84,35 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dropzone")
+    <script>
+        Dropzone.options.badgeDropzone = {
+            url: "@Url.Action("Upload", "Badges", new {area = "Admin"})",
+            maxFileSize: 0.5, // Mb
+            maxFiles: 1,
+            acceptedFiles: ".png,.gif,.jpg,.bmp",
+            init: function() {
+                this.on("maxfilesexceeded",
+                    function(file) {
+                        this.removeFile(file);
+                    });
+                this.on("success",
+                    function(file, response) {
+                        var option = $("<option>",
+                            {
+                                value: response.badgeId,
+                                text: response.imageIdentifier,
+                                selected: true
+                            });
+                        $("#BadgeId")
+                            .append(option);
+                    });
+            }
+        };
+    </script>
+
+}
+@section styles
+{
+    @Styles.Render("~/Content/dropzone")
 }
