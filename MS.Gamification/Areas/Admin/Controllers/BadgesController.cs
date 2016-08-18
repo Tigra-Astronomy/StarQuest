@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BadgesController.cs  Created: 2016-08-13@22:24
-// Last modified: 2016-08-15@02:10
+// Last modified: 2016-08-18@00:43
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
@@ -32,7 +31,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         [HttpPost]
-        public async Task<ActionResult> Upload()
+        public ActionResult Upload()
             {
             var fileNames = (IEnumerable<string>) Request.Files.AllKeys;
             if (fileNames.Count() > 1)
@@ -50,7 +49,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                     Name = identifier
                     };
                 uow.Badges.Add(badge);
-                await uow.CommitAsync();
+                uow.Commit();
                 return Json(new {imageIdentifier = identifier, badgeId = badge.Id});
                 }
             catch (Exception e)

@@ -1738,7 +1738,7 @@
         </member>
         <member name="P:MS.Gamification.Models.MissionTrack.Number">
             <summary>
-            Track number determines the order in which tracks are displayed.
+                Track number determines the order in which tracks are displayed.
             </summary>
             <value>The number.</value>
         </member>

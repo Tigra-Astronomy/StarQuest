@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ImageHelpers.cs  Created: 2016-05-19@01:48
-// Last modified: 2016-07-16@22:58
+// Last modified: 2016-08-18@01:45
 
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -14,7 +14,7 @@ namespace MS.Gamification.HtmlHelpers
             {
             var urlHelper = ((Controller) htmlHelper.ViewContext.Controller).Url;
             var imgTag = new TagBuilder("img");
-            var routeToImage = urlHelper.Action("GetImage", "ValidationImage", new {id = imageName});
+            var routeToImage = urlHelper.Action("GetImage", "ValidationImage", new {id = imageName, area = string.Empty});
             imgTag.MergeAttribute("src", routeToImage);
             imgTag.MergeAttribute("alt", "Validation Image");
             imgTag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -26,7 +26,7 @@ namespace MS.Gamification.HtmlHelpers
             {
             var urlHelper = ((Controller) htmlHelper.ViewContext.Controller).Url;
             var imgTag = new TagBuilder("img");
-            var routeToImage = urlHelper.Action("GetImage", "BadgeImage", new {id = imageName});
+            var routeToImage = urlHelper.Action("GetImage", "BadgeImage", new {id = imageName, area = string.Empty});
             imgTag.MergeAttribute("src", routeToImage);
             imgTag.MergeAttribute("alt", "Badge Image");
             imgTag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
@@ -38,7 +38,7 @@ namespace MS.Gamification.HtmlHelpers
             {
             var urlHelper = ((Controller) htmlHelper.ViewContext.Controller).Url;
             var imgTag = new TagBuilder("img");
-            var routeToImage = urlHelper.Action("GetImage", "StaticImage", new {id = imageName});
+            var routeToImage = urlHelper.Action("GetImage", "StaticImage", new {id = imageName, area = string.Empty});
             imgTag.MergeAttribute("src", routeToImage);
             imgTag.MergeAttribute("alt", "Badge Image");
             imgTag.MergeAttributes(new RouteValueDictionary(htmlAttributes));

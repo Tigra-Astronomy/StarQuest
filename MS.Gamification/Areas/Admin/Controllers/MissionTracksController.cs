@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionTracksController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-13@21:04
+// Last modified: 2016-08-18@01:37
 
 using System;
 using System.Linq;
@@ -50,7 +50,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 {
                 return HttpNotFound();
                 }
-            return View(missionTrack);
+            var model = mapper.Map<MissionTrack, MissionTrackViewModel>(missionTrack);
+            return View(model);
             }
 
         // GET: Admin/MissionTracks/Create
@@ -153,7 +154,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 return HttpNotFound();
                 }
             var missionTrack = maybeTrack.Single();
-            return View(missionTrack);
+            var model = mapper.Map<MissionTrack, MissionTrackViewModel>(missionTrack);
+            return View(model);
             }
 
         // POST: Admin/MissionTracks/Delete/5

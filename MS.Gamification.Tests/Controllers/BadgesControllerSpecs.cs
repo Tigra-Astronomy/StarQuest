@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: BadgesControllerSpecs.cs  Created: 2016-08-14@18:53
-// Last modified: 2016-08-15@00:52
+// Last modified: 2016-08-18@00:46
 
 using System.Linq;
 using System.Web;
@@ -40,7 +40,7 @@ namespace MS.Gamification.Tests.Controllers
                 .WithPostedFile(fakePostedFile)
                 .Build();
             };
-        Because of = () => ControllerUnderTest.Upload().Await();
+        Because of = () => ControllerUnderTest.Upload() /*.Await()*/;
         It should_persist_the_image = () => store.SaveCalled.ShouldBeTrue();
         It should_use_the_expected_identifier = () => store.ImageIdentifier.ShouldEqual(ExpectedIdentifier);
         It should_create_the_badge_in_the_database =
