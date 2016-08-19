@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-08-05@19:34
-// Last modified: 2016-08-18@02:58
+// File: UserAdministrationController.cs  Created: 2016-08-19@04:17
+// Last modified: 2016-08-19@23:43
 
 using System;
 using System.Collections.Generic;
@@ -137,8 +137,9 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var code = await userManager.GenerateEmailConfirmationTokenAsync(userId);
             var emailModel = new VerificationTokenEmailModel
                 {
-                CallbackUrl = Url.Action("ConfirmEmail", "UserAdministration", new {userId, code, area=string.Empty}, Request.Url.Scheme),
-                InformationUrl = Url.Action("Index", "Home", new {area=string.Empty}, Request.Url.Scheme),
+                CallbackUrl =
+                Url.Action("ConfirmEmail", "UserAdministration", new {userId, code, area = string.Empty}, Request.Url.Scheme),
+                InformationUrl = Url.Action("Index", "Home", new {area = string.Empty}, Request.Url.Scheme),
                 VerificationToken = code,
                 Recipient = email
                 };
@@ -323,7 +324,11 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var selectedUsers = model.Where(p => p.Selected).Select(s => s.UserId).ToList();
             var observationModel = new BatchObservationViewModel
                 {
-                Users = selectedUsers
+                Users = selectedUsers,
+                // Assume sensible defaults for group observing
+                ObservationDateTimeUtc = DateTime.UtcNow,
+                Equipment = ObservingEquipment.Telescope,
+                Notes = "Group observation entered by the administrator."
                 };
             ViewBag.Message =
                 $"Enter observation details and click Submit to create an observation for {selectedUsers.Count()} users.";
@@ -334,15 +339,10 @@ namespace MS.Gamification.Areas.Admin.Controllers
 
         private BatchObservationViewModel PrepareBatchObservationViewModel(BatchObservationViewModel model)
             {
-            ViewBag.UserCount = model.Users.Count;
-            var challengeSelector = uow.Challenges.PickList.ToSelectList();
-            ViewData["ChallengeSelector"] = challengeSelector;
-            var equipmentPicklist = PickListExtensions.FromEnum<ObservingEquipment>();
-            ViewBag.Equipment = equipmentPicklist.ToSelectList();
-            var seeingPicklist = PickListExtensions.FromEnum<AntoniadiScale>();
-            ViewBag.Seeing = seeingPicklist.ToSelectList();
-            var transparencyPicklist = PickListExtensions.FromEnum<TransparencyLevel>();
-            ViewBag.Transparency = transparencyPicklist.ToSelectList();
+            model.ChallengePicker = uow.Challenges.PickList.ToSelectList();
+            model.EquipmentPicker = PickListExtensions.FromEnum<ObservingEquipment>().ToSelectList();
+            model.SeeingPicker = PickListExtensions.FromEnum<AntoniadiScale>().ToSelectList();
+            model.TransparencyPicker = PickListExtensions.FromEnum<TransparencyLevel>().ToSelectList();
             return model;
             }
 
