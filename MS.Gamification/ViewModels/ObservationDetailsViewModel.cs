@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservationDetailsViewModel.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-07-22@13:07
+// Last modified: 2016-08-19@21:23
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +14,7 @@ namespace MS.Gamification.ViewModels
         {
         public string ChallengeName { get; set; }
 
-        [Display(Name = "Observation date (UTC)")]
+        [Display(Name = "Date/Time")]
         public DateTime ObservationDateTimeUtc { get; set; }
 
         [Display(Name = "Equipment used")]
