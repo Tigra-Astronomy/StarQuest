@@ -411,6 +411,7 @@
     <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
     <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
     <Compile Include="GameLogic\Preconditions\PreconditionExtensions.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ChallengesInMissionLevel.cs" />
     <Compile Include="GameLogic\QuerySpecifications\LevelExistsInMission.cs" />
     <Compile Include="GameLogic\QuerySpecifications\LevelHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionHasAssociatedObservations.cs" />
@@ -438,7 +439,6 @@
     <Compile Include="GameLogic\QuerySpecifications\SingleObservationWithChallengeAndUser.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChallengesInMissionLevel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MissionController.cs" />
@@ -1051,6 +1051,7 @@
     <Content Include="Views\Observation\Details.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Views\Mission\ChallengeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionController.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-28@16:46
+// Last modified: 2016-08-20@00:48
 
 using System.Linq;
 using System.Web.Mvc;
@@ -69,6 +69,17 @@ namespace MS.Gamification.Controllers
                     }
                 }
             return View(missionModel);
+            }
+
+        // GET: Mission/ChallengeDetails/1
+        public ActionResult ChallengeDetails(int id)
+            {
+            var challengeSpec = new SingleChallengeWithTrackAndCategory(id);
+            var maybeChallenge = uow.Challenges.GetMaybe(challengeSpec);
+            if (maybeChallenge.None)
+                return HttpNotFound();
+            var model = maybeChallenge.Single();
+            return View(model);
             }
         }
     }
