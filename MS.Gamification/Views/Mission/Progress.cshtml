@@ -14,8 +14,10 @@
         var liClass = level.Level == 1 ? "active" : string.Empty;
         var liDataToggle = level.Unlocked ? "data-toggle=tab" : string.Empty;
         var levelId = $"#level{level.Level}";
-        <li class="@liClass" >
-            <a @liDataToggle href="@levelId">@level.Level</a>
+        var icon = level.Unlocked ? "fa fa-unlock padlock-open" : "fa fa-lock padlock-closed";
+        <li class="@liClass">
+
+            <a @liDataToggle href="@levelId"><i class="@icon"></i> Level @level.Level</a>
         </li>
         }
 </ul>
@@ -52,63 +54,63 @@
                 </div>
 
                 foreach (var track in level.Tracks)
-                     {
-                     <div class="panel panel-info">
-                         <div class="panel-heading track">
-                             <div class="row trackHeader">
-                                 <div class="col-md-6">
-                                     <h3 >Track @track.Number: @track.Name</h3>
-                                 </div>
-                                 <div class="col-md-6">
-                                     <div class="progress">
-                                         <div class="progress-bar progress-success" role="progressbar" style="width: @track.PercentComplete%">
-                                             @track.PercentComplete% complete
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="panel-body">
-                             <div class="row trackContent">
-                                 <div class="col-md-10 challenges">
-                                     @foreach (var challenge in track.Challenges)
-                                         {
-                                         <div class="row challenge">
-                                             <div class="col-md-4">@challenge.Name</div>
-                                             <div class="col-md-4">
-                                                 <a>Details</a>
-                                             </div>
-                                             <div class="col-md-3">
-                                                 @if (challenge.HasObservation)
-                                                     {
-                                                     <span class="text-success">
+                    {
+                    <div class="panel panel-info">
+                        <div class="panel-heading track">
+                            <div class="row trackHeader">
+                                <div class="col-md-6">
+                                    <h3 >Track @track.Number: @track.Name</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-success" role="progressbar" style="width: @track.PercentComplete%">
+                                            @track.PercentComplete% complete
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row trackContent">
+                                <div class="col-md-10 challenges">
+                                    @foreach (var challenge in track.Challenges)
+                                        {
+                                        <div class="row challenge">
+                                            <div class="col-md-4">@challenge.Name</div>
+                                            <div class="col-md-4">
+                                                <a>Details</a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                @if (challenge.HasObservation)
+                                                    {
+                                                    <span class="text-success">
                                                         <i class="fa fa-check-square-o"></i>
                                                     </span>
-                                                     }
-                                                 else
-                                                     {
+                                                    }
+                                                else
+                                                    {
                                                     <span class="text-warning">
                                                         <i class="fa fa-square-o"></i>
                                                     </span>
-                                                     }
-                                                 @challenge.Points points
-                                             </div>
-                                             <div class="col-md-1">
-                                                 <a class="btn btn-sm btn-info"
-                                                    href="@Url.Action("SubmitObservation", new {controller = "Observation", id = challenge.Id})">
-                                                     Log <i class="fa fa-angle-double-right"></i>
-                                                 </a>
-                                             </div>
-                                         </div>
-                                         }
-                                 </div>
-                                 <div class="col-md-2">
-                                     @Html.Badge(@track.Badge.ImageIdentifier, new { @class="img img-responsive"})
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                     }
+                                                    }
+                                                @challenge.Points points
+                                            </div>
+                                            <div class="col-md-1">
+                                                <a class="btn btn-sm btn-info"
+                                                   href="@Url.Action("SubmitObservation", new {controller = "Observation", id = challenge.Id})">
+                                                    Log <i class="fa fa-angle-double-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        }
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.Badge(track.Badge.ImageIdentifier, new {@class = "img img-responsive"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
                 }
         </div>
         }
