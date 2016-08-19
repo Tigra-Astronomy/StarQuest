@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MS.Gamification.DataAccess;
+using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 
 namespace MS.Gamification.Models
@@ -22,12 +23,14 @@ namespace MS.Gamification.Models
         ///     Identifies the storage location of a badge bitmap to an <see cref="IImageStore" /> service.
         /// </summary>
         /// <value>The file identifier.</value>
+        [Display(Name = "Image Identifier")]
         public string ImageIdentifier { get; set; }
 
         /// <summary>
         ///     The display name of the badge.
         /// </summary>
         /// <value>The badge name.</value>
+        [Display(Name = "Badge Name")]
         public string Name { get; set; }
 
         #region Navigation

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: XmlDocumentAttribute.cs  Created: 2016-07-21@12:10
-// Last modified: 2016-07-22@04:51
+// Last modified: 2016-08-06@03:02
 
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,16 @@ using System.Xml.Linq;
 using System.Xml.Schema;
 using JetBrains.Annotations;
 using MS.Gamification.DataAccess;
+using NLog;
 
 namespace MS.Gamification.ViewModels.CustomValidation
     {
     [AttributeUsage(AttributeTargets.Property)]
     internal class XmlDocumentAttribute : ValidationAttribute
         {
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
         private readonly Maybe<string> maybeXsdResourceName = Maybe<string>.Empty;
         private readonly Maybe<Type> maybeXsdResourceType = Maybe<Type>.Empty;
-        private bool error;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="XmlDocumentAttribute" /> class with no schema. No schema
@@ -54,43 +55,65 @@ namespace MS.Gamification.ViewModels.CustomValidation
         /// </returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
             {
-            error = false;
             // An empty or null object should pass validation. 
             // [Required] attribute can be used to ensure a non-empty item.
             if (string.IsNullOrEmpty(value as string))
                 {
                 return ValidationResult.Success;
                 }
-            XDocument xmlDocument;
+            var xmlString = (string) value;
             try
                 {
-                var xmlString = (string) value;
-                xmlDocument = XDocument.Parse(xmlString);
+                var xmlDocument = XDocument.Parse(xmlString);
                 }
-            catch (InvalidOperationException)
+            catch (XmlException e)
                 {
+                Log.Warn(e, "Failing XML validation due to invalid markup", xmlString);
                 return FailureResult(validationContext, "Invalid XML markup");
                 }
-            catch (Exception)
-                {
-                return FailureResult(validationContext, "Unable to parse the XML document");
-                }
-            try // to validate the XML document against a schema
+            var schemaSet = new XmlSchemaSet();
+            try
                 {
                 var maybeSchema = GetSchema();
                 if (maybeSchema.None)
                     return ValidationResult.Success; // No schema validation
-                var schemaSet = new XmlSchemaSet();
                 schemaSet.Add(maybeSchema.Single());
-                xmlDocument.Validate(schemaSet, (sender, e) => error = true);
-                return error
-                    ? FailureResult(validationContext, "XML does not conform to the required schema")
-                    : ValidationResult.Success;
                 }
-            catch (Exception)
+            catch (XmlException e)
                 {
-                return FailureResult(validationContext, "Error validating schema resource");
+                Log.Error(e, "Failing validation due to an error loading XML schema");
+                return FailureResult(validationContext,
+                    "Unable to load the XML schema for validation (please report this as a bug)");
                 }
+            var xmlReaderSettings = new XmlReaderSettings
+                {
+                DtdProcessing = DtdProcessing.Prohibit,
+                CheckCharacters = true,
+                ValidationType = ValidationType.Schema,
+                Schemas = schemaSet,
+                ConformanceLevel = ConformanceLevel.Document,
+                ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings,
+                CloseInput = true
+                };
+            xmlReaderSettings.ValidationEventHandler += ValidationEventHandler;
+
+            using (var stream = GenerateStreamFromString(xmlString))
+            using (var xmlReader = XmlReader.Create(stream, xmlReaderSettings))
+                try
+                    {
+                    while (xmlReader.Read()) {}
+                    return ValidationResult.Success;
+                    }
+                catch (XmlSchemaException e)
+                    {
+                    Log.Warn(e, "Failing XML validation due to schema validation error", xmlString);
+                    return FailureResult(validationContext, e.Message);
+                    }
+            }
+
+        private void ValidationEventHandler(object sender, ValidationEventArgs validationEventArgs)
+            {
+            throw validationEventArgs.Exception ?? new XmlSchemaException(validationEventArgs.Message);
             }
 
         private ValidationResult FailureResult(ValidationContext validationContext, string message = null)
@@ -105,24 +128,27 @@ namespace MS.Gamification.ViewModels.CustomValidation
 
         private Maybe<XmlSchema> GetSchema()
             {
-            try
-                {
-                if (maybeXsdResourceName.None || maybeXsdResourceType.None)
-                    return Maybe<XmlSchema>.Empty;
-                var manager = new ResourceManager(maybeXsdResourceType.Single());
-                var xsdString = manager.GetString(maybeXsdResourceName.Single());
-                using (var textReader = new StringReader(xsdString))
-                using (var xmlReader = XmlReader.Create(textReader))
-                    {
-                    var xsd = XmlSchema.Read(xmlReader,
-                        (o, e) => { throw new ArgumentException("Unable to load the schema document"); });
-                    return new Maybe<XmlSchema>(xsd);
-                    }
-                }
-            catch (Exception)
-                {
+            if (maybeXsdResourceName.None || maybeXsdResourceType.None)
                 return Maybe<XmlSchema>.Empty;
+            var manager = new ResourceManager(maybeXsdResourceType.Single());
+            var xsdString = manager.GetString(maybeXsdResourceName.Single());
+            using (var textReader = new StringReader(xsdString))
+            using (var xmlReader = XmlReader.Create(textReader))
+                {
+                var xsd = XmlSchema.Read(xmlReader,
+                    (o, e) => { throw new XmlException("Unable to load the schema"); });
+                return new Maybe<XmlSchema>(xsd);
                 }
+            }
+
+        private Stream GenerateStreamFromString(string s)
+            {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
             }
         }
     }

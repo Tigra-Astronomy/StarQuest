@@ -1,15 +1,15 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UnitTestImageStore.cs  Created: 2016-07-10@00:07
-// Last modified: 2016-07-16@01:46
+// File: UnitTestImageStore.cs  Created: 2016-05-26@03:51
+// Last modified: 2016-08-19@02:30
 
 using System.Collections.Generic;
 using System.IO;
-using MS.Gamification.HtmlHelpers;
+using MS.Gamification.GameLogic;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    internal class UnitTestImageStore : Dictionary<string, string>, IImageStore
+    class UnitTestImageStore : Dictionary<string, string>, IImageStore
         {
         readonly string rootPath;
 
@@ -19,7 +19,17 @@ namespace MS.Gamification.Tests.TestHelpers
             this["NoImage"] = "NoImage.png";
             }
 
-        public new string this[string key] { get { return base[key]; } set { base[key] = Path.Combine(rootPath, value); } }
+        public new string this[string key]
+            {
+            get { return base[key]; }
+            set { base[key] = Path.Combine(rootPath, value); }
+            }
+
+        public string ImageIdentifier { get; set; }
+
+        public Stream ImageStream { get; set; }
+
+        public bool SaveCalled { get; set; }
 
         public string FindImage(string identifier)
             {
@@ -32,6 +42,18 @@ namespace MS.Gamification.Tests.TestHelpers
             {
             var image = FindImage(identifier);
             return $"image/{Path.GetExtension(image).TrimStart('.')}";
+            }
+
+        public void Save(Stream imageStream, string identifier)
+            {
+            ImageStream = imageStream;
+            ImageIdentifier = identifier;
+            SaveCalled = true;
+            }
+
+        public IEnumerable<string> EnumerateImages()
+            {
+            yield break;
             }
         }
     }

@@ -1,10 +1,11 @@
 // This file is part of the MS.Gamification project
 // 
 // File: with_mvc_controller.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-07-09@22:33
+// Last modified: 2016-08-08@23:05
 
 using System;
 using System.Web.Mvc;
+using AutoMapper;
 using Machine.Specifications;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
@@ -37,5 +38,6 @@ namespace MS.Gamification.Tests.Controllers
 
         protected static IGameEngineService RulesService => ContextBuilder.RulesService;
 
+        protected static IMapper Mapper => ContextBuilder.Mapper;
         }
     }

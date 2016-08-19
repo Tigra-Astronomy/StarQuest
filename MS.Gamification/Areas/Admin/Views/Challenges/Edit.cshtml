@@ -1,0 +1,135 @@
+﻿@model CreateChallengeViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Challenge</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MissionTrackId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.MissionTrackId, Model.TrackPicker, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MissionTrackId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Points, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Points, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Points, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, Model.CategoryPicker, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Location, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Location, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookSection, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BookSection, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.BookSection, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ValidationImage, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ValidationImage, Model.ValidationImagePicker, new {@class = "form-control", id= "ImagePicker" })
+                @Html.ValidationMessageFor(model => model.ValidationImage, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="validationDropzone" class="dropzone col-md-offset-2 col-md-4">
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Select an existing validation image in the drop-down above. To upload a new image,
+                    drop it in the box, or click in the box to browse for a file.
+                </p>
+                <p>
+                    Validation images should be encoded as PNG, JPG or GIF and ideally sized to 75x75 pixels
+                    with a 1:1 (square) aspect ratio. They should represent a typical telescopic view.
+                    They will be displayed to the user in a round vignette to simulate an eyepiece view.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/dropzone")
+    <script>
+        Dropzone.options.validationDropzone = {
+            url: "@Url.Action("Upload", "Challenges", new {area = "Admin"})",
+            maxFileSize: 0.5, // Mb
+            maxFiles: 1,
+            acceptedFiles: ".png,.gif,.jpg,.bmp",
+            init: function() {
+                this.on("maxfilesexceeded",
+                    function(file) {
+                        this.removeFile(file);
+                    });
+                this.on("success",
+                    function(file, response) {
+                        var option = $("<option>",
+                            {
+                                value: response.imageIdentifier,
+                                text: response.imageIdentifier,
+                                selected: true
+                            });
+                        $("#ImagePicker")
+                            .append(option);
+                    });
+            }
+        };
+    </script>
+
+}
+@section styles
+{
+    @Styles.Render("~/Content/dropzone")
+}

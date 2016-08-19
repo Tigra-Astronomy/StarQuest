@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GravatarHtmlHelper.cs  Created: 2016-07-29@15:54
-// Last modified: 2016-07-29@16:04
+// Last modified: 2016-08-18@02:46
 
 using System;
 using System.ComponentModel;
@@ -69,6 +69,7 @@ namespace MS.Gamification.HtmlHelpers
         /// <summary>
         ///     Returns a Globally Recognised Avatar as an &lt;img /&gt; - http://gravatar.com
         /// </summary>
+        /// <param name="htmlHelper">The HTML Helper object</param>
         /// <param name="emailAddress">Email Address for the Gravatar</param>
         /// <param name="defaultImage">Default image if user hasn't created a Gravatar</param>
         /// <param name="size">Size in pixels (default: 80)</param>
@@ -105,8 +106,8 @@ namespace MS.Gamification.HtmlHelpers
                     )
                 );
 
-            imgTag.Attributes.Add("class", "gravatar img-responsive img-circle");
-            imgTag.Attributes.Add("alt", "Gravatar image");
+            imgTag.Attributes.Add("class", "img img-responsive img-circle gravatar");
+            imgTag.Attributes.Add("alt", "Change your profile image at http://gravatar.com");
             return new HtmlString(imgTag.ToString(TagRenderMode.SelfClosing));
             }
 

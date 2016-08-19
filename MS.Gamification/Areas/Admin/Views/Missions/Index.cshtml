@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Mission>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped" id="missions">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precondition)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Precondition)*@
+                @if (!string.IsNullOrWhiteSpace(item.Precondition))
+                    {
+                    <i class="fa fa-lock"></i>
+                    }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            </td>
+        </tr>
+        }
+
+</table>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatables")
+    <script>
+        $(document).ready(function () {
+            $('#missions').DataTable();
+        });
+    </script>
+
+}
+
+

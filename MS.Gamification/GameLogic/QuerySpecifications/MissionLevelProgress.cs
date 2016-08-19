@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: MissionLevelProgress.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-22@13:37
+// Last modified: 2016-08-11@07:14
 
 using System.Linq;
 using MS.Gamification.Models;
@@ -16,10 +16,8 @@ namespace MS.Gamification.GameLogic.QuerySpecifications
             {
             this.missionId = missionId;
             FetchStrategy.Include(p => p.MissionLevels);
-            FetchStrategy.Include("MissionLevels.Tracks");
-            FetchStrategy.Include("MissionLevels.Tracks.Badge");
-            FetchStrategy.Include("MissionLevels.Tracks.Challenges");
-            FetchStrategy.Include("MissionLevels.Tracks.Challenges.Category");
+            FetchStrategy.Include(p => p.MissionLevels.Select(q => q.Tracks.Select(r => r.Badge)));
+            FetchStrategy.Include(p => p.MissionLevels.Select(q => q.Tracks.Select(r => r.Challenges.Select(s => s.Category))));
             }
 
         public override IQueryable<Mission> GetQuery(IQueryable<Mission> items)

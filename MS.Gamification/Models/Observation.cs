@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: Observation.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-07-28@10:52
+// Last modified: 2016-08-18@22:50
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -47,6 +47,7 @@ namespace MS.Gamification.Models
         #region Related Entities
         public virtual ApplicationUser User { get; set; }
 
+        [Required]
         public virtual string UserId { get; set; }
 
         public virtual int ChallengeId { get; set; }

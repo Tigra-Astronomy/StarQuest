@@ -18,6 +18,7 @@ namespace MS.Gamification.Models
         [Required]
         [ImageIdentifier]
         [MaxLength(255)]
+        [Display(Name = "Validation Image")]
         public string ValidationImage
             {
             get { return validationImage; }
@@ -32,7 +33,6 @@ namespace MS.Gamification.Models
 
         public string Location { get; set; }
 
-        //ToDo: This property seems like a bad fit, since we may have challenges that are not in the book, or in a different book
         public string BookSection { get; set; }
 
         public int Id { get; set; }

@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
+using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.Controllers;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
@@ -14,7 +15,7 @@ using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.QuerySpecifications
     {
-    class when_fetching_eligible_observations_for_a_set_of_challenges : with_standard_mission<ChallengeController>
+    class when_fetching_eligible_observations_for_a_set_of_challenges : with_standard_mission<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithStandardUser("user", "Joe User")

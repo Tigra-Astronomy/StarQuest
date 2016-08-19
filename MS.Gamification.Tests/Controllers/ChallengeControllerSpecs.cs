@@ -1,13 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-13@23:36
+// Last modified: 2016-08-19@03:44
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Machine.Specifications;
-using MS.Gamification.Controllers;
+using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels;
@@ -39,8 +39,8 @@ namespace MS.Gamification.Tests.Controllers
         + The view model should contain all the challenges from the database
      */
 
-    [Subject(typeof(ChallengeController), "Index action")]
-    class when_viewing_all_challenges : with_standard_mission<ChallengeController>
+    [Subject(typeof(ChallengesController), "Index action")]
+    class when_viewing_all_challenges : with_standard_mission<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => actionResult = ControllerUnderTest.Index() as ViewResult;
@@ -50,8 +50,8 @@ namespace MS.Gamification.Tests.Controllers
         static ViewResult actionResult;
         }
 
-    [Subject(typeof(ChallengeController), "Create Action")]
-    class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengeController>
+    [Subject(typeof(ChallengesController), "Create Action")]
+    class when_calling_the_create_action_with_no_parameters : with_mvc_controller<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.Create() as ViewResult;
@@ -59,8 +59,8 @@ namespace MS.Gamification.Tests.Controllers
         static ViewResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Create Action POST valid data")]
-    class when_calling_the_create_action_with_valid_form_data : with_standard_mission<ChallengeController>
+    [Subject(typeof(ChallengesController), "Create Action POST valid data")]
+    class when_calling_the_create_action_with_valid_form_data : with_standard_mission<ChallengesController>
         {
         Establish context = () =>
             {
@@ -86,8 +86,8 @@ namespace MS.Gamification.Tests.Controllers
         static int originalCount;
         }
 
-    [Subject(typeof(ChallengeController), "ConfirmDelete Action")]
-    class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengeController>
+    [Subject(typeof(ChallengesController), "ConfirmDelete Action")]
+    class when_calling_the_confirm_delete_action_with_valid_id : with_mvc_controller<ChallengesController>
         {
         Establish context = () =>
             {
@@ -106,8 +106,8 @@ namespace MS.Gamification.Tests.Controllers
         static ActionResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Delete Action")]
-    class when_calling_the_delete_action_with_a_valid_id : with_standard_mission<ChallengeController>
+    [Subject(typeof(ChallengesController), "Delete Action")]
+    class when_calling_the_delete_action_with_a_valid_id : with_standard_mission<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.Delete(100) as ViewResult;
@@ -117,8 +117,8 @@ namespace MS.Gamification.Tests.Controllers
         static ViewResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Create Action POST invalid data")]
-    class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    [Subject(typeof(ChallengesController), "Create Action POST invalid data")]
+    class when_calling_the_create_action_with_an_invalid_model : with_mvc_controller<ChallengesController>
         {
         Establish context = () =>
             {
@@ -150,12 +150,12 @@ namespace MS.Gamification.Tests.Controllers
         static ViewResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Edit Action POST invalid data")]
-    class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengeController>
+    [Subject(typeof(ChallengesController), "Edit Action POST invalid data")]
+    class when_calling_the_edit_action_with_an_invalid_model : with_mvc_controller<ChallengesController>
         {
         Establish context = () =>
             {
-            InvalidChallenge = new Challenge
+            InvalidChallenge = new CreateChallengeViewModel
                 {
                 BookSection = "Moon",
                 Points = 0,
@@ -171,32 +171,32 @@ namespace MS.Gamification.Tests.Controllers
         It should_have_an_invalid_model_state = () => ControllerUnderTest.ModelState.IsValid.ShouldBeFalse();
         It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewmodel_with_the_posted_data =
-            () => (Result.Model as Challenge).ShouldBeLike(InvalidChallenge);
+            () => (Result.Model as CreateChallengeViewModel).ShouldBeLike(InvalidChallenge);
         It should_raise_an_error_for_name =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Name)].Errors.Count.ShouldBeGreaterThan(0);
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-                UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
-        static Challenge InvalidChallenge;
+            UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
+        static CreateChallengeViewModel InvalidChallenge;
         static ViewResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Edit Action")]
+    [Subject(typeof(ChallengesController), "Edit Action")]
     class when_sending_a_get_request_to_the_edit_action_with_a_valid_id
-        : with_standard_mission<ChallengeController>
+        : with_standard_mission<ChallengesController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder.Build();
         Because of = () => Result = ControllerUnderTest.Edit(100) as ViewResult;
         It should_return_the_edit_view = () => Result.ViewName.ShouldEqual(string.Empty);
         It should_populate_the_viewModel_with_the_item_to_be_edited =
-            () => (Result.Model as Challenge).Id.ShouldEqual(100);
+            () => (Result.Model as CreateChallengeViewModel).Id.ShouldEqual(100);
         static ViewResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Edit Action")]
+    [Subject(typeof(ChallengesController), "Edit Action")]
     class when_sending_a_get_request_to_the_edit_action_with_an_invalid_id
-        : with_mvc_controller<ChallengeController>
+        : with_standard_mission<ChallengesController>
         {
         /*
          * We put something in the database because an empty database would be a guarantee of 
@@ -205,25 +205,25 @@ namespace MS.Gamification.Tests.Controllers
          */
         Establish context = () => ControllerUnderTest = ContextBuilder
             .WithEntity(new Category {Id = 1})
-            .WithEntity(new Challenge {Id = 9, CategoryId = 1})
+            .WithEntity(new Challenge {Id = 99, CategoryId = 1, MissionTrackId = 1})
             .Build();
         Because of = () => Result = ControllerUnderTest.Edit(3);
         It should_return_a_not_found_error = () => Result.ShouldBeOfExactType<HttpNotFoundResult>();
         static ActionResult Result;
         }
 
-    [Subject(typeof(ChallengeController), "Edit Action")]
+    [Subject(typeof(ChallengesController), "Edit Action")]
     class when_sending_a_post_to_the_edit_action_with_a_valid_model
-        : with_standard_mission<ChallengeController>
+        : with_standard_mission<ChallengesController>
         {
         Establish context = () =>
             {
-            ModifiedChallenge = new Challenge
+            ModifiedChallenge = new CreateChallengeViewModel
                 {
                 Id = 200,
                 BookSection = "Planets",
                 Points = 1,
-                CategoryId = 1,
+                CategoryId = 10,
                 Location = "Mars",
                 Name = "See Mars", MissionTrackId = 2
                 };
@@ -235,11 +235,11 @@ namespace MS.Gamification.Tests.Controllers
         It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_update_the_repository = () =>
-                UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
+            UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
         It should_not_change_the_count_of_challenges =
             () => UnitOfWork.Challenges.GetAll().Count().ShouldEqual(expectedChallengeCount);
         static RedirectToRouteResult Result;
-        static Challenge ModifiedChallenge;
+        static CreateChallengeViewModel ModifiedChallenge;
         static int expectedChallengeCount;
         }
     }

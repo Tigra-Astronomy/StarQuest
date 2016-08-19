@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 
 namespace MS.Gamification.Tests.TestHelpers.Fakes

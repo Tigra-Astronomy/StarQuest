@@ -2,7 +2,7 @@
 @model SubmitObservationViewModel
 @{
     ViewBag.Title = "Submit Observation";
-    ViewBag.ChallengeName = Model.Challenge.Name;
+    ViewBag.ChallengeName = Model.ChallengeName;
     Layout = "~/Views/Shared/ObservationLayout.cshtml";
 }
 
@@ -16,6 +16,7 @@
     @Html.AntiForgeryToken()
     <div class="row" id="form">
         @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
+        @Html.HiddenFor(model=>model.ChallengeId);
         <div id="leftForm" class="col-md-8 form-horizontal">
             <div class="row">
                 <div class="form-group">
@@ -28,7 +29,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Equipment, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Equipment, (IEnumerable<SelectListItem>) ViewBag.Equipment, controlStyle)
+                        @Html.DropDownListFor(model => model.Equipment, Model.EquipmentPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
                     </div>
                 </div>
@@ -42,14 +43,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Seeing, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Seeing, (IEnumerable<SelectListItem>) ViewBag.Seeing, controlStyle)
+                        @Html.DropDownListFor(model => model.Seeing, Model.SeeingPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Transparency, labelStyle)
                     <div class=@inputColumns>
-                        @Html.DropDownListFor(model => model.Transparency, (IEnumerable<SelectListItem>) ViewBag.Transparency, controlStyle)
+                        @Html.DropDownListFor(model => model.Transparency, Model.TransparencyPicker, controlStyle)
                         @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
                     </div>
                 </div>

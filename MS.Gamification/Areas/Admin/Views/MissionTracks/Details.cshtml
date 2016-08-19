@@ -1,0 +1,62 @@
+﻿@using MS.Gamification.HtmlHelpers
+@model MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MissionTrack</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.MissionLevel.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MissionLevel.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Number)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Number)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.AwardTitle)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.AwardTitle)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Badge.ImageIdentifier)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Badge.ImageIdentifier)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            @Html.Badge(Model.Badge.ImageIdentifier, new {@class = "img-responsive"})
+        </div>
+    </div></div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

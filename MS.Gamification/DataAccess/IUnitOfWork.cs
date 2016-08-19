@@ -4,6 +4,7 @@
 // Last modified: 2016-07-01@20:23
 
 using System;
+using System.Threading.Tasks;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.DataAccess
@@ -65,6 +66,11 @@ namespace MS.Gamification.DataAccess
         ///     Commits changes to the database and completes the transaction.
         /// </summary>
         void Commit();
+
+        /// <summary>
+        ///     Asynchronously commits changes to the database and completes the transaction.
+        /// </summary>
+        Task CommitAsync();
 
         /// <summary>
         ///     Cancels the transaction and undoes any pending changes.

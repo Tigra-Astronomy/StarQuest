@@ -51,6 +51,7 @@
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />
     <DocumentationFile>App_Data\MS.Gamification.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -335,6 +336,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BadgesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ChallengesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionLevelsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MissionTracksController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RequiresAdministratorRights.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserAdministrationController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ManageUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\MissionTracks\MissionTrackViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ResendInvitationViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -382,8 +396,11 @@
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameNotificationService.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
+    <Compile Include="GameLogic\IFileSystemService.cs" />
     <Compile Include="GameLogic\IGameEngineService.cs" />
     <Compile Include="GameLogic\IGameNotificationService.cs" />
+    <Compile Include="GameLogic\IImageStore.cs" />
+    <Compile Include="GameLogic\ImageHelper.cs" />
     <Compile Include="GameLogic\IPreconditionXml.cs" />
     <Compile Include="GameLogic\Preconditions\CompositePredicate.cs" />
     <Compile Include="GameLogic\Preconditions\HasAll.cs" />
@@ -394,13 +411,20 @@
     <Compile Include="GameLogic\Preconditions\JoinedBefore.cs" />
     <Compile Include="GameLogic\Preconditions\LevelPreconditionParser.cs" />
     <Compile Include="GameLogic\Preconditions\PreconditionExtensions.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\LevelExistsInMission.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\LevelHasAssociatedObservations.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\MissionHasAssociatedObservations.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionProgressSummary.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\MissionTrackWithBadgeAndLevel.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForChallenge.cs" />
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\SingleChallengeWIthTrackAndCategory.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithProfileInformation.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\TrackHasAssociatedObservations.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ValidationImagePickList.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />
@@ -414,8 +438,6 @@
     <Compile Include="GameLogic\QuerySpecifications\SingleObservationWithChallengeAndUser.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithObservations.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\RequiresAdministratorRights.cs" />
-    <Compile Include="Controllers\ChallengeController.cs" />
     <Compile Include="Controllers\ChallengesInMissionLevel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -423,7 +445,6 @@
     <Compile Include="Controllers\ModerationController.cs" />
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ObservationController.cs" />
-    <Compile Include="Controllers\UserAdministrationController.cs" />
     <Compile Include="Controllers\ValidationImageController.cs" />
     <Compile Include="DataAccess\AsyncExtensions.cs" />
     <Compile Include="DataAccess\AspNetIdentityCurrentUser.cs" />
@@ -441,16 +462,15 @@
     <Compile Include="DataAccess\IUnitOfWork.cs" />
     <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="DataAccess\PicklistItem.cs" />
+    <Compile Include="GameLogic\StringExtensions.cs" />
+    <Compile Include="GameLogic\WebServerImageStore.cs" />
+    <Compile Include="GameLogic\WindowsFileSystem.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\GravatarHtmlHelper.cs" />
-    <Compile Include="HtmlHelpers\IFileSystemService.cs" />
-    <Compile Include="HtmlHelpers\WebServerImageStore.cs" />
-    <Compile Include="HtmlHelpers\IImageStore.cs" />
     <Compile Include="HtmlHelpers\ImageHelpers.cs" />
-    <Compile Include="HtmlHelpers\WindowsFileSystem.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
@@ -462,6 +482,10 @@
     <Compile Include="Migrations\201607271900449_BadgesRequired.cs" />
     <Compile Include="Migrations\201607271900449_BadgesRequired.Designer.cs">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.cs" />
+    <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.Designer.cs">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
@@ -501,12 +525,11 @@
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ManageLoginsViewModel.cs" />
-    <Compile Include="ViewModels\ManageUserViewModel.cs" />
     <Compile Include="ViewModels\Mission\ChallengeViewModel.cs" />
     <Compile Include="ViewModels\Mission\LevelProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\MissionProgressViewModel.cs" />
     <Compile Include="ViewModels\Mission\TrackProgressViewModel.cs" />
-    <Compile Include="ViewModels\ModerationQueueViewModel.cs" />
+    <Compile Include="ViewModels\Moderation\ModerationQueueItem.cs" />
     <Compile Include="ViewModels\ObservationDetailsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\ResendVerificationEmailViewModel.cs" />
@@ -514,8 +537,6 @@
     <Compile Include="ViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SubmitObservationViewModel.cs" />
-    <Compile Include="ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
-    <Compile Include="ViewModels\UserAdministration\BatchObservationViewModel.cs" />
     <Compile Include="ViewModels\UserProfile\ObservationSummaryViewModel.cs" />
     <Compile Include="ViewModels\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\VerifyCodeViewModel.cs" />
@@ -525,27 +546,7 @@
     <Content Include="App_Data\Badges\alpha-deep-space-explorer-1.png" />
     <Content Include="App_Data\Badges\alpha-lunar-observer-1.png" />
     <Content Include="App_Data\Badges\alpha-planetologist-1.png" />
-    <Content Include="App_Data\Badges\alpha-tester.png" />
-    <Content Include="App_Data\Badges\badge-purple.png" />
-    <Content Include="App_Data\Badges\clock.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-2.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-3.png" />
-    <Content Include="App_Data\Badges\Deep-Space-Explorer-1.png" />
-    <Content Include="App_Data\Badges\fire.png" />
-    <Content Include="App_Data\Badges\glass-empty.png" />
-    <Content Include="App_Data\Badges\lightbulb.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-1.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-2.png" />
-    <Content Include="App_Data\Badges\Lunar-Observer-3.png" />
     <Content Include="App_Data\Badges\NoImage.png" />
-    <Content Include="App_Data\Badges\person.png" />
-    <Content Include="App_Data\Badges\Planetologist-1.png" />
-    <Content Include="App_Data\Badges\speech-happy.png" />
-    <Content Include="App_Data\Badges\sprinter.png" />
-    <Content Include="App_Data\Badges\star-green.png" />
-    <Content Include="App_Data\Badges\star-red.png" />
-    <Content Include="App_Data\Badges\star-yellow.png" />
-    <Content Include="App_Data\Badges\tick.png" />
     <Content Include="App_Data\MS.Gamification.xml" />
     <Content Include="App_Data\ValidationImages\Jupiter.png" />
     <Content Include="App_Data\ValidationImages\M31.png" />
@@ -565,6 +566,25 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\c3.css" />
     <Content Include="Content\c3.min.css" />
+    <Content Include="Content\codemirror-3.01\codemirror.css" />
+    <Content Include="Content\codemirror-3.0\dialog.css" />
+    <Content Include="Content\codemirror-3.0\simple-hint.css" />
+    <Content Include="Content\codemirror-3.0\theme\ambiance-mobile.css" />
+    <Content Include="Content\codemirror-3.0\theme\ambiance.css" />
+    <Content Include="Content\codemirror-3.0\theme\blackboard.css" />
+    <Content Include="Content\codemirror-3.0\theme\cobalt.css" />
+    <Content Include="Content\codemirror-3.0\theme\eclipse.css" />
+    <Content Include="Content\codemirror-3.0\theme\elegant.css" />
+    <Content Include="Content\codemirror-3.0\theme\erlang-dark.css" />
+    <Content Include="Content\codemirror-3.0\theme\lesser-dark.css" />
+    <Content Include="Content\codemirror-3.0\theme\monokai.css" />
+    <Content Include="Content\codemirror-3.0\theme\neat.css" />
+    <Content Include="Content\codemirror-3.0\theme\night.css" />
+    <Content Include="Content\codemirror-3.0\theme\rubyblue.css" />
+    <Content Include="Content\codemirror-3.0\theme\solarized.css" />
+    <Content Include="Content\codemirror-3.0\theme\twilight.css" />
+    <Content Include="Content\codemirror-3.0\theme\vibrant-ink.css" />
+    <Content Include="Content\codemirror-3.0\theme\xq-dark.css" />
     <Content Include="Content\dataTables.fontawesome.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.css" />
     <Content Include="Content\DataTables\css\autoFill.bootstrap.min.css" />
@@ -711,6 +731,9 @@
     <EmbeddedResource Include="Migrations\201607271900449_BadgesRequired.resx">
       <DependentUpon>201607271900449_BadgesRequired.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608182157291_ObservationsRequireUsers.resx">
+      <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -744,6 +767,40 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="EmailTemplates\ResetPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Challenges\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\BatchObservationDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\BatchObservations.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\CreateUserAccounts.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ManageUser.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ManageUsers.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ReplacementToken.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\ResendInvitation.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\TokenExpired.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\UserProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionLevels\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Missions\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MissionTracks\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Details.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -755,6 +812,99 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\c3.js" />
     <Content Include="Scripts\c3.min.js" />
+    <Content Include="Scripts\codemirror-3.01\codemirror.js" />
+    <Content Include="Scripts\codemirror-3.01\keymap\emacs.js" />
+    <Content Include="Scripts\codemirror-3.01\keymap\vim.js" />
+    <Content Include="Scripts\codemirror-3.01\mode\css.js" />
+    <Content Include="Scripts\codemirror-3.01\mode\htmlmixed.js" />
+    <Content Include="Scripts\codemirror-3.01\mode\javascript.js" />
+    <Content Include="Scripts\codemirror-3.01\mode\xml.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\dialog\dialog.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\edit\closetag.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\edit\continuecomment.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\edit\continuelist.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\edit\matchbrackets.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\fold\collapserange.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\fold\foldcode.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\format\formatting.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\hint\javascript-hint.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\hint\pig-hint.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\hint\python-hint.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\hint\simple-hint.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\hint\xml-hint.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\mode\loadmode.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\mode\multiplex.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\mode\overlay.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\runmode\colorize.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\runmode\runmode-standalone.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\runmode\runmode.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\runmode\runmode.node.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\search\match-highlighter.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\search\search.js" />
+    <Content Include="Scripts\codemirror-3.0\addon\search\searchcursor.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\apl.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\asterisk.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\clike.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\clojure.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\coffeescript.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\commonlisp.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\css.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\d.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\diff.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\ecl.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\erlang.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\gfm.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\go.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\groovy.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\haskell.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\haxe.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\htmlembedded.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\htmlmixed.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\http.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\javascript.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\jinja2.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\less.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\lua.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\markdown.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\meta.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\mysql.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\ntriples.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\ocaml.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\pascal.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\perl.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\php.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\pig.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\plsql.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\properties.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\python.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\r.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\rpm\changes.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\rpm\spec.css" />
+    <Content Include="Scripts\codemirror-3.0\mode\rpm\spec.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\rst.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\ruby.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\rust.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\sass.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\scheme.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\shell.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\sieve.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\smalltalk.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\smarty.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\sparql.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\sql.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\stex.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\tiddlywiki\tiddlywiki.css" />
+    <Content Include="Scripts\codemirror-3.0\mode\tiddlywiki\tiddlywiki.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\tiki\tiki.css" />
+    <Content Include="Scripts\codemirror-3.0\mode\tiki\tiki.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\vb.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\vbscript.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\velocity.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\verilog.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\xml.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\xquery.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\yaml.js" />
+    <Content Include="Scripts\codemirror-3.0\mode\z80.js" />
     <Content Include="Scripts\cumulativeScoreGraph.js" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\d3.min.js" />
@@ -822,6 +972,14 @@
     <Content Include="Scripts\DataTables\responsive.foundation.min.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.js" />
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\jira-web-collector.js" />
     <None Include="Scripts\jquery-2.2.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.4.js" />
@@ -835,6 +993,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\password.js" />
+    <Content Include="Scripts\preconditionEditable.js" />
+    <Content Include="Scripts\preconditionReadonly.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -874,10 +1034,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Challenge\Index.cshtml" />
-    <Content Include="Views\Challenge\Create.cshtml" />
-    <Content Include="Views\Challenge\Delete.cshtml" />
-    <Content Include="Views\Challenge\Edit.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
@@ -894,18 +1050,6 @@
     <Content Include="Views\Mission\Progress.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
     <Content Include="Views\Observation\Details.cshtml" />
-    <Content Include="Views\UserAdministration\UserProfile.cshtml" />
-    <Content Include="Views\UserAdministration\Index.cshtml" />
-    <Content Include="Views\UserAdministration\CreateUserAccounts.cshtml" />
-    <Content Include="Views\UserAdministration\CreateUserAccountsConfirmation.cshtml" />
-    <Content Include="Views\UserAdministration\ManageUsers.cshtml" />
-    <Content Include="Views\UserAdministration\ManageUser.cshtml" />
-    <Content Include="Views\UserAdministration\TokenExpired.cshtml" />
-    <Content Include="Views\UserAdministration\ReplacementToken.cshtml" />
-    <Content Include="Views\UserAdministration\ResendInvitation.cshtml" />
-    <Content Include="Views\UserAdministration\BatchObservations.cshtml" />
-    <Content Include="Views\UserAdministration\EditorTemplates\BatchObservationUserViewModel.cshtml" />
-    <Content Include="Views\UserAdministration\BatchObservationDetails.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
@@ -932,6 +1076,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="IdentityHelpers\" />
   </ItemGroup>
   <PropertyGroup>

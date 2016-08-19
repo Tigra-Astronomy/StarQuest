@@ -219,3 +219,5 @@ ModelManifest.xml
 jquery*.js
 /MS.Gamification/Content/DataTables
 /MS.Gamification/Scripts/DataTables
+/MS.Gamification/App_Data/Badges
+/MS.Gamification/App_Data/Badges

@@ -63,7 +63,7 @@
                         <h3 class="panel-title">Recent Observations</h3>
                     </div>
                     <div class="col-xs-3 pull-right">
-                        <button type="button" class="btn btn-xs btn-default">See all &raquo;</button>
+                        @Html.ActionLink("See all »", "Index","Observation",new {},new {@class="btn btn-xs btn-default"})
                     </div>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                                     <h3 class="panel-title">@mission.MissionTitle</h3>
                                 </div>
                                 <div class="col-xs-3 pull-right">
-                                    <button type="button" class="btn btn-xs btn-default">Details &raquo;</button>
+                                    @Html.ActionLink("Details »", "Progress","Mission", new {id=mission.Id},new {@class="btn btn-xs btn-default"})
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionBuilder.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-27@19:55
+// Last modified: 2016-08-08@23:37
 
 using System.Collections.Generic;
 using System.Threading;
@@ -59,7 +59,7 @@ namespace MS.Gamification.Tests.TestHelpers
                 Level = missionLevel,
                 Name = missionName,
                 Tracks = tracks,
-                MissionId = 1
+                MissionId = missionId
                 };
             foreach (var track in tracks)
                 {

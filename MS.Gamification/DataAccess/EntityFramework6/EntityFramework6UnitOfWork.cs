@@ -4,14 +4,16 @@
 // Last modified: 2016-07-20@22:39
 
 using System;
+using System.Threading.Tasks;
 using MS.Gamification.Models;
+using NLog;
 
 namespace MS.Gamification.DataAccess.EntityFramework6
     {
     public class EntityFramework6UnitOfWork : IUnitOfWork
         {
         private readonly ApplicationDbContext dbContext;
-
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
         public EntityFramework6UnitOfWork(ApplicationDbContext context)
             {
@@ -50,14 +52,28 @@ namespace MS.Gamification.DataAccess.EntityFramework6
                 }
             catch (Exception e)
                 {
-                Console.WriteLine(e); // ToDo: write the exception to a log file
+                Log.Error(e, "Committing database transaction");
+                throw;
+                }
+            }
+
+        public Task CommitAsync()
+            {
+            try
+                {
+                return dbContext.SaveChangesAsync();
+                }
+            catch (Exception e)
+                {
+                Log.Error(e,"Committing database transaction");
                 throw;
                 }
             }
 
         public void Cancel()
             {
-            throw new NotImplementedException();
+            Log.Error("Canceling database transaction");
+            dbContext.Dispose();
             }
 
         #region IDisposable Pattern

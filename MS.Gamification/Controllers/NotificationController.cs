@@ -5,6 +5,7 @@
 
 using System.Linq;
 using System.Web.Mvc;
+using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
