@@ -76,9 +76,9 @@
                                     @foreach (var challenge in track.Challenges)
                                         {
                                         <div class="row challenge">
-                                            <div class="col-md-4">@challenge.Name</div>
-                                            <div class="col-md-4">
-                                                <a>Details</a>
+                                            <div class="col-md-7">@challenge.Name</div>
+                                            <div class="col-md-1">
+                                                @Html.ActionLink("Details","ChallengeDetails", new {area=string.Empty, id=challenge.Id})
                                             </div>
                                             <div class="col-md-3">
                                                 @if (challenge.HasObservation)

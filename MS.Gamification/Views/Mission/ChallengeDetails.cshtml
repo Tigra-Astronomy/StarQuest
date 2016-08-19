@@ -1,0 +1,62 @@
+﻿@model Challenge
+
+@{
+    ViewBag.Title = "Challenge Details";
+}
+
+<h2>Challenge Details</h2>
+<div class="row">
+    <div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MissionTrack.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MissionTrack.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Points)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Points)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.BookSection)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BookSection)
+            </dd>
+        </dl>
+    </div>
+</div>

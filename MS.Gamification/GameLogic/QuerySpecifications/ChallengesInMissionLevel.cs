@@ -1,8 +1,7 @@
 using System.Linq;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 
-namespace MS.Gamification.Controllers
+namespace MS.Gamification.GameLogic.QuerySpecifications
     {
     public class ChallengesInMissionLevel : QuerySpecification<Challenge>
         {
