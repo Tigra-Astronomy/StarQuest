@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: UserProfileController.cs  Created: 2016-07-29@15:35
-// Last modified: 2016-07-30@19:39
+// Last modified: 2016-08-20@00:01
 
 using System.Linq;
 using System.Web.Mvc;
@@ -47,7 +47,7 @@ namespace MS.Gamification.Controllers
                 UserId = user.UniqueId,
                 UserName = user.DisplayName,
                 EmailAddress = user.LoginName,
-                Titles = new[] {"Big Cheese", "Top Cat", "Legendary Monkton Stargazer", "Teacher's Pet"},
+                Titles = Enumerable.Empty<string>(), //ToDo: coming soon...
                 Badges = badges,
                 Observations = appUser.Observations
                     .Take(showObservations)
