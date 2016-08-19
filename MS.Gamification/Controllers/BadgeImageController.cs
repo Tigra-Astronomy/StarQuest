@@ -4,6 +4,7 @@
 // Last modified: 2016-07-19@03:07
 
 using System.Web.Mvc;
+using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 using Ninject;
 

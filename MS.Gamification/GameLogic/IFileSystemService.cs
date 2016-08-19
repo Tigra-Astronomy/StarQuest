@@ -1,4 +1,4 @@
-namespace MS.Gamification.HtmlHelpers
+namespace MS.Gamification.GameLogic
     {
     /// <summary>
     ///   Provides file system services

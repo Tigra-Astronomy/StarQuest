@@ -8,6 +8,7 @@ using System.Web;
 using FakeItEasy;
 using Machine.Specifications;
 using MS.Gamification.Areas.Admin.Controllers;
+using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
@@ -50,14 +51,10 @@ namespace MS.Gamification.Tests.Controllers
         }
 
     [Subject(typeof(BadgesController), "Image Identifier")]
-    class when_creating_an_image_identifier_from_a_filename : with_mvc_controller<BadgesController>
+    class when_creating_an_image_identifier_from_a_filename 
         {
-        Establish context = () =>
-            {
-            FileName = "The Cat Sat On.The Mat.thingy";
-            ControllerUnderTest = ContextBuilder.Build();
-            };
-        Because of = () => Identifier = ControllerUnderTest.GenerateImageIdentifier(FileName);
+        Establish context = () => FileName = "The Cat Sat On.The Mat.thingy";
+        Because of = () => Identifier = FileName.ToImageIdentifier();
         It should_produce_the_expected_identifier = () => Identifier.ShouldEqual(ExpectedIdentifier);
         static string FileName;
         static string Identifier;

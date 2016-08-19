@@ -1,11 +1,11 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UnitTestImageStore.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-08-15@00:38
+// Last modified: 2016-08-19@02:30
 
 using System.Collections.Generic;
 using System.IO;
-using MS.Gamification.HtmlHelpers;
+using MS.Gamification.GameLogic;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
@@ -49,6 +49,11 @@ namespace MS.Gamification.Tests.TestHelpers
             ImageStream = imageStream;
             ImageIdentifier = identifier;
             SaveCalled = true;
+            }
+
+        public IEnumerable<string> EnumerateImages()
+            {
+            yield break;
             }
         }
     }

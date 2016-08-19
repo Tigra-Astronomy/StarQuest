@@ -396,8 +396,11 @@
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameNotificationService.cs" />
     <Compile Include="GameLogic\GameRulesService.cs" />
+    <Compile Include="GameLogic\IFileSystemService.cs" />
     <Compile Include="GameLogic\IGameEngineService.cs" />
     <Compile Include="GameLogic\IGameNotificationService.cs" />
+    <Compile Include="GameLogic\IImageStore.cs" />
+    <Compile Include="GameLogic\ImageHelper.cs" />
     <Compile Include="GameLogic\IPreconditionXml.cs" />
     <Compile Include="GameLogic\Preconditions\CompositePredicate.cs" />
     <Compile Include="GameLogic\Preconditions\HasAll.cs" />
@@ -417,9 +420,11 @@
     <Compile Include="GameLogic\QuerySpecifications\EligibleObservationsForChallenges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\MissionLevelProgress.cs" />
     <Compile Include="GameLogic\QuerySpecifications\ObservationsForUserMission.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\SingleChallengeWIthTrackAndCategory.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithBadges.cs" />
     <Compile Include="GameLogic\QuerySpecifications\SingleUserWithProfileInformation.cs" />
     <Compile Include="GameLogic\QuerySpecifications\TrackHasAssociatedObservations.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ValidationImagePickList.cs" />
     <Compile Include="GameLogic\StarquestPasswordValidator.cs" />
     <Compile Include="GameLogic\FetchStrategyExtensions.cs" />
     <Compile Include="GameLogic\GenericFetchStrategy.cs" />
@@ -458,16 +463,14 @@
     <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="DataAccess\PicklistItem.cs" />
     <Compile Include="GameLogic\StringExtensions.cs" />
+    <Compile Include="GameLogic\WebServerImageStore.cs" />
+    <Compile Include="GameLogic\WindowsFileSystem.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\GravatarHtmlHelper.cs" />
-    <Compile Include="HtmlHelpers\IFileSystemService.cs" />
-    <Compile Include="HtmlHelpers\WebServerImageStore.cs" />
-    <Compile Include="HtmlHelpers\IImageStore.cs" />
     <Compile Include="HtmlHelpers\ImageHelpers.cs" />
-    <Compile Include="HtmlHelpers\WindowsFileSystem.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
@@ -797,6 +800,7 @@
     <Content Include="Areas\Admin\Views\MissionTracks\Details.cshtml" />
     <Content Include="Areas\Admin\Views\MissionTracks\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MissionTracks\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Challenges\Details.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

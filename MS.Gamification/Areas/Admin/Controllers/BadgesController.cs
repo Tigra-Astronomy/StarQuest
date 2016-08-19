@@ -39,7 +39,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var index = fileNames.Single();
             var postedFile = Request.Files[index];
             var postedFileName = postedFile.FileName;
-            var identifier = GenerateImageIdentifier(postedFileName);
+            var identifier = postedFileName.ToImageIdentifier();
             try
                 {
                 store.Save(postedFile.InputStream, identifier);
@@ -58,12 +58,12 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 }
             }
 
-        public string GenerateImageIdentifier(string fileName)
-            {
-            var result = Path.GetFileNameWithoutExtension(fileName);
-            result = result.ToLower(CultureInfo.InvariantCulture);
-            result = result.Keep(ImageIdentifierAllowedCharacters, '-');
-            return result;
-            }
+        //public string GenerateImageIdentifier(string fileName)
+        //    {
+        //    var result = Path.GetFileNameWithoutExtension(fileName);
+        //    result = result.ToLower(CultureInfo.InvariantCulture);
+        //    result = result.Keep(ImageIdentifierAllowedCharacters, '-');
+        //    return result;
+        //    }
         }
     }

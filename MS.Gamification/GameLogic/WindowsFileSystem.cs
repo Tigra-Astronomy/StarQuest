@@ -5,7 +5,7 @@
 
 using System.IO;
 
-namespace MS.Gamification.HtmlHelpers
+namespace MS.Gamification.GameLogic
     {
     internal class WindowsFileSystem : IFileSystemService
         {

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: CreateChallengeViewModel.cs  Created: 2016-07-09@20:19
-// Last modified: 2016-08-11@00:53
+// Last modified: 2016-08-19@03:25
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,11 +11,7 @@ namespace MS.Gamification.ViewModels
     {
     public class CreateChallengeViewModel
         {
-        //ToDo: Eventually this must be supplied
-        //[Required]
-        //[FileNameWithoutPath]
-        //[MaxLength(255)]
-        //public string ValidationImage { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -34,6 +30,8 @@ namespace MS.Gamification.ViewModels
         public int MissionTrackId { get; set; }
 
         public string ValidationImage { get; set; } = string.Empty;
+
+        public IEnumerable<SelectListItem> ValidationImagePicker { get; set; }
 
         public IEnumerable<SelectListItem> CategoryPicker { get; set; }
 

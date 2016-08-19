@@ -1199,6 +1199,18 @@
             <param name="badgeId">The badge identifier.</param>
             <param name="userId">The user identifier.</param>
         </member>
+        <member name="T:MS.Gamification.GameLogic.IFileSystemService">
+            <summary>
+              Provides file system services
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IFileSystemService.FileExists(System.String)">
+            <summary>
+              Checks whether a file exists on disk.
+            </summary>
+            <param name="fullyQualifiedFileName">The fully qualified name of the file.</param>
+            <returns><c>true</c> if the file exists, <c>false</c> otherwise.</returns>
+        </member>
         <member name="M:MS.Gamification.GameLogic.IGameEngineService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
             <summary>
                 Computes the percent complete for a set of challenges, given a set of eligible observations. The
@@ -1307,6 +1319,45 @@
             </summary>
             <param name="observation">The observation that has been approved.</param>
             <returns>An awaitable Task.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IImageStore">
+            <summary>
+                Represents a persistent store of named images.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.FindImage(System.String)">
+            <summary>
+                Finds and returns a matching image from the store; i fnone found,
+                returns the placeholder image.
+            </summary>
+            <param name="identifier">
+                The image identifier. How this is translated into an image file name is implementation specific.
+            </param>
+            <returns>
+                The fully qualified file name on disk of a matching image,
+                or if no matches were found, the fully qualified filename on disk of
+                a placeholder image (which is assumed to always exist).
+            </returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.MimeType(System.String)">
+            <summary>
+                Gets the MIME type of the specified image file
+            </summary>
+            <param name="identifier">The image identifier.</param>
+            <returns>The MIME type of the identified image, for example, "image/png".</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.Save(System.IO.Stream,System.String)">
+            <summary>
+                Persists the image bitmap into the image store, using the <paramref name="identifier" /> as the key.
+            </summary>
+            <param name="imageStream">The image bitmap.</param>
+            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
         </member>
         <member name="T:MS.Gamification.GameLogic.IPreconditionXml">
             <summary>
@@ -1585,6 +1636,19 @@
             <param name="source">The source string.</param>
             <returns>A new string showing each character of the source string as a hex digit.</returns>
         </member>
+        <member name="T:MS.Gamification.GameLogic.WebServerImageStore">
+            <summary>
+                Maps image names to static image files that are store on a web server, where the path to the images comes
+                from a setting in the Web.config file.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.IImageStore" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.WebServerImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
+        </member>
         <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
             <summary>
                 Globally Recognised Avatar - http://gravatar.com
@@ -1671,61 +1735,9 @@
             <param name="en"></param>
             <returns></returns>
         </member>
-        <member name="T:MS.Gamification.HtmlHelpers.IFileSystemService">
-            <summary>
-              Provides file system services
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.IFileSystemService.FileExists(System.String)">
-            <summary>
-              Checks whether a file exists on disk.
-            </summary>
-            <param name="fullyQualifiedFileName">The fully qualified name of the file.</param>
-            <returns><c>true</c> if the file exists, <c>false</c> otherwise.</returns>
-        </member>
-        <member name="T:MS.Gamification.HtmlHelpers.WebServerImageStore">
-            <summary>
-                Maps image names to static image files that are store on a web server, where the path to the images comes
-                from a setting in the Web.config file.
-            </summary>
-            <seealso cref="T:MS.Gamification.HtmlHelpers.IImageStore" />
-        </member>
-        <member name="T:MS.Gamification.HtmlHelpers.IImageStore">
-            <summary>
-              Represents a persistent store of named images.
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.IImageStore.FindImage(System.String)">
-            <summary>
-              Finds and returns a matching image from the store; i fnone found,
-              returns the placeholder image.
-            </summary>
-            <param name="identifier">
-              The image identifier. How this is translated into an image file name is implementation specific.
-            </param>
-            <returns>
-              The fully qualified file name on disk of a matching image,
-              or if no matches were found, the fully qualified filename on disk of
-              a placeholder image (which is assumed to always exist).
-            </returns>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.IImageStore.MimeType(System.String)">
-            <summary>
-              Gets the MIME type of the specified image file
-            </summary>
-            <param name="identifier">The image identifier.</param>
-            <returns>The MIME type of the identified image, for example, "image/png".</returns>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.IImageStore.Save(System.IO.Stream,System.String)">
-            <summary>
-            Persists the image bitmap into the image store, using the <paramref name="identifier"/> as the key.
-            </summary>
-            <param name="imageStream">The image bitmap.</param>
-            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
-        </member>
         <member name="P:MS.Gamification.Models.Badge.ImageIdentifier">
             <summary>
-                Identifies the storage location of a badge bitmap to an <see cref="T:MS.Gamification.HtmlHelpers.IImageStore" /> service.
+                Identifies the storage location of a badge bitmap to an <see cref="T:MS.Gamification.GameLogic.IImageStore" /> service.
             </summary>
             <value>The file identifier.</value>
         </member>

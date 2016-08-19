@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 using Ninject;
 
