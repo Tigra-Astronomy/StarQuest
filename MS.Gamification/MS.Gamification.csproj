@@ -1039,7 +1039,6 @@
     <Content Include="Views\Observation\SubmitObservation.cshtml" />
     <Content Include="Views\Observation\Index.cshtml" />
     <Content Include="Views\Shared\NavbarPartial.cshtml" />
-    <Content Include="Views\Shared\ObservationLayout.cshtml" />
     <Content Include="Views\Shared\Analytics.cshtml" />
     <Content Include="Views\Moderation\Index.cshtml" />
     <Content Include="Views\Moderation\Details.cshtml" />

@@ -3,55 +3,38 @@
 
 @{
     ViewBag.Title = "Moderate Observation";
-    ViewBag.ChallengeName = Model.Challenge.Name; //ToDo: Should this be in the controller?
-    Layout = "~/Views/Shared/ObservationLayout.cshtml";
-    var labelStyle = new {@class = "control-label col-md-3"};
-    var valueColumns = "col-md-9";
-    var controlStyle = new {htmlAttributes = new {@class = "form-control"}};
 }
+
+<div class="row" id="challenge">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </div>
+        <div class="panel-body">
+            <h3>@Model.Challenge.Name</h3>
+        </div>
+    </div>
+</div>
 
 <h2>Observation Details</h2>
 <h3>Submitted by: @Model.User.UserName</h3>
 
 <div class="row" id="observation">
-    <div id="leftForm" class="col-md-8 form-horizontal">
+    <div id="leftForm" class="col-md-8">
         <div class="row">
-            <div class="form-group">
-                @Html.LabelFor(model => model.ObservationDateTimeUtc, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.ObservationDateTimeUtc, controlStyle)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Equipment, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.Equipment, controlStyle)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.ObservingSite, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.ObservingSite, controlStyle)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seeing, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.Seeing, controlStyle)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Transparency, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.Transparency, controlStyle)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Notes, labelStyle)
-                <div class="@valueColumns">
-                    @Html.DisplayFor(model => model.Notes, controlStyle)
-                </div>
-            </div>
+            <dl class="dl-horizontal">
+                <dt>@Html.LabelFor(model => model.ObservationDateTimeUtc)</dt>
+                <dd>@Html.DisplayFor(model => model.ObservationDateTimeUtc)</dd>
+                <dt>@Html.LabelFor(model => model.Equipment)</dt>
+                <dd>@Html.DisplayFor(model => model.Equipment)</dd>
+                <dt>@Html.LabelFor(model => model.ObservingSite)</dt>
+                <dd>@Html.DisplayFor(model => model.ObservingSite)</dd>
+                <dt>@Html.LabelFor(model => model.Seeing)</dt>
+                <dd>@Html.DisplayFor(model => model.Seeing)</dd>
+                <dt>@Html.LabelFor(model => model.Transparency)</dt>
+                <dd>@Html.DisplayFor(model => model.Transparency)</dd>
+                <dt>@Html.LabelFor(model => model.Notes)</dt>
+                <dd>@Html.DisplayFor(model => model.Notes)</dd>
         </div>
     </div>
     <div id="spacer" class="col-md-1"></div>
@@ -78,9 +61,7 @@
     </div>
 </div>
 
-@section moderator{
-    <div class="row">
-        @Html.ActionLink("Approve", "Approve", new {id = Model.Id}, new {@class = "btn btn-success"})
-        @Html.ActionLink("Reject", "Reject", new {Model.Id}, new {@class = "btn btn-danger"})
-    </div>
-}
+<div class="row">
+    @Html.ActionLink("Approve", "Approve", new {id = Model.Id}, new {@class = "btn btn-success"})
+    @Html.ActionLink("Reject", "Reject", new {Model.Id}, new {@class = "btn btn-danger"})
+</div>
