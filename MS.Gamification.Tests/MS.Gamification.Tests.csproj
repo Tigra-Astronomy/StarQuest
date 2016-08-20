@@ -167,6 +167,7 @@
     <Compile Include="Controllers\MissionLevelsControllerSpecs.cs" />
     <Compile Include="Controllers\ModerationControllerSpecs.cs" />
     <Compile Include="Controllers\ObservationControllerSpecs.cs" />
+    <Compile Include="Controllers\UserAdministrationControllerSpecs.cs" />
     <Compile Include="Controllers\ValidationImageControllerSpecs.cs" />
     <Compile Include="Controllers\with_mvc_controller.cs" />
     <Compile Include="Controllers\with_standard_mission.cs" />

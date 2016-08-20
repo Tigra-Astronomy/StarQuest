@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-08-19@04:17
-// Last modified: 2016-08-19@23:43
+// Last modified: 2016-08-20@21:30
 
 using System;
 using System.Collections.Generic;
@@ -29,6 +29,11 @@ namespace MS.Gamification.Areas.Admin.Controllers
     [Authorize]
     public class UserAdministrationController : RequiresAdministratorRights
         {
+        private static readonly Regex SimpleEmailRegex = new Regex(Constants.RFC822EmailPattern, RegexOptions.ExplicitCapture);
+        private static readonly Regex UserNameEmailCsvRegex = new Regex(Constants.UserNameAndEmailCsvPattern,
+            RegexOptions.ExplicitCapture);
+        private static readonly Regex UserNameEmailCanonicalRegex = new Regex(Constants.UserNameAndEmailCanonicalPattern,
+            RegexOptions.ExplicitCapture);
         private readonly IGameEngineService gameEngine;
         private readonly ILogger log;
         private readonly IMapper mapper;
@@ -69,36 +74,27 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         [HttpPost]
-        public async Task<ActionResult> CreateUserAccounts(string emails)
+        public async Task<ActionResult> CreateUserAccounts(BulkUserEntryViewModel bulkCreateModel)
             {
-            var emailRegex = new Regex(Constants.emailPattern);
-            var wellFormedEmails = new List<string>();
             var successfulEmails = new List<string>();
             var failedEmails = new Dictionary<string, string>();
-            var sourceEmails = emails.Split(new[] {'\r', '\n', ' ', ';', ','}, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var candidate in sourceEmails)
+            var sourceEmails = bulkCreateModel.UserNamesAndEmails.Split(new[] {'\r', '\n', ';'},
+                StringSplitOptions.RemoveEmptyEntries);
+            foreach (var emailAddress in sourceEmails)
                 {
-                var isValid = emailRegex.IsMatch(candidate);
-                if (isValid)
-                    {
-                    wellFormedEmails.Add(candidate);
-                    }
-                else
-                    {
-                    failedEmails.Add(candidate, "Contains invalid characters per RFC-822");
-                    }
-                }
-
-            foreach (var emailAddress in wellFormedEmails)
-                {
+                var cleanedEmail = emailAddress.Trim();
                 try
                     {
-                    await CreateAndNotifyUser(emailAddress);
-                    successfulEmails.Add(emailAddress);
+                    await CreateAndNotifyUser(cleanedEmail);
+                    successfulEmails.Add(cleanedEmail);
+                    }
+                catch (ArgumentException ex)
+                    {
+                    failedEmails.Add(cleanedEmail, ex.Message);
                     }
                 catch (Exception ex)
                     {
-                    failedEmails.Add(emailAddress, $"Exception: {ex.Message}");
+                    failedEmails.Add(cleanedEmail, $"Unexpected error: {ex.Message}");
                     }
                 }
             var model = new CreateUsersConfirmationViewModel
@@ -114,9 +110,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
         private async Task CreateAndNotifyUser(string emailAddress)
             {
             log.Info($"Provisioning user account for email address {emailAddress}");
-            // The user is created with an 'un-utterable' password, which must be reset
-            var user = new ApplicationUser {UserName = emailAddress, Email = emailAddress};
-            //var password = $"Aa1@#{new Guid()}";
+            // The user is created with an empty password, which must be reset
+            var user = CreateUserFromEmailString(emailAddress);
             var result = await userManager.CreateAsync(user /*, password*/);
             if (!result.Succeeded)
                 {
@@ -129,6 +124,68 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 throw new InvalidOperationException(builder.ToString());
                 }
             await SendNotificationEmail(user.Id, emailAddress);
+            }
+
+        /// <summary>
+        ///     Tries to recognize various user name and email formats and, if successful, creates a new
+        ///     <see cref="ApplicationUser" /> from the parsed results.
+        /// </summary>
+        /// <param name="userNameAndEmail">
+        ///     The input user name and email in one of the recognised formats:
+        ///     <list type="table">
+        ///         <listheader>
+        ///             <term>Format</term>
+        ///             <description>Description</description>
+        ///         </listheader>
+        ///         <item>
+        ///             <term>Simple RFC822 email address</term>
+        ///             <description>
+        ///                 <para>A simple email address in RFC-822 format.</para>
+        ///                 <para>Example: <c><![CDATA[Joe@user.com]]></c></para>
+        ///                 <para>
+        ///                     Since there is no user name component in this format, the parsed value is used  as both
+        ///                     the email address and the user name.
+        ///                 </para>
+        ///             </description>
+        ///         </item>
+        ///         <item>
+        ///             <term>Canonical user name format</term>
+        ///             <description>
+        ///                 <para>A user name and email address specified in canonical format.</para>
+        ///                 <para>Example: <c><![CDATA[Joe User<Joe@user.com>]]></c></para>
+        ///             </description>
+        ///         </item>
+        ///         <item>
+        ///             <term>Comma Separated Values (CSV) format</term>
+        ///             <description>
+        ///                 <para>A user name and email address separated with a comma.</para>
+        ///                 <para>Example: <c><![CDATA[Joe User, Joe@user.com]]></c></para>
+        ///             </description>
+        ///         </item>
+        ///     </list>
+        /// </param>
+        /// <exception cref="ArgumentException">Not in any of the recognized formats.</exception>
+        internal static ApplicationUser CreateUserFromEmailString(string userNameAndEmail)
+            {
+            var source = userNameAndEmail.Trim();
+            // Try to match Canonical format "User Name<recipient@email.domain>"
+            var canonicalMatch = UserNameEmailCanonicalRegex.Match(source);
+            if (canonicalMatch.Success)
+                return new ApplicationUser
+                    {UserName = canonicalMatch.Groups["name"].Value, Email = canonicalMatch.Groups["email"].Value};
+            // Try to match CSV format "Joe User, Joe@user.com"
+            var csvMatch = UserNameEmailCsvRegex.Match(source);
+            if (csvMatch.Success)
+                return new ApplicationUser {UserName = csvMatch.Groups["name"].Value, Email = csvMatch.Groups["email"].Value};
+            // Try to match a simple RFC822 email address and use it as the username and the email address.
+            var rfc822Match = SimpleEmailRegex.Match(source);
+            if (rfc822Match.Success)
+                {
+                var email = rfc822Match.Groups["email"].Value;
+                return new ApplicationUser
+                    {UserName = email, Email = email};
+                }
+            throw new ArgumentException("Not in any of the recognised formats.");
             }
 
         private async Task SendNotificationEmail(string userId, string email)
@@ -171,20 +228,22 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ReplacementToken(ResendInvitationViewModel model)
             {
+            var forgotModel = new ForgotViewModel {Email = model.Email};
             if (!ModelState.IsValid)
                 {
-                return View("TokenExpired", model);
+                return View("TokenExpired", forgotModel);
                 }
             try
                 {
                 var user = await userManager.FindByEmailAsync(model.Email);
                 await SendNotificationEmail(user.Id, model.Email);
+                return RedirectToAction("Index");
                 }
             catch (Exception e)
                 {
-                Console.WriteLine(e);
+                ModelState.AddModelError(string.Empty, e.Message);
+                return View(forgotModel);
                 }
-            return View();
             }
 
         public ActionResult ResendInvitation()

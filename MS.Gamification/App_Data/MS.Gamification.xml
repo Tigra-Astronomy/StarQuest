@@ -32,6 +32,47 @@
             </summary>
             <seealso cref="T:MS.Gamification.Areas.Admin.Controllers.RequiresAdministratorRights" />
         </member>
+        <member name="M:MS.Gamification.Areas.Admin.Controllers.UserAdministrationController.CreateUserFromEmailString(System.String)">
+            <summary>
+                Tries to recognize various user name and email formats and, if successful, creates a new
+                <see cref="T:MS.Gamification.Models.ApplicationUser" /> from the parsed results.
+            </summary>
+            <param name="userNameAndEmail">
+                The input user name and email in one of the recognised formats:
+                <list type="table">
+                    <listheader>
+                        <term>Format</term>
+                        <description>Description</description>
+                    </listheader>
+                    <item>
+                        <term>Simple RFC822 email address</term>
+                        <description>
+                            <para>A simple email address in RFC-822 format.</para>
+                            <para>Example: <c><![CDATA[Joe@user.com]]></c></para>
+                            <para>
+                                Since there is no user name component in this format, the parsed value is used  as both
+                                the email address and the user name.
+                            </para>
+                        </description>
+                    </item>
+                    <item>
+                        <term>Canonical user name format</term>
+                        <description>
+                            <para>A user name and email address specified in canonical format.</para>
+                            <para>Example: <c><![CDATA[Joe User<Joe@user.com>]]></c></para>
+                        </description>
+                    </item>
+                    <item>
+                        <term>Comma Separated Values (CSV) format</term>
+                        <description>
+                            <para>A user name and email address separated with a comma.</para>
+                            <para>Example: <c><![CDATA[Joe User, Joe@user.com]]></c></para>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <exception cref="T:System.ArgumentException">Not in any of the recognized formats.</exception>
+        </member>
         <member name="P:MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel.Number">
             <summary>
                 Track number determines the order in which tracks are displayed.
@@ -1074,7 +1115,7 @@
             </summary>
             <value>The errors.</value>
         </member>
-        <member name="F:MS.Gamification.GameLogic.Constants.emailPattern">
+        <member name="F:MS.Gamification.GameLogic.Constants.RFC822EmailPattern">
             <summary>
                 RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
             </summary>

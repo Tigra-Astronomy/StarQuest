@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-22@14:43
+// Last modified: 2016-08-20@18:27
 
 using System;
 using System.Linq;
@@ -106,7 +106,7 @@ namespace MS.Gamification.Controllers
             3. If it's an email, look the username up in the database, then log in with the username.
             */
             var signInName = userNameOrEmail;
-            var emailRegex = new Regex(Constants.emailPattern);
+            var emailRegex = new Regex(Constants.RFC822EmailPattern);
             var isEmail = emailRegex.IsMatch(userNameOrEmail);
             if (isEmail)
                 {

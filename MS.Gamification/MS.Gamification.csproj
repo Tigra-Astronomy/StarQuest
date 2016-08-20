@@ -350,6 +350,7 @@
     <Compile Include="Areas\Admin\ViewModels\ResendInvitationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationUserViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserAdministration\BatchObservationViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\UserAdministration\BulkUserEntryViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />

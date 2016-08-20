@@ -1,17 +1,62 @@
-﻿@model dynamic
+﻿@model MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BulkUserEntryViewModel
 
 @{
-    ViewBag.Title = "CreateUserAccounts";
+    ViewBag.Title = "Invite Users";
 }
 
 <h3>Create User Accounts</h3>
 
 <form action="@Url.Action("CreateUserAccounts")" method="post">
     <div class="form-group">
-        <label for="emailBox">Enter email addresses here:</label>
-        <textarea class="form-control" name="emails" rows="5" id="emailBox"></textarea>
+        <label for="emailBox">Enter user names and email addresses here:</label>
+        <textarea class="form-control" name="UserNamesAndEmails" rows="5" id="emailBox"></textarea>
     </div>
     <p>
-        <input type="submit"value="Create accounts &raquo;"/>
+        <input type="submit" value="Invite Users &raquo;" class="btn btn-warning" />
     </p>
 </form>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Instructions</h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            Type (or paste) one of more users in the text box above. Entries may be entered
+            each on a separate line, or separated by semicolons (or a mixture of both).
+            Each entry should be in one of the following formats:
+        </p>
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <td class="col-xs-2"><code>Joe User&lt;Joe@user.com&gt;</code></td>
+                    <td class="col-xs-2"><i class="fa fa-check text-success"></i> <em>recommended</em></td>
+                    <td class="col-xs-8">Canonical format</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-2"><code>Joe User, Joe@user.com</code></td>
+                    <td class="col-xs-2"><i class="fa fa-check text-success"></i> <em>recommended</em></td>
+                    <td class="col-xs-8">Comma Separated Values (CSV)</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-2"><code>Joe@user.com</code></td>
+                    <td class="col-xs-2"><i class="fa fa-arrow-down text-danger"></i> <em>discouraged</em></td>
+                    <td class="col-xs-8">
+                        RFC822 email address - this format is accepted but discouraged because the email address
+                        will be used as the user name, making it harder to identify the user later. Use this format
+                        only if you don't know the user's name.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            When you click the <code>Invite Users</code> button, a new user account will be created for each user
+            and an invitation email will be sent to the specified email address. The account will be provisioned but
+            will not be active until the user confirms their email address and sets a password. You can see whether
+            users have activated their accounts on the <code>Account Status</code> page.
+        </p>
+        <p>
+            When the process is complete, you will see a summary of successful and unsuccessful invitations.
+        </p>
+    </div>
+</div>
