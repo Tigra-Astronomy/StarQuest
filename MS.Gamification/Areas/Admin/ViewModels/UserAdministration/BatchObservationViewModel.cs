@@ -1,9 +1,10 @@
 // This file is part of the MS.Gamification project
 // 
-// File: BatchObservationViewModel.cs  Created: 2016-08-19@04:17
-// Last modified: 2016-08-19@23:36
+// File: BatchObservationViewModel.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-08-20@23:23
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using MS.Gamification.ViewModels;
 
@@ -17,6 +18,7 @@ namespace MS.Gamification.Areas.Admin.ViewModels.UserAdministration
         {
         public List<string> Users { get; set; }
 
+        [Display(Name = "Challenge")]
         public int ChallengeId { get; set; }
 
         public IEnumerable<SelectListItem> ChallengePicker { get; set; }
