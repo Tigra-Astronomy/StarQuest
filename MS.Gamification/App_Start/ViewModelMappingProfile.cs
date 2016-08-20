@@ -1,10 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-08-18@04:38
+// Last modified: 2016-08-20@02:00
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
+using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.Models;
@@ -61,10 +62,15 @@ namespace MS.Gamification.App_Start
             CreateMap<Mission, MissionProgressViewModel>()
                 .ForMember(m => m.MissionTitle, m => m.MapFrom(s => s.Title))
                 .ForMember(m => m.Levels, m => m.MapFrom(s => s.MissionLevels));
-            CreateMap<MissionLevel, MissionLevel>();
             CreateMap<MissionTrackViewModel, MissionTrack>()
                 .ForMember(m => m.Challenges, m => m.Ignore())
                 .ForMember(m => m.Id, m => m.Ignore())
+                .ForMember(m => m.Badge, m => m.Ignore())
+                .ForMember(m => m.MissionLevel, m => m.Ignore())
+                .ReverseMap();
+            CreateMap<MissionLevelViewModel, MissionLevel>()
+                .ForMember(m => m.Tracks, m => m.Ignore())
+                .ForMember(m => m.Mission, m => m.Ignore())
                 .ReverseMap();
             }
         }

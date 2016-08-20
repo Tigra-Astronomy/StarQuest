@@ -1,11 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionLevelsSpecs.cs  Created: 2016-08-07@17:21
-// Last modified: 2016-08-09@00:01
+// File: MissionLevelsSpecs.cs  Created: 2016-08-19@04:17
+// Last modified: 2016-08-20@02:53
 
 using System;
 using System.Linq;
 using Machine.Specifications;
+using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.Controllers;
@@ -71,7 +72,7 @@ namespace MS.Gamification.Tests.GameLogic
             {
             ControllerUnderTest = ContextBuilder
                 .Build();
-            newLevel = new MissionLevel
+            newLevel = new MissionLevelViewModel
                 {
                 Name = "Level 99",
                 AwardTitle = "Persistence",
@@ -82,7 +83,7 @@ namespace MS.Gamification.Tests.GameLogic
         Because of = () => RulesService.CreateLevelAsync(newLevel).Await();
         It should_create_the_level = () => UnitOfWork.MissionLevels.GetAll().Single(p => p.Level == 99);
         static Exception exception;
-        static MissionLevel newLevel;
+        static MissionLevelViewModel newLevel;
         }
 
     [Subject(typeof(GameRulesService), "Create level")]
@@ -92,7 +93,7 @@ namespace MS.Gamification.Tests.GameLogic
             {
             ControllerUnderTest = ContextBuilder
                 .Build();
-            newLevel = new MissionLevel
+            newLevel = new MissionLevelViewModel
                 {
                 Name = "Level 99",
                 AwardTitle = "Persistence",
@@ -104,7 +105,7 @@ namespace MS.Gamification.Tests.GameLogic
         It should_throw = () => exception.ShouldBeOfExactType<InvalidOperationException>();
         It should_not_create_the_duplicate_level = () => UnitOfWork.MissionLevels.GetAll().Count(p => p.Level == 1).ShouldEqual(1);
         static Exception exception;
-        static MissionLevel newLevel;
+        static MissionLevelViewModel newLevel;
         }
 
     [Subject(typeof(GameRulesService), "Change mission association")]
@@ -116,12 +117,12 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithEntity(new Mission {Id = 2, Title = "Second Mission"})
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.Get(1);
-            updatedLevel = Mapper.Map<MissionLevel, MissionLevel>(originalLevel);
+            updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
             updatedLevel.MissionId = 2;
             };
         Because of = () => RulesService.UpdateLevelAsync(updatedLevel).Await();
         It should_succeed = () => UnitOfWork.MissionLevels.Get(originalLevel.Id).MissionId.ShouldEqual(2);
-        static MissionLevel updatedLevel;
+        static MissionLevelViewModel updatedLevel;
         static MissionLevel originalLevel;
         }
 
@@ -135,13 +136,13 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithMissionLevel(2).Level(1).BuildMission()
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.GetAll().Single(p => p.Level == 1 && p.MissionId == 1);
-            updatedLevel = Mapper.Map<MissionLevel, MissionLevel>(originalLevel);
+            updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
             updatedLevel.MissionId = 2;
             };
         Because of = () => Exception = Catch.Exception(() => { RulesService.UpdateLevelAsync(updatedLevel).Await(); });
         It should_throw = () => Exception.ShouldBeOfExactType<InvalidOperationException>();
         It should_not_update_the_level = () => UnitOfWork.MissionLevels.Get(originalLevel.Id).MissionId.ShouldEqual(1);
-        static MissionLevel updatedLevel;
+        static MissionLevelViewModel updatedLevel;
         static MissionLevel originalLevel;
         static Exception Exception;
         }
@@ -158,13 +159,13 @@ namespace MS.Gamification.Tests.GameLogic
                 .WithEntity(new Mission {Id = 2, Title = "Mission 2"})
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.GetAll().Single(p => p.Level == 1 && p.MissionId == 1);
-            updatedLevel = Mapper.Map<MissionLevel, MissionLevel>(originalLevel);
+            updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
             updatedLevel.MissionId = 2;
             };
         Because of = () => Exception = Catch.Exception(() => { RulesService.UpdateLevelAsync(updatedLevel).Await(); });
         It should_throw = () => Exception.ShouldBeOfExactType<InvalidOperationException>();
         It should_not_update_the_level = () => UnitOfWork.MissionLevels.Get(originalLevel.Id).MissionId.ShouldEqual(1);
-        static MissionLevel updatedLevel;
+        static MissionLevelViewModel updatedLevel;
         static MissionLevel originalLevel;
         static Exception Exception;
         }
