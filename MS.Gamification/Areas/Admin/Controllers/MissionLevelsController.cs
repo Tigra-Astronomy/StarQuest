@@ -12,6 +12,7 @@ using AutoMapper;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
+using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 
 namespace MS.Gamification.Areas.Admin.Controllers
     {
@@ -53,21 +54,14 @@ namespace MS.Gamification.Areas.Admin.Controllers
         // GET: Admin/MissionLevels/Create
         public ActionResult Create()
             {
-            PopulateMissionPicker();
-            return View();
+            var model = new MissionLevelViewModel();
+            PopulateMissionPicker(model);
+            return View(model);
             }
 
-        private void PopulateMissionPicker(int? selectedItem = null)
+        private void PopulateMissionPicker(MissionLevelViewModel model)
             {
-            if (selectedItem.HasValue)
-                {
-                ViewBag.MissionId = new SelectList(uow.Missions.GetAll(), "Id", "Title", selectedItem.Value);
-                }
-            else
-                {
-                uow.Missions.PickList.ToSelectList();
-                ViewBag.MissionId = new SelectList(uow.Missions.GetAll(), "Id", "Title");
-                }
+            model.MissionPicker = uow.MissionLevels.PickList.ToSelectList();
             }
 
         // POST: Admin/MissionLevels/Create
@@ -76,23 +70,23 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(
-            [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevel missionLevel)
+            [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevelViewModel model)
             {
             if (!ModelState.IsValid)
                 {
-                PopulateMissionPicker();
-                return View(missionLevel);
+                PopulateMissionPicker(model);
+                return View(model);
                 }
             try
                 {
-                await gameEngine.CreateLevelAsync(missionLevel);
+                await gameEngine.CreateLevelAsync(model);
                 return RedirectToAction("Index");
                 }
             catch (InvalidOperationException e)
                 {
                 ModelState.AddModelError(string.Empty, e.Message);
-                PopulateMissionPicker();
-                return View(missionLevel);
+                PopulateMissionPicker(model);
+                return View(model);
                 }
             }
 
@@ -108,9 +102,9 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 {
                 return HttpNotFound();
                 }
-            var missionLevel = maybeLevel.Single();
-            PopulateMissionPicker(missionLevel.MissionId);
-            return View(missionLevel);
+            var model = mapper.Map<MissionLevel,MissionLevelViewModel>(maybeLevel.Single());
+            PopulateMissionPicker(model);
+            return View(model);
             }
 
         // POST: Admin/MissionLevels/Edit/5
@@ -119,23 +113,23 @@ namespace MS.Gamification.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(
-            [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevel missionLevel)
+            [Bind(Include = "Id,Name,Level,AwardTitle,Precondition,MissionId")] MissionLevelViewModel model)
             {
             if (!ModelState.IsValid)
                 {
-                PopulateMissionPicker(missionLevel.MissionId);
-                return View(missionLevel);
+                PopulateMissionPicker(model);
+                return View(model);
                 }
             try
                 {
-                await gameEngine.UpdateLevelAsync(missionLevel);
+                await gameEngine.UpdateLevelAsync(model);
                 return RedirectToAction("Index");
                 }
             catch (InvalidOperationException e)
                 {
                 ModelState.AddModelError(string.Empty, e.Message);
-                PopulateMissionPicker();
-                return View(missionLevel);
+                PopulateMissionPicker(model);
+                return View(model);
                 }
             }
 

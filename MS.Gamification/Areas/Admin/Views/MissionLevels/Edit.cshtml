@@ -1,4 +1,4 @@
-﻿@model MissionLevel
+﻿@model MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -20,8 +20,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MissionId, "MissionId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MissionId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MissionId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model=>model.MissionId, Model.MissionPicker, new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.MissionId, "", new {@class = "text-danger"})
             </div>
         </div>
 

@@ -1150,14 +1150,14 @@
             <param name="levelId">The ID of the level to be deleted.</param>
             <exception cref="T:System.InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
         </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateLevelAsync(MS.Gamification.Models.MissionLevel)">
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
             <summary>
                 Creates the specified level according to game rules.
                 Throws an exception if the level was invalid or could not be created.
             </summary>
             <param name="newLevel">The new level.</param>
         </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateLevelAsync(MS.Gamification.Models.MissionLevel)">
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
             <summary>
                 Updates the level in the database with the supplied values, provided
                 that no game rules are violated.
@@ -1269,7 +1269,7 @@
             <param name="levelId">The ID of the level to be deleted.</param>
             <exception cref="T:System.InvalidOperationException">Thrown if the level could not be deleted.</exception>
         </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateLevelAsync(MS.Gamification.Models.MissionLevel)">
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
             <summary>
                 Creates the specified level according to game rules.
                 Throws an exception if the level was invalid or could not be created.
@@ -1277,7 +1277,7 @@
             <param name="newLevel">The new level.</param>
             <exception cref="T:System.ArgumentException">Thrown if the level could not be created for any reason.</exception>
         </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateLevelAsync(MS.Gamification.Models.MissionLevel)">
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
             <summary>
                 Updates the level in the database with the supplied values, provided
                 that no game rules are violated.

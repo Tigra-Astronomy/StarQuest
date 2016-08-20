@@ -1,13 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: GameRulesService.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-18@02:47
+// Last modified: 2016-08-20@02:33
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.Preconditions;
@@ -198,7 +199,7 @@ namespace MS.Gamification.GameLogic
                 throw new ArgumentException("Level not found");
                 }
             var level = maybeLevel.Single();
-            if (LevelHasAssociatedObservations(level))
+            if (LevelHasAssociatedObservations(levelId))
                 {
                 Log.Warn($"Delete blocked because level {levelId} has associated observations");
                 throw new InvalidOperationException("Cannot delete a level that has observations associated with it");
@@ -213,7 +214,7 @@ namespace MS.Gamification.GameLogic
         ///     Throws an exception if the level was invalid or could not be created.
         /// </summary>
         /// <param name="newLevel">The new level.</param>
-        public async Task CreateLevelAsync(MissionLevel newLevel)
+        public async Task CreateLevelAsync(MissionLevelViewModel newLevel)
             {
             Log.Info($"Creating new level id={newLevel.Id} name={newLevel.Name} in mission {newLevel.MissionId}");
             var specification = new LevelExistsInMission(newLevel.Level, newLevel.MissionId);
@@ -223,7 +224,8 @@ namespace MS.Gamification.GameLogic
                 Log.Warn($"Create failed because mission {newLevel.MissionId} already has a level {newLevel.Level}");
                 throw new InvalidOperationException($"There is already a level number {newLevel.Level} in the mission");
                 }
-            unitOfWork.MissionLevels.Add(newLevel);
+            var levelToAdd = mapper.Map<MissionLevelViewModel, MissionLevel>(newLevel);
+            unitOfWork.MissionLevels.Add(levelToAdd);
             await unitOfWork.CommitAsync();
             Log.Info($"Successfully created level id={newLevel.Id} name={newLevel.Name} in mission {newLevel.MissionId}");
             }
@@ -235,7 +237,7 @@ namespace MS.Gamification.GameLogic
         /// <param name="updatedLevel">The updated level (which must include the ID).</param>
         /// <returns>Task.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the level update failed for any reason.</exception>
-        public async Task UpdateLevelAsync(MissionLevel updatedLevel)
+        public async Task UpdateLevelAsync(MissionLevelViewModel updatedLevel)
             {
             Log.Info($"Updating level id={updatedLevel.Id} name={updatedLevel.Name} mission={updatedLevel.MissionId}");
             var maybeLevel = unitOfWork.MissionLevels.GetMaybe(updatedLevel.Id);
@@ -252,12 +254,12 @@ namespace MS.Gamification.GameLogic
                 throw new InvalidOperationException("The target mission does not exist in the database");
                 }
             var targetMission = maybeMission.Single();
-            if (targetMission.MissionLevels.Any(p => p.Level == updatedLevel.Level))
+            if (targetMission.MissionLevels.Any(p => p.Level == updatedLevel.Level && p.Id != updatedLevel.Id))
                 {
                 Log.Warn($"Update blocked because the target mission {targetMission.Id} already had level {updatedLevel.Level}");
                 throw new InvalidOperationException($"The target mission already has a level {updatedLevel.Level}");
                 }
-            if (LevelHasAssociatedObservations(updatedLevel))
+            if (LevelHasAssociatedObservations(updatedLevel.Id))
                 {
                 Log.Warn($"Update blocked because the level has associated observations");
                 throw new InvalidOperationException("Cannot move a level that has observations associated with it");
@@ -383,9 +385,9 @@ namespace MS.Gamification.GameLogic
                 }
             }
 
-        private bool LevelHasAssociatedObservations(MissionLevel level)
+        private bool LevelHasAssociatedObservations(int levelId)
             {
-            var observationSpec = new LevelHasAssociatedObservations(level.Id);
+            var observationSpec = new LevelHasAssociatedObservations(levelId);
             var maybeHasObservations = unitOfWork.Observations.GetMaybe(observationSpec);
             return maybeHasObservations.Any();
             }
