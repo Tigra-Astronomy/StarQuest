@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: MissionController.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-20@00:48
+// Last modified: 2016-08-20@04:12
 
 using System.Linq;
 using System.Web.Mvc;
@@ -40,31 +40,29 @@ namespace MS.Gamification.Controllers
                 return HttpNotFound("The specified Mission ID was not found");
             var mission = maybeMission.Single();
             var missionModel = mapper.Map<Mission, MissionProgressViewModel>(mission);
-            var challengeSpecification = new ChallengesInMissionLevel(mission.Id);
-            var challengesInMission = uow.Challenges.AllSatisfying(challengeSpecification);
             // Compute the % complete for each level overall and its individual tracks
             foreach (var missionLevel in missionModel.Levels)
                 {
+                var challengeSpecification = new ChallengesInMissionLevel(missionLevel.Id);
+                var challengesInLevel = uow.Challenges.AllSatisfying(challengeSpecification);
                 missionLevel.Unlocked = rules.IsLevelUnlockedForUser(missionLevel, requestingUser.UniqueId);
                 // Only count one observation towards each challenge, for the purposes of computing progress.
-                var eligibleObservationsForMission = new EligibleObservationsForChallenges(challengesInMission,
+                var eligibleObservationsForLevel = new EligibleObservationsForChallenges(challengesInLevel,
                     requestingUser.UniqueId);
-                var observationsForMission = uow.Observations.AllSatisfying(eligibleObservationsForMission);
-                var missionTotalChallenges = missionLevel.Tracks.Sum(track => track.Challenges.Count);
-                missionLevel.OverallProgressPercent = rules.ComputePercentComplete(challengesInMission, observationsForMission);
+                var observationsForLevel = uow.Observations.AllSatisfying(eligibleObservationsForLevel);
+                missionLevel.OverallProgressPercent = rules.ComputePercentComplete(challengesInLevel, observationsForLevel);
                 // Compute individual track progress
-                //var trackPercentComplete = new List<int>(levelModel.Tracks.Count());
                 foreach (var track in missionLevel.Tracks)
                     {
-                    var challengesInTrack = challengesInMission.Where(p => p.MissionTrackId == track.Id).ToList();
-                    var eligibleObservationsForTrack = new EligibleObservationsForChallenges(challengesInTrack,
+                    var challengesInTrack = challengesInLevel.Where(p => p.MissionTrackId == track.Id).ToList();
+                    var trackObservationsSpec = new EligibleObservationsForChallenges(challengesInTrack,
                         requestingUser.UniqueId);
-                    var observations = uow.Observations.AllSatisfying(eligibleObservationsForTrack);
-                    track.PercentComplete = rules.ComputePercentComplete(challengesInTrack, observations);
+                    var observationsForTrack = uow.Observations.AllSatisfying(trackObservationsSpec);
+                    track.PercentComplete = rules.ComputePercentComplete(challengesInTrack, observationsForTrack);
                     // Iterate through the challenges to determine whether or not each one is "complete"
                     foreach (var challenge in track.Challenges)
                         {
-                        challenge.HasObservation = observations.Any(p => p.ChallengeId == challenge.Id);
+                        challenge.HasObservation = observationsForTrack.Any(p => p.ChallengeId == challenge.Id);
                         }
                     }
                 }

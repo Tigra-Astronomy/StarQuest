@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: EligibleObservationsForChallenges.cs  Created: 2016-07-04@20:37
-// Last modified: 2016-07-04@21:06
+// File: EligibleObservationsForChallenges.cs  Created: 2016-07-09@20:14
+// Last modified: 2016-08-20@03:55
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using MS.Gamification.Models;
 
 namespace MS.Gamification.GameLogic.QuerySpecifications
     {
-    class EligibleObservationsForChallenges : QuerySpecification<Observation>
+    internal class EligibleObservationsForChallenges : QuerySpecification<Observation>
         {
         private readonly IEnumerable<Challenge> challenges;
         private readonly string userId;
@@ -29,8 +29,8 @@ namespace MS.Gamification.GameLogic.QuerySpecifications
                                               orderby observation.ObservationDateTimeUtc ascending
                                               select observation;
             var eligibleObservations = from challenge in challenges
-                                       join observation in approvedObservationsForUser on challenge.Id equals
-                                           observation.ChallengeId
+                                       join observation in approvedObservationsForUser
+                                           on challenge.Id equals observation.ChallengeId
                                        select observation;
             return eligibleObservations.DistinctBy(p => p.ChallengeId).AsQueryable();
             }
