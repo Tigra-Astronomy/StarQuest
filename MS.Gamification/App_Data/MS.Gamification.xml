@@ -1422,6 +1422,12 @@
             <param name="predicate">The predicate already built.</param>
             <param name="predicateXml">The predicate XML.</param>
         </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ChallengesInMissionLevel">
+            <summary>
+                Returns all of the challenges associated with a mission Level.
+            </summary>
+            <seealso cref="T:MS.Gamification.Models.Challenge" />
+        </member>
         <member name="T:MS.Gamification.GameLogic.QuerySpecifications.LevelHasAssociatedObservations">
             <summary>
                 A query specification that can be used to determine whether a given Mission Level has any observations
