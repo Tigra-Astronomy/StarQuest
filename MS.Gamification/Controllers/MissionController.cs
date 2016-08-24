@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionController.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-20@04:12
+// File: MissionController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-08-24@23:56
 
 using System.Linq;
 using System.Web.Mvc;
@@ -11,22 +11,57 @@ using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels.Mission;
+using MS.Gamification.ViewModels.UserProfile;
 
 namespace MS.Gamification.Controllers
     {
     public class MissionController : RequiresAuthorization
         {
+        private readonly GameRulesService gameEngine;
         private readonly IMapper mapper;
         private readonly ICurrentUser requestingUser;
-        private readonly GameRulesService rules;
         private readonly IUnitOfWork uow;
 
-        public MissionController(IUnitOfWork uow, ICurrentUser user, GameRulesService rules, IMapper mapper)
+        public MissionController(IUnitOfWork uow, ICurrentUser user, GameRulesService gameEngine, IMapper mapper)
             {
             this.uow = uow;
             requestingUser = user;
-            this.rules = rules;
+            this.gameEngine = gameEngine;
             this.mapper = mapper;
+            }
+
+        // GET Mission/Index
+        public ActionResult Index()
+            {
+            var specification = new SingleUserWithProfileInformation(requestingUser.UniqueId);
+            var maybeUser = uow.Users.GetMaybe(specification);
+            if (maybeUser.None)
+                return HttpNotFound("User not found in the database");
+            var appUser = maybeUser.Single();
+            var missionSpec = new MissionProgressSummary();
+            var missions = uow.Missions.AllSatisfying(missionSpec);
+            var missionViewModel = missions.Select(p => mapper.Map<Mission, MissionProgressViewModel>(p)).ToList();
+            var model = new UserProfileViewModel
+                {
+                UserId = requestingUser.UniqueId,
+                UserName = requestingUser.DisplayName,
+                EmailAddress = requestingUser.LoginName,
+                Titles = Enumerable.Empty<string>(), //ToDo: coming soon...
+                Missions = missionViewModel
+                };
+
+            var allChallenges = uow.Challenges.GetAll();
+            foreach (var mission in model.Missions)
+                {
+                foreach (var level in mission.Levels)
+                    {
+                    var challengesForLevel = allChallenges.Where(p => p.MissionTrack.MissionLevelId == level.Id);
+                    var observationSpec = new EligibleObservationsForChallenges(challengesForLevel, requestingUser.UniqueId);
+                    var eligibleObservations = uow.Observations.AllSatisfying(observationSpec);
+                    level.OverallProgressPercent = gameEngine.ComputePercentComplete(challengesForLevel, eligibleObservations);
+                    }
+                }
+            return View(model);
             }
 
         // GET Mission/Progress/1
@@ -45,12 +80,12 @@ namespace MS.Gamification.Controllers
                 {
                 var challengeSpecification = new ChallengesInMissionLevel(missionLevel.Id);
                 var challengesInLevel = uow.Challenges.AllSatisfying(challengeSpecification);
-                missionLevel.Unlocked = rules.IsLevelUnlockedForUser(missionLevel, requestingUser.UniqueId);
+                missionLevel.Unlocked = gameEngine.IsLevelUnlockedForUser(missionLevel, requestingUser.UniqueId);
                 // Only count one observation towards each challenge, for the purposes of computing progress.
                 var eligibleObservationsForLevel = new EligibleObservationsForChallenges(challengesInLevel,
                     requestingUser.UniqueId);
                 var observationsForLevel = uow.Observations.AllSatisfying(eligibleObservationsForLevel);
-                missionLevel.OverallProgressPercent = rules.ComputePercentComplete(challengesInLevel, observationsForLevel);
+                missionLevel.OverallProgressPercent = gameEngine.ComputePercentComplete(challengesInLevel, observationsForLevel);
                 // Compute individual track progress
                 foreach (var track in missionLevel.Tracks)
                     {
@@ -58,7 +93,7 @@ namespace MS.Gamification.Controllers
                     var trackObservationsSpec = new EligibleObservationsForChallenges(challengesInTrack,
                         requestingUser.UniqueId);
                     var observationsForTrack = uow.Observations.AllSatisfying(trackObservationsSpec);
-                    track.PercentComplete = rules.ComputePercentComplete(challengesInTrack, observationsForTrack);
+                    track.PercentComplete = gameEngine.ComputePercentComplete(challengesInTrack, observationsForTrack);
                     // Iterate through the challenges to determine whether or not each one is "complete"
                     foreach (var challenge in track.Challenges)
                         {

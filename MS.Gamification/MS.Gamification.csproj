@@ -1054,6 +1054,7 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Views\Mission\ChallengeDetails.cshtml" />
+    <Content Include="Views\Mission\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
