@@ -18,14 +18,14 @@
 @using (Html.BeginForm())
     {
     var labelStyle = new {@class = "control-label col-md-3"};
-    var inputColumns = "col-md-9";
+    var inputColumns = "col-md-8";
     var controlStyle = new {htmlAttributes = new {@class = "form-control"}};
     var validationStyle = new {@class = "text-danger"};
     @Html.AntiForgeryToken()
     <div class="row" id="form">
         @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
-        @Html.HiddenFor(model => model.ChallengeId);
-        <div id="leftForm" class="col-md-8 form-horizontal">
+        @Html.HiddenFor(model => model.ChallengeId)
+        <div id="leftForm" class="col-md-6 form-horizontal">
             <div class="row">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ObservationDateTimeLocal, labelStyle)
@@ -70,41 +70,44 @@
                     </div>
                 </div>
             </div>
+            <div class="row" id="submit">
+                <div class="col-xs-offset-3 col-xs-9">
+                    <input type="submit" value="Submit Observation" class="btn btn-warning" />
+                </div>
+            </div>
         </div>
-        <div id="rightForm" class="col-md-offset-1 col-md-3 form-horizontal">
+        <div id="rightForm" class="col-md-6 form-horizontal">
             <div class="row" id="images">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        What I Saw:
+                        Select the image that best matches what you observed
                     </div>
                     <div class="panel-body">
                         @foreach (var imageFile in Model.ValidationImages)
                             {
-                            <div class="col-md-5 panel panel-info">
-                                @Html.ValidationImage(imageFile, new {@class = "img-responsive img-circle"})
-                                @Html.RadioButtonFor(model => model.SubmittedImage, imageFile) Select
+                            <div class="col-md-6 ">
+                                <div class="panel panel-info">
+                                    @Html.ValidationImage(imageFile, new {@class = "img-responsive img-circle"})
+                                    @Html.RadioButtonFor(model => model.SubmittedImage, imageFile) Select
+                                </div>
                             </div>
                             }
                     </div>
-                </div>
-            </div>
-            <div class="row" id="submit">
-                <div class="col-xs-12">
-                    <input type="submit" value="Submit Observation" class="btn btn-warning"/>
                 </div>
             </div>
         </div>
     </div>
     }
 
-<div class="panel panel-warning">
-    <div class="panel-heading">
-        <h3 class="panel-title">Moderation</h3>
-    </div>
-    <div class="panel-body">
-        <p>
-            All observations must be approved by a moderator before they can count towards your score or award any badges.
-            You will be notified by email when your observation is approved.
-        </p>
-    </div>
-</div>
+<div class="row ">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">Moderation</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                All observations must be approved by a moderator before they can count towards your score or award any badges.
+                You will be notified by email when your observation is approved.
+            </p>
+        </div>
+    </div></div>
