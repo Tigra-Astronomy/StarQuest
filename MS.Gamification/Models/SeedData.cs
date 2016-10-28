@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: SeedData.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-26@06:33
+// File: SeedData.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-10-28@23:10
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,6 @@ using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.Areas.Admin.Controllers;
-using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess.EntityFramework6;
 
 namespace MS.Gamification.Models
@@ -70,6 +69,9 @@ namespace MS.Gamification.Models
             var roleManager = new RoleManager<IdentityRole>(roleStore);
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
+            // If there is already any user with Administrator rights, then we're done.
+            if (context.Users.Any(p => p.Roles.Any(r => r.RoleId == RequiresAdministratorRights.AdministratorRoleName)))
+                return;
             if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.AdministratorRoleName))
                 roleManager.Create(new IdentityRole {Name = RequiresAdministratorRights.AdministratorRoleName});
             if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.ModeratorRoleName))
@@ -78,7 +80,7 @@ namespace MS.Gamification.Models
                 {
                 //ToDo: Hard coded secrets!! These need to come from web.config or similar
                 var user = new ApplicationUser
-                    {UserName = AdministratorUserName, Email = "nobody@nowhere.com", EmailConfirmed = true};
+                        {UserName = AdministratorUserName, Email = "nobody@nowhere.com", EmailConfirmed = true};
                 userManager.Create(user, AdministratorDefaultPassword);
                 userManager.AddToRole(user.Id, RequiresAdministratorRights.AdministratorRoleName);
                 }
@@ -115,7 +117,7 @@ namespace MS.Gamification.Models
                                     Name = "Lunar Track",
                                     AwardTitle = "Alpha Lunar Observer",
                                     Badge =
-                                    new Badge {Name = "Alpha Lunar Observer", ImageIdentifier = "alpha-lunar-observer-1"},
+                                        new Badge {Name = "Alpha Lunar Observer", ImageIdentifier = "alpha-lunar-observer-1"},
                                     Number = 1,
                                     Challenges = new List<Challenge>
                                         {
@@ -173,8 +175,11 @@ namespace MS.Gamification.Models
                                     AwardTitle = "Alpha Deep Space Explorer",
                                     Number = 3,
                                     Badge =
-                                    new Badge
-                                        {Name = "Alpha Deep Space Explorer", ImageIdentifier = "alpha-deep-space-explorer-1"},
+                                        new Badge
+                                            {
+                                            Name = "Alpha Deep Space Explorer",
+                                            ImageIdentifier = "alpha-deep-space-explorer-1"
+                                            },
                                     Challenges = new List<Challenge>
                                         {
                                         new Challenge
@@ -214,7 +219,7 @@ namespace MS.Gamification.Models
                                     Name = "Lunar Track",
                                     AwardTitle = "Alpha Lunar Observer II",
                                     Badge =
-                                    new Badge {Name = "Alpha Lunar Observer II", ImageIdentifier = "alpha-lunar-observer-1"},
+                                        new Badge {Name = "Alpha Lunar Observer II", ImageIdentifier = "alpha-lunar-observer-1"},
                                     Number = 1,
                                     Challenges = new List<Challenge>
                                         {
@@ -308,8 +313,11 @@ namespace MS.Gamification.Models
                                     AwardTitle = "Alpha Deep Space Explorer II",
                                     Number = 3,
                                     Badge =
-                                    new Badge
-                                        {Name = "Alpha Deep Space Explorer II", ImageIdentifier = "alpha-deep-space-explorer-1"},
+                                        new Badge
+                                            {
+                                            Name = "Alpha Deep Space Explorer II",
+                                            ImageIdentifier = "alpha-deep-space-explorer-1"
+                                            },
                                     Challenges = new List<Challenge>
                                         {
                                         new Challenge
@@ -355,7 +363,7 @@ namespace MS.Gamification.Models
                         #endregion Level 2
                         }
                     }
-                );
+            );
             }
 
         private static string LoadPreconditionFromFile(string fileNameWithoutPath)
