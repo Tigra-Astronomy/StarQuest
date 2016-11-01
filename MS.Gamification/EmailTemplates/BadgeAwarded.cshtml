@@ -1,0 +1,21 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<MS.Gamification.BadgeAwardedEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+
+<h2>Badge Awarded</h2>
+<p>
+    Congratulations!
+    You've been awarded the @Model.BadgeName badge,
+    for completeing the @Model.TrackName in the @Model.MissionTitle mission.
+</p>
+<p>
+    You are now one step closer to becoming a @Model.LevelAwardTitle
+</p>
+
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

@@ -1,0 +1,44 @@
+﻿@model List<MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BatchObservationUserViewModel>
+
+@{
+    ViewBag.Title = "Batch Observations";
+}
+
+<h2>Batch Observation Entry</h2>
+<h3>Step 1 - Select Users</h3>
+
+@using (Html.BeginForm())
+    {
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="chkSelectAll" /></th>
+                        <th>
+                            User Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.EditorFor(m => Model)
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 pull-right">
+            <input type="submit" value="Next »" class="btn btn-info" />
+        </div>
+    </div>
+    <script>
+        $("#chkSelectAll").bind("change", function () {
+            $(".chkSelect").prop("checked", $(this).prop("checked"));
+        });
+        $(".chkSelect").bind("change", function () {
+            if (!$(this).prop("checked"))
+                $("#chkSelectAll").prop("checked", false);
+        });
+        $(".alert").hide().fadeIn("slow");
+    </script>
+    }

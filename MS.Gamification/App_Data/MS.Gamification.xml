@@ -1,0 +1,1892 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MS.Gamification</name>
+    </assembly>
+    <members>
+        <member name="M:MS.Gamification.NinjectWebCommon.Start">
+            <summary>
+                Starts the application
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.NinjectWebCommon.Stop">
+            <summary>
+                Stops the application.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.NinjectWebCommon.CreateKernel">
+            <summary>
+                Creates the kernel that will manage your application.
+            </summary>
+            <returns>The created kernel.</returns>
+        </member>
+        <member name="M:MS.Gamification.NinjectWebCommon.RegisterServices(Ninject.IKernel)">
+            <summary>
+                Load your modules or register your services here!
+            </summary>
+            <param name="kernel">The kernel.</param>
+        </member>
+        <member name="T:MS.Gamification.Areas.Admin.Controllers.MissionsController">
+            <summary>
+                CRUD operations on Missions.
+            </summary>
+            <seealso cref="T:MS.Gamification.Areas.Admin.Controllers.RequiresAdministratorRights" />
+        </member>
+        <member name="M:MS.Gamification.Areas.Admin.Controllers.UserAdministrationController.CreateUserFromEmailString(System.String)">
+            <summary>
+                Tries to recognize various user name and email formats and, if successful, creates a new
+                <see cref="T:MS.Gamification.Models.ApplicationUser" /> from the parsed results.
+            </summary>
+            <param name="userNameAndEmail">
+                The input user name and email in one of the recognised formats:
+                <list type="table">
+                    <listheader>
+                        <term>Format</term>
+                        <description>Description</description>
+                    </listheader>
+                    <item>
+                        <term>Simple RFC822 email address</term>
+                        <description>
+                            <para>A simple email address in RFC-822 format.</para>
+                            <para>Example: <c><![CDATA[Joe@user.com]]></c></para>
+                            <para>
+                                Since there is no user name component in this format, the parsed value is used  as both
+                                the email address and the user name.
+                            </para>
+                        </description>
+                    </item>
+                    <item>
+                        <term>Canonical user name format</term>
+                        <description>
+                            <para>A user name and email address specified in canonical format.</para>
+                            <para>Example: <c><![CDATA[Joe User<Joe@user.com>]]></c></para>
+                        </description>
+                    </item>
+                    <item>
+                        <term>Comma Separated Values (CSV) format</term>
+                        <description>
+                            <para>A user name and email address separated with a comma.</para>
+                            <para>Example: <c><![CDATA[Joe User, Joe@user.com]]></c></para>
+                        </description>
+                    </item>
+                </list>
+            </param>
+            <exception cref="T:System.ArgumentException">Not in any of the recognized formats.</exception>
+        </member>
+        <member name="P:MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel.Number">
+            <summary>
+                Track number determines the order in which tracks are displayed.
+            </summary>
+            <value>The number.</value>
+        </member>
+        <member name="T:MS.Gamification.Areas.Admin.ViewModels.UserAdministration.BatchObservationViewModel">
+            <summary>
+                Contains all of the details for an observation, plus a list of users.
+            </summary>
+            <seealso cref="T:MS.Gamification.ViewModels.ObservationDetailsViewModel" />
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.ApiDescriptionExtensions.GetFriendlyId(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Generates an URI-friendly ID for the <see cref="T:System.Web.Http.Description.ApiDescription"/>. E.g. "Get-Values-id_name" instead of "GetValues/{id}?name={name}"
+            </summary>
+            <param name="description">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The ID as a string.</returns>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.HelpPageConfig">
+            <summary>
+                Use this class to customize the Help Page. For example you can set a custom
+                <see cref="T:System.Web.Http.Description.IDocumentationProvider" /> to supply the documentation or you can
+                provide the samples for the requests/responses.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.Controllers.HelpController">
+            <summary>
+            The controller that will handle requests for the help page.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetDocumentationProvider(System.Web.Http.HttpConfiguration,System.Web.Http.Description.IDocumentationProvider)">
+            <summary>
+            Sets the documentation provider for help page.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="documentationProvider">The documentation provider.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleObjects(System.Web.Http.HttpConfiguration,System.Collections.Generic.IDictionary{System.Type,System.Object})">
+            <summary>
+            Sets the objects that will be used by the formatters to produce sample requests/responses.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleObjects">The sample objects.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type and action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleRequest(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample request directly for the specified media type and action with parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample request.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String)">
+            <summary>
+            Sets the sample request directly for the specified media type of the action.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleResponse(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.String,System.String,System.String[])">
+            <summary>
+            Sets the sample response directly for the specified media type of the action with specific parameters.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample response.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForMediaType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Sets the sample directly for all actions with the specified media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetSampleForType(System.Web.Http.HttpConfiguration,System.Object,System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Sets the sample directly for all actions with the specified type and media type.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sample">The sample.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The parameter type or return type of an action.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualRequestType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate request samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String)">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetActualResponseType(System.Web.Http.HttpConfiguration,System.Type,System.String,System.String,System.String[])">
+            <summary>
+            Specifies the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> returned as part of the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            The help page will use this information to produce more accurate response samples.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="type">The type.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <returns>The help page sample generator.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.SetHelpPageSampleGenerator(System.Web.Http.HttpConfiguration,MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator)">
+            <summary>
+            Sets the help page sample generator.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="sampleGenerator">The help page sample generator.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.GetModelDescriptionGenerator(System.Web.Http.HttpConfiguration)">
+            <summary>
+            Gets the model description generator.
+            </summary>
+            <param name="config">The configuration.</param>
+            <returns>The <see cref="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator"/></returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageConfigurationExtensions.GetHelpPageApiModel(System.Web.Http.HttpConfiguration,System.String)">
+            <summary>
+            Gets the model that represents an API displayed on the help page. The model is initialized on the first call and cached for subsequent calls.
+            </summary>
+            <param name="config">The <see cref="T:System.Web.Http.HttpConfiguration"/>.</param>
+            <param name="apiDescriptionId">The <see cref="T:System.Web.Http.Description.ApiDescription"/> ID.</param>
+            <returns>
+            An <see cref="T:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel"/>
+            </returns>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescription">
+            <summary>
+            Describes a type model.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescriptionGenerator">
+            <summary>
+            Generates model descriptions for given types.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelNameAttribute">
+            <summary>
+            Use this attribute to change the name of the <see cref="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescription"/> generated for a type.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel">
+            <summary>
+            The model that represents an API displayed on the help page.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel"/> class.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription">
+            <summary>
+            Gets or sets the <see cref="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.ApiDescription"/> that describes the API.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.UriParameters">
+            <summary>
+            Gets or sets the <see cref="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ParameterDescription"/> collection that describes the URI parameters for the API.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.RequestDocumentation">
+            <summary>
+            Gets or sets the documentation for the request.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.RequestModelDescription">
+            <summary>
+            Gets or sets the <see cref="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the request body.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.RequestBodyParameters">
+            <summary>
+            Gets the request body parameter descriptions.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.ResourceDescription">
+            <summary>
+            Gets or sets the <see cref="T:MS.Gamification.Areas.HelpPage.ModelDescriptions.ModelDescription"/> that describes the resource.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.ResourceProperties">
+            <summary>
+            Gets the resource property descriptions.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.SampleRequests">
+            <summary>
+            Gets the sample requests associated with the API.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.SampleResponses">
+            <summary>
+            Gets the sample responses associated with the API.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.Models.HelpPageApiModel.ErrorMessages">
+            <summary>
+            Gets the error messages associated with this model.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator">
+            <summary>
+            This class will generate the samples for the help page.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator"/> class.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.ActualHttpMessageTypes">
+            <summary>
+            Gets CLR types that are used as the content of <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/>.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples">
+            <summary>
+            Gets the objects that are used directly as samples for certain actions.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects">
+            <summary>
+            Gets the objects that are serialized as samples by the supported formatters.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories">
+            <summary>
+            Gets factories for the objects that the supported formatters will serialize as samples. Processed in order,
+            stopping when the factory successfully returns a non-<see langref="null"/> object.
+            </summary>
+            <remarks>
+            Collection includes just <see cref="M:MS.Gamification.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)"/> initially. Use
+            <code>SampleObjectFactories.Insert(0, func)</code> to provide an override and
+            <code>SampleObjectFactories.Add(func)</code> to provide a fallback.</remarks>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.GetSampleRequests(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the request body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.GetSampleResponses(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Gets the response body samples for a given <see cref="T:System.Web.Http.Description.ApiDescription"/>.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.GetSample(System.Web.Http.Description.ApiDescription,MS.Gamification.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Gets the request or response body samples.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The samples keyed by media type.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.GetActionSample(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.Type,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue,MS.Gamification.Areas.HelpPage.SampleDirection)">
+            <summary>
+            Search for samples that are provided directly through <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.ActionSamples"/>.
+            </summary>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="type">The CLR type.</param>
+            <param name="formatter">The formatter.</param>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
+            <returns>The sample that matches the parameters.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.GetSampleObject(System.Type)">
+            <summary>
+            Gets the sample object that will be serialized by the formatters. 
+            First, it will look at the <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.SampleObjects"/>. If no sample object is found, it will try to create
+            one using <see cref="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.DefaultSampleObjectFactory(MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator,System.Type)"/> (which wraps an <see cref="T:MS.Gamification.Areas.HelpPage.ObjectGenerator"/>) and other
+            factories in <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.SampleObjectFactories"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The sample object.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.ResolveHttpRequestMessageType(System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Resolves the actual type of <see cref="T:System.Net.Http.ObjectContent`1"/> passed to the <see cref="T:System.Net.Http.HttpRequestMessage"/> in an action.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <returns>The type.</returns>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.ResolveType(System.Web.Http.Description.ApiDescription,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},MS.Gamification.Areas.HelpPage.SampleDirection,System.Collections.ObjectModel.Collection{System.Net.Http.Formatting.MediaTypeFormatter}@)">
+            <summary>
+            Resolves the type of the action parameter or return value when <see cref="T:System.Net.Http.HttpRequestMessage"/> or <see cref="T:System.Net.Http.HttpResponseMessage"/> is used.
+            </summary>
+            <param name="api">The <see cref="T:System.Web.Http.Description.ApiDescription"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+            <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
+            <param name="formatters">The formatters.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleGenerator.WriteSampleObjectUsingFormatter(System.Net.Http.Formatting.MediaTypeFormatter,System.Object,System.Type,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Writes the sample object using formatter.
+            </summary>
+            <param name="formatter">The formatter.</param>
+            <param name="value">The value.</param>
+            <param name="type">The type.</param>
+            <param name="mediaType">Type of the media.</param>
+            <returns></returns>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.HelpPageSampleKey">
+            <summary>
+            This is used to identify the place where the sample should be applied.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Creates a new <see cref="T:MS.Gamification.Areas.HelpPage.HelpPageSampleKey"/> based on media type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,System.Type)">
+            <summary>
+            Creates a new <see cref="T:MS.Gamification.Areas.HelpPage.HelpPageSampleKey"/> based on media type and CLR type.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="type">The CLR type.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.#ctor(MS.Gamification.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:MS.Gamification.Areas.HelpPage.HelpPageSampleKey"/> based on <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="sampleDirection">The <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.#ctor(System.Net.Http.Headers.MediaTypeHeaderValue,MS.Gamification.Areas.HelpPage.SampleDirection,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new <see cref="T:MS.Gamification.Areas.HelpPage.HelpPageSampleKey"/> based on media type, <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>, controller name, action name and parameter names.
+            </summary>
+            <param name="mediaType">The media type.</param>
+            <param name="sampleDirection">The <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.</param>
+            <param name="controllerName">Name of the controller.</param>
+            <param name="actionName">Name of the action.</param>
+            <param name="parameterNames">The parameter names.</param>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.ControllerName">
+            <summary>
+            Gets the name of the controller.
+            </summary>
+            <value>
+            The name of the controller.
+            </value>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.ActionName">
+            <summary>
+            Gets the name of the action.
+            </summary>
+            <value>
+            The name of the action.
+            </value>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.MediaType">
+            <summary>
+            Gets the media type.
+            </summary>
+            <value>
+            The media type.
+            </value>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.ParameterNames">
+            <summary>
+            Gets the parameter names.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection">
+            <summary>
+            Gets the <see cref="P:MS.Gamification.Areas.HelpPage.HelpPageSampleKey.SampleDirection"/>.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.ImageSample">
+            <summary>
+            This represents an image sample on the help page. There's a display template named ImageSample associated with this class.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.ImageSample.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MS.Gamification.Areas.HelpPage.ImageSample"/> class.
+            </summary>
+            <param name="src">The URL of an image.</param>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.InvalidSample">
+            <summary>
+            This represents an invalid sample on the help page. There's a display template named InvalidSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.ObjectGenerator">
+            <summary>
+            This class will create an object of a given type and populate it with sample data.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.ObjectGenerator.GenerateObject(System.Type)">
+            <summary>
+            Generates an object for a given type. The type needs to be public, have a public default constructor and settable public properties/fields. Currently it supports the following types:
+            Simple types: <see cref="T:System.Int32"/>, <see cref="T:System.String"/>, <see cref="T:System.Enum"/>, <see cref="T:System.DateTime"/>, <see cref="T:System.Uri"/>, etc.
+            Complex types: POCO types.
+            Nullables: <see cref="T:System.Nullable`1"/>.
+            Arrays: arrays of simple types or complex types.
+            Key value pairs: <see cref="T:System.Collections.Generic.KeyValuePair`2"/>
+            Tuples: <see cref="T:System.Tuple`1"/>, <see cref="T:System.Tuple`2"/>, etc
+            Dictionaries: <see cref="T:System.Collections.Generic.IDictionary`2"/> or anything deriving from <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            Collections: <see cref="T:System.Collections.Generic.IList`1"/>, <see cref="T:System.Collections.Generic.IEnumerable`1"/>, <see cref="T:System.Collections.Generic.ICollection`1"/>, <see cref="T:System.Collections.IList"/>, <see cref="T:System.Collections.IEnumerable"/>, <see cref="T:System.Collections.ICollection"/> or anything deriving from <see cref="T:System.Collections.Generic.ICollection`1"/> or <see cref="T:System.Collections.IList"/>.
+            Queryables: <see cref="T:System.Linq.IQueryable"/>, <see cref="T:System.Linq.IQueryable`1"/>.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>An object of the given type.</returns>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.SampleDirection">
+            <summary>
+            Indicates whether the sample is used for request or response
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.TextSample">
+            <summary>
+            This represents a preformatted text sample on the help page. There's a display template named TextSample associated with this class.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.Areas.HelpPage.XmlDocumentationProvider">
+            <summary>
+            A custom <see cref="T:System.Web.Http.Description.IDocumentationProvider"/> that reads the API documentation from an XML documentation file.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.Areas.HelpPage.XmlDocumentationProvider.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MS.Gamification.Areas.HelpPage.XmlDocumentationProvider"/> class.
+            </summary>
+            <param name="documentPath">The physical path to XML document.</param>
+        </member>
+        <member name="T:MS.Gamification.Controllers.Api.CumulativeScoreController">
+            <summary>
+                Supplies historical data about a player's score over time.
+            </summary>
+            <seealso cref="T:System.Web.Http.ApiController" />
+        </member>
+        <member name="M:MS.Gamification.Controllers.Api.CumulativeScoreController.#ctor(MS.Gamification.DataAccess.IUnitOfWork)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.Controllers.Api.CumulativeScoreController" /> class.
+            </summary>
+            <param name="uow">
+                A Unit of Work containing data repositories. This is typically supplied by a Dependency Injection
+                framework
+            </param>
+        </member>
+        <member name="M:MS.Gamification.Controllers.Api.CumulativeScoreController.Get(System.String)">
+            <summary>
+                Gets the cumulative score for the specified player for each day on which the score changed.
+            </summary>
+            <param name="id">The player's unique user ID (usually a GUID).</param>
+            <returns>IHttpActionResult.</returns>
+        </member>
+        <member name="M:MS.Gamification.Controllers.AccountController.FindUserByNameOrEmail(System.String)">
+            <summary>
+                Finds the user by name or email.
+            </summary>
+            <param name="userNameOrEmail">The user name or email.</param>
+            <returns>The <see cref="T:MS.Gamification.Models.ApplicationUser" />, if found.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if there was not exactly one user found.</exception>
+        </member>
+        <member name="M:MS.Gamification.Controllers.ObservationController.GetValidationImages(MS.Gamification.Models.Challenge)">
+            <summary>
+                Builds a list of exactly 4 validation images, consisting of one correct image and 3 incorrect images, in
+                a random order.The resultant collection is guaranteed to always have exactly 4 entries.
+            </summary>
+            <param name="challenge"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MS.Gamification.Controllers.ObservationController.SelectRandomElementsFromList``1(System.Int32,System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+                Selects and returns a specified number of elements chosen randomly from a collection. If there are not
+                enough elements in the source collection, a filler is used. The resulting collection is guaranteed to have
+                exactly the requested number of elements.
+            </summary>
+            <typeparam name="T">The type of collection</typeparam>
+            <param name="count">The number of elements requested.</param>
+            <param name="source">The source collection to be randomly sampled.</param>
+            <param name="filler">
+                An object used as padding when there are not enough source elements to satisfy the
+                request.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext.#ctor(System.Data.Common.DbConnection)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext" /> class. This constructor allows for
+                use with the EFFORT in-memory provider during unit testing.
+            </summary>
+            <param name="connection">A configured database connection.</param>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository">
+            <summary>
+                Stores the challenges.
+            </summary>
+            <seealso cref="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2" />
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository.#ctor(MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.ChallengeRepository" /> class.
+            </summary>
+            <param name="dbContext">The database context.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.EntityFramework6UnitOfWork.Finalize">
+            <summary>
+                Finalizes this instance (called prior to garbage collection by the CLR)
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.EntityFramework6UnitOfWork.Dispose">
+            <summary>
+                Disposes the unit of work, discarding any uncommitted repository modifications.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.EntityFramework6UnitOfWork.Dispose(System.Boolean)">
+            <summary>
+                Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="fromUserCode">
+                <c>true</c> to release both managed and unmanaged resources; <c>false</c> to
+                release only unmanaged resources.
+            </param>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2">
+            <summary>
+                Generic repository base class with common accessors.
+            </summary>
+            <typeparam name="TEntity">
+                The type of entity contained by the repository.
+            </typeparam>
+            <typeparam name="TKey">
+                The type of the primary key
+            </typeparam>
+            <remarks>
+                <para>
+                    This abstract base class implements the generic
+                    <see cref="T:MS.Gamification.DataAccess.IRepository`2" /> interface and provides implementations for common operations
+                    that should be available for all entity sets.
+                </para>
+                <para>
+                    The implementation is coupled to the database technology being used, so if the persistence framework is
+                    changed or upgraded then this class will have to be updated or replaced with a new implementation. This
+                    will likely also affect all derived classes, which will also have to be updated or replaced.
+                </para>
+            </remarks>
+        </member>
+        <member name="F:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Context">
+            <summary>
+                The database context that will be used to persist and retrieve entities from permanent storage.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.#ctor(System.Data.Entity.DbContext)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2" /> class.
+            </summary>
+            <param name="context">
+                The database context that will be used to persist and retrieve entities from permanent
+                storage.
+            </param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Get(`1)">
+            <summary>
+                Gets the specified entity.
+            </summary>
+            <param name="id">The entity ID.</param>
+            <returns>
+                Returns the entity with the specified primary key. If no
+                matching item was found, returns null.
+            </returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.GetMaybe(`1)">
+            <summary>
+                Gets a single entity by ID, if it exists.
+            </summary>
+            <param name="id">The entity ID.</param>
+            <returns>A <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> that either contains the matched entity, or is empty.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.GetAll">
+            <summary>
+                Gets an enumerable collection of all entities in the entity set.
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1" />.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Find(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+                Gets all entities that satisfy a <paramref name="predicate" />.
+            </summary>
+            <param name="predicate">A predicate expression tree.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> containing all entities that satisfy the predicate.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.AllSatisfying``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
+            <summary>
+                Gets all entities that satisfy the supplied specification. If a <see cref="T:MS.Gamification.GameLogic.IFetchStrategy`1" /> is
+                present, then the specified related entities are loaded eagerly.
+            </summary>
+            <param name="specification">A specification that determines which entities should be returned.</param>
+            <returns>A collection of all entities satisfying the specification.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.QueryWithFetchStrategy``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
+            <summary>
+                Builds an <see cref="T:System.Data.Entity.Core.Objects.ObjectQuery`1" /> that takes account of the eager loading fetch strategy.
+            </summary>
+            <param name="specification"></param>
+            <returns>A query that includes eager loading of specified related entities.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.GetMaybe``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
+            <summary>
+                Gets zero or one items that matches a specification. Throws an exception if there is more than one
+                match.
+            </summary>
+            <param name="specification">A query specification that should resolve to exactly one match.</param>
+            <returns>The single matched entity, or <see cref="P:MS.Gamification.DataAccess.Maybe`1.Empty" />.</returns>
+            <exception cref="T:System.InvalidOperationException">
+                More than one result was returned; check your specification!
+            </exception>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Add(`0)">
+            <summary>
+                Adds one entity to the entity set and ensures that it has a unique identifier.
+            </summary>
+            <param name="entity">The entity to add.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+                Adds entities to the entity set and ensures that they each have a unique identifier.
+            </summary>
+            <param name="entities">The entities.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Remove(`0)">
+            <summary>
+                Removes one entity from the entity set.
+            </summary>
+            <param name="entity">The entity to remove.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.Repository`2.Remove(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+                Removes entities from the entity set.
+            </summary>
+            <param name="entities">The entities.</param>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.EntityFramework6.Repository`2.PickList">
+            <summary>
+                Gets the pick list (a collection of key-value pairs).
+            </summary>
+            <value>The pick list, which can be empty but not null.</value>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.EntityFramework6.UserRepository">
+            <summary>
+                Stores all of the registered users, their passwords, claims and other details.
+            </summary>
+            <seealso cref="T:MS.Gamification.DataAccess.EntityFramework6.Repository`2" />
+        </member>
+        <member name="M:MS.Gamification.DataAccess.EntityFramework6.UserRepository.#ctor(MS.Gamification.DataAccess.EntityFramework6.ApplicationDbContext)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.EntityFramework6.UserRepository" /> class.
+            </summary>
+            <param name="dbContext">The database context.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.PickListExtensions.FromEnum``1">
+            <exception cref="T:System.InvalidOperationException">Only valid on enum types</exception>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.ICurrentUser">
+            <summary>
+                A service for accessing details of the current user. In the case of a web application, the 'current' user
+                would typically be the user making the request.
+            </summary>
+            <remarks>
+                Note that a user may be 'current' without necessarily being logged in. The presence of a 'current user'
+                simply means the user has been identified and is no guarantee that they have been authenticated.
+                <see cref="P:MS.Gamification.DataAccess.ICurrentUser.IsAuthenticated" />.
+            </remarks>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.ICurrentUser.DisplayName">
+            <summary>
+                Gets the display name of the user.
+            </summary>
+            <value>The display name.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.ICurrentUser.LoginName">
+            <summary>
+                Gets the login name of the user. This is typically what the user would enter in the login screen, but may be
+                something different.
+            </summary>
+            <value>The name of the login.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.ICurrentUser.UniqueId">
+            <summary>
+                Gets the unique identifier of the user. Typically this is used as the Row ID in whatever store is used to persist
+                the user's details.
+            </summary>
+            <value>The unique identifier.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.ICurrentUser.IsAuthenticated">
+            <summary>
+                Gets a value indicating whether the user has been authenticated.
+            </summary>
+            <value><c>true</c> if this instance is authenticated; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.AspNetIdentityCurrentUser">
+            <summary>
+                Encapsulates the concept of a 'current user' based on ASP.Net Identity.
+            </summary>
+            <seealso cref="T:MS.Gamification.DataAccess.ICurrentUser" />
+        </member>
+        <member name="M:MS.Gamification.DataAccess.AspNetIdentityCurrentUser.#ctor(MS.Gamification.ApplicationUserManager,System.Security.Principal.IIdentity)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.AspNetIdentityCurrentUser" /> class.
+            </summary>
+            <param name="manager">The ASP.Net Identity User Manager.</param>
+            <param name="identity">The identity as reported by the HTTP Context.</param>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.AspNetIdentityCurrentUser.DisplayName">
+            <summary>
+                Gets the display name of the user. This implementation returns the login name.
+            </summary>
+            <value>The display name.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.AspNetIdentityCurrentUser.LoginName">
+            <summary>
+                Gets the login name of the user.
+                something different.
+            </summary>
+            <value>The name of the login.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.AspNetIdentityCurrentUser.UniqueId">
+            <summary>
+                Gets the unique identifier of the user, which can be used to look the user up in a database.
+                the user's details.
+            </summary>
+            <value>The unique identifier.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.AspNetIdentityCurrentUser.IsAuthenticated">
+            <summary>
+                Gets a value indicating whether the user has been authenticated.
+            </summary>
+            <value><c>true</c> if the user is authenticated; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.IDomainEntity`1">
+            <summary>
+                A marker interface that must be present on all domain entities. This ensures that all domain entities contain
+                an <see cref="P:MS.Gamification.DataAccess.IDomainEntity`1.Id" /> property and also serves as a constraint on the types that can be used with the
+                <see cref="T:MS.Gamification.DataAccess.IRepository`2" /> interface.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IDomainEntity`1.Id">
+            <summary>
+                Gets an identifier that uniquely identifies this entity from all other entities of the same type.
+            </summary>
+            <value>The identifier.</value>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.IRepository`2">
+            <summary>
+                Generic repository interface which must be implemented by all repositories that participate in a Unit of
+                Work.
+            </summary>
+            <remarks>
+                This generic interface is database and application independent and is one of the key articulation points in
+                the application architecture. The interface defines behaviours that are common to all repositories and
+                provide the foundation for entity repositories to specialise into a selection of queries and operations
+                required by the business logic.
+            </remarks>
+            <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
+            <typeparam name="TKey">The type of the primary key.</typeparam>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IRepository`2.PickList">
+            <summary>
+                Gets the pick list (a collection of key-value pairs).
+            </summary>
+            <value>The pick list.</value>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Get(`1)">
+            <summary>
+                Gets the specified entity.
+            </summary>
+            <param name="id">The entity ID.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.GetAll">
+            <summary>
+                Gets an enumerable collection of all entities in the entity set.
+            </summary>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1" />.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Find(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+                Gets all entities that satisfy a <paramref name="predicate" />.
+            </summary>
+            <param name="predicate">A predicate expression tree.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1" /> containing all entities that satisfy the predicate.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Add(`0)">
+            <summary>
+                Adds one entity to the entity set.
+            </summary>
+            <param name="entity">The entity to add.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+                Adds entities to the entity set.
+            </summary>
+            <param name="entities">The entities.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Remove(`0)">
+            <summary>
+                Removes one entity from the entity set.
+            </summary>
+            <param name="entity">The entity to remove.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.Remove(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+                Removes entities from the entity set.
+            </summary>
+            <param name="entities">The entities.</param>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.GetMaybe(`1)">
+            <summary>
+                Gets a single entity by ID, if it exists.
+            </summary>
+            <param name="id">The entity ID.</param>
+            <returns>A <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> that either contains the matched entity, or is empty.</returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.GetMaybe``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
+            <summary>
+                Gets at most one item that matches a query specification. Throws an exception if there is more than one
+                one matching item.
+            </summary>
+            <param name="specification">A query specification for the desired entity</param>
+            <returns>Zero or one items in a <see cref="T:MS.Gamification.DataAccess.Maybe`1" />.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if there is not exactly one match.</exception>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IRepository`2.AllSatisfying``1(MS.Gamification.GameLogic.IQuerySpecification{`0,``0})">
+            <summary>
+                Gets all entities that satisfy the supplied specification.
+            </summary>
+            <param name="specification">A specification that determines which entities should be returned.</param>
+            <returns>A collection of all entities satisfying the specification.</returns>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.IUnitOfWork">
+            <summary>
+                Represents a database transaction
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.Challenges">
+            <summary>
+                Gets the challenges repository.
+            </summary>
+            <value>The challenges repository.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.Users">
+            <summary>
+                Gets the users repository.
+            </summary>
+            <value>The users.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.CategoriesRepository">
+            <summary>
+                Gets the categories repository.
+            </summary>
+            <value>The categories repository.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.Observations">
+            <summary>
+                Gets the observations repository.
+            </summary>
+            <value>The observations repository.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.MissionLevels">
+            <summary>
+                Gets the missions repository.
+            </summary>
+            <value>The missions queryable collection.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.Missions">
+            <summary>
+            Gets the missions.
+            </summary>
+            <value>The missions.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.MissionTracks">
+            <summary>
+            Gets the mission tracks.
+            </summary>
+            <value>The mission tracks.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.IUnitOfWork.Badges">
+            <summary>
+            All badges known to the system.
+            </summary>
+            <value>The badges.</value>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IUnitOfWork.Commit">
+            <summary>
+                Commits changes to the database and completes the transaction.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IUnitOfWork.CommitAsync">
+            <summary>
+                Asynchronously commits changes to the database and completes the transaction.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.IUnitOfWork.Cancel">
+            <summary>
+                Cancels the transaction and undoes any pending changes.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.Maybe`1">
+            <summary>
+              Represents an object that may or may not have a value (strictly, a collection of zero or one elements). Use
+              LINQ expression <c>maybe.Any()</c> to determine if there is a value. Use LINQ expression
+              <c>maybe.Single()</c> to retrieve the value.
+            </summary>
+            <typeparam name="T">The type of the item in the collection.</typeparam>
+            <remarks>
+              This type almost completely eliminates any need to return <c>null</c> or deal with possibly null references,
+              which makes code cleaner and more clearly expresses the intent of 'no value' versus 'error'.  The value of a
+              Maybe cannot be <c>null</c>, because <c>null</c> really means 'no value' and that is better expressed by
+              using <see cref="P:MS.Gamification.DataAccess.Maybe`1.Empty" />.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.Maybe`1.#ctor">
+            <summary>
+              Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> with no value.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.Maybe`1.#ctor(`0)">
+            <summary>
+              Initializes a new instance of the <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> with a value.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.Maybe`1.Empty">
+            <summary>
+              Gets an instance that does not contain a value.
+            </summary>
+            <value>The empty instance.</value>
+        </member>
+        <member name="P:MS.Gamification.DataAccess.Maybe`1.None">
+            <summary>
+              Gets a value indicating whether this <see cref="T:MS.Gamification.DataAccess.Maybe`1" /> is empty (has no value).
+            </summary>
+            <value><c>true</c> if none; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.Maybe`1.GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the
+              collection.
+            </returns>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.Maybe`1.ToString">
+            <summary>
+              Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
+        </member>
+        <member name="T:MS.Gamification.DataAccess.PickListItem`1">
+            <summary>
+                Represents a key-value pair that can be used in a select (drop-down) field in a view
+            </summary>
+            <typeparam name="TKey">The type of the key.</typeparam>
+        </member>
+        <member name="M:MS.Gamification.DataAccess.PickListItem`1.#ctor(`0,System.String)">
+            <summary>
+                Initializes a new instance of the <see cref="T:System.Object" /> class.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Succeeded">
+            <summary>
+                The total number of observations that were created successfully.
+            </summary>
+            <value>The succeeded.</value>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Failed">
+            <summary>
+                The total number of observations that were not created.
+            </summary>
+            <value>The failed.</value>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Errors">
+            <summary>
+                The error that occurred for each user.
+            </summary>
+            <value>The errors.</value>
+        </member>
+        <member name="F:MS.Gamification.GameLogic.Constants.RFC822EmailPattern">
+            <summary>
+                RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.GameNotificationService">
+            <summary>
+                Notifies users of game events by email.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.IGameNotificationService" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
+            <summary>
+                Notifies the user that an observation they submitted has been approved by a moderator.
+            </summary>
+            <param name="observation">The observation that has been approved.</param>
+            <returns>An awaitable Task.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.BadgeAwarded(MS.Gamification.Models.Badge,MS.Gamification.Models.ApplicationUser,MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Notifies the user that they have been awarded a badge.
+            </summary>
+            <param name="badge">The badge that was awarded.</param>
+            <param name="user">The recipient user.</param>
+            <param name="track">The track that was completed resulting in the award.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Computes the percent complete for a set of challenges, given a set of eligible observations. The
+                computation is based on the number of points gained, rather than just a simple count.
+            </summary>
+            <param name="challenges">The set of challenges that represents 100% progress.</param>
+            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
+            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
+            <remarks>
+                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Creates observations in bulk, for the specified list of users.
+            </summary>
+            <param name="observation">The observation template.</param>
+            <param name="userIds">A list of user IDs.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.EvaluateBadges(MS.Gamification.Models.Observation)">
+            <summary>
+                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
+            </summary>
+            <param name="observation">The observation that has just been approved for the user.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Determines whether the supplied set of observations are sufficient to complete the given level.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="observations">The observations.</param>
+            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteMissionAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteLevelAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Creates the specified level according to game rules.
+                Throws an exception if the level was invalid or could not be created.
+            </summary>
+            <param name="newLevel">The new level.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Updates the level in the database with the supplied values, provided
+                that no game rules are violated.
+            </summary>
+            <param name="updatedLevel">The updated level (which must include the ID).</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the level update failed for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not created for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track could not be deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
+            <summary>
+                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="userId">The user.</param>
+            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.AwardBadge(System.Int32,System.String)">
+            <summary>
+                Awards a badge to a user.
+            </summary>
+            <param name="badgeId">The badge identifier.</param>
+            <param name="userId">The user identifier.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IFileSystemService">
+            <summary>
+              Provides file system services
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IFileSystemService.FileExists(System.String)">
+            <summary>
+              Checks whether a file exists on disk.
+            </summary>
+            <param name="fullyQualifiedFileName">The fully qualified name of the file.</param>
+            <returns><c>true</c> if the file exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Computes the percent complete for a set of challenges, given a set of eligible observations. The
+                computation is based on the number of points gained, rather than just a simple count.
+            </summary>
+            <param name="challenges">The set of challenges that represents 100% progress.</param>
+            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
+            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
+            <remarks>
+                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Creates observations in bulk, for the specified list of users.
+            </summary>
+            <param name="observation">The observation template.</param>
+            <param name="userIds">A list of user IDs.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.EvaluateBadges(MS.Gamification.Models.Observation)">
+            <summary>
+                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
+            </summary>
+            <param name="observation">The observation that has just been approved for the user.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
+            <summary>
+                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="userId">The user.</param>
+            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Determines whether the supplied set of observations are sufficient to complete the given level.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="observations">The observations.</param>
+            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteMissionAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteLevelAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the level could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Creates the specified level according to game rules.
+                Throws an exception if the level was invalid or could not be created.
+            </summary>
+            <param name="newLevel">The new level.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the level could not be created for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Updates the level in the database with the supplied values, provided
+                that no game rules are violated.
+            </summary>
+            <param name="updatedLevel">The updated level (which must include the ID).</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Creates a new mission track, subject to game logic rules.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track is not created for any reason.</exception>
+            <param name="newTrack">The new track.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
+            <summary>
+            A service that can notify users about certain game-related events.
+            Note that the notification service is only responsible for rendering the requested notification
+            on demand and it will not carry out any validation of game logic.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
+            <summary>
+                Notifies the user that an observation they submitted has been approved by a moderator.
+            </summary>
+            <param name="observation">The observation that has been approved.</param>
+            <returns>An awaitable Task.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IImageStore">
+            <summary>
+                Represents a persistent store of named images.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.FindImage(System.String)">
+            <summary>
+                Finds and returns a matching image from the store; i fnone found,
+                returns the placeholder image.
+            </summary>
+            <param name="identifier">
+                The image identifier. How this is translated into an image file name is implementation specific.
+            </param>
+            <returns>
+                The fully qualified file name on disk of a matching image,
+                or if no matches were found, the fully qualified filename on disk of
+                a placeholder image (which is assumed to always exist).
+            </returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.MimeType(System.String)">
+            <summary>
+                Gets the MIME type of the specified image file
+            </summary>
+            <param name="identifier">The image identifier.</param>
+            <returns>The MIME type of the identified image, for example, "image/png".</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.Save(System.IO.Stream,System.String)">
+            <summary>
+                Persists the image bitmap into the image store, using the <paramref name="identifier" /> as the key.
+            </summary>
+            <param name="imageStream">The image bitmap.</param>
+            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IPreconditionXml">
+            <summary>
+            An object that has a precondition, expressed as an XML document
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1">
+            <summary>
+                A composite predicate that can contain zero or more subconditions.
+            </summary>
+            <typeparam name="T">The type of object that the predicate can be applied to.</typeparam>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
+            <summary>
+                Adds a subcondition to the composite predicate.
+            </summary>
+            <param name="condition">The subcondition.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.HasAny">
+            <summary>
+                A composite predicate that is true if any of its subconditions are true (logical OR).
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1">
+            <summary>
+                A composite predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
+                condition.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
+            <summary>
+                Adds a subcondition to the composite predicate.
+            </summary>
+            <param name="condition">The subcondition.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1">
+            <summary>
+                A predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
+                condition.
+            </summary>
+            <typeparam name="T">The type of the object to be evaluated.</typeparam>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.IPredicate`1.Evaluate(`0)">
+            <summary>
+                Evaluates the predicate against the specified object.
+            </summary>
+            <param name="candidate">The instance of <typeparamref name="T" /> being evaluated.</param>
+            <returns><c>true</c> if the instance satisfies the predicate, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser">
+            <summary>
+                Parses level precondition XML and builds a predicate expression tree that can be applied to a user to see if
+                the level is unlocked for that user.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser.CreateCompositePredicate(MS.Gamification.GameLogic.Preconditions.ICompositePredicate{MS.Gamification.Models.ApplicationUser},System.Xml.Linq.XElement)">
+            <summary>
+                Recursively creates a composite predicate.
+            </summary>
+            <param name="predicate">The predicate already built.</param>
+            <param name="predicateXml">The predicate XML.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ChallengesInMissionLevel">
+            <summary>
+                Returns all of the challenges associated with a mission Level.
+            </summary>
+            <seealso cref="T:MS.Gamification.Models.Challenge" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.LevelHasAssociatedObservations">
+            <summary>
+                A query specification that can be used to determine whether a given Mission Level has any observations
+                associated with it. The query returns a set of integers, which will be empty if no observations were found,
+                or will contain a single element representing the number of observations associated with the level. This is
+                designed to be convenient for use with <c>Repository.GetMaybe</c>.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ObservationsForUserMission">
+            <summary>
+                Specifies the set of observations submitted by a given user against the given Mission ID. Eagerly loads the
+                Challenge and Mission Track for each observation.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.QuerySpecification`1" />
+        </member>
+        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredLength">
+            <summary>Minimum required length</summary>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredComplexityFactors">
+            <summary>
+                The number of complexity factors that must be satisfied
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StarquestPasswordValidator.ValidateAsync(System.String)">
+            <summary>
+                Ensures that the string is of the required length and meets the configured requirements
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions">
+            <summary>
+                Extension methods used by <see cref="T:MS.Gamification.GameLogic.GenericFetchStrategy`1" />
+            </summary>
+            <remarks>
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions.FetchPathExpressionVisitor">
+            <summary>
+                Visits MemberExpression nodes in an expression tree and extracts the member names.
+            </summary>
+            <seealso cref="T:System.Linq.Expressions.ExpressionVisitor" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.GenericFetchStrategy`1">
+            <summary>
+                A default Fetch Strategy that will be suitable for most simple situations.
+            </summary>
+            <typeparam name="TEntity">Tee type of the root entity being queried</typeparam>
+            <remarks>
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IFetchStrategy`1">
+            <summary>
+            Defines an abstraction that enables a query to specify eager loading of related entities.
+            Entity Framework normally uses lazy loading by default and this can lead to inefficient queries,
+            notably the "N+1" problem (see http://stackoverflow.com/questions/97197/what-is-the-n1-selects-issue).
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <remarks>
+            Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IQuerySpecification`2">
+            <summary>
+                Represents a query that filters a set of input entities and projects the results onto a set of output
+                entities.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The type of the projected output entities.</typeparam>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.IQuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IQuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`1">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="T">The type of the input entities to be filtered and of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`2">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The projected type of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.QuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.QuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.StringExtensions">
+            <summary>
+                String extension methods.
+            </summary>
+            <remarks>
+                Internal use only. Driver and application developers should not rely on this class, because the interface
+                and method signatures may change at any time.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Head(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the head of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the head of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Tail(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the tail of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the tail of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)">
+            <summary>
+                Keeps only the wanted (that is, removes all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">A list of the wanted characters. All other characters will be removed.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all
+                the characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String,System.Char)">
+            <summary>
+                Keeps only the wanted (that is, replaces all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">
+                A list of the wanted characters. All other characters will be replaced with
+                <paramref name="substitute" />.
+            </param>
+            <param name="substitute">The character that will replace all unwanted characters.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all the
+                characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)">
+            <summary>
+                Removes all unwanted characters from a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="clean">A list of the unwanted characters. All other characters will be preserved.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" />
+                if all of the characters were deleted or if the source string was null or empty.
+            </returns>
+            <remarks>
+                Contrast with <see cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+            </remarks>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveHead(System.String,System.Int32)">
+            <summary>
+                Remove the head of the string, leaving the tail.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the head.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the head.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveTail(System.String,System.Int32)">
+            <summary>
+                Remove the tail of the string, leaving the head.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the tail.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the tail.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.ToHex(System.String)">
+            <summary>
+                Converts a tring to a hex representation, suitable for display in a debugger.
+            </summary>
+            <param name="source">The source string.</param>
+            <returns>A new string showing each character of the source string as a hex digit.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.WebServerImageStore">
+            <summary>
+                Maps image names to static image files that are store on a web server, where the path to the images comes
+                from a setting in the Web.config file.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.IImageStore" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.WebServerImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
+            <summary>
+                Globally Recognised Avatar - http://gravatar.com
+            </summary>
+            <remarks>
+                This implementation by Andrew Freemantle - http://www.fatlemon.co.uk/
+                <para>Source, Wiki and Issues: https://github.com/AndrewFreemantle/Gravatar-HtmlHelper </para>
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage">
+            <summary>
+                In addition to allowing you to use your own image, Gravatar has a number of built in options which you can also use
+                as defaults. Most of these work by taking the requested email hash and using it to generate a themed image that is
+                unique to that email address
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Default">
+            <summary>Default Gravatar logo</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Http404">
+            <summary>
+                404 - do not load any image if none is associated with the email hash, instead return an HTTP 404 (File Not
+                Found) response
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MysteryMan">
+            <summary>Mystery-Man - a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Identicon">
+            <summary>Identicon - a geometric pattern based on an email hash</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MonsterId">
+            <summary>MonsterId - a generated 'monster' with different colors, faces, etc</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Wavatar">
+            <summary>Wavatar - generated faces with differing features and backgrounds</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Retro">
+            <summary>Retro - awesome generated, 8-bit arcade-style pixelated faces</summary>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating">
+            <summary>
+                Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate for a certain
+                audience. By default, only 'G' rated images are displayed unless you indicate that you would like to see higher
+                ratings
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.G">
+            <summary>Suitable for display on all websites with any audience type</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.PG">
+            <summary>May contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.R">
+            <summary>May contain such things as harsh profanity, intense violence, nudity, or hard drug use</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.X">
+            <summary>May contain hardcore sexual imagery or extremely disturbing violence</summary>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GravatarImage(System.Web.Mvc.HtmlHelper,System.String,System.Int32,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage,System.String,System.Boolean,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating,System.Boolean)">
+            <summary>
+                Returns a Globally Recognised Avatar as an &lt;img /&gt; - http://gravatar.com
+            </summary>
+            <param name="htmlHelper">The HTML Helper object</param>
+            <param name="emailAddress">Email Address for the Gravatar</param>
+            <param name="defaultImage">Default image if user hasn't created a Gravatar</param>
+            <param name="size">Size in pixels (default: 80)</param>
+            <param name="defaultImageUrl">URL to a custom default image (e.g: 'Url.Content("~/images/no-grvatar.png")' )</param>
+            <param name="forceDefaultImage">Prefer the default image over the users own Gravatar</param>
+            <param name="rating">Gravatar content rating (note that Gravatars are self-rated)</param>
+            <param name="forceSecureRequest">Always do secure (https) requests</param>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetMd5Hash(System.String)">
+            <summary>
+                Generates an MD5 hash of the given string
+            </summary>
+            <remarks>Source: http://msdn.microsoft.com/en-us/library/system.security.cryptography.md5.aspx </remarks>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetDescription(System.Enum)">
+            <summary>
+                Returns the value of a DescriptionAttribute for a given Enum value
+            </summary>
+            <remarks>Source: http://blogs.msdn.com/b/abhinaba/archive/2005/10/21/483337.aspx </remarks>
+            <param name="en"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MS.Gamification.Models.Badge.ImageIdentifier">
+            <summary>
+                Identifies the storage location of a badge bitmap to an <see cref="T:MS.Gamification.GameLogic.IImageStore" /> service.
+            </summary>
+            <value>The file identifier.</value>
+        </member>
+        <member name="P:MS.Gamification.Models.Badge.Name">
+            <summary>
+                The display name of the badge.
+            </summary>
+            <value>The badge name.</value>
+        </member>
+        <member name="P:MS.Gamification.Models.Badge.Users">
+            <summary>
+                The list of users who have been awarded this badge.
+            </summary>
+            <value>The users.</value>
+        </member>
+        <member name="P:MS.Gamification.Models.ApplicationUser.Provisioned">
+            <summary>
+                The date and time on which the user account was provisioned.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Models.MissionTrack.Number">
+            <summary>
+                Track number determines the order in which tracks are displayed.
+            </summary>
+            <value>The number.</value>
+        </member>
+        <member name="T:MS.Gamification.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.Properties.Resources.PreconditionSchema">
+             <summary>
+               Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+            &lt;xs:schema id=&quot;LevelPreconditionSchema&quot;
+                targetNamespace=&quot;http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd&quot;
+                elementFormDefault=&quot;qualified&quot;
+                xmlns=&quot;http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd&quot;
+                xmlns:tns=&quot;http://tigra-astronomy.com/starquest/LevelPreconditionSchema.xsd&quot;
+                xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;
+            &gt;
+              &lt;xs:element name=&quot;LevelPrecondition&quot;&gt;
+                &lt;xs:complexType&gt;
+                  &lt;xs:group minOccurs=&quot;1&quot; ma [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
+        <member name="T:MS.Gamification.ViewModels.CustomValidation.FileNameWithoutPathAttribute">
+            <summary>
+              Validation data annotation that checks for a valid file name (with no directory or path).
+            </summary>
+            <seealso cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />
+        </member>
+        <member name="M:MS.Gamification.ViewModels.CustomValidation.FileNameWithoutPathAttribute.IsValid(System.Object)">
+            <summary>
+              Determines whether the specified value of the object is valid.
+            </summary>
+            <returns>
+              <c>true</c> if the specified value is valid; otherwise, <c>false</c>.
+            </returns>
+            <param name="value">The value of the object to validate. </param>
+        </member>
+        <member name="M:MS.Gamification.ViewModels.CustomValidation.XmlDocumentAttribute.#ctor">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.ViewModels.CustomValidation.XmlDocumentAttribute" /> class with no schema. No schema
+                validation will take place, but the validated object must still consist of well-formed XML.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.ViewModels.CustomValidation.XmlDocumentAttribute.#ctor(System.String,System.Type)">
+            <summary>
+                Initializes a new instance of the <see cref="T:MS.Gamification.ViewModels.CustomValidation.XmlDocumentAttribute" /> class with a resource identifier
+                that can be used to load an XML Schema Document (XSD). The validated object must be well-formed XML and
+                must also conform to the supplied schema. Note that failure to load the schema will result in the
+                validated object being considered invalid.
+            </summary>
+            <param name="schemaResourceName">Name of the schema resource.</param>
+            <param name="schemaResourceType"><see cref="T:System.Type" /> of the schema resource.</param>
+        </member>
+        <member name="M:MS.Gamification.ViewModels.CustomValidation.XmlDocumentAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+            <summary>
+                Validates the specified <paramref name="value" /> with respect to the current validation attribute.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="validationContext">The context information about the validation operation.</param>
+            <returns>
+                An instance of the <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> class.
+            </returns>
+        </member>
+        <member name="T:MS.Gamification.ViewModels.Moderation.ModerationQueueItem">
+            <summary>
+                Data transfer object used to display the moderation queue
+            </summary>
+        </member>
+    </members>
+</doc>

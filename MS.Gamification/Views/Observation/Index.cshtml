@@ -1,0 +1,42 @@
+﻿@using MS.Gamification.HtmlHelpers
+@model IEnumerable<Observation>
+
+<div class="row" id="title">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>Observing Log</h2>
+        </div>
+    </div>
+</div>
+
+<div>
+    @foreach (var item in Model)
+        {
+        <article class="row observation">
+            @Html.ValidationImage(item.SubmittedImage, new {@class = "img-responsive img-circle col-md-1"})
+            <div class="col-md-8 observation-header">
+                @item.ObservationDateTimeUtc.ToLocalTime().ToString()
+                <br/>
+                @item.Challenge.Name
+            </div>
+            <div class="col-md-1 approval-status">
+                @switch (item.Status)
+                    {
+                        case ModerationState.AwaitingModeration:
+                            <i class="fa fa-question-circle status-pending"></i>
+                            break;
+                        case ModerationState.Rejected:
+                            <i class="fa fa-times-circle status-rejected"></i>
+                            break;
+                        case ModerationState.Approved:
+                            <i class="fa fa-check-circle status-approved"></i>
+                            break;
+                        default:
+                            <i class="fa fa-question-circle status-unknown"></i>
+                            break;
+                    }
+            </div>
+            @Html.ActionLink("View >", "Details", new {id = item.Id}, new {@class = "btn btn-info col-md-1 observation-detail-button", role = "button"})
+        </article>
+        }
+</div>

@@ -1,0 +1,202 @@
+﻿body {
+    padding-bottom: 20px;
+    padding-top: 50px;
+}
+
+/* Set padding to keep content from hitting the edges */
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+
+.dl-horizontal dt { white-space: normal; }
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+/*input,
+select,
+textarea { max-width: 280px; }*/
+
+textarea.form-control { min-height: 10em; }
+
+/* Status icons */
+
+
+.status-pending {
+    color: goldenrod;
+    font-size: 2em;
+}
+
+.status-approved {
+    color: seagreen;
+    font-size: 2em;
+}
+
+.status-rejected {
+    color: indianred;
+    font-size: 2em;
+}
+
+.status-unknown {
+    color: gray;
+    font-size: 2em;
+}
+
+.row.observation {
+    border-bottom: 1px;
+    border-bottom-color: grey;
+    border-bottom-style: dotted;
+    height: 90px;
+    padding-bottom: 12px;
+    padding-top: 12px;
+}
+
+.observation-header { margin-top: 12px; }
+
+.approval-status { margin-top: 16px; }
+
+.observation-detail-button { margin-top: 12px; }
+
+/* Password complexity validation box */
+
+.pw-invalid {
+    color: indianred;
+    line-height: 24px;
+    /*background:url(../images/invalid.png) no-repeat 0 50%;*/
+    padding-left: 22px;
+}
+
+.pw-valid {
+    color: darkseagreen;
+    line-height: 24px;
+    /*background:url(../images/valid.png) no-repeat 0 50%;*/
+    padding-left: 22px;
+}
+
+#passwordInfo { display: none; }
+
+.padding-row { min-height: 100px; }
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.dialog-body { font-size: 2.5em; }
+
+.dialog-title { font-size: 3em; }
+
+.track .progress {
+    border: 1px solid indianred;
+    height: 25px;
+    margin-top: 15px;
+}
+
+.level .progress {
+    border: 1px solid indianred;
+    height: 25px;
+    margin-top: 25px;
+}
+
+.masthead {
+    background-image: url('/StaticImage/GetImage/masthead');
+    background-position: 0% 25%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    margin-bottom: 0px;
+    text-shadow: black 0.3em 0.3em 0.3em;
+}
+
+/* adapted from http://maxwells.github.io/bootstrap-tags.html */
+
+.tag {
+    font-size: 14px;
+    margin: 0 .1em;
+    padding: .5em;
+}
+
+.tag a {
+    color: #bbb;
+    cursor: pointer;
+    margin: 0 0 0 .3em;
+    opacity: 0.6;
+}
+
+.tag a:hover { opacity: 1.0; }
+
+.tag .remove {
+    top: 0;
+    /*vertical-align: bottom;*/
+}
+
+.tag a .icon-white {
+    color: #fff;
+    /*margin-bottom: 2px;*/
+}
+
+img.gravatar { margin-bottom: 12px; }
+
+#chart {
+    margin: 24px;
+    padding: 0px;
+}
+
+.panel-body.c3 { min-height: 400px; }
+
+.CodeMirror { border: 1px solid #334; }
+
+/*.dropzone .dz-preview .dz-image {
+    border-radius: 20px;
+    display: block;
+    height: 240px !important;
+    overflow: hidden;
+    position: relative;
+    width: 240px !important;
+    z-index: 10;
+}*/
+
+/*
+    Customise appearance of Bootstrap tabs (specifically for the Mission Progress view)
+*/
+
+.nav-tabs { border-color: #1A3E5E; }
+
+.tab-pane {
+    background-color: #2F71AB;
+    border: solid 1px #1A3E5E;
+    border-top: 0;
+    padding: 5px;
+}
+
+.nav-tabs > li a {
+    background-color: #D6E6F3;
+    border: 1px solid #1A3E5E;
+    color: black;
+}
+
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li > a:hover {
+    /*background-color: #D6E6F3 !important;*/
+    background-color: #788eb6 !important;
+    border: 1px solid;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus {
+    background-color: #2F71AB;
+    border: 1px solid #1A3E5E;
+    border-bottom-color: transparent;
+    color: white;
+}
+
+.padlock-open { color: darkseagreen }
+
+.padlock-closed { color: indianred }

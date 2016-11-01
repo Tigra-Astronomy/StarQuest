@@ -1,0 +1,41 @@
+﻿@using System.Reflection
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Html.Partial("Analytics")
+    <title>@ViewBag.Title - Star Quest </title>
+    @Styles.Render("~/Content/css")
+    @if (IsSectionDefined("styles"))
+        {
+        @RenderSection("styles")
+        }
+    @Scripts.Render("~/bundles/header")
+</head>
+<body>
+    @Html.Partial("NavbarPartial")
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        Star Quest version
+                        @typeof(MS.Gamification.MvcApplication).Assembly.GetName().Version.ToString()
+                        Copyright &copy; 2016 - @DateTime.Now.Year - Fern Hughes
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <span class="pull-right">Hosted by <a href="http://tigra-astronomy.com" target="blank">Tigra Astronomy</a></span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jira")
+    @RenderSection("scripts", false)
+</body>
+</html>

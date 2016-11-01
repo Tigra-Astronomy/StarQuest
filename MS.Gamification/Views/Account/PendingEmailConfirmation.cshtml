@@ -1,0 +1,37 @@
+﻿@model ResendVerificationEmailViewModel
+
+@{
+    ViewBag.Title = "Account Locked";
+}
+
+<div class="row padding-row"></div>
+<div class="row row-centered">
+    <div class="col-md-10 col-centered">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title dialog-title">
+                    <i class="fa fa-warning"></i>
+                    Account Locked Pending Email Verification
+                </h3>
+            </div>
+            <div class="panel-body dialog-body">
+                Please check your email for a verification message and click the link there
+                to complete the sign-up process.
+
+                If you have not received the email, please check your spam and/or junk mail folders.
+
+                If you still cannot find the email, click the button below for a new verification message.
+
+                If you do not receive the message within 15 minutes, please contact technical support.
+
+            </div>
+        </div>
+        <br/>
+        @Html.ActionLink(
+            "Resend verification email",
+            "ResendVerificationEmail",
+            new {id = Model.UserId},
+            new {@class = "btn btn-info"}
+            );
+    </div>
+</div>

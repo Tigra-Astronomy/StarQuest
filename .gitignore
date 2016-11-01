@@ -10,6 +10,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# ELMAH generated errors database
+/**/App_Data/error-*.xml
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -210,3 +213,11 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+*.map
+/MS.Gamification/Scripts/password.js
+/MS.Gamification/Scripts/typings/jquery/jquery.d.ts
+jquery*.js
+/MS.Gamification/Content/DataTables
+/MS.Gamification/Scripts/DataTables
+/MS.Gamification/App_Data/Badges
+/MS.Gamification/App_Data/Badges

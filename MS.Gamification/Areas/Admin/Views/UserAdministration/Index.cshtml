@@ -1,0 +1,54 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<div class="jumbotron masthead">
+    <h1>STAR QUEST</h1>
+    <p class="lead">Administration dashboard</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>User administration</h2>
+        <p>
+            @Html.ActionLink("Invite Users »", "CreateUserAccounts", new {}, new {@class = "btn btn-default"})
+        </p>
+        <p>
+            @Html.ActionLink("Resend Invitation »", "ResendInvitation", new {}, new {@class = "btn btn-default"})
+        </p>
+        <p>
+            @Html.ActionLink("See Account Status »", "ManageUsers", new {}, new {@class = "btn btn-default"})
+        </p>
+        <p>
+            @Html.ActionLink("Set User Permissions »", "ManageUsers", new {}, new {@class = "btn btn-default"})
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h2>Mission control</h2>
+        <p>
+            @Html.RouteLink("Manage Missions »", "Admin", new {controller = "Missions"}, new {@class = "btn btn-default"})
+        </p>
+        <p>
+            @Html.RouteLink("Manage Levels »", "Admin", new { controller = "MissionLevels" }, new { @class = "btn btn-default" })
+        </p>
+        <p>
+            @Html.RouteLink("Manage Tracks »", "Admin", new { controller = "MissionTracks" }, new { @class = "btn btn-default" })
+        </p>
+        <p>
+            @Html.RouteLink("Manage Challenges »", "Admin", new { controller = "Challenges" }, new { @class = "btn btn-default" })
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Moderation</h2>
+        <p>
+            @Html.ActionLink("Moderation Queue »", "Index", "Moderation", new {area = string.Empty}, new {@class = "btn btn-default"})
+        </p>
+        <p>
+            @Html.ActionLink("Observation Batch Entry »", "BatchObservations", new {}, new {@class = "btn btn-default"})
+        </p>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+﻿@using MS.Gamification.HtmlHelpers
+@model SubmitObservationViewModel
+@{
+    ViewBag.Title = "Submit Observation";
+}
+
+<div class="row" id="challenge">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2>@ViewBag.Title</h2>
+        </div>
+        <div class="panel-body">
+            <h3>@Model.ChallengeName</h3>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+    {
+    var labelStyle = new {@class = "control-label col-md-3"};
+    var inputColumns = "col-md-8";
+    var controlStyle = new {htmlAttributes = new {@class = "form-control"}};
+    var validationStyle = new {@class = "text-danger"};
+    @Html.AntiForgeryToken()
+    <div class="row" id="form">
+        @Html.ValidationSummary(true, "", new {@class = "text-danger col-md-12"})
+        @Html.HiddenFor(model => model.ChallengeId)
+        <div id="leftForm" class="col-md-6 form-horizontal">
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ObservationDateTimeLocal, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.ObservationDateTimeLocal)
+                        @Html.ValidationMessageFor(model => model.ObservationDateTimeLocal, "", validationStyle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Equipment, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Equipment, Model.EquipmentPicker, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Equipment, "", validationStyle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ObservingSite, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.ObservingSite, controlStyle)
+                        @Html.ValidationMessageFor(model => model.ObservingSite, "", validationStyle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Seeing, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Seeing, Model.SeeingPicker, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Seeing, "", validationStyle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Transparency, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.DropDownListFor(model => model.Transparency, Model.TransparencyPicker, new {@class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.Transparency, "", validationStyle)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Notes, labelStyle)
+                    <div class=@inputColumns>
+                        @Html.EditorFor(model => model.Notes, controlStyle)
+                        @Html.ValidationMessageFor(model => model.Notes, "", validationStyle)
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="submit">
+                <div class="col-xs-offset-3 col-xs-9">
+                    <input type="submit" value="Submit Observation" class="btn btn-warning" />
+                </div>
+            </div>
+        </div>
+        <div id="rightForm" class="col-md-6 form-horizontal">
+            <div class="row" id="images">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Select the image that best matches what you observed
+                    </div>
+                    <div class="panel-body">
+                        @foreach (var imageFile in Model.ValidationImages)
+                            {
+                            <div class="col-md-6 ">
+                                <div class="panel panel-info">
+                                    @Html.ValidationImage(imageFile, new {@class = "img-responsive img-circle"})
+                                    @Html.RadioButtonFor(model => model.SubmittedImage, imageFile) Select
+                                </div>
+                            </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+<div class="row ">
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">Moderation</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                All observations must be approved by a moderator before they can count towards your score or award any badges.
+                You will be notified by email when your observation is approved.
+            </p>
+        </div>
+    </div></div>
