@@ -20,7 +20,7 @@
 <h3>Submitted by: @Model.User.UserName</h3>
 
 <div class="row" id="observation">
-    <div id="leftForm" class="col-md-8">
+    <div id="leftForm" class="col-md-6">
         <div class="row">
             <dl class="dl-horizontal">
                 <dt>@Html.LabelFor(model => model.ObservationDateTimeUtc)</dt>
@@ -35,10 +35,10 @@
                 <dd>@Html.DisplayFor(model => model.Transparency)</dd>
                 <dt>@Html.LabelFor(model => model.Notes)</dt>
                 <dd>@Html.DisplayFor(model => model.Notes)</dd>
+            </dl>
         </div>
     </div>
-    <div id="spacer" class="col-md-1"></div>
-    <div id="rightForm" class="col-md-3 form-horizontal">
+    <div id="rightForm" class="col-md-6 form-horizontal">
         <div class="row" id="images">
             <div class="panel panel-primary">
                 <div class="panel-heading">

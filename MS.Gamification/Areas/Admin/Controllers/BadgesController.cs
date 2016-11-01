@@ -1,18 +1,15 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: BadgesController.cs  Created: 2016-08-13@22:24
-// Last modified: 2016-08-18@00:43
+// File: BadgesController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-11-01@19:23
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
-using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using Ninject;
 
@@ -31,6 +28,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload()
             {
             var fileNames = (IEnumerable<string>) Request.Files.AllKeys;
@@ -58,11 +56,12 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 }
             }
 
-        //public string GenerateImageIdentifier(string fileName)
-        //    {
-        //    var result = Path.GetFileNameWithoutExtension(fileName);
-        //    result = result.ToLower(CultureInfo.InvariantCulture);
         //    result = result.Keep(ImageIdentifierAllowedCharacters, '-');
+        //    result = result.ToLower(CultureInfo.InvariantCulture);
+        //    var result = Path.GetFileNameWithoutExtension(fileName);
+        //    {
+
+        //public string GenerateImageIdentifier(string fileName)
         //    return result;
         //    }
         }

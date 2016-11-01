@@ -14,11 +14,11 @@
         <div class="col-md-8">
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.MissionLevel.Name)
+                    @Html.DisplayNameFor(model => model.MissionLevelName)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.MissionLevel.Name)
+                    @Html.DisplayFor(model => model.MissionLevelName)
                 </dd>
 
                 <dt>
@@ -45,15 +45,15 @@
                     @Html.DisplayFor(model => model.AwardTitle)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Badge.ImageIdentifier)
+                    @Html.DisplayNameFor(model => model.BadgeImageIdentifier)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.Badge.ImageIdentifier)
+                    @Html.DisplayFor(model => model.BadgeImageIdentifier)
                 </dd>
             </dl>
         </div>
         <div class="col-md-4">
-            @Html.Badge(Model.Badge.ImageIdentifier, new {@class = "img-responsive"})
+            @Html.Badge(Model.BadgeImageIdentifier, new {@class = "img-responsive"})
         </div>
     </div></div>
 <p>

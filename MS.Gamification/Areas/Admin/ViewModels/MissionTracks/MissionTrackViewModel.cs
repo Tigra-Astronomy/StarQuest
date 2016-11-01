@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionTrackViewModel.cs  Created: 2016-08-19@04:17
-// Last modified: 2016-08-20@01:54
+// File: MissionTrackViewModel.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-08-21@01:40
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,6 +38,10 @@ namespace MS.Gamification.Areas.Admin.ViewModels.MissionTracks
         public IEnumerable<SelectListItem> BadgePicker { get; set; }
 
         public IEnumerable<SelectListItem> LevelPicker { get; set; }
+
+        public string MissionLevelName { get; set; }
+
+        public string BadgeImageIdentifier { get; set; }
 
         public override string ToString()
             {

@@ -1054,6 +1054,7 @@
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\UserProfile\Index.cshtml" />
     <Content Include="Views\Mission\ChallengeDetails.cshtml" />
+    <Content Include="Views\Mission\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\password.ts" />
@@ -1081,6 +1082,16 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="IdentityHelpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Autofac.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Engine.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Framework.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Tasks.Core.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Utilities.Core.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Web.XmlTransform.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Puma.Security.Rules.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

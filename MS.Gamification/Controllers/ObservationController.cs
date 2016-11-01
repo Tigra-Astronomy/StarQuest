@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationController.cs  Created: 2016-05-10@22:29
-// Last modified: 2016-08-18@23:07
+// File: ObservationController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-11-01@19:22
 
 using System;
 using System.Collections.Generic;
@@ -150,12 +150,13 @@ namespace MS.Gamification.Controllers
             }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SubmitObservation(SubmitObservationViewModel model)
             {
             var observation = mapper.Map<SubmitObservationViewModel, Observation>(model);
             observation.UserId = webUser.UniqueId;
             var maybeChallenge = uow.Challenges.GetMaybe(model.ChallengeId);
-            if(maybeChallenge.None)
+            if (maybeChallenge.None)
                 throw new ArgumentException("Invalid challenge ID specified");
             observation.ExpectedImage = maybeChallenge.Single().ValidationImage;
             observation.Status = ModerationState.AwaitingModeration;

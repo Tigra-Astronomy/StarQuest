@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionLevelsController.cs  Created: 2016-08-05@22:52
-// Last modified: 2016-08-18@02:47
+// File: MissionLevelsController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-08-21@02:16
 
 using System;
 using System.Linq;
@@ -9,10 +9,10 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
+using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
-using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 
 namespace MS.Gamification.Areas.Admin.Controllers
     {
@@ -61,7 +61,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
 
         private void PopulateMissionPicker(MissionLevelViewModel model)
             {
-            model.MissionPicker = uow.MissionLevels.PickList.ToSelectList();
+            model.MissionPicker = uow.Missions.PickList.ToSelectList();
             }
 
         // POST: Admin/MissionLevels/Create
@@ -102,7 +102,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 {
                 return HttpNotFound();
                 }
-            var model = mapper.Map<MissionLevel,MissionLevelViewModel>(maybeLevel.Single());
+            var model = mapper.Map<MissionLevel, MissionLevelViewModel>(maybeLevel.Single());
             PopulateMissionPicker(model);
             return View(model);
             }

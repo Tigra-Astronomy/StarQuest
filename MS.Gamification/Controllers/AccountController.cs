@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: AccountController.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-20@18:27
+// File: AccountController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-11-01@19:20
 
 using System;
 using System.Linq;
@@ -481,7 +481,9 @@ namespace MS.Gamification.Controllers
         private ActionResult RedirectToLocal(string returnUrl)
             {
             if (Url.IsLocalUrl(returnUrl))
+#pragma warning disable SEC0109 // Unvalidated MVC Redirect
                 return Redirect(returnUrl);
+#pragma warning restore SEC0109 // Unvalidated MVC Redirect
             return RedirectToAction("Index", "Home");
             }
 

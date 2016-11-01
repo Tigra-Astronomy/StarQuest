@@ -1,11 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
-// File: Configuration.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-22@13:45
+// File: Configuration.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-10-28@23:12
 
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Linq;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
 
@@ -38,8 +39,12 @@ namespace MS.Gamification.Migrations
                 SeedData.CreateAdministratorAccount(context);
                 SeedData.CreateCategories(context);
                 context.SaveChanges();
-                SeedData.CreateBetaMission(context);
-                context.SaveChanges();
+                // Create sample mission data, but only if there are no missions in the database.
+                if (!context.Missions.Any())
+                    {
+                    SeedData.CreateBetaMission(context);
+                    context.SaveChanges();
+                    }
                 }
             catch (DbEntityValidationException eve)
                 {
