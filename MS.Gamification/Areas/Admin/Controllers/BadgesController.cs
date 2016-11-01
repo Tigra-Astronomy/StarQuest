@@ -30,7 +30,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             this.uow = uow;
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult Upload()
             {
             var fileNames = (IEnumerable<string>) Request.Files.AllKeys;

@@ -73,7 +73,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View();
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateUserAccounts(BulkUserEntryViewModel bulkCreateModel)
             {
             var successfulEmails = new List<string>();
@@ -329,7 +329,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             model.RolePicker = availableRoles.ToSelectList();
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public async Task<ActionResult> AddRole(ManageUserViewModel model)
             {
             try
@@ -377,7 +377,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View(model);
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult BatchObservations(List<BatchObservationUserViewModel> model)
             {
             var selectedUsers = model.Where(p => p.Selected).Select(s => s.UserId).ToList();
@@ -405,7 +405,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return model;
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult BatchObservationDetails(BatchObservationViewModel model)
             {
             var observation = mapper.Map<BatchObservationViewModel, Observation>(model);

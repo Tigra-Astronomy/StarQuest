@@ -65,7 +65,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return model;
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult Create(CreateChallengeViewModel model)
             {
             if (!ModelState.IsValid)
@@ -115,7 +115,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View(model);
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult Edit(CreateChallengeViewModel model)
             {
             if (!ModelState.IsValid)
@@ -128,7 +128,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return RedirectToAction("Index");
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult Upload()
             {
             var fileNames = (IEnumerable<string>) Request.Files.AllKeys;

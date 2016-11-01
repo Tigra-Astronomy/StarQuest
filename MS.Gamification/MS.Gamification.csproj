@@ -1083,6 +1083,16 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="IdentityHelpers\" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Autofac.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Engine.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Framework.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Tasks.Core.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Build.Utilities.Core.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Microsoft.Web.XmlTransform.dll" />
+    <Analyzer Include="..\packages\Puma.Security.Rules.1.0.2\analyzers\dotnet\cs\Puma.Security.Rules.dll" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

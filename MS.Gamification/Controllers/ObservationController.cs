@@ -149,7 +149,7 @@ namespace MS.Gamification.Controllers
             return results;
             }
 
-        [HttpPost]
+        [HttpPost][ValidateAntiForgeryToken]
         public ActionResult SubmitObservation(SubmitObservationViewModel model)
             {
             var observation = mapper.Map<SubmitObservationViewModel, Observation>(model);
