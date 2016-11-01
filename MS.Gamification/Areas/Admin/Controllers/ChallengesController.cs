@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengesController.cs  Created: 2016-08-19@00:11
-// Last modified: 2016-08-19@03:35
+// File: ChallengesController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-11-01@19:22
 
 using System;
 using System.Collections.Generic;
@@ -65,7 +65,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return model;
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CreateChallengeViewModel model)
             {
             if (!ModelState.IsValid)
@@ -115,7 +116,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View(model);
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(CreateChallengeViewModel model)
             {
             if (!ModelState.IsValid)
@@ -128,7 +130,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return RedirectToAction("Index");
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Upload()
             {
             var fileNames = (IEnumerable<string>) Request.Files.AllKeys;

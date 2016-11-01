@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-08-19@04:17
-// Last modified: 2016-08-20@21:30
+// File: UserAdministrationController.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-11-01@19:22
 
 using System;
 using System.Collections.Generic;
@@ -73,7 +73,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View();
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateUserAccounts(BulkUserEntryViewModel bulkCreateModel)
             {
             var successfulEmails = new List<string>();
@@ -172,7 +173,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var canonicalMatch = UserNameEmailCanonicalRegex.Match(source);
             if (canonicalMatch.Success)
                 return new ApplicationUser
-                    {UserName = canonicalMatch.Groups["name"].Value, Email = canonicalMatch.Groups["email"].Value};
+                        {UserName = canonicalMatch.Groups["name"].Value, Email = canonicalMatch.Groups["email"].Value};
             // Try to match CSV format "Joe User, Joe@user.com"
             var csvMatch = UserNameEmailCsvRegex.Match(source);
             if (csvMatch.Success)
@@ -183,7 +184,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 {
                 var email = rfc822Match.Groups["email"].Value;
                 return new ApplicationUser
-                    {UserName = email, Email = email};
+                        {UserName = email, Email = email};
                 }
             throw new ArgumentException("Not in any of the recognised formats.");
             }
@@ -195,7 +196,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             var emailModel = new VerificationTokenEmailModel
                 {
                 CallbackUrl =
-                Url.Action("ConfirmEmail", "UserAdministration", new {userId, code, area = string.Empty}, Request.Url.Scheme),
+                    Url.Action("ConfirmEmail", "UserAdministration", new {userId, code, area = string.Empty}, Request.Url.Scheme),
                 InformationUrl = Url.Action("Index", "Home", new {area = string.Empty}, Request.Url.Scheme),
                 VerificationToken = code,
                 Recipient = email
@@ -329,7 +330,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             model.RolePicker = availableRoles.ToSelectList();
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddRole(ManageUserViewModel model)
             {
             try
@@ -377,7 +379,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return View(model);
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult BatchObservations(List<BatchObservationUserViewModel> model)
             {
             var selectedUsers = model.Where(p => p.Selected).Select(s => s.UserId).ToList();
@@ -405,7 +408,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             return model;
             }
 
-        [HttpPost][ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult BatchObservationDetails(BatchObservationViewModel model)
             {
             var observation = mapper.Map<BatchObservationViewModel, Observation>(model);
