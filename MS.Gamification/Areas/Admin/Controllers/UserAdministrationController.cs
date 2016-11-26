@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: UserAdministrationController.cs  Created: 2016-08-20@23:12
-// Last modified: 2016-11-01@19:22
+// File: UserAdministrationController.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-11-26@00:11
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.GameLogic;
+using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using NLog;
@@ -98,7 +99,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
                     failedEmails.Add(cleanedEmail, $"Unexpected error: {ex.Message}");
                     }
                 }
-            var model = new CreateUsersConfirmationViewModel
+            var model = new BatchOperationConfirmationViewModel("Provision User Accounts")
                 {
                 FailedAddresses = failedEmails,
                 SuccessfulAddresses = successfulEmails,
@@ -423,6 +424,40 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 ModelState.AddModelError(null, $"{key}: {results.Errors[key]}");
                 }
             return View(model);
+            }
+
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "BatchResendInvitations")]
+        public async Task<ActionResult> BatchResendInvitations(IEnumerable<ManageUserViewModel> model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View("Index", model);
+                }
+            var selectedUsers = model.Where(p => p.Selected);
+
+            var successfulEmails = new List<string>();
+            var failedEmails = new Dictionary<string, string>();
+            foreach (var user in selectedUsers)
+                {
+                try
+                    {
+                    await SendNotificationEmail(user.Id, user.Email);
+                    successfulEmails.Add(user.Email);
+                    }
+                catch (Exception ex)
+                    {
+                    failedEmails[user.Email] = ex.Message;
+                    }
+                }
+            var resultsModel = new BatchOperationConfirmationViewModel("Resend Invitations")
+                {
+                FailedAddresses = failedEmails,
+                SuccessfulAddresses = successfulEmails,
+                FailedTotal = failedEmails.Count,
+                SucceededTotal = successfulEmails.Count
+                };
+            return View("CreateUserAccountsConfirmation", resultsModel);
             }
         }
     }

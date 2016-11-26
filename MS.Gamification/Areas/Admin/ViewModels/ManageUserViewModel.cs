@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ManageUserViewModel.cs  Created: 2016-08-05@20:37
-// Last modified: 2016-08-18@02:59
+// File: ManageUserViewModel.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-11-25@22:31
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +18,8 @@ namespace MS.Gamification.Areas.Admin.ViewModels
             }
 
         public string Id { get; set; }
+
+        public bool Selected { get; set; }
 
         public string Username { get; set; }
 

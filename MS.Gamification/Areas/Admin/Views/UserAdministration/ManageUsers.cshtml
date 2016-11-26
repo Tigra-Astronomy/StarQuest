@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MS.Gamification.Areas.Admin.ViewModels.ManageUserViewModel>
+﻿@model List<MS.Gamification.Areas.Admin.ViewModels.ManageUserViewModel>
 @{
     ViewBag.Title = "ManageUsers";
 }
@@ -10,54 +10,34 @@
 
 @Html.ValidationSummary(false)
 
-<table class="table table-striped table-hover" id="users">
-    <thead>
-    <tr>
-        <th>User name</th>
-        <th>Email</th>
-        <th colspan="3">Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var user in Model)
-        {
+
+<form action="" method="post">
+    <table class="table table-striped table-hover" id="users">
+        <thead>
         <tr>
-            <td>@user.Username</td>
-            <td>@user.Email</td>
-            <td>
-                @if (user.EmailVerified)
-                    {
-                    <i class="fa fa-envelope"></i>
-                    }
-            </td>
-            <td>
-                @if (user.HasValidPassword)
-                    {
-                    <i class="fa fa-key"></i>
-                    }
-            </td>
-            <td>
-                @if (user.AccountLocked)
-                    {
-                    <i class="fa fa-lock"></i>
-                    }
-            </td>
-            <td>
-                @Html.ActionLink("Manage", "ManageUser", new {id = user.Id}, new {@class = "btn btn-xs btn-default"})
-            </td>
+            <th><input type="checkbox" id="chkSelectAll" /></th>
+            <th>User name</th>
+            <th>Email</th>
+            <th colspan="3">Status</th>
+            <th>Actions</th>
         </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @Html.EditorFor(m=>Model)
+        </tbody>
+    </table>
+    
+    @*Multiple Submit buttons*@
+    <input class="btn btn-warning" type="submit" value="Resend Invitation" name="action:BatchResendInvitations" />
+</form>
 
-@section scripts
-{
-    @Scripts.Render("~/bundles/datatables")
-    <script>
-        $(document).ready(function () {
-            $('#users').DataTable();
-        });
-    </script>
-
-}
+    @section scripts
+    {
+        @Scripts.Render("~/bundles/datatables")
+        <script>
+            $(document)
+                .ready(function() {
+                    $('#users').DataTable();
+                });
+        </script>
+    }

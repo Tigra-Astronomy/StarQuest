@@ -1,14 +1,14 @@
-﻿@model CreateUsersConfirmationViewModel
+﻿@model BatchOperationConfirmationViewModel
 
 @{
-    ViewBag.Title = "CreateUserAccountsConfirmation";
+    ViewBag.Title = "Batch Operation Results";
     var hiddenIfEmpty = Model.FailedTotal == 0 ? "display: none;" : string.Empty;
 }
 
-<h2>Create User Accounts - confirmation</h2>
+<h2>Batch Operation Results</h2>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h4>Account creation results</h4>
+        <h4>@Model.OperationDescription Results</h4>
     </div>
     <div class="panel-body">
         <div class="alert alert-success" role="alert">
@@ -46,10 +46,10 @@
                 }
             </tbody>
         </table>
-        <p>
+        @*<p>
             <a class="btn btn-default" href="@Url.Action("CreateUserAccounts")" style="@hiddenIfEmpty">
                 Retry failed items <i class="fa fa-angle-double-right"></i>
             </a>
-        </p>
+        </p>*@
     </div>
 </div>

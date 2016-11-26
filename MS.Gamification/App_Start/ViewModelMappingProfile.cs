@@ -39,6 +39,7 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.ObservationId, m => m.MapFrom(s => s.Id))
                 .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
             CreateMap<ApplicationUser, ManageUserViewModel>()
+                .ForMember(m=>m.Selected, m=>m.UseValue(false))
                 .ForMember(m => m.AccountLocked, m => m.MapFrom(s => s.LockoutEnabled))
                 .ForMember(m => m.EmailVerified, m => m.MapFrom(s => s.EmailConfirmed))
                 .ForMember(m => m.HasValidPassword, m => m.ResolveUsing(r => !string.IsNullOrWhiteSpace(r.PasswordHash)))

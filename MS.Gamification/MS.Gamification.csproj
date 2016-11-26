@@ -473,6 +473,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\GravatarHtmlHelper.cs" />
     <Compile Include="HtmlHelpers\ImageHelpers.cs" />
+    <Compile Include="HtmlHelpers\MultipleButtonAttribute.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.cs" />
     <Compile Include="Migrations\201606302114396_InitialSchema.Designer.cs">
       <DependentUpon>201606302114396_InitialSchema.cs</DependentUpon>
@@ -514,7 +515,7 @@
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ConfigureTwoFactorViewModel.cs" />
     <Compile Include="ViewModels\CreateChallengeViewModel.cs" />
-    <Compile Include="ViewModels\CreateUsersConfirmationViewModel.cs" />
+    <Compile Include="ViewModels\BatchOperationConfirmationViewModel.cs" />
     <Compile Include="ViewModels\CreateUsersViewModel.cs" />
     <Compile Include="ViewModels\CustomValidation\FileNameWithoutPathAttribute.cs" />
     <Compile Include="ViewModels\CustomValidation\ImageIdentifierAttribute.cs" />
@@ -803,6 +804,7 @@
     <Content Include="Areas\Admin\Views\MissionTracks\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MissionTracks\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Challenges\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\UserAdministration\EditorTemplates\ManageUserViewModel.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
