@@ -394,6 +394,7 @@
     <Compile Include="EmailTemplates\EmailModelBase.cs" />
     <Compile Include="EmailTemplates\ModerationEmailModel.cs" />
     <Compile Include="EmailTemplates\VerificationTokenEmailModel.cs" />
+    <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="GameLogic\BatchCreateObservationsResult.cs" />
     <Compile Include="GameLogic\Constants.cs" />
     <Compile Include="GameLogic\GameNotificationService.cs" />
