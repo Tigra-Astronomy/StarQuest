@@ -197,6 +197,14 @@ img.gravatar { margin-bottom: 12px; }
     color: white;
 }
 
-.padlock-open { color: darkseagreen }
+/* Padlock icons in mission level tabs */
 
-.padlock-closed { color: indianred }
+.padlock-open { color: darkseagreen; }
+
+.padlock-closed { color: indianred; }
+
+/* Account lockout icons on the Manage Users admin view */
+
+.locked-account { color: red; }
+
+.unlocked-account { color: black; }

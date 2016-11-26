@@ -1,8 +1,9 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ManageUserViewModel.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-11-25@22:31
+// Last modified: 2016-11-26@08:01
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -30,7 +31,11 @@ namespace MS.Gamification.Areas.Admin.ViewModels
 
         public bool HasValidPassword { get; set; }
 
-        public bool AccountLocked { get; set; }
+        public bool AccountLocked => AccountLockedUntilUtc > DateTime.UtcNow;
+
+        public DateTime AccountLockedUntilUtc { get; set; }
+
+        public bool LockoutEnabled { get; set; }
 
         public IList<string> Roles { get; set; }
 

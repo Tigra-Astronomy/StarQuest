@@ -2,9 +2,16 @@
     
 <tr>
     <td>
-        @Html.CheckBoxFor(model => model.Selected)
-        @Html.HiddenFor(model=>model.Id)
+        @Html.CheckBoxFor(model => model.Selected, new Dictionary<string, object>
+            {
+            {"class", "data"},
+            {"data-email-verified", Model.EmailVerified},
+            {"data-has-password", Model.HasValidPassword},
+            {"data-account-locked", Model.AccountLocked},
+            })
+        @Html.HiddenFor(model => model.Id)
     </td>
+
     <td>@Model.Username</td>
     <td>
         @Model.Email
@@ -23,9 +30,16 @@
             }
     </td>
     <td>
-        @if (Model.AccountLocked)
+        @if (Model.LockoutEnabled)
             {
-            <i class="fa fa-lock"></i>
+            if (Model.AccountLocked)
+                {
+                <i class="fa fa-lock locked-account"></i>
+                }
+            else
+                {
+                <i class="fa fa-unlock unlocked-account"></i>
+                }
             }
     </td>
     <td>

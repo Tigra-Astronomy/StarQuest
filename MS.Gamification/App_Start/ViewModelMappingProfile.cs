@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ViewModelMappingProfile.cs  Created: 2016-07-16@04:48
-// Last modified: 2016-08-20@02:00
+// File: ViewModelMappingProfile.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-11-26@08:04
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -39,13 +39,15 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.ObservationId, m => m.MapFrom(s => s.Id))
                 .ForMember(m => m.UserName, m => m.MapFrom(s => s.User.UserName));
             CreateMap<ApplicationUser, ManageUserViewModel>()
-                .ForMember(m=>m.Selected, m=>m.UseValue(false))
-                .ForMember(m => m.AccountLocked, m => m.MapFrom(s => s.LockoutEnabled))
+                .ForMember(m => m.Selected, m => m.UseValue(false))
+                .ForMember(m => m.AccountLockedUntilUtc, m => m.MapFrom(s => s.LockoutEndDateUtc))
+                //.ForMember(m => m.AccountLocked, m => m.MapFrom(s => s.LockoutEndDateUtc > DateTime.UtcNow))
                 .ForMember(m => m.EmailVerified, m => m.MapFrom(s => s.EmailConfirmed))
                 .ForMember(m => m.HasValidPassword, m => m.ResolveUsing(r => !string.IsNullOrWhiteSpace(r.PasswordHash)))
                 .ForMember(m => m.Roles, m => m.Ignore())
                 .ForMember(m => m.RoleToAdd, m => m.Ignore())
-                .ForMember(m => m.RolePicker, m => m.Ignore());
+                .ForMember(m => m.RolePicker, m => m.Ignore())
+                .IgnoreAllPropertiesWithAnInaccessibleSetter();
             CreateMap<BatchObservationViewModel, Observation>()
                 .ForMember(m => m.Challenge, m => m.Ignore())
                 .ForMember(m => m.ExpectedImage, m => m.Ignore())

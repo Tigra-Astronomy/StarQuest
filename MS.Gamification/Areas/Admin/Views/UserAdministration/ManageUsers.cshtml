@@ -10,34 +10,55 @@
 
 @Html.ValidationSummary(false)
 
+<div class="row" id="filterButtons">
+    <div class="col-md-1">Select:</div>
+    <div class="col-md-11">
+        <div class="btn-group">
+            <button type="button" id="btn-unverified-email" class="btn btn-sm btn-default">Unverified Email</button>
+            <button type="button" id="btn-invalid-password" class="btn btn-sm btn-default">Invalid Password</button>
+            <button type="button" id="btn-locked-out" class="btn btn-default">Locked Out</button>
+            <button type="button" id="btn-invert-selection" class="btn btn-default">Invert Selection</button>
+            <button type="button" id="btn-select-all" class="btn btn-default">All</button>
+            <button type="button" id="btn-select-none" class="btn btn-default">None</button>
+        </div>
+    </div>
+</div>
 
 <form action="" method="post">
-    <table class="table table-striped table-hover" id="users">
-        <thead>
-        <tr>
-            <th><input type="checkbox" id="chkSelectAll" /></th>
-            <th>User name</th>
-            <th>Email</th>
-            <th colspan="3">Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @Html.EditorFor(m=>Model)
-        </tbody>
-    </table>
-    
     @*Multiple Submit buttons*@
-    <input class="btn btn-warning" type="submit" value="Resend Invitation" name="action:BatchResendInvitations" />
+    <div class="row">
+        <div class="col-md-1">Action:</div>
+        <div class="col-md-11">
+            <div class="btn-group" id="actionButtons">
+                <input class="btn btn-warning" type="submit" value="Resend Invitation" name="action:BatchResendInvitations"/>
+                <input class="btn btn-danger" type="submit" value="Suspend" name="action:BatchResendInvitations"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped table-hover" id="users">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="chkSelectAll"/>
+                    </th>
+                    <th>User name</th>
+                    <th>Email</th>
+                    <th colspan="3">Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @Html.EditorFor(m => Model)
+                </tbody>
+            </table>
+        </div>
+    </div>
 </form>
 
-    @section scripts
-    {
-        @Scripts.Render("~/bundles/datatables")
-        <script>
-            $(document)
-                .ready(function() {
-                    $('#users').DataTable();
-                });
-        </script>
-    }
+@section scripts
+{
+    @Scripts.Render("~/bundles/datatables")
+    <script src="~/Scripts/listSelector.js"></script>
+}

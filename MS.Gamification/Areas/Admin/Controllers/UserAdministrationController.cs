@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-11-26@00:11
+// Last modified: 2016-11-26@08:15
 
 using System;
 using System.Collections.Generic;
@@ -291,7 +291,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
                             Id = user.Id,
                             Email = user.Email,
                             Username = user.UserName,
-                            AccountLocked = user.LockoutEnabled,
+                            AccountLockedUntilUtc = user.LockoutEndDateUtc ?? DateTime.MinValue,
+                            LockoutEnabled = user.LockoutEnabled,
                             HasValidPassword = user.PasswordHash != null,
                             EmailVerified = user.EmailConfirmed
                             };

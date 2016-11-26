@@ -1059,10 +1059,13 @@
     <Content Include="Views\Mission\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\listSelector.ts" />
     <TypeScriptCompile Include="Scripts\password.ts" />
     <TypeScriptCompile Include="Scripts\typings\c3\c3.d.ts" />
     <None Include="Scripts\typings\d3\d3.d.ts" />
     <None Include="Scripts\typings\d3\plugins\d3.superformula.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.dataTables\jquery.dataTables-1.9.4.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jquery.dataTables\jquery.dataTables.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <ItemGroup>

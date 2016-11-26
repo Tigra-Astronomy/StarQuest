@@ -33,8 +33,8 @@ namespace MS.Gamification
 
             bundles.Add(new ScriptBundle("~/bundles/jira").Include("~/Scripts/jira-web-collector.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/typescript").Include(
-                "~/Scripts/password.js"));
+            bundles.Add(new ScriptBundle("~/bundles/typescript")
+                .Include("~/Scripts/password.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
                 "~/Scripts/DataTables/jquery.dataTables.js",
