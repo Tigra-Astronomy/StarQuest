@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: UserAdministrationController.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-11-26@08:15
+// Last modified: 2016-11-30@23:47
 
 using System;
 using System.Collections.Generic;
@@ -428,7 +428,82 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         [HttpPost]
+        [MultipleButton(Name = "action", Argument = "BatchUnlockUsers")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> BatchUnlockUsers(IEnumerable<ManageUserViewModel> model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View("Index", model);
+                }
+            var selectedUsers = model.Where(p => p.Selected);
+
+            var successfulEmails = new List<string>();
+            var failedEmails = new Dictionary<string, string>();
+            foreach (var user in selectedUsers)
+                {
+                try
+                    {
+                    var result = await userManager.SetLockoutEndDateAsync(user.Id, DateTimeOffset.UtcNow);
+                    if (result.Succeeded)
+                        {
+                        successfulEmails.Add(user.Email);
+                        }
+                    else
+                        {
+                        failedEmails[user.Email] = result.Errors.FirstOrDefault();
+                        AddIdentityErrors(result);
+                        }
+                    }
+                catch (Exception ex)
+                    {
+                    failedEmails[user.Email] = ex.Message;
+                    }
+                }
+            ViewData["Message"] = $"{successfulEmails.Count} successfully unlocked, {failedEmails.Count} failed.";
+            return RedirectToAction("ManageUsers");
+            }
+
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "BatchSuspendUsers")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> BatchSuspendUsers(IEnumerable<ManageUserViewModel> model)
+            {
+            if (!ModelState.IsValid)
+                {
+                return View("Index", model);
+                }
+            var selectedUsers = model.Where(p => p.Selected);
+
+            var successfulEmails = new List<string>();
+            var failedEmails = new Dictionary<string, string>();
+            foreach (var user in selectedUsers)
+                {
+                try
+                    {
+                    var result = await userManager.SetLockoutEndDateAsync(user.Id, DateTimeOffset.MaxValue);
+                    if (result.Succeeded)
+                        {
+                        successfulEmails.Add(user.Email);
+                        }
+                    else
+                        {
+                        failedEmails[user.Email] = result.Errors.FirstOrDefault();
+                        AddIdentityErrors(result);
+                        }
+                    }
+                catch (Exception ex)
+                    {
+                    failedEmails[user.Email] = ex.Message;
+                    }
+                }
+            ViewData["Message"] = $"{successfulEmails.Count} successfully suspended, {failedEmails.Count} failed.";
+            return RedirectToAction("ManageUsers");
+            }
+
+        [HttpPost]
         [MultipleButton(Name = "action", Argument = "BatchResendInvitations")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> BatchResendInvitations(IEnumerable<ManageUserViewModel> model)
             {
             if (!ModelState.IsValid)

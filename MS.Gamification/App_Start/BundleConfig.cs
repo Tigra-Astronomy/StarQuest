@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: BundleConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-13@22:15
+// File: BundleConfig.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-01@01:54
 
 using System.Web.Optimization;
 
@@ -25,7 +25,7 @@ namespace MS.Gamification
             bundles.Add(new ScriptBundle("~/bundles/header").Include(
                 "~/Scripts/applicationInsights.js",
                 "~/Scripts/modernizr-*"
-                ));
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
@@ -49,7 +49,7 @@ namespace MS.Gamification
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/font-awesome.css",
-                "~/Content/site.css"));
+                "~/Content/Site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/c3Charts").Include(
                 "~/Scripts/d3.js",
@@ -62,13 +62,13 @@ namespace MS.Gamification
                 "~/Scripts/codemirror-3.01/codemirror.js",
                 "~/Scripts/codemirror-3.01/mode/xml.js",
                 "~/Scripts/preconditionReadonly.js"
-                ));
+            ));
 
             bundles.Add(new ScriptBundle("~/Scripts/preconditionEditor").Include(
                 "~/Scripts/codemirror-3.01/codemirror.js",
                 "~/Scripts/codemirror-3.01/mode/xml.js",
                 "~/Scripts/preconditionEditable.js"
-                ));
+            ));
 
             bundles.Add(new StyleBundle("~/Content/codeMirror.css").Include(
                 "~/Content/codemirror-3.01/codemirror.css",
