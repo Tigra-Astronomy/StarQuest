@@ -81,6 +81,7 @@ namespace MS.Gamification
                 RegisterServices(kernel);
                 // Register Ninject as the resolver for WebAPI controllers
                 GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
+                NinjectKernel = kernel;
                 return kernel;
                 }
             catch
@@ -89,6 +90,8 @@ namespace MS.Gamification
                 throw;
                 }
             }
+
+        public static IKernel NinjectKernel { get; set; }
 
         /// <summary>
         ///     Load your modules or register your services here!

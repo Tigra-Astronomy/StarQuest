@@ -26,6 +26,634 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="T:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory">
+            <summary>
+            A factory class for creating scheduled job instances using the Ninject DI kernel.
+            </summary>
+            <seealso cref="T:FluentScheduler.IJobFactory" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory.#ctor(Ninject.IKernel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory"/> class.
+            </summary>
+            <param name="kernel"></param>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Succeeded">
+            <summary>
+                The total number of observations that were created successfully.
+            </summary>
+            <value>The succeeded.</value>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Failed">
+            <summary>
+                The total number of observations that were not created.
+            </summary>
+            <value>The failed.</value>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Errors">
+            <summary>
+                The error that occurred for each user.
+            </summary>
+            <value>The errors.</value>
+        </member>
+        <member name="F:MS.Gamification.GameLogic.Constants.RFC822EmailPattern">
+            <summary>
+                RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.GameNotificationService">
+            <summary>
+                Notifies users of game events by email.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.IGameNotificationService" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
+            <summary>
+                Notifies the user that an observation they submitted has been approved by a moderator.
+            </summary>
+            <param name="observation">The observation that has been approved.</param>
+            <returns>An awaitable Task.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.BadgeAwarded(MS.Gamification.Models.Badge,MS.Gamification.Models.ApplicationUser,MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Notifies the user that they have been awarded a badge.
+            </summary>
+            <param name="badge">The badge that was awarded.</param>
+            <param name="user">The recipient user.</param>
+            <param name="track">The track that was completed resulting in the award.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.ObservationDetailsViewModel})">
+            <summary>
+                Notifies a user about pending observations.
+            </summary>
+            <param name="user">The user to be notified.</param>
+            <param name="observations">The list of pending observations.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Computes the percent complete for a set of challenges, given a set of eligible observations. The
+                computation is based on the number of points gained, rather than just a simple count.
+            </summary>
+            <param name="challenges">The set of challenges that represents 100% progress.</param>
+            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
+            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
+            <remarks>
+                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Creates observations in bulk, for the specified list of users.
+            </summary>
+            <param name="observation">The observation template.</param>
+            <param name="userIds">A list of user IDs.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.EvaluateBadges(MS.Gamification.Models.Observation)">
+            <summary>
+                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
+            </summary>
+            <param name="observation">The observation that has just been approved for the user.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Determines whether the supplied set of observations are sufficient to complete the given level.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="observations">The observations.</param>
+            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteMissionAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteLevelAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Creates the specified level according to game rules.
+                Throws an exception if the level was invalid or could not be created.
+            </summary>
+            <param name="newLevel">The new level.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Updates the level in the database with the supplied values, provided
+                that no game rules are violated.
+            </summary>
+            <param name="updatedLevel">The updated level (which must include the ID).</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the level update failed for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not created for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track could not be deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
+            <summary>
+                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="userId">The user.</param>
+            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.GameRulesService.AwardBadge(System.Int32,System.String)">
+            <summary>
+                Awards a badge to a user.
+            </summary>
+            <param name="badgeId">The badge identifier.</param>
+            <param name="userId">The user identifier.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IFileSystemService">
+            <summary>
+              Provides file system services
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IFileSystemService.FileExists(System.String)">
+            <summary>
+              Checks whether a file exists on disk.
+            </summary>
+            <param name="fullyQualifiedFileName">The fully qualified name of the file.</param>
+            <returns><c>true</c> if the file exists, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Computes the percent complete for a set of challenges, given a set of eligible observations. The
+                computation is based on the number of points gained, rather than just a simple count.
+            </summary>
+            <param name="challenges">The set of challenges that represents 100% progress.</param>
+            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
+            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
+            <remarks>
+                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
+                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+                Creates observations in bulk, for the specified list of users.
+            </summary>
+            <param name="observation">The observation template.</param>
+            <param name="userIds">A list of user IDs.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.EvaluateBadges(MS.Gamification.Models.Observation)">
+            <summary>
+                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
+            </summary>
+            <param name="observation">The observation that has just been approved for the user.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
+            <summary>
+                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="userId">The user.</param>
+            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
+            <summary>
+                Determines whether the supplied set of observations are sufficient to complete the given level.
+            </summary>
+            <param name="level">The level.</param>
+            <param name="observations">The observations.</param>
+            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteMissionAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission, if it is safe to do so.
+            </summary>
+            <param name="id">The identifier.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteLevelAsync(System.Int32)">
+            <summary>
+                Deletes the specified mission level, if it is safe to do so.
+            </summary>
+            <param name="levelId">The ID of the level to be deleted.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the level could not be deleted.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Creates the specified level according to game rules.
+                Throws an exception if the level was invalid or could not be created.
+            </summary>
+            <param name="newLevel">The new level.</param>
+            <exception cref="T:System.ArgumentException">Thrown if the level could not be created for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
+            <summary>
+                Updates the level in the database with the supplied values, provided
+                that no game rules are violated.
+            </summary>
+            <param name="updatedLevel">The updated level (which must include the ID).</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
+            <summary>
+                Creates a new mission track, subject to game logic rules.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track is not created for any reason.</exception>
+            <param name="newTrack">The new track.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteTrackAsync(System.Int32)">
+            <summary>
+                Deletes the track provided game rules allow it.
+            </summary>
+            <param name="id">The track ID.</param>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
+            <summary>
+                Updates a mission track from values in the submitted model, provided that game rules allow it.
+            </summary>
+            <param name="model">The model containing new values.</param>
+            <returns>Task.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
+            <summary>
+                A service that can notify users about certain game-related events.
+                Note that the notification service is only responsible for rendering the requested notification
+                on demand and it will not carry out any validation of game logic.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
+            <summary>
+                Notifies the user that an observation they submitted has been approved by a moderator.
+            </summary>
+            <param name="observation">The observation that has been approved.</param>
+            <returns>An awaitable Task.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.ObservationDetailsViewModel})">
+            <summary>
+                Notifies a user about pending observations.
+            </summary>
+            <param name="user">The user to be notified.</param>
+            <param name="observations">The list of pending observations.</param>
+            <returns>Task.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IImageStore">
+            <summary>
+                Represents a persistent store of named images.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.FindImage(System.String)">
+            <summary>
+                Finds and returns a matching image from the store; i fnone found,
+                returns the placeholder image.
+            </summary>
+            <param name="identifier">
+                The image identifier. How this is translated into an image file name is implementation specific.
+            </param>
+            <returns>
+                The fully qualified file name on disk of a matching image,
+                or if no matches were found, the fully qualified filename on disk of
+                a placeholder image (which is assumed to always exist).
+            </returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.MimeType(System.String)">
+            <summary>
+                Gets the MIME type of the specified image file
+            </summary>
+            <param name="identifier">The image identifier.</param>
+            <returns>The MIME type of the identified image, for example, "image/png".</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.Save(System.IO.Stream,System.String)">
+            <summary>
+                Persists the image bitmap into the image store, using the <paramref name="identifier" /> as the key.
+            </summary>
+            <param name="imageStream">The image bitmap.</param>
+            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IPreconditionXml">
+            <summary>
+            An object that has a precondition, expressed as an XML document
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1">
+            <summary>
+                A composite predicate that can contain zero or more subconditions.
+            </summary>
+            <typeparam name="T">The type of object that the predicate can be applied to.</typeparam>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
+            <summary>
+                Adds a subcondition to the composite predicate.
+            </summary>
+            <param name="condition">The subcondition.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.HasAny">
+            <summary>
+                A composite predicate that is true if any of its subconditions are true (logical OR).
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1">
+            <summary>
+                A composite predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
+                condition.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
+            <summary>
+                Adds a subcondition to the composite predicate.
+            </summary>
+            <param name="condition">The subcondition.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1">
+            <summary>
+                A predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
+                condition.
+            </summary>
+            <typeparam name="T">The type of the object to be evaluated.</typeparam>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.IPredicate`1.Evaluate(`0)">
+            <summary>
+                Evaluates the predicate against the specified object.
+            </summary>
+            <param name="candidate">The instance of <typeparamref name="T" /> being evaluated.</param>
+            <returns><c>true</c> if the instance satisfies the predicate, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser">
+            <summary>
+                Parses level precondition XML and builds a predicate expression tree that can be applied to a user to see if
+                the level is unlocked for that user.
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser.CreateCompositePredicate(MS.Gamification.GameLogic.Preconditions.ICompositePredicate{MS.Gamification.Models.ApplicationUser},System.Xml.Linq.XElement)">
+            <summary>
+                Recursively creates a composite predicate.
+            </summary>
+            <param name="predicate">The predicate already built.</param>
+            <param name="predicateXml">The predicate XML.</param>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ChallengesInMissionLevel">
+            <summary>
+                Returns all of the challenges associated with a mission Level.
+            </summary>
+            <seealso cref="T:MS.Gamification.Models.Challenge" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.LevelHasAssociatedObservations">
+            <summary>
+                A query specification that can be used to determine whether a given Mission Level has any observations
+                associated with it. The query returns a set of integers, which will be empty if no observations were found,
+                or will contain a single element representing the number of observations associated with the level. This is
+                designed to be convenient for use with <c>Repository.GetMaybe</c>.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ObservationsForUserMission">
+            <summary>
+                Specifies the set of observations submitted by a given user against the given Mission ID. Eagerly loads the
+                Challenge and Mission Track for each observation.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.QuerySpecification`1" />
+        </member>
+        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredLength">
+            <summary>Minimum required length</summary>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredComplexityFactors">
+            <summary>
+                The number of complexity factors that must be satisfied
+            </summary>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StarquestPasswordValidator.ValidateAsync(System.String)">
+            <summary>
+                Ensures that the string is of the required length and meets the configured requirements
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions">
+            <summary>
+                Extension methods used by <see cref="T:MS.Gamification.GameLogic.GenericFetchStrategy`1" />
+            </summary>
+            <remarks>
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions.FetchPathExpressionVisitor">
+            <summary>
+                Visits MemberExpression nodes in an expression tree and extracts the member names.
+            </summary>
+            <seealso cref="T:System.Linq.Expressions.ExpressionVisitor" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.GenericFetchStrategy`1">
+            <summary>
+                A default Fetch Strategy that will be suitable for most simple situations.
+            </summary>
+            <typeparam name="TEntity">Tee type of the root entity being queried</typeparam>
+            <remarks>
+                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IFetchStrategy`1">
+            <summary>
+            Defines an abstraction that enables a query to specify eager loading of related entities.
+            Entity Framework normally uses lazy loading by default and this can lead to inefficient queries,
+            notably the "N+1" problem (see http://stackoverflow.com/questions/97197/what-is-the-n1-selects-issue).
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <remarks>
+            Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.IQuerySpecification`2">
+            <summary>
+                Represents a query that filters a set of input entities and projects the results onto a set of output
+                entities.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The type of the projected output entities.</typeparam>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.IQuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.IQuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`1">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="T">The type of the input entities to be filtered and of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecification`2">
+            <summary>
+                Represents a projecting query specification, which filters a set of input entities and projects them onto a
+                set of output entities. The types of the input and output entities may be the same or different.
+            </summary>
+            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
+            <typeparam name="TOut">The projected type of the output entities.</typeparam>
+            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.QuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
+            <summary>
+                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
+            </summary>
+            <param name="items">The items to be filtered.</param>
+            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
+        </member>
+        <member name="P:MS.Gamification.GameLogic.QuerySpecification`2.FetchStrategy">
+            <summary>
+                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
+                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
+                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
+                ORM or storage engine is free to ignore the hint.
+            </summary>
+            <value>The fetch strategy.</value>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.StringExtensions">
+            <summary>
+                String extension methods.
+            </summary>
+            <remarks>
+                Internal use only. Driver and application developers should not rely on this class, because the interface
+                and method signatures may change at any time.
+            </remarks>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Head(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the head of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the head of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Tail(System.String,System.Int32)">
+            <summary>
+                Returns the specified number of characters from the tail of a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
+            <returns>The specified number of characters from the tail of the source string, as a new string.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)">
+            <summary>
+                Keeps only the wanted (that is, removes all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">A list of the wanted characters. All other characters will be removed.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all
+                the characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String,System.Char)">
+            <summary>
+                Keeps only the wanted (that is, replaces all unwanted characters) from the string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="keep">
+                A list of the wanted characters. All other characters will be replaced with
+                <paramref name="substitute" />.
+            </param>
+            <param name="substitute">The character that will replace all unwanted characters.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all the
+                characters were deleted or if the source string was null or empty.
+            </returns>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)">
+            <summary>
+                Removes all unwanted characters from a string.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="clean">A list of the unwanted characters. All other characters will be preserved.</param>
+            <returns>
+                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" />
+                if all of the characters were deleted or if the source string was null or empty.
+            </returns>
+            <remarks>
+                Contrast with <see cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+            </remarks>
+            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveHead(System.String,System.Int32)">
+            <summary>
+                Remove the head of the string, leaving the tail.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the head.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the head.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveTail(System.String,System.Int32)">
+            <summary>
+                Remove the tail of the string, leaving the head.
+            </summary>
+            <param name="source">The source string.</param>
+            <param name="length">Number of characters to remove from the tail.</param>
+            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the tail.</returns>
+        </member>
+        <member name="M:MS.Gamification.GameLogic.StringExtensions.ToHex(System.String)">
+            <summary>
+                Converts a tring to a hex representation, suitable for display in a debugger.
+            </summary>
+            <param name="source">The source string.</param>
+            <returns>A new string showing each character of the source string as a hex digit.</returns>
+        </member>
+        <member name="T:MS.Gamification.GameLogic.WebServerImageStore">
+            <summary>
+                Maps image names to static image files that are store on a web server, where the path to the images comes
+                from a setting in the Web.config file.
+            </summary>
+            <seealso cref="T:MS.Gamification.GameLogic.IImageStore" />
+        </member>
+        <member name="M:MS.Gamification.GameLogic.WebServerImageStore.EnumerateImages">
+            <summary>
+                Enumerates the image identifiers in the store.
+            </summary>
+            <returns>IEnumerable{string}.</returns>
+        </member>
         <member name="T:MS.Gamification.Areas.Admin.Controllers.MissionsController">
             <summary>
                 CRUD operations on Missions.
@@ -1096,605 +1724,6 @@
             <summary>
                 Initializes a new instance of the <see cref="T:System.Object" /> class.
             </summary>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Succeeded">
-            <summary>
-                The total number of observations that were created successfully.
-            </summary>
-            <value>The succeeded.</value>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Failed">
-            <summary>
-                The total number of observations that were not created.
-            </summary>
-            <value>The failed.</value>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.BatchCreateObservationsResult.Errors">
-            <summary>
-                The error that occurred for each user.
-            </summary>
-            <value>The errors.</value>
-        </member>
-        <member name="F:MS.Gamification.GameLogic.Constants.RFC822EmailPattern">
-            <summary>
-                RFC822-compatible email pattern, taken from http://regexlib.com/REDetails.aspx?regexp_id=26
-            </summary>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.GameNotificationService">
-            <summary>
-                Notifies users of game events by email.
-            </summary>
-            <seealso cref="T:MS.Gamification.GameLogic.IGameNotificationService" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
-            <summary>
-                Notifies the user that an observation they submitted has been approved by a moderator.
-            </summary>
-            <param name="observation">The observation that has been approved.</param>
-            <returns>An awaitable Task.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameNotificationService.BadgeAwarded(MS.Gamification.Models.Badge,MS.Gamification.Models.ApplicationUser,MS.Gamification.Models.MissionTrack)">
-            <summary>
-                Notifies the user that they have been awarded a badge.
-            </summary>
-            <param name="badge">The badge that was awarded.</param>
-            <param name="user">The recipient user.</param>
-            <param name="track">The track that was completed resulting in the award.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
-            <summary>
-                Computes the percent complete for a set of challenges, given a set of eligible observations. The
-                computation is based on the number of points gained, rather than just a simple count.
-            </summary>
-            <param name="challenges">The set of challenges that represents 100% progress.</param>
-            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
-            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
-            <remarks>
-                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
-            </remarks>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-                Creates observations in bulk, for the specified list of users.
-            </summary>
-            <param name="observation">The observation template.</param>
-            <param name="userIds">A list of user IDs.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.EvaluateBadges(MS.Gamification.Models.Observation)">
-            <summary>
-                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
-            </summary>
-            <param name="observation">The observation that has just been approved for the user.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
-            <summary>
-                Determines whether the supplied set of observations are sufficient to complete the given level.
-            </summary>
-            <param name="level">The level.</param>
-            <param name="observations">The observations.</param>
-            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
-            <exception cref="T:System.NotImplementedException"></exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteMissionAsync(System.Int32)">
-            <summary>
-                Deletes the specified mission, if it is safe to do so.
-            </summary>
-            <param name="id">The identifier.</param>
-            <returns>Task.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteLevelAsync(System.Int32)">
-            <summary>
-                Deletes the specified mission level, if it is safe to do so.
-            </summary>
-            <param name="levelId">The ID of the level to be deleted.</param>
-            <exception cref="T:System.InvalidOperationException">Thrown is the level was not deleted for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
-            <summary>
-                Creates the specified level according to game rules.
-                Throws an exception if the level was invalid or could not be created.
-            </summary>
-            <param name="newLevel">The new level.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
-            <summary>
-                Updates the level in the database with the supplied values, provided
-                that no game rules are violated.
-            </summary>
-            <param name="updatedLevel">The updated level (which must include the ID).</param>
-            <returns>Task.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the level update failed for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
-            <exception cref="T:System.InvalidOperationException">Thrown if the track was not created for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.DeleteTrackAsync(System.Int32)">
-            <summary>
-                Deletes the track provided game rules allow it.
-            </summary>
-            <param name="id">The track ID.</param>
-            <exception cref="T:System.InvalidOperationException">Thrown if the track could not be deleted for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
-            <summary>
-                Updates a mission track from values in the submitted model, provided that game rules allow it.
-            </summary>
-            <param name="model">The model containing new values.</param>
-            <returns>Task.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
-            <summary>
-                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
-            </summary>
-            <param name="level">The level.</param>
-            <param name="userId">The user.</param>
-            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.GameRulesService.AwardBadge(System.Int32,System.String)">
-            <summary>
-                Awards a badge to a user.
-            </summary>
-            <param name="badgeId">The badge identifier.</param>
-            <param name="userId">The user identifier.</param>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IFileSystemService">
-            <summary>
-              Provides file system services
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IFileSystemService.FileExists(System.String)">
-            <summary>
-              Checks whether a file exists on disk.
-            </summary>
-            <param name="fullyQualifiedFileName">The fully qualified name of the file.</param>
-            <returns><c>true</c> if the file exists, <c>false</c> otherwise.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.ComputePercentComplete(System.Collections.Generic.IEnumerable{MS.Gamification.Models.Challenge},System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
-            <summary>
-                Computes the percent complete for a set of challenges, given a set of eligible observations. The
-                computation is based on the number of points gained, rather than just a simple count.
-            </summary>
-            <param name="challenges">The set of challenges that represents 100% progress.</param>
-            <param name="eligibleObservations">The eligible observations for the set of challenges.</param>
-            <returns>The computed percentage, as an integer, guaranteed to be between 0% and 100% inclusive.</returns>
-            <remarks>
-                It is assumed that the set of observations has already been filtered for eligibility, e.g. by calling
-                <see cref="T:MS.Gamification.GameLogic.QuerySpecifications.EligibleObservationsForChallenges" />.
-            </remarks>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.BatchCreateObservations(MS.Gamification.Models.Observation,System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-                Creates observations in bulk, for the specified list of users.
-            </summary>
-            <param name="observation">The observation template.</param>
-            <param name="userIds">A list of user IDs.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.EvaluateBadges(MS.Gamification.Models.Observation)">
-            <summary>
-                Evaluates whether the user is entitled to any new badges, as a result of submitting an observation.
-            </summary>
-            <param name="observation">The observation that has just been approved for the user.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelUnlockedForUser(MS.Gamification.GameLogic.IPreconditionXml,System.String)">
-            <summary>
-                Determines whether a level is unlocked for a user by evaluating the level preconditions against that user.
-            </summary>
-            <param name="level">The level.</param>
-            <param name="userId">The user.</param>
-            <returns><c>true</c> if [is level unlocked for user] [the specified level]; otherwise, <c>false</c>.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.IsLevelComplete(MS.Gamification.Models.MissionLevel,System.Collections.Generic.IEnumerable{MS.Gamification.Models.Observation})">
-            <summary>
-                Determines whether the supplied set of observations are sufficient to complete the given level.
-            </summary>
-            <param name="level">The level.</param>
-            <param name="observations">The observations.</param>
-            <returns><c>true</c> if [is level complete] [the specified level]; otherwise, <c>false</c>.</returns>
-            <exception cref="T:System.NotImplementedException"></exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteMissionAsync(System.Int32)">
-            <summary>
-                Deletes the specified mission, if it is safe to do so.
-            </summary>
-            <param name="id">The identifier.</param>
-            <returns>Task.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the mission could not be deleted.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteLevelAsync(System.Int32)">
-            <summary>
-                Deletes the specified mission level, if it is safe to do so.
-            </summary>
-            <param name="levelId">The ID of the level to be deleted.</param>
-            <exception cref="T:System.InvalidOperationException">Thrown if the level could not be deleted.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
-            <summary>
-                Creates the specified level according to game rules.
-                Throws an exception if the level was invalid or could not be created.
-            </summary>
-            <param name="newLevel">The new level.</param>
-            <exception cref="T:System.ArgumentException">Thrown if the level could not be created for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateLevelAsync(MS.Gamification.Areas.Admin.ViewModels.MissionLevels.MissionLevelViewModel)">
-            <summary>
-                Updates the level in the database with the supplied values, provided
-                that no game rules are violated.
-            </summary>
-            <param name="updatedLevel">The updated level (which must include the ID).</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.CreateTrackAsync(MS.Gamification.Models.MissionTrack)">
-            <summary>
-                Creates a new mission track, subject to game logic rules.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Thrown if the track is not created for any reason.</exception>
-            <param name="newTrack">The new track.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.DeleteTrackAsync(System.Int32)">
-            <summary>
-                Deletes the track provided game rules allow it.
-            </summary>
-            <param name="id">The track ID.</param>
-            <exception cref="T:System.InvalidOperationException">Thrown if the track was not deleted for any reason.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameEngineService.UpdateTrackAsync(MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel)">
-            <summary>
-                Updates a mission track from values in the submitted model, provided that game rules allow it.
-            </summary>
-            <param name="model">The model containing new values.</param>
-            <returns>Task.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown if the track was not updated for any reason.</exception>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IGameNotificationService">
-            <summary>
-            A service that can notify users about certain game-related events.
-            Note that the notification service is only responsible for rendering the requested notification
-            on demand and it will not carry out any validation of game logic.
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.ObservationApproved(MS.Gamification.Models.Observation)">
-            <summary>
-                Notifies the user that an observation they submitted has been approved by a moderator.
-            </summary>
-            <param name="observation">The observation that has been approved.</param>
-            <returns>An awaitable Task.</returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IImageStore">
-            <summary>
-                Represents a persistent store of named images.
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IImageStore.FindImage(System.String)">
-            <summary>
-                Finds and returns a matching image from the store; i fnone found,
-                returns the placeholder image.
-            </summary>
-            <param name="identifier">
-                The image identifier. How this is translated into an image file name is implementation specific.
-            </param>
-            <returns>
-                The fully qualified file name on disk of a matching image,
-                or if no matches were found, the fully qualified filename on disk of
-                a placeholder image (which is assumed to always exist).
-            </returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IImageStore.MimeType(System.String)">
-            <summary>
-                Gets the MIME type of the specified image file
-            </summary>
-            <param name="identifier">The image identifier.</param>
-            <returns>The MIME type of the identified image, for example, "image/png".</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IImageStore.Save(System.IO.Stream,System.String)">
-            <summary>
-                Persists the image bitmap into the image store, using the <paramref name="identifier" /> as the key.
-            </summary>
-            <param name="imageStream">The image bitmap.</param>
-            <param name="identifier">The image identifier that can later be used to retrieve the image.</param>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IImageStore.EnumerateImages">
-            <summary>
-                Enumerates the image identifiers in the store.
-            </summary>
-            <returns>IEnumerable{string}.</returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IPreconditionXml">
-            <summary>
-            An object that has a precondition, expressed as an XML document
-            </summary>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1">
-            <summary>
-                A composite predicate that can contain zero or more subconditions.
-            </summary>
-            <typeparam name="T">The type of object that the predicate can be applied to.</typeparam>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.Preconditions.CompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
-            <summary>
-                Adds a subcondition to the composite predicate.
-            </summary>
-            <param name="condition">The subcondition.</param>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.Preconditions.HasAny">
-            <summary>
-                A composite predicate that is true if any of its subconditions are true (logical OR).
-            </summary>
-            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1" />
-        </member>
-        <member name="T:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1">
-            <summary>
-                A composite predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
-                condition.
-            </summary>
-            <seealso cref="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.Preconditions.ICompositePredicate`1.AddSubcondition(MS.Gamification.GameLogic.Preconditions.IPredicate{`0})">
-            <summary>
-                Adds a subcondition to the composite predicate.
-            </summary>
-            <param name="condition">The subcondition.</param>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.Preconditions.IPredicate`1">
-            <summary>
-                A predicate that can be applied to an instance of type <typeparamref name="T" />to see if it meets some
-                condition.
-            </summary>
-            <typeparam name="T">The type of the object to be evaluated.</typeparam>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.Preconditions.IPredicate`1.Evaluate(`0)">
-            <summary>
-                Evaluates the predicate against the specified object.
-            </summary>
-            <param name="candidate">The instance of <typeparamref name="T" /> being evaluated.</param>
-            <returns><c>true</c> if the instance satisfies the predicate, <c>false</c> otherwise.</returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser">
-            <summary>
-                Parses level precondition XML and builds a predicate expression tree that can be applied to a user to see if
-                the level is unlocked for that user.
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.Preconditions.LevelPreconditionParser.CreateCompositePredicate(MS.Gamification.GameLogic.Preconditions.ICompositePredicate{MS.Gamification.Models.ApplicationUser},System.Xml.Linq.XElement)">
-            <summary>
-                Recursively creates a composite predicate.
-            </summary>
-            <param name="predicate">The predicate already built.</param>
-            <param name="predicateXml">The predicate XML.</param>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ChallengesInMissionLevel">
-            <summary>
-                Returns all of the challenges associated with a mission Level.
-            </summary>
-            <seealso cref="T:MS.Gamification.Models.Challenge" />
-        </member>
-        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.LevelHasAssociatedObservations">
-            <summary>
-                A query specification that can be used to determine whether a given Mission Level has any observations
-                associated with it. The query returns a set of integers, which will be empty if no observations were found,
-                or will contain a single element representing the number of observations associated with the level. This is
-                designed to be convenient for use with <c>Repository.GetMaybe</c>.
-            </summary>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.ObservationsForUserMission">
-            <summary>
-                Specifies the set of observations submitted by a given user against the given Mission ID. Eagerly loads the
-                Challenge and Mission Track for each observation.
-            </summary>
-            <seealso cref="T:MS.Gamification.GameLogic.QuerySpecification`1" />
-        </member>
-        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredLength">
-            <summary>Minimum required length</summary>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredComplexityFactors">
-            <summary>
-                The number of complexity factors that must be satisfied
-            </summary>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StarquestPasswordValidator.ValidateAsync(System.String)">
-            <summary>
-                Ensures that the string is of the required length and meets the configured requirements
-            </summary>
-            <param name="item"></param>
-            <returns></returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions">
-            <summary>
-                Extension methods used by <see cref="T:MS.Gamification.GameLogic.GenericFetchStrategy`1" />
-            </summary>
-            <remarks>
-                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
-            </remarks>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.FetchStrategyExtensions.FetchPathExpressionVisitor">
-            <summary>
-                Visits MemberExpression nodes in an expression tree and extracts the member names.
-            </summary>
-            <seealso cref="T:System.Linq.Expressions.ExpressionVisitor" />
-        </member>
-        <member name="T:MS.Gamification.GameLogic.GenericFetchStrategy`1">
-            <summary>
-                A default Fetch Strategy that will be suitable for most simple situations.
-            </summary>
-            <typeparam name="TEntity">Tee type of the root entity being queried</typeparam>
-            <remarks>
-                Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
-            </remarks>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IFetchStrategy`1">
-            <summary>
-            Defines an abstraction that enables a query to specify eager loading of related entities.
-            Entity Framework normally uses lazy loading by default and this can lead to inefficient queries,
-            notably the "N+1" problem (see http://stackoverflow.com/questions/97197/what-is-the-n1-selects-issue).
-            </summary>
-            <typeparam name="TEntity"></typeparam>
-            <remarks>
-            Borrowed from http://blog.willbeattie.net/2011/02/specification-pattern-entity-framework.html
-            </remarks>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.IQuerySpecification`2">
-            <summary>
-                Represents a query that filters a set of input entities and projects the results onto a set of output
-                entities.
-            </summary>
-            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
-            <typeparam name="TOut">The type of the projected output entities.</typeparam>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.IQuerySpecification`2.FetchStrategy">
-            <summary>
-                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
-                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
-                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
-                ORM or storage engine is free to ignore the hint.
-            </summary>
-            <value>The fetch strategy.</value>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.IQuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
-            <summary>
-                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
-            </summary>
-            <param name="items">The items to be filtered.</param>
-            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.QuerySpecification`1">
-            <summary>
-                Represents a projecting query specification, which filters a set of input entities and projects them onto a
-                set of output entities. The types of the input and output entities may be the same or different.
-            </summary>
-            <typeparam name="T">The type of the input entities to be filtered and of the output entities.</typeparam>
-            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
-        </member>
-        <member name="T:MS.Gamification.GameLogic.QuerySpecification`2">
-            <summary>
-                Represents a projecting query specification, which filters a set of input entities and projects them onto a
-                set of output entities. The types of the input and output entities may be the same or different.
-            </summary>
-            <typeparam name="TIn">The type of the input entities to be filtered.</typeparam>
-            <typeparam name="TOut">The projected type of the output entities.</typeparam>
-            <seealso cref="T:MS.Gamification.GameLogic.IQuerySpecification`2" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.QuerySpecification`2.GetQuery(System.Linq.IQueryable{`0})">
-            <summary>
-                Gets the LINQ expression tree (<see cref="T:System.Linq.IQueryable`1" /> representing the filter.
-            </summary>
-            <param name="items">The items to be filtered.</param>
-            <returns>IQueryable{TOut}, a LINQ query expression with deferred execution.</returns>
-        </member>
-        <member name="P:MS.Gamification.GameLogic.QuerySpecification`2.FetchStrategy">
-            <summary>
-                Gets the fetch strategy, which specifies which entities are to be retrieved from storage. Many ORMs use
-                "lazy loading" which can lead to the "N+1 Query Problem" if related entities are enumerated. The fetch
-                strategy is a hint to whatever ORM is used as to which related entities should be loaded eagerly. The
-                ORM or storage engine is free to ignore the hint.
-            </summary>
-            <value>The fetch strategy.</value>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.StringExtensions">
-            <summary>
-                String extension methods.
-            </summary>
-            <remarks>
-                Internal use only. Driver and application developers should not rely on this class, because the interface
-                and method signatures may change at any time.
-            </remarks>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.Head(System.String,System.Int32)">
-            <summary>
-                Returns the specified number of characters from the head of a string.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
-            <returns>The specified number of characters from the head of the source string, as a new string.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.Tail(System.String,System.Int32)">
-            <summary>
-                Returns the specified number of characters from the tail of a string.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="length">The number of characters to be returned, must not be greater than the length of the string.</param>
-            <returns>The specified number of characters from the tail of the source string, as a new string.</returns>
-            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the requested number of characters exceeds the string length.</exception>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)">
-            <summary>
-                Keeps only the wanted (that is, removes all unwanted characters) from the string.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="keep">A list of the wanted characters. All other characters will be removed.</param>
-            <returns>
-                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all
-                the characters were deleted or if the source string was null or empty.
-            </returns>
-            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String,System.Char)">
-            <summary>
-                Keeps only the wanted (that is, replaces all unwanted characters) from the string.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="keep">
-                A list of the wanted characters. All other characters will be replaced with
-                <paramref name="substitute" />.
-            </param>
-            <param name="substitute">The character that will replace all unwanted characters.</param>
-            <returns>
-                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" /> if all the
-                characters were deleted or if the source string was null or empty.
-            </returns>
-            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.Clean(System.String,System.String)">
-            <summary>
-                Removes all unwanted characters from a string.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="clean">A list of the unwanted characters. All other characters will be preserved.</param>
-            <returns>
-                A new string with all of the unwanted characters deleted. Returns <see cref="F:System.String.Empty" />
-                if all of the characters were deleted or if the source string was null or empty.
-            </returns>
-            <remarks>
-                Contrast with <see cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
-            </remarks>
-            <seealso cref="M:MS.Gamification.GameLogic.StringExtensions.Keep(System.String,System.String)" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveHead(System.String,System.Int32)">
-            <summary>
-                Remove the head of the string, leaving the tail.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="length">Number of characters to remove from the head.</param>
-            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the head.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.RemoveTail(System.String,System.Int32)">
-            <summary>
-                Remove the tail of the string, leaving the head.
-            </summary>
-            <param name="source">The source string.</param>
-            <param name="length">Number of characters to remove from the tail.</param>
-            <returns>A new string containing the old string with <paramref name="length" /> characters removed from the tail.</returns>
-        </member>
-        <member name="M:MS.Gamification.GameLogic.StringExtensions.ToHex(System.String)">
-            <summary>
-                Converts a tring to a hex representation, suitable for display in a debugger.
-            </summary>
-            <param name="source">The source string.</param>
-            <returns>A new string showing each character of the source string as a hex digit.</returns>
-        </member>
-        <member name="T:MS.Gamification.GameLogic.WebServerImageStore">
-            <summary>
-                Maps image names to static image files that are store on a web server, where the path to the images comes
-                from a setting in the Web.config file.
-            </summary>
-            <seealso cref="T:MS.Gamification.GameLogic.IImageStore" />
-        </member>
-        <member name="M:MS.Gamification.GameLogic.WebServerImageStore.EnumerateImages">
-            <summary>
-                Enumerates the image identifiers in the store.
-            </summary>
-            <returns>IEnumerable{string}.</returns>
         </member>
         <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
             <summary>

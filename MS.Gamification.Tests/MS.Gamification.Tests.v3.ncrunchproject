@@ -1,0 +1,7 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <ConsiderInconclusiveTestsAsPassing>True</ConsiderInconclusiveTestsAsPassing>
+    <PreventSigningOfAssembly>True</PreventSigningOfAssembly>
+    <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
+  </Settings>
+</ProjectConfiguration>

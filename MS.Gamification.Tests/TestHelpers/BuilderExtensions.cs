@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: BuilderExtensions.cs  Created: 2016-07-02@02:53
-// Last modified: 2016-07-07@00:06
+// File: BuilderExtensions.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:25
 
 using System.Web.Mvc;
 
@@ -9,18 +9,22 @@ namespace MS.Gamification.Tests.TestHelpers
     {
     static class BuilderExtensions
         {
-        public static MissionBuilder<TController> WithMissionLevel<TController>(
-            this ControllerContextBuilder<TController> context, int missionId = 1)
-            where TController : ControllerBase
+        public static MissionBuilder WithMissionLevel(this DataContextBuilder builder, int missionId = 1)
             {
-            return new MissionBuilder<TController>(context, missionId);
+            return new MissionBuilder(builder, missionId);
             }
 
-        public static ObservationBuilder<TController> WithObservation<TController>(
-            this ControllerContextBuilder<TController> context)
+        public static ObservationBuilder WithObservation(this DataContextBuilder dcb)
+            {
+            return new ObservationBuilder(dcb);
+            }
+
+        public static ControllerContextBuilder<TController> WithTempData<TController>(this DataContextBuilder dcb, string key,
+            object value)
             where TController : ControllerBase
             {
-            return new ObservationBuilder<TController>(context);
+            var controllerContextBuilder = dcb as ControllerContextBuilder<TController>;
+            return controllerContextBuilder.WithTempData(key, value);
             }
         }
     }

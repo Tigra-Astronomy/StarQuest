@@ -1,29 +1,28 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionBuilder.TrackBuilder.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-27@19:55
+// File: MissionBuilder.TrackBuilder.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@21:11
 
 using System.Collections.Generic;
 using System.Threading;
-using System.Web.Mvc;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    partial class MissionBuilder<TContoller> where TContoller : ControllerBase
+    partial class MissionBuilder
         {
         internal partial class TrackBuilder
             {
             static int uniqueId;
-            readonly List<Challenge> challenges = new List<Challenge>();
-            readonly MissionBuilder<TContoller> mission;
-            readonly string trackAwardTitle;
             readonly Badge badge = new Badge {Id = uniqueId, ImageIdentifier = $"image-{uniqueId}", Name = $"Bade {uniqueId}"};
+            readonly List<Challenge> challenges = new List<Challenge>();
+            readonly MissionBuilder mission;
+            readonly string trackAwardTitle;
             int trackId;
             string trackName;
             int trackNumber;
 
-            public TrackBuilder(MissionBuilder<TContoller> mission, int trackNumber)
+            public TrackBuilder(MissionBuilder mission, int trackNumber)
                 {
                 this.mission = mission;
                 this.trackNumber = trackNumber;
@@ -44,7 +43,7 @@ namespace MS.Gamification.Tests.TestHelpers
                 return this;
                 }
 
-            public MissionBuilder<TContoller> BuildTrack()
+            public MissionBuilder BuildTrack()
                 {
                 var track = new MissionTrack
                     {

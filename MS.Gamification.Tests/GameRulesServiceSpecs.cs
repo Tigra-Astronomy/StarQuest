@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: GameRulesServiceSpecs.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-09@22:26
+// File: GameRulesServiceSpecs.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-12-12@23:38
 
 using System.Linq;
 using Machine.Specifications;
@@ -28,12 +28,13 @@ namespace MS.Gamification.Tests
         : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(100).Approved().BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(101).Approved().BuildObservation()
+            .WithData(d => d
+                .WithStandardUser("user", "Joe User")
+                .WithObservation().ForUserId("user").ForChallenge(100).Approved().BuildObservation()
+                .WithObservation().ForUserId("user").ForChallenge(101).Approved().BuildObservation())
             .Build();
         Because of = () =>
-            result = RulesService.IsLevelComplete(UnitOfWork.MissionLevels.Get(1), UnitOfWork.Observations.GetAll());
+                result = RulesService.IsLevelComplete(UnitOfWork.MissionLevels.Get(1), UnitOfWork.Observations.GetAll());
         It should_be_true = () => result.ShouldBeTrue();
         static bool result;
         }

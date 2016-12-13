@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: BulkCreateObservationsSpecs.cs  Created: 2016-07-24@06:21
-// Last modified: 2016-07-24@12:38
+// File: BulkCreateObservationsSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:42
 
 using System;
 using System.Linq;
@@ -29,23 +29,24 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Joe User")
-                .WithEntity(new Category {Id = 1, Name = "Test"})
-                .WithMissionLevel(1)
-                .WithTrack(1)
-                .WithChallenge("Unit test challenge").WithId(99).InCategory(1)
-                .WithValidationImage("unit-test-image").BuildChallenge()
-                .BuildTrack()
-                .BuildMission()
+                .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithEntity(new Category {Id = 1, Name = "Test"})
+                    .WithMissionLevel(1)
+                    .WithTrack(1)
+                    .WithChallenge("Unit test challenge").WithId(99).InCategory(1)
+                    .WithValidationImage("unit-test-image").BuildChallenge()
+                    .BuildTrack()
+                    .BuildMission())
                 .Build();
             observation = new Observation {ChallengeId = 99};
             GameService = ContextBuilder.RulesService;
             };
         Because of = () => result = GameService.BatchCreateObservations(observation, new[] {"user"});
         It should_contain_the_correct_validation_image_for_the_challenge = () =>
-            UnitOfWork.Observations.GetAll().Single().SubmittedImage.ShouldEqual("unit-test-image");
+                UnitOfWork.Observations.GetAll().Single().SubmittedImage.ShouldEqual("unit-test-image");
         It should_be_approved = () =>
-            UnitOfWork.Observations.GetAll().Single().Status.ShouldEqual(ModerationState.Approved);
+                UnitOfWork.Observations.GetAll().Single().Status.ShouldEqual(ModerationState.Approved);
 
         It should_report_one_success = () => result.Succeeded.ShouldEqual(1);
         It should_report_no_errors = () => result.Failed.ShouldEqual(0);
@@ -61,15 +62,16 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Joe User")
-                .WithEntity(new Category {Id = 1, Name = "Test"})
-                .WithMissionLevel(1)
-                .WithTrack(1)
-                .WithChallenge("Unit test challenge").WithId(99).InCategory(1)
-                .WithValidationImage("unit-test-image").BuildChallenge()
-                .BuildTrack()
-                .BuildMission()
-                .WithObservation().ForChallenge(99).ForUserId("user").At(StartOfDay).BuildObservation()
+                .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithEntity(new Category {Id = 1, Name = "Test"})
+                    .WithMissionLevel(1)
+                    .WithTrack(1)
+                    .WithChallenge("Unit test challenge").WithId(99).InCategory(1)
+                    .WithValidationImage("unit-test-image").BuildChallenge()
+                    .BuildTrack()
+                    .BuildMission()
+                    .WithObservation().ForChallenge(99).ForUserId("user").At(StartOfDay).BuildObservation())
                 .Build();
             observation = new Observation {ChallengeId = 99, ObservationDateTimeUtc = EndOfDay};
             GameService = ContextBuilder.RulesService;

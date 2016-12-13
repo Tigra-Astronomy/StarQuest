@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionTrackSpecs.cs  Created: 2016-08-10@17:56
-// Last modified: 2016-08-13@21:48
+// File: MissionTrackSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:33
 
 using System;
 using System.Linq;
@@ -155,9 +155,10 @@ namespace MS.Gamification.Tests.GameLogic
          *  with a single track number 1
          */
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMissionLevel(2).WithId(99).Level(1)
-            .WithTrack(1).WithName("target").BuildTrack()
-            .BuildMission()
+            .WithData(d => d
+                .WithMissionLevel(2).WithId(99).Level(1)
+                .WithTrack(1).WithName("target").BuildTrack()
+                .BuildMission())
             .Build();
         Because of = () =>
             {
@@ -189,8 +190,9 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Joe Test")
-                .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
+                .WithData(d => d
+                    .WithStandardUser("user", "Joe Test")
+                    .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation())
                 .Build();
             };
         Because of = () => Exception = Catch.Exception(() => RulesService.DeleteTrackAsync(1).Await());

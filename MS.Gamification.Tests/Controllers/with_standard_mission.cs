@@ -1,11 +1,10 @@
 // This file is part of the MS.Gamification project
 // 
-// File: with_standard_mission.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-08@22:57
+// File: with_standard_mission.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-13@00:00
 
 using System.Web.Mvc;
 using Machine.Specifications;
-using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers
@@ -33,21 +32,6 @@ namespace MS.Gamification.Tests.Controllers
 
     class with_standard_mission<TController> : with_mvc_controller<TController> where TController : Controller
         {
-        Establish context = () => ContextBuilder
-            .WithEntity(new Category {Id = 10, Name = "Phase"})
-            .WithEntity(new Category {Id = 20, Name = "Planet"})
-            .WithEntity(new Category {Id = 30, Name = "Open Cluster"})
-            .WithEntity(new Category {Id = 40, Name = "Galaxy"})
-            .WithMissionLevel().WithId(1).Level(1)
-            .WithTrack(1).WithId(1)
-            .WithChallenge("See the New Moon").WithId(100).InCategory(10).BuildChallenge()
-            .WithChallenge("See the Full Moon").WithId(101).InCategory(10).BuildChallenge().BuildTrack()
-            .WithTrack(2).WithId(2)
-            .WithChallenge("See Jupiter").WithId(200).InCategory(20).BuildChallenge()
-            .WithChallenge("See Saturn").WithId(201).InCategory(20).BuildChallenge().BuildTrack()
-            .WithTrack(3).WithId(3)
-            .WithChallenge("See the Pleiades").WithId(300).InCategory(30).BuildChallenge()
-            .WithChallenge("See Andromeda").WithId(400).InCategory(40).BuildChallenge().BuildTrack()
-            .BuildMission();
+        Establish context = () => ContextBuilder.WithData(TestData.CreateStandardMissionData);
         }
     }
