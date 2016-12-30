@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModeratorDailySummaryTaskSpecs.cs  Created: 2016-12-12@19:45
-// Last modified: 2016-12-13@01:14
+// Last modified: 2016-12-13@04:11
 
 using System.Collections.Generic;
 using FakeItEasy;
@@ -10,7 +10,7 @@ using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.ScheduledTasks;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
-using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.Moderation;
 
 namespace MS.Gamification.Tests.ScheduledJobs
     {
@@ -29,7 +29,7 @@ namespace MS.Gamification.Tests.ScheduledJobs
         It should_not_send_any_notifications = () =>
             A.CallTo(() => JobContextBuilder.Notifier.PendingObservationSummary(
                     A<ApplicationUser>.Ignored,
-                    A<IEnumerable<ObservationDetailsViewModel>>.Ignored))
+                    A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustNotHaveHappened();
         }
 
@@ -41,17 +41,17 @@ namespace MS.Gamification.Tests.ScheduledJobs
             Job = JobContextBuilder
                 .NotifyWith(A.Fake<IGameNotificationService>())
                 .WithData(d => d
-                        .WithModerator("moderator", "Joe Moderator")
+                        .WithModerator("mod", "Joe Moderator")
                         .WithStandardUser("user", "Joe User")
-                        .WithObservation().AwaitingModeration().ForUserId("user").BuildObservation()
+                        .WithObservation().WithId(2).AwaitingModeration().ForUserId("user").ForChallenge(100).BuildObservation()
                 )
                 .Build();
             };
         Because of = () => Job.Execute();
         It should_send_one_notification = () =>
             A.CallTo(() => JobContextBuilder.Notifier.PendingObservationSummary(
-                    A<ApplicationUser>.That.Matches(p => p.Id == "moderator"),
-                    A<IEnumerable<ObservationDetailsViewModel>>.Ignored))
+                    A<ApplicationUser>.That.Matches(p => p.Id == "mod"),
+                    A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         }
     }

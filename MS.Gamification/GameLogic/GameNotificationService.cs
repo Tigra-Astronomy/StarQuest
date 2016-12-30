@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: GameNotificationService.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-12-13@00:29
+// Last modified: 2016-12-13@03:32
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
-using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.Moderation;
 using NLog;
 using RazorEngine.Templating;
 
@@ -95,7 +95,7 @@ namespace MS.Gamification.GameLogic
         /// <param name="observations">The list of pending observations.</param>
         /// <returns>Task.</returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public Task PendingObservationSummary(ApplicationUser user, IEnumerable<ObservationDetailsViewModel> observations)
+        public Task PendingObservationSummary(ApplicationUser user, IEnumerable<ModerationQueueItem> observations)
             {
             throw new NotImplementedException();
             }

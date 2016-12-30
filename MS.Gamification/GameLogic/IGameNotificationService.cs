@@ -1,12 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IGameNotificationService.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-12-13@00:29
+// Last modified: 2016-12-13@03:30
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MS.Gamification.Models;
-using MS.Gamification.ViewModels;
+using MS.Gamification.ViewModels.Moderation;
 
 namespace MS.Gamification.GameLogic
     {
@@ -32,6 +32,6 @@ namespace MS.Gamification.GameLogic
         /// <param name="user">The user to be notified.</param>
         /// <param name="observations">The list of pending observations.</param>
         /// <returns>Task.</returns>
-        Task PendingObservationSummary(ApplicationUser user, IEnumerable<ObservationDetailsViewModel> observations);
+        Task PendingObservationSummary(ApplicationUser user, IEnumerable<ModerationQueueItem> observations);
         }
     }

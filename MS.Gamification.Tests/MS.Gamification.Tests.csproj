@@ -123,6 +123,10 @@
       <HintPath>..\packages\PostSharp.Patterns.Common.4.3.24\lib\net45\PostSharp.Patterns.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PostSharp.Patterns.Threading, Version=4.3.24.0, Culture=neutral, PublicKeyToken=e7f631e6ce13f078, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Patterns.Threading.4.3.24\lib\net45\PostSharp.Patterns.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -205,6 +209,7 @@
     <Compile Include="ScheduledJobs\ModeratorDailySummaryTaskSpecs.cs" />
     <Compile Include="ScheduledJobs\SchedulerContextBuilder.cs" />
     <Compile Include="ScheduledJobs\with_job_context.cs" />
+    <Compile Include="TestHelpers\ApplicationUserBadges.cs" />
     <Compile Include="TestHelpers\BuilderExtensions.cs" />
     <Compile Include="TestHelpers\ChallengeWithoutNavigationPropertiesComparer.cs" />
     <Compile Include="TestHelpers\ControllerContextBuilder.cs" />

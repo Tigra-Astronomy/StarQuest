@@ -82,7 +82,7 @@
             <param name="user">The recipient user.</param>
             <param name="track">The track that was completed resulting in the award.</param>
         </member>
-        <member name="M:MS.Gamification.GameLogic.GameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.ObservationDetailsViewModel})">
+        <member name="M:MS.Gamification.GameLogic.GameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.Moderation.ModerationQueueItem})">
             <summary>
                 Notifies a user about pending observations.
             </summary>
@@ -311,7 +311,7 @@
             <param name="observation">The observation that has been approved.</param>
             <returns>An awaitable Task.</returns>
         </member>
-        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.ObservationDetailsViewModel})">
+        <member name="M:MS.Gamification.GameLogic.IGameNotificationService.PendingObservationSummary(MS.Gamification.Models.ApplicationUser,System.Collections.Generic.IEnumerable{MS.Gamification.ViewModels.Moderation.ModerationQueueItem})">
             <summary>
                 Notifies a user about pending observations.
             </summary>
@@ -441,6 +441,12 @@
                 Challenge and Mission Track for each observation.
             </summary>
             <seealso cref="T:MS.Gamification.GameLogic.QuerySpecification`1" />
+        </member>
+        <member name="T:MS.Gamification.GameLogic.QuerySpecifications.UsersInRole">
+            <summary>
+                Matches all the users who have the specified role.
+            </summary>
+            <seealso cref="T:MS.Gamification.Models.ApplicationUser" />
         </member>
         <member name="P:MS.Gamification.GameLogic.StarquestPasswordValidator.RequiredLength">
             <summary>Minimum required length</summary>

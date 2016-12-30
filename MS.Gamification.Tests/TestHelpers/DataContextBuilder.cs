@@ -1,9 +1,11 @@
 // This file is part of the MS.Gamification project
 // 
 // File: DataContextBuilder.cs  Created: 2016-12-12@20:48
-// Last modified: 2016-12-12@23:11
+// Last modified: 2016-12-30@08:18
 
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using Effort.Extra;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
@@ -18,14 +20,18 @@ namespace MS.Gamification.Tests.TestHelpers
 
         public IUnitOfWork UnitOfWork { get; internal set; }
 
+        public DbContext DataContext => uowBuilder.DataContext;
+
+        public DbConnection DataConnection => uowBuilder.DataConnection;
+
         /// <summary>
         ///     Adds a user to the identity store and assigns the Moderator role.
         /// </summary>
         /// <param name="id">The user's unique identifier.</param>
         /// <param name="username">The user's login name.</param>
         /// <returns>
-        ///     A reference to this <see cref="ControllerContextBuilder{TController}" /> that may be used to fluently
-        ///     chain operations.
+        ///     A reference to this <see cref="ControllerContextBuilder{TController}" /> that may be
+        ///     used to fluently chain operations.
         /// </returns>
         public DataContextBuilder WithModerator(string id, string username)
             {
@@ -38,7 +44,12 @@ namespace MS.Gamification.Tests.TestHelpers
             var user = new ApplicationUser {Id = id, UserName = username, Email = $"{id}@nowhere.nw", EmailConfirmed = true};
             foreach (var role in roles)
                 {
-                user.Roles.Add(new IdentityUserRole {RoleId = role, UserId = id});
+                var identityRole = new IdentityRole(role);
+                var identityUserRole = new IdentityUserRole {RoleId = identityRole.Id, UserId = id};
+                user.Roles.Add(identityUserRole);
+                data.Table<IdentityRole>("AspNetRoles").Add(identityRole);
+                data.Table<IdentityUserRole>("AspNetUserRoles")
+                    .Add(identityUserRole);
                 }
             data.Table<ApplicationUser>("AspNetUsers").Add(user);
             }
@@ -110,9 +121,10 @@ namespace MS.Gamification.Tests.TestHelpers
                 user.Badges.Add(badgeToAdd);
                 badgeToAdd.Users.Add(user);
                 data.Table<Badge>().Add(badgeToAdd);
+                data.Table<ApplicationUserBadge>()
+                    .Add(new ApplicationUserBadge {ApplicationUser_Id = user.Id, Badge_Id = badgeId});
                 }
             data.Table<ApplicationUser>("AspNetUsers").Add(user);
-
             return this;
             }
 

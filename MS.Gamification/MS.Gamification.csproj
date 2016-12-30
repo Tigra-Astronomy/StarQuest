@@ -487,6 +487,7 @@
     <Compile Include="DataAccess\Maybe.cs" />
     <Compile Include="DataAccess\PicklistItem.cs" />
     <Compile Include="GameLogic\StringExtensions.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\UsersInRole.cs" />
     <Compile Include="GameLogic\WebServerImageStore.cs" />
     <Compile Include="GameLogic\WindowsFileSystem.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
