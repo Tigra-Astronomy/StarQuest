@@ -27,7 +27,6 @@ namespace MS.Gamification.GameLogic.QuerySpecifications
 
         public override IQueryable<ApplicationUser> GetQuery(IQueryable<ApplicationUser> items)
             {
-            var identityRoles = roleManager.Roles.Where(p => p.Name == this.role);
             var usersInRole = from identityRole in roleManager.Roles
                               where identityRole.Name == role
                               from roleUser in identityRole.Users

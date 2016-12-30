@@ -1,11 +1,12 @@
 // This file is part of the MS.Gamification project
 // 
 // File: DataContextBuilder.cs  Created: 2016-12-12@20:48
-// Last modified: 2016-12-30@08:18
+// Last modified: 2016-12-30@08:49
 
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Linq;
 using Effort.Extra;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.DataAccess;
@@ -44,14 +45,23 @@ namespace MS.Gamification.Tests.TestHelpers
             var user = new ApplicationUser {Id = id, UserName = username, Email = $"{id}@nowhere.nw", EmailConfirmed = true};
             foreach (var role in roles)
                 {
-                var identityRole = new IdentityRole(role);
+                var identityRole = GetOrCreateIdentityRole(role);
                 var identityUserRole = new IdentityUserRole {RoleId = identityRole.Id, UserId = id};
                 user.Roles.Add(identityUserRole);
-                data.Table<IdentityRole>("AspNetRoles").Add(identityRole);
                 data.Table<IdentityUserRole>("AspNetUserRoles")
                     .Add(identityUserRole);
                 }
             data.Table<ApplicationUser>("AspNetUsers").Add(user);
+            }
+
+        IdentityRole GetOrCreateIdentityRole(string roleName)
+            {
+            var existingRole = data.Table<IdentityRole>("AspNetRoles").SingleOrDefault(p => p.Name == roleName);
+            if (existingRole != null)
+                return existingRole;
+            var identityRole = new IdentityRole(roleName);
+            data.Table<IdentityRole>("AspNetRoles").Add(identityRole);
+            return identityRole;
             }
 
         /// <summary>
