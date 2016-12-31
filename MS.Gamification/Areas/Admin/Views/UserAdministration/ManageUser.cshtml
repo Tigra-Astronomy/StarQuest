@@ -67,6 +67,7 @@
     <div class="panel-body">
         @using (Html.BeginForm("AddRole", "UserAdministration"))
             {
+            @Html.AntiForgeryToken()
             <div class="row">
                 @Html.ValidationSummary()
                 <div class="col-xs-3">

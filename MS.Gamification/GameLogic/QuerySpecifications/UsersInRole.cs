@@ -19,7 +19,7 @@ namespace MS.Gamification.GameLogic.QuerySpecifications
         private readonly string role;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public UsersInRole(string role, RoleManager<IdentityRole> roleManager )
+        public UsersInRole(string role, RoleManager<IdentityRole> roleManager)
             {
             this.role = role;
             this.roleManager = roleManager;
@@ -27,12 +27,11 @@ namespace MS.Gamification.GameLogic.QuerySpecifications
 
         public override IQueryable<ApplicationUser> GetQuery(IQueryable<ApplicationUser> items)
             {
-            var usersInRole = from identityRole in roleManager.Roles
-                              where identityRole.Name == role
-                              from roleUser in identityRole.Users
-                              join user in items on roleUser.UserId equals user.Id
+            var targetRoleId = roleManager.Roles.Single(p => p.Name == role).Id;
+            var usersInRole = from user in items
+                              where user.Roles.Any(p => p.RoleId == targetRoleId)
                               select user;
             return usersInRole;
             }
-    }
+        }
     }

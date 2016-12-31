@@ -4,6 +4,14 @@
         <name>MS.Gamification</name>
     </assembly>
     <members>
+        <member name="M:MS.Gamification.Startup.CreateSchedulerCompositionRoot">
+            <summary>
+                Creates a DI container for the scheduler service. Tasks execute outside of any web
+                request, so we can't use any services that rely on a HttpContext. Similarly,  we
+                cannot use InRequestScope() so we must use InTransientScope() or InsingletonScope()
+                instead.
+            </summary>
+        </member>
         <member name="M:MS.Gamification.NinjectWebCommon.Start">
             <summary>
                 Starts the application
@@ -28,13 +36,13 @@
         </member>
         <member name="T:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory">
             <summary>
-            A factory class for creating scheduled job instances using the Ninject DI kernel.
+                A factory class for creating scheduled job instances using the Ninject DI kernel.
             </summary>
             <seealso cref="T:FluentScheduler.IJobFactory" />
         </member>
         <member name="M:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory.#ctor(Ninject.IKernel)">
             <summary>
-            Initializes a new instance of the <see cref="T:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory"/> class.
+                Initializes a new instance of the <see cref="T:MS.Gamification.GameLogic.ScheduledTasks.NinjectScheduledTaskFactory" /> class.
             </summary>
             <param name="kernel"></param>
         </member>

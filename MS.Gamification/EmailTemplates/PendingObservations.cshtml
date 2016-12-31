@@ -1,0 +1,39 @@
+﻿@inherits RazorEngine.Templating.TemplateBase<MS.Gamification.EmailTemplates.PendingObservationsEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+
+<h2>Pending Observations Awaiting Moderation</h2>
+<p>
+    There are @Model.PendingObservations.Count() observations awaiting moderation.
+    Please visit the
+    <a href="http://starquest.monktonstargazers.org/Moderation">moderator dashboard</a>
+    and review these items.
+</p>
+<p>
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>User</th>
+            <th>Challenge</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var observation in Model.PendingObservations)
+            {
+            <tr>
+                <td>@observation.DateTime</td>
+                <td>@observation.UserName</td>
+                <td>@observation.ChallengeName</td>
+                <td></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</p>
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

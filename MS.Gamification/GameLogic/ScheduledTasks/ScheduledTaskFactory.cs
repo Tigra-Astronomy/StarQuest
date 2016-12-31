@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Dependencies;
+﻿// This file is part of the MS.Gamification project
+// 
+// File: ScheduledTaskFactory.cs  Created: 2016-12-12@17:35
+// Last modified: 2016-12-31@09:48
+
 using FluentScheduler;
 using Ninject;
 using NLog;
@@ -10,21 +10,21 @@ using NLog;
 namespace MS.Gamification.GameLogic.ScheduledTasks
     {
     /// <summary>
-    /// A factory class for creating scheduled job instances using the Ninject DI kernel.
+    ///     A factory class for creating scheduled job instances using the Ninject DI kernel.
     /// </summary>
     /// <seealso cref="FluentScheduler.IJobFactory" />
     public class NinjectScheduledTaskFactory : IJobFactory
         {
-        private readonly IKernel services;
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+        private readonly IKernel services;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NinjectScheduledTaskFactory"/> class.
+        ///     Initializes a new instance of the <see cref="NinjectScheduledTaskFactory" /> class.
         /// </summary>
         /// <param name="kernel"></param>
         public NinjectScheduledTaskFactory(IKernel kernel)
-        {
-            this.services = kernel;
+            {
+            services = kernel;
             }
 
         public IJob GetJobInstance<TJob>() where TJob : IJob

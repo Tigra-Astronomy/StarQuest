@@ -1,4 +1,11 @@
-﻿using FluentScheduler;
+﻿// This file is part of the MS.Gamification project
+// 
+// File: StarQuestScheduledJobs.cs  Created: 2016-12-12@18:35
+// Last modified: 2016-12-31@13:38
+
+using System;
+using System.Configuration;
+using FluentScheduler;
 
 namespace MS.Gamification.GameLogic.ScheduledTasks
     {
@@ -6,7 +13,12 @@ namespace MS.Gamification.GameLogic.ScheduledTasks
         {
         public StarQuestScheduledJobs()
             {
-            Schedule<ModeratorDailySummaryTask>().ToRunEvery(1).Days().At(9, 0);
+            var moderatorDailySummarySetting = ConfigurationManager.AppSettings["DailyModeratorNotificationTime"];
+            var moderatorDailySummary = TimeSpan.Parse(moderatorDailySummarySetting);
+            Schedule<ModeratorDailySummaryTask>()
+                .ToRunEvery(1)
+                .Days()
+                .At(moderatorDailySummary.Hours, moderatorDailySummary.Minutes);
             }
         }
     }

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: NinjectWebCommon.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-29@22:41
+// File: NinjectWebCommon.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-31@10:18
 
 using System;
 using System.Configuration;
@@ -21,10 +21,8 @@ using MS.Gamification.App_Start;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.GameLogic;
-using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using Ninject;
-using Ninject.Activation;
 using Ninject.Web.Common;
 using Owin;
 using RazorEngine;
@@ -41,7 +39,11 @@ namespace MS.Gamification
         {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
-        private static IDataProtectionProvider DataProtectionProvider { get; set; }
+        internal static IDataProtectionProvider DataProtectionProvider { get; set; }
+
+        public static IKernel NinjectKernel { get; set; }
+
+        public static string RazorEngineTemplatePath { get; private set; }
 
         /// <summary>
         ///     Starts the application
@@ -90,8 +92,6 @@ namespace MS.Gamification
                 throw;
                 }
             }
-
-        public static IKernel NinjectKernel { get; set; }
 
         /// <summary>
         ///     Load your modules or register your services here!
@@ -143,13 +143,20 @@ namespace MS.Gamification
             kernel.Bind<IGameNotificationService>().To<GameNotificationService>().InRequestScope();
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
             kernel.Bind<IMapper>().ToMethod(m => mapperConfiguration.CreateMapper()).InSingletonScope();
-            kernel.Bind<IRazorEngineService>().ToMethod(CreateRazorEngineService).InSingletonScope();
+            ResolveRazorEngineTemplatePath(kernel);
+            kernel.Bind<IRazorEngineService>()
+                .ToMethod(ctx => CreateRazorEngineService(RazorEngineTemplatePath))
+                .InSingletonScope();
             }
 
-        private static IRazorEngineService CreateRazorEngineService(IContext context)
+        private static void ResolveRazorEngineTemplatePath(IKernel kernel)
             {
-            var util = context.Kernel.Get<HttpServerUtilityBase>();
-            var templatePath = util.MapPath("~/EmailTemplates");
+            var util = kernel.Get<HttpServerUtilityBase>();
+            RazorEngineTemplatePath = util.MapPath("~/EmailTemplates");
+            }
+
+        internal static IRazorEngineService CreateRazorEngineService(string templatePath)
+            {
             var config = new TemplateServiceConfiguration
                 {
                 Language = Language.CSharp,
