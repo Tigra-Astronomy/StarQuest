@@ -1,9 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ModeratorDailySummaryTask.cs  Created: 2016-12-12@16:04
-// Last modified: 2016-12-30@03:46
+// Last modified: 2016-12-31@18:47
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using FluentScheduler;
 using Microsoft.AspNet.Identity;
@@ -70,7 +73,19 @@ namespace MS.Gamification.GameLogic.ScheduledTasks
                 return;
             foreach (var moderator in moderators)
                 {
-                notifier.PendingObservationSummary(moderator, pendingObservations);
+                notifier.PendingObservationSummary(moderator, pendingObservations).Wait();
+                }
+            try
+                {
+                log.Debug("Waiting for notification tasks to complete");
+                }
+            catch (Exception ex)
+                {
+                log.Debug(ex, "Notification task threw exception");
+                }
+            finally
+                {
+                log.Debug("All notification tasks complete");
                 }
             }
         }
