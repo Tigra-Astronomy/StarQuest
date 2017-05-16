@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ObservationController.cs  Created: 2016-08-20@23:12
-// Last modified: 2016-11-01@19:22
+// File: ObservationController.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-01@00:17
 
 using System;
 using System.Collections.Generic;
@@ -54,10 +54,15 @@ namespace MS.Gamification.Controllers
             model.ValidationImages = validationImages.ToList();
 
 
+            AddObservationPickLists(model);
+            return View(model);
+            }
+
+        private static void AddObservationPickLists(SubmitObservationViewModel model)
+            {
             model.EquipmentPicker = PickListExtensions.FromEnum<ObservingEquipment>().ToSelectList();
             model.SeeingPicker = PickListExtensions.FromEnum<AntoniadiScale>().ToSelectList();
             model.TransparencyPicker = PickListExtensions.FromEnum<TransparencyLevel>().ToSelectList();
-            return View(model);
             }
 
         private IEnumerable<Challenge> IncorrectImagesForChallenge(Challenge challenge)
@@ -153,6 +158,11 @@ namespace MS.Gamification.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitObservation(SubmitObservationViewModel model)
             {
+            if (!ModelState.IsValid)
+                {
+                AddObservationPickLists(model);
+                return View(model);
+                }
             var observation = mapper.Map<SubmitObservationViewModel, Observation>(model);
             observation.UserId = webUser.UniqueId;
             var maybeChallenge = uow.Challenges.GetMaybe(model.ChallengeId);

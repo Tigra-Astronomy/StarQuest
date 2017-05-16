@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ApplicationDbContext.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-22@04:58
+// File: ApplicationDbContext.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-13@03:51
 
 using System.Data.Common;
 using System.Data.Entity;
@@ -24,19 +24,19 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         /// <param name="connection">A configured database connection.</param>
         public ApplicationDbContext(DbConnection connection) : base(connection, true) {}
 
-        public virtual DbSet<Challenge> Challenges { get; set; }
+        public virtual IDbSet<Challenge> Challenges { get; set; }
 
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual IDbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<MissionLevel> MissionLevels { get; set; }
+        public virtual IDbSet<MissionLevel> MissionLevels { get; set; }
 
-        public virtual DbSet<MissionTrack> MissionTracks { get; set; }
+        public virtual IDbSet<MissionTrack> MissionTracks { get; set; }
 
-        public virtual DbSet<Observation> Observations { get; set; }
+        public virtual IDbSet<Observation> Observations { get; set; }
 
-        public virtual DbSet<Mission> Missions { get; set; }
+        public virtual IDbSet<Mission> Missions { get; set; }
 
-        public virtual DbSet<Badge> Badges { get; set; }
+        public virtual IDbSet<Badge> Badges { get; set; }
 
         public static ApplicationDbContext Create()
             {

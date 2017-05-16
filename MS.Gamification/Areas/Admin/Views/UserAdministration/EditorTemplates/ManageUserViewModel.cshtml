@@ -1,0 +1,48 @@
+﻿@model MS.Gamification.Areas.Admin.ViewModels.ManageUserViewModel
+    
+<tr>
+    <td>
+        @Html.CheckBoxFor(model => model.Selected, new Dictionary<string, object>
+            {
+            {"class", "data"},
+            {"data-email-verified", Model.EmailVerified},
+            {"data-has-password", Model.HasValidPassword},
+            {"data-account-locked", Model.AccountLocked},
+            })
+        @Html.HiddenFor(model => model.Id)
+    </td>
+
+    <td>@Model.Username</td>
+    <td>
+        @Model.Email
+        @Html.HiddenFor(model=>model.Email)
+   </td>
+    <td>
+        @if (Model.EmailVerified)
+            {
+            <i class="fa fa-envelope"></i>
+            }
+    </td>
+    <td>
+        @if (Model.HasValidPassword)
+            {
+            <i class="fa fa-key"></i>
+            }
+    </td>
+    <td>
+        @if (Model.LockoutEnabled)
+            {
+            if (Model.AccountLocked)
+                {
+                <i class="fa fa-lock locked-account"></i>
+                }
+            else
+                {
+                <i class="fa fa-unlock unlocked-account"></i>
+                }
+            }
+    </td>
+    <td>
+        @Html.ActionLink("Manage", "ManageUser", new { id = Model.Id }, new { @class = "btn btn-xs btn-default" })
+    </td>
+</tr>

@@ -79,16 +79,16 @@ namespace MS.Gamification.Tests.Controllers
                 Notes = "Unit Test",
                 SubmittedImage = "CorrectImage.png"
                 };
-            ControllerUnderTest = ContextBuilder
-                .WithEntity(new Category {Id = 1, Name = "Unit Test Category"})
-                .WithEntity(Challenge = new Challenge
-                    {
-                    Id = 1,
-                    Name = "Unit test challenge",
-                    CategoryId = 1,
-                    Location = "Your Imagination",
-                    Points = 10
-                    })
+            ControllerUnderTest = ContextBuilder.WithData(d => d
+                    .WithEntity(new Category {Id = 1, Name = "Unit Test Category"})
+                    .WithEntity(Challenge = new Challenge
+                        {
+                        Id = 1,
+                        Name = "Unit test challenge",
+                        CategoryId = 1,
+                        Location = "Your Imagination",
+                        Points = 10
+                        }))
                 .WithTempData(nameof(Challenge), Challenge)
                 .Build();
             };

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: LevelUnlockingSpecs.cs  Created: 2016-07-26@09:12
-// Last modified: 2016-07-28@18:10
+// File: LevelUnlockingSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:41
 
 using System;
 using FakeItEasy;
@@ -20,7 +20,7 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Joe User")
+                .WithData(d => d.WithStandardUser("user", "Joe User"))
                 .Build();
 
             Level = new LevelProgressViewModel
@@ -40,7 +40,7 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Joe User")
+                .WithData(d => d.WithStandardUser("user", "Joe User"))
                 .Build();
 
             Level = new LevelProgressViewModel
@@ -61,7 +61,7 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithUserAwardedBadges("user", "Joe User", 1, 2, 4)
+                .WithData(d => d.WithUserAwardedBadges("user", "Joe User", 1, 2, 4))
                 .Build();
 
             Level = new LevelProgressViewModel
@@ -84,14 +84,14 @@ namespace MS.Gamification.Tests.GameLogic
             A.CallTo(() => fakeUow.Users).Throws(new Exception("You've been unit tested"));
             ContextBuilder.UnitOfWork = fakeUow;
             ControllerUnderTest = ContextBuilder
-                .WithUserAwardedBadges("user", "Joe User", 1, 2, 4)
+                .WithData(d => d.WithUserAwardedBadges("user", "Joe User", 1, 2, 4))
                 .Build();
 
             Level = new LevelProgressViewModel
                 {
                 Precondition = TestData.FromEmbeddedResource("PreconditionsEngine.HasAll-1-2-4.xml")
                 };
-        };
+            };
         Because of = () => isUnlocked = RulesService.IsLevelUnlockedForUser(Level, "user");
         It should_be_locked = () => isUnlocked.ShouldBeFalse();
         static LevelProgressViewModel Level;

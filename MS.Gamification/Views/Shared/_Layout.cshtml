@@ -15,6 +15,14 @@
 </head>
 <body>
     @Html.Partial("NavbarPartial")
+    @if (!string.IsNullOrWhiteSpace(ViewData["Message"] as string))
+        {
+        <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Message</strong>
+            @ViewData["Message"]
+        </div>
+        }
     <div class="container body-content">
         @RenderBody()
         <hr />

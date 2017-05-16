@@ -3,6 +3,7 @@
 @inherits RazorEngine.Templating.TemplateBase<VerificationTokenEmailModel>
 @{
     Layout = "EmailLayout.cshtml";
+    var mailto = "mailto:Tim@tigra-astronomy.com,johnhislop@me.com?Subject=StarQuest Nomination&Body=I would like to nominate the following people to participate in StarQuest:%0A%0A";
 }
 <p>
     You have been invited to participate in the Star Quest programme
@@ -41,7 +42,7 @@
 @if (!string.IsNullOrWhiteSpace(Model.Recipient))
     {
     <p>
-        This invitation was sent to: <strong>@Model.Recipient</strong><br/>
+        This invitation was sent to: <strong>@Model.Recipient</strong><br />
         Please use this address when requested by the web site.
     </p>
     }
@@ -50,6 +51,38 @@
     If you do not wish to participate, do not click the link
     and your account will not be enabled.
 </p>
+<p>
+    <em>Note:</em>
+    Access to @Model.ApplicationName is currently by invitation only and membership is open to
+    members of Monkton Stargazers, their friends and family.
+    If we have sent this invitation to the wrong email address, or if
+    you have friends or family who would like to nominate, then please pass their
+    full name and email address along to us and we will send them an invitation.
+    Click the button below to nominate someone.
+</p>
+@*
+    Callback button using the "Border + Padding" technique,
+    see: https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design
+*@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center" style="-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;" bgcolor="#e9703e">
+                        <a href="@mailto"
+                           target="_blank"
+                           style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; text-decoration: none; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; padding: 12px 18px; border: 1px solid #e9703e; display: inline-block;">
+                            Nominate Friends and Family &rarr;
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+@* End button *@
+
 <p>
     For more information about @Model.ApplicationName, please see
     <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.

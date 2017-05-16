@@ -1,12 +1,15 @@
 // This file is part of the MS.Gamification project
 // 
-// File: GameNotificationService.cs  Created: 2016-07-28@10:16
-// Last modified: 2016-08-18@23:37
+// File: GameNotificationService.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-31@13:36
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
+using MS.Gamification.ViewModels.Moderation;
 using NLog;
 using RazorEngine.Templating;
 
@@ -35,6 +38,7 @@ namespace MS.Gamification.GameLogic
             {
             get
                 {
+                if (url == null) return string.Empty;
                 var requestUrl = url.RequestContext.HttpContext.Request.Url;
                 var fqUrl = url.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
                 //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
@@ -83,6 +87,29 @@ namespace MS.Gamification.GameLogic
             var emailBody = razor.RunCompile("BadgeAwarded.cshtml", typeof(BadgeAwardedEmailModel), model);
             await userManager.SendEmailAsync(user.Id, "Badge Awarded", emailBody);
             Log.Info($"Successfully notified user {user.Id} <{user.UserName}> of awarded badge id={badge.Id} name={badge.Name}");
+            }
+
+        /// <summary>
+        ///     Notifies a user about pending observations.
+        /// </summary>
+        /// <param name="user">The user to be notified.</param>
+        /// <param name="observations">The list of pending observations.</param>
+        /// <returns>Task.</returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public async Task PendingObservationSummary(ApplicationUser user, IEnumerable<ModerationQueueItem> observations)
+            {
+            Log.Info($"Notifying user {user.Id} <{user.UserName}> of pending moderation requests");
+            var pendingObservations = observations as IList<ModerationQueueItem> ?? observations.ToList();
+            var model = new PendingObservationsEmailModel
+                {
+                Recipient = user.Email,
+                InformationUrl = "http://starquest.monktonstargazers.org",
+                PendingObservations = pendingObservations
+                };
+            var emailBody = razor.RunCompile("PendingObservations.cshtml", typeof(PendingObservationsEmailModel), model);
+            await userManager.SendEmailAsync(user.Id, "Observations Pending Moderator Review", emailBody);
+            Log.Info(
+                $"Successfully notified user {user.Id} <{user.UserName}> of {pendingObservations.Count} pending observations");
             }
         }
     }

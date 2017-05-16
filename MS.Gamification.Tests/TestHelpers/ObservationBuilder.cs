@@ -1,21 +1,20 @@
 // This file is part of the MS.Gamification project
 // 
-// File: ObservationBuilder.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-24@09:16
+// File: ObservationBuilder.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@21:08
 
 using System;
 using System.Threading;
-using System.Web.Mvc;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    class ObservationBuilder<TController> where TController : ControllerBase
+    class ObservationBuilder
         {
         const string MissingImage = "NoImage";
         // ReSharper disable once StaticMemberInGenericType
         static int uniqueId;
-        readonly ControllerContextBuilder<TController> context;
+        readonly DataContextBuilder dcb;
         readonly ObservingEquipment equipment = ObservingEquipment.NakedEye;
         readonly string expectedImage = MissingImage;
         readonly string notes = "Lorem ipsum dolor sit amet";
@@ -29,13 +28,13 @@ namespace MS.Gamification.Tests.TestHelpers
         ModerationState observationStatus = ModerationState.Approved;
         string userId = "user";
 
-        public ObservationBuilder(ControllerContextBuilder<TController> context)
+        public ObservationBuilder(DataContextBuilder dcb)
             {
-            this.context = context;
+            this.dcb = dcb;
             observationId = Interlocked.Increment(ref uniqueId);
             }
 
-        public ControllerContextBuilder<TController> BuildObservation()
+        public DataContextBuilder BuildObservation()
             {
             var observation = new Observation
                 {
@@ -52,47 +51,47 @@ namespace MS.Gamification.Tests.TestHelpers
                 Transparency = transparency,
                 UserId = userId
                 };
-            context.WithEntity(observation);
-            return context;
+            dcb.WithEntity(observation);
+            return dcb;
             }
 
-        public ObservationBuilder<TController> ForChallenge(int challengeId)
+        public ObservationBuilder ForChallenge(int challengeId)
             {
             this.challengeId = challengeId;
             return this;
             }
 
-        public ObservationBuilder<TController> ForUserId(string user)
+        public ObservationBuilder ForUserId(string user)
             {
             userId = user;
             return this;
             }
 
-        public ObservationBuilder<TController> AwaitingModeration()
+        public ObservationBuilder AwaitingModeration()
             {
             observationStatus = ModerationState.AwaitingModeration;
             return this;
             }
 
-        public ObservationBuilder<TController> WithId(int id)
+        public ObservationBuilder WithId(int id)
             {
             observationId = id;
             return this;
             }
 
-        public ObservationBuilder<TController> Rejected()
+        public ObservationBuilder Rejected()
             {
             observationStatus = ModerationState.Rejected;
             return this;
             }
 
-        public ObservationBuilder<TController> Approved()
+        public ObservationBuilder Approved()
             {
             observationStatus = ModerationState.Approved;
             return this;
             }
 
-        public ObservationBuilder<TController> At(DateTime dateTime)
+        public ObservationBuilder At(DateTime dateTime)
             {
             observationDateTimeUtc = dateTime;
             return this;

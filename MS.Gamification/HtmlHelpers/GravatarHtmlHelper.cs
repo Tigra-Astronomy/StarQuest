@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: GravatarHtmlHelper.cs  Created: 2016-07-29@15:54
-// Last modified: 2016-08-18@02:46
+// File: GravatarHtmlHelper.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-01@02:45
 
 using System;
 using System.ComponentModel;
@@ -90,12 +90,12 @@ namespace MS.Gamification.HtmlHelpers
             var imgTag = new TagBuilder("img");
 
             emailAddress = string.IsNullOrEmpty(emailAddress) ? string.Empty : emailAddress.Trim().ToLower();
-
+            var md5Hash = GetMd5Hash(emailAddress);
             imgTag.Attributes.Add("src",
                 string.Format("{0}://{1}.gravatar.com/avatar/{2}?s={3}{4}{5}{6}",
                     htmlHelper.ViewContext.HttpContext.Request.IsSecureConnection || forceSecureRequest ? "https" : "http",
                     htmlHelper.ViewContext.HttpContext.Request.IsSecureConnection || forceSecureRequest ? "secure" : "www",
-                    GetMd5Hash(emailAddress),
+                    md5Hash,
                     size,
                     "&d=" +
                     (!string.IsNullOrEmpty(defaultImageUrl)
@@ -103,8 +103,8 @@ namespace MS.Gamification.HtmlHelpers
                         : defaultImage.GetDescription()),
                     forceDefaultImage ? "&f=y" : "",
                     "&r=" + rating.GetDescription()
-                    )
-                );
+                )
+            );
 
             imgTag.Attributes.Add("class", "img img-responsive img-circle gravatar");
             imgTag.Attributes.Add("alt", "Change your profile image at http://gravatar.com");

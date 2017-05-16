@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MS.Gamification.Areas.Admin.ViewModels.ManageUserViewModel>
+﻿@model List<MS.Gamification.Areas.Admin.ViewModels.ManageUserViewModel>
 @{
     ViewBag.Title = "ManageUsers";
 }
@@ -10,54 +10,57 @@
 
 @Html.ValidationSummary(false)
 
-<table class="table table-striped table-hover" id="users">
-    <thead>
-    <tr>
-        <th>User name</th>
-        <th>Email</th>
-        <th colspan="3">Status</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var user in Model)
-        {
-        <tr>
-            <td>@user.Username</td>
-            <td>@user.Email</td>
-            <td>
-                @if (user.EmailVerified)
-                    {
-                    <i class="fa fa-envelope"></i>
-                    }
-            </td>
-            <td>
-                @if (user.HasValidPassword)
-                    {
-                    <i class="fa fa-key"></i>
-                    }
-            </td>
-            <td>
-                @if (user.AccountLocked)
-                    {
-                    <i class="fa fa-lock"></i>
-                    }
-            </td>
-            <td>
-                @Html.ActionLink("Manage", "ManageUser", new {id = user.Id}, new {@class = "btn btn-xs btn-default"})
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+<div class="row" id="filterButtons">
+    <div class="col-md-1">Select:</div>
+    <div class="col-md-11">
+        <div class="btn-group">
+            <button type="button" id="btn-unverified-email" class="btn btn-sm btn-default">Unverified Email</button>
+            <button type="button" id="btn-invalid-password" class="btn btn-sm btn-default">Invalid Password</button>
+            <button type="button" id="btn-locked-out" class="btn btn-sm btn-default">Locked Out</button>
+            <button type="button" id="btn-invert-selection" class="btn btn-sm btn-default">Invert Selection</button>
+            <button type="button" id="btn-select-all" class="btn btn-sm btn-default">All</button>
+            <button type="button" id="btn-select-none" class="btn btn-sm btn-default">None</button>
+        </div>
+    </div>
+</div>
+
+<form action="" method="post">
+    @Html.AntiForgeryToken()
+    @*Multiple Submit buttons*@
+    <div class="row">
+        <div class="col-md-1">Action:</div>
+        <div class="col-md-11">
+            <div class="btn-group" id="actionButtons">
+                <input class="btn btn-sm btn-warning" type="submit" value="Resend Invitation" name="action:BatchResendInvitations"/>
+                <input class="btn btn-sm btn-danger" type="submit" value="Suspend" name="action:BatchSuspendUsers"/>
+                <input class="btn btn-sm btn-success" type="submit" value="Unlock" name="action:BatchUnlockUsers"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped table-hover" id="users">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="chkSelectAll"/> Select
+                    </th>
+                    <th>User name</th>
+                    <th>Email</th>
+                    <th colspan="3">Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @Html.EditorFor(m => Model)
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
 
 @section scripts
 {
     @Scripts.Render("~/bundles/datatables")
-    <script>
-        $(document).ready(function () {
-            $('#users').DataTable();
-        });
-    </script>
-
+    <script src="~/Scripts/listSelector.js"></script>
 }

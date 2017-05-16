@@ -1,15 +1,14 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionBuilder.ChallengeBuilder.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-24@07:28
+// File: MissionBuilder.ChallengeBuilder.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@21:11
 
 using System.Threading;
-using System.Web.Mvc;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
     {
-    partial class MissionBuilder<TContoller> where TContoller : ControllerBase
+    partial class MissionBuilder
         {
         internal partial class TrackBuilder
             {

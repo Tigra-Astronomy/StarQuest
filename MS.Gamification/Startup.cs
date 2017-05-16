@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: Startup.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-17@21:45
+// File: Startup.cs  Created: 2016-08-20@23:12
+// Last modified: 2016-12-12@19:20
 
 using Microsoft.Owin;
 using MS.Gamification;
@@ -17,6 +17,7 @@ namespace MS.Gamification
             {
             NinjectWebCommon.ConfigureServices(app);
             ConfigureAuth(app);
+            ConfigureScheduler();
             }
         }
     }

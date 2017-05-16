@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionControllerSpecs.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-07-28@20:37
+// File: MissionControllerSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:31
 
 using System.Linq;
 using System.Web.Mvc;
@@ -44,7 +44,7 @@ namespace MS.Gamification.Tests.Controllers
     class when_an_invalid_mission_id_is_specified : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMissionLevel().BuildMission()
+            .WithData(d => d.WithMissionLevel().BuildMission())
             .Build();
         Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Progress(InvalidMissionId);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);
@@ -58,7 +58,7 @@ namespace MS.Gamification.Tests.Controllers
         : with_mvc_controller<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithMissionLevel().WithId(1).Level(1).BuildMission()
+            .WithData(d => d.WithMissionLevel().WithId(1).Level(1).BuildMission())
             .Build();
         Because of = () => result = (HttpStatusCodeResult) ControllerUnderTest.Progress(1 /*, InvalidLevel*/);
         It should_return_404 = () => result.StatusCode.ShouldEqual(404);
@@ -90,11 +90,13 @@ namespace MS.Gamification.Tests.Controllers
     class when_the_user_has_completed_one_challenge_in_each_track : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
             .WithRequestingUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+            .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+            )
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
         It should_have_the_expected_overall_progress = () => Model.Levels.First().OverallProgressPercent.ShouldEqual(50);
@@ -105,14 +107,16 @@ namespace MS.Gamification.Tests.Controllers
     class when_the_user_has_completed_all_challenges_in_all_tracks : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
             .WithRequestingUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(101).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(201).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation()
+            .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(101).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(201).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation()
+            )
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
         It should_have_100_percent_overall_progress = () => Model.Levels.First().OverallProgressPercent.ShouldEqual(100);
@@ -124,14 +128,16 @@ namespace MS.Gamification.Tests.Controllers
         : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
             .WithRequestingUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+            .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(100).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation()
+            )
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
         It should_only_count_the_first_valid_observation_for_each_challenge =
@@ -144,11 +150,13 @@ namespace MS.Gamification.Tests.Controllers
         : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
             .WithRequestingUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation() // Track 2 = 50%
-            .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation() // Track 3
-            .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation() // Track 3 = 100%
+            .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithObservation().ForUserId("user").ForChallenge(200).BuildObservation() // Track 2 = 50%
+                    .WithObservation().ForUserId("user").ForChallenge(300).BuildObservation() // Track 3
+                    .WithObservation().ForUserId("user").ForChallenge(400).BuildObservation() // Track 3 = 100%
+            )
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
         It should_compute_progress_for_track_1 = () => Model.Levels[0].Tracks[0].PercentComplete.ShouldEqual(0);
@@ -163,11 +171,13 @@ namespace MS.Gamification.Tests.Controllers
         : with_standard_mission<MissionController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Joe User")
             .WithRequestingUser("user", "Joe User")
-            .WithObservation().ForUserId("user").ForChallenge(100).AwaitingModeration().BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(200).Rejected().BuildObservation()
-            .WithObservation().ForUserId("user").ForChallenge(300).Approved().BuildObservation()
+            .WithData(d => d
+                    .WithStandardUser("user", "Joe User")
+                    .WithObservation().ForUserId("user").ForChallenge(100).AwaitingModeration().BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(200).Rejected().BuildObservation()
+                    .WithObservation().ForUserId("user").ForChallenge(300).Approved().BuildObservation()
+            )
             .Build();
         Because of = () => Model = ((ViewResult) ControllerUnderTest.Progress(1)).Model as MissionProgressViewModel;
         It should_compute_progress_for_track_1 = () => Model.Levels[0].Tracks[0].PercentComplete.ShouldEqual(0);

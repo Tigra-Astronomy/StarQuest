@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: SubmitObservationViewModel.cs  Created: 2016-07-09@20:14
-// Last modified: 2016-08-18@02:09
+// File: SubmitObservationViewModel.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-01@00:56
 
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace MS.Gamification.ViewModels
         [Display(Name = "Equipment used")]
         public ObservingEquipment Equipment { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Enter a description of where you made the observation from, e.g. 'Thanet Observatory'")]
         [Display(Name = "Observing site")]
         public string ObservingSite { get; set; }
 
@@ -43,7 +43,7 @@ namespace MS.Gamification.ViewModels
         public string Notes { get; set; }
 
         [ImageIdentifier]
-        [Required]
+        [Required(ErrorMessage = "You must select the validation image that most closely resembles your observation")]
         public string SubmittedImage { get; set; }
 
         public List<string> ValidationImages { get; set; }

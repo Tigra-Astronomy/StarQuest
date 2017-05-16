@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: IdentityConfig.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-24@15:42
+// File: IdentityConfig.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-11-25@21:59
 
 using System;
 using System.Configuration;
@@ -45,7 +45,7 @@ namespace MS.Gamification
             var credentials = new NetworkCredential(
                 ConfigurationManager.AppSettings["mailAccount"],
                 ConfigurationManager.AppSettings["mailPassword"]
-                );
+            );
 
             // Create a Web transport for sending email.
             try
@@ -95,7 +95,7 @@ namespace MS.Gamification
             // Configure user lockout defaults
             UserLockoutEnabledByDefault = true;
             DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            MaxFailedAccessAttemptsBeforeLockout = 5;
+            MaxFailedAccessAttemptsBeforeLockout = 25;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
@@ -112,8 +112,11 @@ namespace MS.Gamification
             SmsService = new SmsService();
             if (dataProtectionProvider != null)
                 {
-                UserTokenProvider =
-                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                var dataProtector = dataProtectionProvider.Create("ASP.NET Identity");
+                UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtector)
+                    {
+                    TokenLifespan = TimeSpan.FromDays(7)
+                    };
                 }
             }
         }

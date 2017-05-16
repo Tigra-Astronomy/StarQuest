@@ -16,16 +16,9 @@
 
 .dl-horizontal dt { white-space: normal; }
 
-/* Set width on the form input elements since they're 100% wide by default */
-
-/*input,
-select,
-textarea { max-width: 280px; }*/
-
 textarea.form-control { min-height: 10em; }
 
 /* Status icons */
-
 
 .status-pending {
     color: goldenrod;
@@ -140,7 +133,7 @@ textarea.form-control { min-height: 10em; }
     /*margin-bottom: 2px;*/
 }
 
-img.gravatar { margin-bottom: 12px; }
+.gravatar { margin-bottom: 12px; }
 
 #chart {
     margin: 24px;
@@ -197,6 +190,34 @@ img.gravatar { margin-bottom: 12px; }
     color: white;
 }
 
-.padlock-open { color: darkseagreen }
+/* Padlock icons in mission level tabs */
 
-.padlock-closed { color: indianred }
+.padlock-open { color: darkseagreen; }
+
+.padlock-closed { color: indianred; }
+
+/* Account lockout icons on the Manage Users admin view */
+
+.locked-account { color: red; }
+
+.unlocked-account { color: black; }
+
+/* Validation styles */
+
+/* error message text appearance */
+
+.field-validation-error { font-size: 1.25em; }
+
+/* Appearance of input fields with validation errors */
+
+.input-validation-error {
+    background: lightpink;
+    border: thin solid red;
+}
+
+/* Validation images */
+
+.validation-image {
+    height: 245px;
+    width: 245px;
+}

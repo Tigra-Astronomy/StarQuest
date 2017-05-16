@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: ChallengeControllerSpecs.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-19@03:44
+// File: ChallengeControllerSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:37
 
 using System.Collections.Generic;
 using System.Linq;
@@ -92,11 +92,12 @@ namespace MS.Gamification.Tests.Controllers
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithEntity(new Category {Id = 1})
-                .WithMissionLevel().WithTrack(1)
-                .WithChallenge("See all the moon phases").WithId(1).InCategory(1).BuildChallenge()
-                .WithChallenge("See Saturn").WithId(2).InCategory(1).BuildChallenge()
-                .BuildTrack().BuildMission()
+                .WithData(d => d
+                    .WithEntity(new Category {Id = 1})
+                    .WithMissionLevel().WithTrack(1)
+                    .WithChallenge("See all the moon phases").WithId(1).InCategory(1).BuildChallenge()
+                    .WithChallenge("See Saturn").WithId(2).InCategory(1).BuildChallenge()
+                    .BuildTrack().BuildMission())
                 .Build();
             };
 
@@ -131,7 +132,7 @@ namespace MS.Gamification.Tests.Controllers
                 Name = string.Empty
                 };
             ControllerUnderTest = ContextBuilder
-                .WithEntity(new Category {Id = 1})
+                .WithData(d => d.WithEntity(new Category {Id = 1}))
                 .Build();
             ControllerUnderTest.ValidateModel(InvalidChallenge);
             };
@@ -163,7 +164,8 @@ namespace MS.Gamification.Tests.Controllers
                 Location = "Moon",
                 Name = string.Empty
                 };
-            ControllerUnderTest = ContextBuilder.WithEntity(new Category {Id = 1})
+            ControllerUnderTest = ContextBuilder
+                .WithData(d => d.WithEntity(new Category {Id = 1}))
                 .Build();
             ControllerUnderTest.ValidateModel(InvalidChallenge);
             };
@@ -177,7 +179,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_raise_an_error_for_points =
             () => ControllerUnderTest.ModelState[nameof(InvalidChallenge.Points)].Errors.Count.ShouldBeGreaterThan(0);
         It should_not_add_an_item_to_the_challenges_repository = () =>
-            UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
+                UnitOfWork.Challenges.GetAll().ShouldBeEmpty();
         static CreateChallengeViewModel InvalidChallenge;
         static ViewResult Result;
         }
@@ -204,8 +206,9 @@ namespace MS.Gamification.Tests.Controllers
          * the IDs didn't match, not because the DB was empty.
          */
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithEntity(new Category {Id = 1})
-            .WithEntity(new Challenge {Id = 99, CategoryId = 1, MissionTrackId = 1})
+            .WithData(d => d
+                .WithEntity(new Category {Id = 1})
+                .WithEntity(new Challenge {Id = 99, CategoryId = 1, MissionTrackId = 1}))
             .Build();
         Because of = () => Result = ControllerUnderTest.Edit(3);
         It should_return_a_not_found_error = () => Result.ShouldBeOfExactType<HttpNotFoundResult>();
@@ -235,7 +238,7 @@ namespace MS.Gamification.Tests.Controllers
         It should_successfully_validate_the_model = () => ControllerUnderTest.ModelState.IsValid.ShouldBeTrue();
         It should_return_a_redirect_to_the_index_action = () => Result.RouteValues["Action"].ShouldEqual("Index");
         It should_update_the_repository = () =>
-            UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
+                UnitOfWork.Challenges.Get(200).Name.ShouldEqual("See Mars");
         It should_not_change_the_count_of_challenges =
             () => UnitOfWork.Challenges.GetAll().Count().ShouldEqual(expectedChallengeCount);
         static RedirectToRouteResult Result;

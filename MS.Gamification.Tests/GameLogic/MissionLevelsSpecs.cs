@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionLevelsSpecs.cs  Created: 2016-08-19@04:17
-// Last modified: 2016-08-20@02:53
+// File: MissionLevelsSpecs.cs  Created: 2016-11-01@19:37
+// Last modified: 2016-12-12@23:35
 
 using System;
 using System.Linq;
@@ -46,8 +46,9 @@ namespace MS.Gamification.Tests.GameLogic
     class when_deleting_a_mission_level_with_associated_observations : with_standard_mission<DummyGameController>
         {
         Establish context = () => ControllerUnderTest = ContextBuilder
-            .WithStandardUser("user", "Test User")
-            .WithObservation().Approved().ForChallenge(100).ForUserId("user").BuildObservation()
+            .WithData(d => d
+                .WithStandardUser("user", "Test User")
+                .WithObservation().Approved().ForChallenge(100).ForUserId("user").BuildObservation())
             .Build();
         Because of = () => exception = Catch.Exception(() => RulesService.DeleteLevelAsync(1).Await());
         It should_throw = () => exception.ShouldBeOfExactType<InvalidOperationException>();
@@ -114,7 +115,8 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithEntity(new Mission {Id = 2, Title = "Second Mission"})
+                .WithData(d => d
+                    .WithEntity(new Mission {Id = 2, Title = "Second Mission"}))
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.Get(1);
             updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
@@ -133,7 +135,7 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithMissionLevel(2).Level(1).BuildMission()
+                .WithData(d => d.WithMissionLevel(2).Level(1).BuildMission())
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.GetAll().Single(p => p.Level == 1 && p.MissionId == 1);
             updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
@@ -154,9 +156,10 @@ namespace MS.Gamification.Tests.GameLogic
         Establish context = () =>
             {
             ControllerUnderTest = ContextBuilder
-                .WithStandardUser("user", "Test User")
-                .WithObservation().ForChallenge(100).ForUserId("user").BuildObservation()
-                .WithEntity(new Mission {Id = 2, Title = "Mission 2"})
+                .WithData(d => d
+                    .WithStandardUser("user", "Test User")
+                    .WithObservation().ForChallenge(100).ForUserId("user").BuildObservation()
+                    .WithEntity(new Mission {Id = 2, Title = "Mission 2"}))
                 .Build();
             originalLevel = UnitOfWork.MissionLevels.GetAll().Single(p => p.Level == 1 && p.MissionId == 1);
             updatedLevel = Mapper.Map<MissionLevel, MissionLevelViewModel>(originalLevel);
