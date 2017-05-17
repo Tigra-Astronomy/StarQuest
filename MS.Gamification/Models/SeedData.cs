@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: SeedData.cs  Created: 2016-08-20@23:12
-// Last modified: 2016-10-28@23:10
+// File: SeedData.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-16@20:36
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,6 @@ using System.Web;
 using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.DataAccess.EntityFramework6;
 
 namespace MS.Gamification.Models
@@ -54,7 +53,7 @@ namespace MS.Gamification.Models
             "Variable Star"
             };
 
-        internal static void CreateCategories(ApplicationDbContext context)
+        internal static void EnsureCategories(this ApplicationDbContext context)
             {
             foreach (var seed in Categories)
                 {
@@ -63,27 +62,33 @@ namespace MS.Gamification.Models
                 }
             }
 
-        internal static void CreateAdministratorAccount(ApplicationDbContext context)
+        internal static void EnsureDefaultRolesAndUsers(this ApplicationDbContext context)
+            {
+            context.EnsureRoleExists(RoleNames.Administrator);
+            context.EnsureRoleExists(RoleNames.Moderator);
+            context.EnsureRoleExists(RoleNames.EventManager);
+            context.EnsureAdminUserExists();
+            }
+
+        internal static void EnsureRoleExists(this ApplicationDbContext context, string roleName)
             {
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);
+            if (!context.Roles.Any(role => role.Name == roleName))
+                roleManager.Create(new IdentityRole {Name = roleName});
+            }
+
+        internal static void EnsureAdminUserExists(this ApplicationDbContext context)
+            {
+            if (context.Users.Any(p => p.Roles.Any(r => r.RoleId == RoleNames.Administrator)) ||
+                context.Users.Any(user => user.UserName == AdministratorUserName)) return;
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
-            // If there is already any user with Administrator rights, then we're done.
-            if (context.Users.Any(p => p.Roles.Any(r => r.RoleId == RequiresAdministratorRights.AdministratorRoleName)))
-                return;
-            if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.AdministratorRoleName))
-                roleManager.Create(new IdentityRole {Name = RequiresAdministratorRights.AdministratorRoleName});
-            if (!context.Roles.Any(role => role.Name == RequiresAdministratorRights.ModeratorRoleName))
-                roleManager.Create(new IdentityRole {Name = RequiresAdministratorRights.ModeratorRoleName});
-            if (!context.Users.Any(user => user.UserName == AdministratorUserName))
-                {
-                //ToDo: Hard coded secrets!! These need to come from web.config or similar
-                var user = new ApplicationUser
-                        {UserName = AdministratorUserName, Email = "nobody@nowhere.com", EmailConfirmed = true};
-                userManager.Create(user, AdministratorDefaultPassword);
-                userManager.AddToRole(user.Id, RequiresAdministratorRights.AdministratorRoleName);
-                }
+            //ToDo: Hard coded secrets!! These need to come from web.config or similar
+            var adminUser = new ApplicationUser
+                    {UserName = AdministratorUserName, Email = "nobody@nowhere.com", EmailConfirmed = true};
+            userManager.Create(adminUser, AdministratorDefaultPassword);
+            userManager.AddToRole(adminUser.Id, RoleNames.Administrator);
             }
 
         internal static void CreateBetaMission(ApplicationDbContext context)
@@ -205,6 +210,7 @@ namespace MS.Gamification.Models
                                 }
                             },
                         #endregion Level 1
+
                         #region Level 2
                         new MissionLevel
                             {
@@ -266,7 +272,8 @@ namespace MS.Gamification.Models
                                     Name = "Planetary Track",
                                     AwardTitle = "Alpha Planetologist II",
                                     Number = 2,
-                                    Badge = new Badge {Name = "Alpha Planetologist II", ImageIdentifier = "alpha-planetologist-1"},
+                                    Badge = new Badge
+                                            {Name = "Alpha Planetologist II", ImageIdentifier = "alpha-planetologist-1"},
                                     Challenges = new List<Challenge>
                                         {
                                         new Challenge

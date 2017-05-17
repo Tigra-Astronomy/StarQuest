@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: IUnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-01@20:23
+// File: IUnitOfWork.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-17@00:15
 
 using System;
 using System.Threading.Tasks;
@@ -45,22 +45,24 @@ namespace MS.Gamification.DataAccess
         IRepository<MissionLevel, int> MissionLevels { get; }
 
         /// <summary>
-        /// Gets the missions.
+        ///     Gets the missions.
         /// </summary>
         /// <value>The missions.</value>
-        IRepository<Mission,int> Missions { get; }
+        IRepository<Mission, int> Missions { get; }
 
         /// <summary>
-        /// Gets the mission tracks.
+        ///     Gets the mission tracks.
         /// </summary>
         /// <value>The mission tracks.</value>
-        IRepository<MissionTrack, int> MissionTracks { get;  }
+        IRepository<MissionTrack, int> MissionTracks { get; }
 
         /// <summary>
-        /// All badges known to the system.
+        ///     All badges known to the system.
         /// </summary>
         /// <value>The badges.</value>
         IRepository<Badge, int> Badges { get; }
+
+        IRepository<ObservingSession, int> ObservingSessions { get; }
 
         /// <summary>
         ///     Commits changes to the database and completes the transaction.

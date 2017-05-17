@@ -1,12 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-11-26@08:04
+// Last modified: 2017-05-17@03:06
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
 using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
+using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
@@ -75,6 +76,10 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.Tracks, m => m.Ignore())
                 .ForMember(m => m.Mission, m => m.Ignore())
                 .ReverseMap();
+            CreateMap<CreateObservingSessionViewModel, ObservingSession>()
+                .ForMember(m => m.Attendees, m => m.Ignore())
+                .ForMember(m => m.Id, m => m.Ignore());
+            CreateMap<ObservingSession, EditObservingSessionViewModel>();
             }
         }
     }

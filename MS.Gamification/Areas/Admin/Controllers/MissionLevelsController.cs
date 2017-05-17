@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: MissionLevelsController.cs  Created: 2016-08-20@23:12
-// Last modified: 2016-08-21@02:16
+// File: MissionLevelsController.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-16@21:08
 
 using System;
 using System.Linq;
@@ -149,7 +149,8 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // POST: Admin/MissionLevels/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
             {

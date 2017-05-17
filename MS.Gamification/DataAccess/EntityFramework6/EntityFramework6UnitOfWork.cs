@@ -1,10 +1,12 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: EntityFramework6UnitOfWork.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-07-20@22:39
+// File: EntityFramework6UnitOfWork.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-16@19:45
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using MS.Gamification.Models;
 using NLog;
 
@@ -12,8 +14,8 @@ namespace MS.Gamification.DataAccess.EntityFramework6
     {
     public class EntityFramework6UnitOfWork : IUnitOfWork
         {
-        private readonly ApplicationDbContext dbContext;
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+        private readonly ApplicationDbContext dbContext;
 
         public EntityFramework6UnitOfWork(ApplicationDbContext context)
             {
@@ -26,22 +28,34 @@ namespace MS.Gamification.DataAccess.EntityFramework6
             Missions = new MissionRepository(dbContext);
             MissionTracks = new MissionTrackRepository(dbContext);
             Badges = new BadgeRepository(dbContext);
+            ObservingSessions = new ObservingSessionRepository(dbContext);
             }
 
+        [NotNull]
+        public IRepository<ObservingSession, int> ObservingSessions { get; }
+
+        [NotNull]
         public IRepository<Challenge, int> Challenges { get; }
 
+        [NotNull]
         public IRepository<ApplicationUser, string> Users { get; }
 
+        [NotNull]
         public IRepository<Category, int> CategoriesRepository { get; }
 
+        [NotNull]
         public IRepository<Observation, int> Observations { get; }
 
+        [NotNull]
         public IRepository<MissionLevel, int> MissionLevels { get; }
 
+        [NotNull]
         public IRepository<Mission, int> Missions { get; }
 
+        [NotNull]
         public IRepository<MissionTrack, int> MissionTracks { get; }
 
+        [NotNull]
         public IRepository<Badge, int> Badges { get; }
 
         public void Commit()
@@ -57,15 +71,17 @@ namespace MS.Gamification.DataAccess.EntityFramework6
                 }
             }
 
+        [NotNull]
         public Task CommitAsync()
             {
+            Contract.Ensures(Contract.Result<Task>() != null);
             try
                 {
                 return dbContext.SaveChangesAsync();
                 }
             catch (Exception e)
                 {
-                Log.Error(e,"Committing database transaction");
+                Log.Error(e, "Committing database transaction");
                 throw;
                 }
             }

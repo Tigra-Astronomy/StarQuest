@@ -1,16 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: RequiresAdministratorRights.cs  Created: 2016-06-30@21:44
-// Last modified: 2016-07-17@07:48
+// File: RequiresAdministratorRights.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-16@20:13
 
 using System.Web.Mvc;
+using MS.Gamification.Models;
 
 namespace MS.Gamification.Areas.Admin.Controllers
     {
-    [Authorize(Roles = AdministratorRoleName)]
-    public class RequiresAdministratorRights : Controller
-        {
-        internal const string AdministratorRoleName = "Administrator";
-        internal const string ModeratorRoleName = "Moderator";
-        }
+    [Authorize(Roles = RoleNames.Administrator)]
+    public class RequiresAdministratorRights : Controller { }
     }

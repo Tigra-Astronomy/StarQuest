@@ -29,6 +29,7 @@
     <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <ApplicationInsightsResourceId>/subscriptions/2c155733-1131-4a15-b5d6-1096766bf56b/resourcegroups/Monkton-Stargazers/providers/microsoft.insights/components/StarQuest Application Insights</ApplicationInsightsResourceId>
     <DontImportPostSharp>True</DontImportPostSharp>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/2c155733-1131-4a15-b5d6-1096766bf56b/resourcegroups/Monkton-Stargazers/providers/microsoft.insights/components/StarQuest Application Insights</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -352,7 +353,12 @@
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CreateObservingSessionViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\ObservingSessionsController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ObservingSessions\EditObservingSessionViewModel.cs" />
+    <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />
     <Compile Include="EmailTemplates\PendingObservationsEmailModel.cs" />
+    <Compile Include="GameLogic\QuerySpecifications\ObservingSessionsIndex.cs" />
     <Compile Include="GameLogic\ScheduledTasks\StarQuestScheduledJobs.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\ViewModelMappingProfile.cs" />
@@ -515,6 +521,10 @@
     <Compile Include="Migrations\201608182157291_ObservationsRequireUsers.Designer.cs">
       <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705162030165_ObservingSessions.cs" />
+    <Compile Include="Migrations\201705162030165_ObservingSessions.Designer.cs">
+      <DependentUpon>201705162030165_ObservingSessions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AntoniadiScale.cs" />
     <Compile Include="Models\Badge.cs" />
@@ -527,6 +537,8 @@
     <Compile Include="Models\MissionTrack.cs" />
     <Compile Include="Models\Observation.cs" />
     <Compile Include="Models\ObservingEquipment.cs" />
+    <Compile Include="Models\ObservingSession.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\SeedData.cs" />
     <Compile Include="Models\TransparencyLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -788,6 +800,9 @@
     <EmbeddedResource Include="Migrations\201608182157291_ObservationsRequireUsers.resx">
       <DependentUpon>201608182157291_ObservationsRequireUsers.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705162030165_ObservingSessions.resx">
+      <DependentUpon>201705162030165_ObservingSessions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -869,6 +884,8 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="EmailTemplates\PendingObservations.cshtml" />
+    <Content Include="Areas\Admin\Views\ObservingSessions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ObservingSessions\Index.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1172,6 +1189,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="IdentityHelpers\" />
+    <Folder Include="Views\ObservingSession\" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.9.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />

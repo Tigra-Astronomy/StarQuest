@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic.QuerySpecifications;
+using MS.Gamification.Models;
 using NLog;
 using PostSharp.Patterns.Model;
 using PostSharp.Patterns.Threading;
@@ -66,9 +67,9 @@ namespace MS.Gamification.GameLogic.ScheduledTasks
             log.Info($"Found {pendingObservations.Count()} pending observations");
             if (!pendingObservations.Any())
                 return;
-            var moderatorSpecification = new UsersInRole(RequiresAdministratorRights.ModeratorRoleName, rolemanager);
+            var moderatorSpecification = new UsersInRole(RoleNames.Moderator, rolemanager);
             var moderators = uow.Users.AllSatisfying(moderatorSpecification);
-            log.Info($"Found {moderators.Count()} users with role {RequiresAdministratorRights.ModeratorRoleName}");
+            log.Info($"Found {moderators.Count()} users with role {RoleNames.Moderator}");
             if (!moderators.Any())
                 return;
             foreach (var moderator in moderators)

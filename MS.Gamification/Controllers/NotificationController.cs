@@ -1,11 +1,10 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: NotificationController.cs  Created: 2016-06-06@23:38
-// Last modified: 2016-07-30@20:04
+// File: NotificationController.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-16@20:13
 
 using System.Linq;
 using System.Web.Mvc;
-using MS.Gamification.Areas.Admin.Controllers;
 using MS.Gamification.DataAccess;
 using MS.Gamification.GameLogic;
 using MS.Gamification.GameLogic.QuerySpecifications;
@@ -24,7 +23,7 @@ namespace MS.Gamification.Controllers
 
         public ActionResult ModerationQueue()
             {
-            if (!User.IsInRole(RequiresAdministratorRights.ModeratorRoleName))
+            if (!User.IsInRole(RoleNames.Moderator))
                 {
                 return new EmptyResult();
                 }

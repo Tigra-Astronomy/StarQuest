@@ -24,6 +24,7 @@ using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using Ninject;
 using Ninject.Web.Common;
+using NLog;
 using Owin;
 using RazorEngine;
 using RazorEngine.Configuration;
@@ -147,6 +148,9 @@ namespace MS.Gamification
             kernel.Bind<IRazorEngineService>()
                 .ToMethod(ctx => CreateRazorEngineService(RazorEngineTemplatePath))
                 .InSingletonScope();
+            kernel.Bind<ILogger>()
+                .ToMethod(context => LogManager.GetLogger(context.Request.Target.Name))
+                .InRequestScope();
             }
 
         private static void ResolveRazorEngineTemplatePath(IKernel kernel)
