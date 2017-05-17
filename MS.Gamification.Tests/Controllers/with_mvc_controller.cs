@@ -7,8 +7,8 @@ using System;
 using System.Web.Mvc;
 using AutoMapper;
 using Machine.Specifications;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers

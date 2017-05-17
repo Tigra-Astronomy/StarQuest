@@ -4,7 +4,7 @@
 // Last modified: 2016-07-15@23:16
 
 using Machine.Specifications;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.Tests.TestHelpers.Fakes;

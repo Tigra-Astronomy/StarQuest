@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Areas.Admin.Controllers

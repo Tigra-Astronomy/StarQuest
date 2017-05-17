@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Models;
 using Ninject;
 

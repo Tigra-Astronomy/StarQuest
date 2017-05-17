@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.IO;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 
 namespace MS.Gamification.Tests.TestHelpers
     {

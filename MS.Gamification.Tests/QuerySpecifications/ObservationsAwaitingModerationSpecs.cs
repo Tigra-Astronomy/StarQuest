@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
-using MS.Gamification.GameLogic.QuerySpecifications;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels.Moderation;
 

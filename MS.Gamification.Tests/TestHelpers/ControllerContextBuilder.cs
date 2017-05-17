@@ -10,8 +10,8 @@ using System.Web.Mvc;
 using AutoMapper;
 using Machine.Specifications;
 using MS.Gamification.App_Start;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.TestHelpers.Fakes;
 using Ninject;
 

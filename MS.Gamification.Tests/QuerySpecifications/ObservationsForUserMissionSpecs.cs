@@ -6,8 +6,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Machine.Specifications;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.Controllers;
-using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;

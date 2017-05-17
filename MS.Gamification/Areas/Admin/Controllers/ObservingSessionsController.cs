@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionsController.cs  Created: 2017-05-16@20:38
-// Last modified: 2017-05-17@02:56
+// Last modified: 2017-05-17@19:55
 
 using System;
 using System.Diagnostics;
@@ -13,9 +13,9 @@ using System.Web.Mvc;
 using AutoMapper;
 using JetBrains.Annotations;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 using NLog;
 

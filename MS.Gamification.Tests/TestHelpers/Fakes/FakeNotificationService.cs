@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels.Moderation;
 

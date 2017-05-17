@@ -5,9 +5,9 @@
 
 using System.Linq;
 using System.Web.Mvc;
+using MS.Gamification.BusinessLogic.Gamification;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
-using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers

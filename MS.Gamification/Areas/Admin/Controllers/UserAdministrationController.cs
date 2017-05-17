@@ -15,15 +15,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.Areas.Admin.ViewModels;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
 using MS.Gamification.EmailTemplates;
-using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using NLog;
 using RazorEngine.Templating;
-using Constants = MS.Gamification.GameLogic.Constants;
+using Constants = MS.Gamification.BusinessLogic.Gamification.Constants;
 
 namespace MS.Gamification.Areas.Admin.Controllers
     {

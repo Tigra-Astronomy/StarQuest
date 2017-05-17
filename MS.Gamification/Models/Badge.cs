@@ -6,8 +6,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.HtmlHelpers;
 
 namespace MS.Gamification.Models

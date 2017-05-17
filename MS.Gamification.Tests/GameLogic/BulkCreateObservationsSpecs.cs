@@ -6,7 +6,7 @@
 using System;
 using System.Linq;
 using Machine.Specifications;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;

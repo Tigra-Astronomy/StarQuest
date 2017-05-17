@@ -6,8 +6,8 @@
 using System.Collections.Generic;
 using FakeItEasy;
 using Machine.Specifications;
-using MS.Gamification.GameLogic;
-using MS.Gamification.GameLogic.ScheduledTasks;
+using MS.Gamification.BusinessLogic.Gamification;
+using MS.Gamification.BusinessLogic.Gamification.ScheduledTasks;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels.Moderation;

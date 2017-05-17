@@ -8,7 +8,7 @@ using System.Web;
 using FakeItEasy;
 using Machine.Specifications;
 using MS.Gamification.Areas.Admin.Controllers;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.Controllers

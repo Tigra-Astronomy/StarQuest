@@ -5,7 +5,7 @@
 
 using FluentScheduler;
 using Machine.Specifications;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Tests.TestHelpers;
 
 namespace MS.Gamification.Tests.ScheduledJobs

@@ -17,7 +17,7 @@ using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using RazorEngine.Templating;
-using Constants = MS.Gamification.GameLogic.Constants;
+using Constants = MS.Gamification.BusinessLogic.Gamification.Constants;
 
 namespace MS.Gamification.Controllers
     {

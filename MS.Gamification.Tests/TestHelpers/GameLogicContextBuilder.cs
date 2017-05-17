@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MS.Gamification.GameLogic.Preconditions;
+using MS.Gamification.BusinessLogic.Gamification.Preconditions;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Tests.TestHelpers
@@ -74,16 +74,5 @@ namespace MS.Gamification.Tests.TestHelpers
             user.Provisioned = provisioningDate;
             return this;
             }
-        }
-
-    class GameLogicContext
-        {
-        public LevelPreconditionParser Parser { get; set; } = new LevelPreconditionParser();
-
-        public IPredicate<ApplicationUser> Precondition { get; set; }
-
-        public ApplicationUser User { get; set; }
-
-        public IEnumerable<Badge> Badges { get; set; }
         }
     }

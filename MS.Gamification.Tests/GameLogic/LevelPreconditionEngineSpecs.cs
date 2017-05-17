@@ -5,7 +5,7 @@
 
 using System;
 using Machine.Specifications;
-using MS.Gamification.GameLogic.Preconditions;
+using MS.Gamification.BusinessLogic.Gamification.Preconditions;
 
 namespace MS.Gamification.Tests.GameLogic
     {

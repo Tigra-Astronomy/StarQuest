@@ -1,6 +1,11 @@
+// This file is part of the MS.Gamification project
+// 
+// File: with_game_logic_context.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-17@19:25
+
 using System.Collections.Generic;
 using Machine.Specifications;
-using MS.Gamification.GameLogic.Preconditions;
+using MS.Gamification.BusinessLogic.Gamification.Preconditions;
 using MS.Gamification.Models;
 using MS.Gamification.Tests.TestHelpers;
 

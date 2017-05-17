@@ -4,7 +4,7 @@
 // Last modified: 2016-07-29@20:34
 
 using System.Collections.Generic;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.ViewModels.Mission

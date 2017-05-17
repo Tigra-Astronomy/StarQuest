@@ -6,8 +6,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Controllers.Api

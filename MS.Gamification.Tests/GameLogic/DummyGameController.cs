@@ -4,7 +4,7 @@
 // Last modified: 2016-07-24@06:48
 
 using System.Web.Mvc;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 
 namespace MS.Gamification.Tests.GameLogic
     {

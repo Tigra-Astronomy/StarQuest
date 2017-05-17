@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
-using MS.Gamification.GameLogic;
+using MS.Gamification.BusinessLogic.Gamification;
 
 namespace MS.Gamification.DataAccess
     {

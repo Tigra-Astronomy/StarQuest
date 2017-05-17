@@ -6,8 +6,8 @@
 using System;
 using FakeItEasy;
 using Machine.Specifications;
+using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels.Mission;

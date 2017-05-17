@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
+using MS.Gamification.BusinessLogic.Gamification;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.DataAccess;
-using MS.Gamification.GameLogic;
-using MS.Gamification.GameLogic.QuerySpecifications;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.Areas.Admin.Controllers
