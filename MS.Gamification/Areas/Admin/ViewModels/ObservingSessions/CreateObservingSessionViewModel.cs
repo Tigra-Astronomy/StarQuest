@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: CreateObservingSessionViewModel.cs  Created: 2017-05-16@21:07
-// Last modified: 2017-05-17@03:36
+// Last modified: 2017-05-17@03:42
 
 using System;
 using System.ComponentModel.DataAnnotations;
