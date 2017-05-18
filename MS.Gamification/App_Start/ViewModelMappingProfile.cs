@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-17@03:06
+// Last modified: 2017-05-18@17:19
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -9,6 +9,7 @@ using MS.Gamification.Areas.Admin.ViewModels.MissionLevels;
 using MS.Gamification.Areas.Admin.ViewModels.MissionTracks;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
+using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
 using MS.Gamification.ViewModels.Mission;
@@ -78,6 +79,7 @@ namespace MS.Gamification.App_Start
                 .ReverseMap();
             CreateMap<CreateObservingSessionViewModel, ObservingSession>()
                 .ForMember(m => m.Attendees, m => m.Ignore())
+                .ForMember(m => m.ScheduleState, m => m.UseValue(ScheduleState.Scheduled))
                 .ForMember(m => m.Id, m => m.Ignore());
             CreateMap<ObservingSession, EditObservingSessionViewModel>();
             }

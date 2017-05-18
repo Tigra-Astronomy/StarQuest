@@ -358,6 +358,7 @@
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\EditObservingSessionViewModel.cs" />
     <Compile Include="BusinessLogic\EventManagement\IObservingSessionManager.cs" />
     <Compile Include="BusinessLogic\EventManagement\ObservingSessionLogic.cs" />
+    <Compile Include="BusinessLogic\EventManagement\ScheduleState.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />
     <Compile Include="EmailTemplates\PendingObservationsEmailModel.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\ObservingSessionsIndex.cs" />

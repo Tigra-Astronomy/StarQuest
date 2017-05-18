@@ -1,12 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSession.cs  Created: 2017-05-16@19:02
-// Last modified: 2017-05-16@19:30
+// Last modified: 2017-05-18@17:17
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
+using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.DataAccess;
 
 namespace MS.Gamification.Models
@@ -45,6 +46,8 @@ namespace MS.Gamification.Models
         [NotNull]
         [ItemNotNull]
         public List<ApplicationUser> Attendees { get; set; }
+
+        public ScheduleState ScheduleState { get; set; }
 
         public int Id { get; set; }
         }

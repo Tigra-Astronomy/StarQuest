@@ -1,9 +1,10 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionSpecs.cs  Created: 2017-05-17@18:51
-// Last modified: 2017-05-17@19:51
+// Last modified: 2017-05-18@17:17
 
 using System;
+using System.Linq;
 using Machine.Specifications;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.BusinessLogic.EventManagement;
@@ -20,6 +21,7 @@ namespace MS.Gamification.Tests.EventLogic
             Venue = "Your imagination",
             StartsAt = new DateTime(2000, 1, 1, 0, 0, 0)
             });
-        It should_create_a_session_in_scheduled_state;
+        It should_create_a_session_in_scheduled_state = () =>
+            Sessions.Single().ScheduleState.ShouldEqual(ScheduleState.Scheduled);
         }
     }
