@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: with_event_logic_context.cs  Created: 2017-05-17@19:24
-// Last modified: 2017-05-18@17:20
+// Last modified: 2017-05-18@18:32
 
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -23,8 +23,6 @@ namespace MS.Gamification.Tests.EventLogic
             EventContext = null;
             EventContextBuilder = null;
             };
-        Establish context;
-        Because of;
 
         #region Convenience Properties
         protected static IObservingSessionManager SessionManager => EventContext.SessionManager;

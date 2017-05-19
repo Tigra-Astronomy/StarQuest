@@ -1,11 +1,13 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: StarQuestScheduledJobs.cs  Created: 2016-12-12@18:35
-// Last modified: 2016-12-31@13:38
+// File: StarQuestScheduledJobs.cs  Created: 2017-05-17@19:32
+// Last modified: 2017-05-19@02:01
 
 using System;
 using System.Configuration;
 using FluentScheduler;
+using MS.Gamification.BusinessLogic.EventManagement;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 
 namespace MS.Gamification.BusinessLogic.Gamification.ScheduledTasks
     {
@@ -19,6 +21,9 @@ namespace MS.Gamification.BusinessLogic.Gamification.ScheduledTasks
                 .ToRunEvery(1)
                 .Days()
                 .At(moderatorDailySummary.Hours, moderatorDailySummary.Minutes);
+            Schedule<QueueProcessorTask>()
+                .ToRunEvery(15)
+                .Minutes();
             }
         }
     }

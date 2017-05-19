@@ -1,10 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: IUnitOfWork.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-17@00:15
+// Last modified: 2017-05-18@22:12
 
 using System;
 using System.Threading.Tasks;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 using MS.Gamification.Models;
 
 namespace MS.Gamification.DataAccess
@@ -62,7 +63,17 @@ namespace MS.Gamification.DataAccess
         /// <value>The badges.</value>
         IRepository<Badge, int> Badges { get; }
 
+        /// <summary>
+        ///     Scheduled observing sessions
+        /// </summary>
+        /// <value>The observing sessions.</value>
         IRepository<ObservingSession, int> ObservingSessions { get; }
+
+        /// <summary>
+        ///     Items of various types queued for later processing
+        /// </summary>
+        /// <value>The queued work items.</value>
+        IRepository<QueuedWorkItem, int> QueuedWorkItems { get; }
 
         /// <summary>
         ///     Commits changes to the database and completes the transaction.

@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: EntityFramework6UnitOfWork.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-16@19:45
+// Last modified: 2017-05-18@22:32
 
 using System;
 using System.Diagnostics.Contracts;
@@ -20,6 +20,7 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         public EntityFramework6UnitOfWork(ApplicationDbContext context)
             {
             dbContext = context;
+            QueuedWorkItems = new QueuedWorkItemRepository(dbContext);
             Users = new UserRepository(dbContext);
             Challenges = new ChallengeRepository(dbContext);
             CategoriesRepository = new CategoryRepository(dbContext);
@@ -33,6 +34,9 @@ namespace MS.Gamification.DataAccess.EntityFramework6
 
         [NotNull]
         public IRepository<ObservingSession, int> ObservingSessions { get; }
+
+        [NotNull]
+        public IRepository<QueuedWorkItem, int> QueuedWorkItems { get; }
 
         [NotNull]
         public IRepository<Challenge, int> Challenges { get; }

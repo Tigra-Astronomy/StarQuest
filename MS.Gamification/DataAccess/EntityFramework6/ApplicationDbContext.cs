@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
 // File: ApplicationDbContext.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-16@19:40
+// Last modified: 2017-05-18@22:31
 
 using System.Data.Common;
 using System.Data.Entity;
@@ -56,6 +56,10 @@ namespace MS.Gamification.DataAccess.EntityFramework6
         [ItemNotNull]
         [NotNull]
         public virtual IDbSet<ObservingSession> ObservingSessions { get; set; }
+
+        [ItemNotNull]
+        [NotNull]
+        public virtual IDbSet<QueuedWorkItem> QueuedWorkItems { get; set; }
 
         public static ApplicationDbContext Create()
             {

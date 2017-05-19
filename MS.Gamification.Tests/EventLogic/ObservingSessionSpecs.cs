@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionSpecs.cs  Created: 2017-05-17@18:51
-// Last modified: 2017-05-18@17:17
+// Last modified: 2017-05-18@19:29
 
 using System;
 using System.Linq;
@@ -15,13 +15,14 @@ namespace MS.Gamification.Tests.EventLogic
     class when_creating_a_new_observing_session : with_event_logic_context
         {
         Establish context = () => EventContext = EventContextBuilder.Build();
-        Because of = () => SessionManager.Create(new CreateObservingSessionViewModel
-            {
-            Title = "Test session",
-            Venue = "Your imagination",
-            StartsAt = new DateTime(2000, 1, 1, 0, 0, 0)
-            });
-        It should_create_a_session_in_scheduled_state = () =>
+        Because of = () => SessionManager.CreateAsync(new CreateObservingSessionViewModel
+                {
+                Title = "Test session",
+                Venue = "Your imagination",
+                StartsAt = new DateTime(2000, 1, 1, 0, 0, 0)
+                })
+            .Wait();
+        It should_create_one_session_in_scheduled_state = () =>
             Sessions.Single().ScheduleState.ShouldEqual(ScheduleState.Scheduled);
         }
     }

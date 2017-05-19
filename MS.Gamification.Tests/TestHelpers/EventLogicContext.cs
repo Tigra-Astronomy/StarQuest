@@ -12,7 +12,7 @@ namespace MS.Gamification.Tests.TestHelpers
     {
     class EventLogicContext
         {
-        public IObservingSessionManager SessionManager { get; private set; }
+        public IObservingSessionManager SessionManager { get; set; }
 
         public IUnitOfWork UnitOfWork { get; set; }
 

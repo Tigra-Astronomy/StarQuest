@@ -1,10 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: IRepository.cs  Created: 2016-05-10@22:28
-// Last modified: 2016-08-18@02:42
+// File: IRepository.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-18@22:26
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 using JetBrains.Annotations;
 using MS.Gamification.BusinessLogic.Gamification;
@@ -23,6 +24,7 @@ namespace MS.Gamification.DataAccess
     /// </remarks>
     /// <typeparam name="TEntity">The type of entity contained in the repository.</typeparam>
     /// <typeparam name="TKey">The type of the primary key.</typeparam>
+    [ContractClass(typeof(RepositoryContract<,>))]
     public interface IRepository<TEntity, TKey> where TEntity : class, IDomainEntity<TKey>
         {
         /// <summary>
@@ -30,6 +32,7 @@ namespace MS.Gamification.DataAccess
         /// </summary>
         /// <value>The pick list.</value>
         [NotNull]
+        [ItemNotNull]
         IEnumerable<PickListItem<TKey>> PickList { get; }
 
         /// <summary>
@@ -98,5 +101,33 @@ namespace MS.Gamification.DataAccess
         /// <param name="specification">A specification that determines which entities should be returned.</param>
         /// <returns>A collection of all entities satisfying the specification.</returns>
         IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity, TOut> specification) where TOut : class;
+        }
+
+    [ContractClassFor(typeof(IRepository<,>))]
+    internal abstract class RepositoryContract<TEntity, TKey> : IRepository<TEntity, TKey>
+        where TEntity : class, IDomainEntity<TKey>
+        {
+        public abstract IEnumerable<PickListItem<TKey>> PickList { get; }
+
+        public abstract TEntity Get(TKey id);
+
+        public abstract IEnumerable<TEntity> GetAll();
+
+        public abstract IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+
+        public abstract void Add(TEntity entity);
+
+        public abstract void Add(IEnumerable<TEntity> entities);
+
+        public abstract void Remove(TEntity entity);
+
+        public abstract void Remove(IEnumerable<TEntity> entities);
+
+        public abstract Maybe<TEntity> GetMaybe(TKey id);
+
+        public abstract Maybe<TOut> GetMaybe<TOut>(IQuerySpecification<TEntity, TOut> specification);
+
+        public abstract IEnumerable<TOut> AllSatisfying<TOut>(IQuerySpecification<TEntity, TOut> specification)
+            where TOut : class;
         }
     }

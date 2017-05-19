@@ -17,8 +17,24 @@ namespace MS.Gamification.Migrations
                         StartsAt = c.DateTime(nullable: false),
                         Description = c.String(),
                         SendNotifications = c.Boolean(nullable: false),
+                        ScheduleState = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.QueuedWorkItems",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ProcessAfter = c.DateTime(nullable: false),
+                        QueueName = c.String(nullable: false, maxLength: 8),
+                        Disposition = c.Int(nullable: false),
+                        ObservingSessionId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.ObservingSessions", t => t.ObservingSessionId, cascadeDelete: true)
+                .Index(t => t.ProcessAfter)
+                .Index(t => t.ObservingSessionId);
             
             AddColumn("dbo.AspNetUsers", "ObservingSession_Id", c => c.Int());
             CreateIndex("dbo.AspNetUsers", "ObservingSession_Id");
@@ -27,9 +43,13 @@ namespace MS.Gamification.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.QueuedWorkItems", "ObservingSessionId", "dbo.ObservingSessions");
             DropForeignKey("dbo.AspNetUsers", "ObservingSession_Id", "dbo.ObservingSessions");
+            DropIndex("dbo.QueuedWorkItems", new[] { "ObservingSessionId" });
+            DropIndex("dbo.QueuedWorkItems", new[] { "ProcessAfter" });
             DropIndex("dbo.AspNetUsers", new[] { "ObservingSession_Id" });
             DropColumn("dbo.AspNetUsers", "ObservingSession_Id");
+            DropTable("dbo.QueuedWorkItems");
             DropTable("dbo.ObservingSessions");
         }
     }

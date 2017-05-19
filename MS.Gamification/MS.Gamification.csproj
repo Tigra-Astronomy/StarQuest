@@ -358,8 +358,15 @@
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\EditObservingSessionViewModel.cs" />
     <Compile Include="BusinessLogic\EventManagement\IObservingSessionManager.cs" />
     <Compile Include="BusinessLogic\EventManagement\ObservingSessionLogic.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\QueueProcessorTask.cs" />
     <Compile Include="BusinessLogic\EventManagement\ScheduleState.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\IProcessWorkItems.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ITimeProvider.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminder.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\WorkItemDisposition.cs" />
+    <Compile Include="Models\QueuedWorkItem.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />
+    <Compile Include="DataAccess\EntityFramework6\QueuedWorkItemRepository.cs" />
     <Compile Include="EmailTemplates\PendingObservationsEmailModel.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\ObservingSessionsIndex.cs" />
     <Compile Include="BusinessLogic\Gamification\ScheduledTasks\StarQuestScheduledJobs.cs" />
