@@ -29,10 +29,11 @@ namespace MS.Gamification.Migrations
                         ProcessAfter = c.DateTime(nullable: false),
                         QueueName = c.String(nullable: false, maxLength: 8),
                         Disposition = c.Int(nullable: false),
-                        ObservingSessionId = c.Int(nullable: false),
+                        ObservingSessionId = c.Int(),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ObservingSessions", t => t.ObservingSessionId, cascadeDelete: true)
+                .ForeignKey("dbo.ObservingSessions", t => t.ObservingSessionId)
                 .Index(t => t.ProcessAfter)
                 .Index(t => t.ObservingSessionId);
             

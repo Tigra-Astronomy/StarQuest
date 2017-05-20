@@ -570,6 +570,37 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="P:MS.Gamification.BusinessLogic.QueueProcessing.QueueProcessorTask.EligibleWorkItems">
+            <summary>
+                The list of all work items founf to be eligible for processing
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.BusinessLogic.QueueProcessing.QueueProcessorTask.SuccessfulWorkItems">
+            <summary>
+                The list of work items that were eligible and completed successfully.
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.BusinessLogic.QueueProcessing.QueueProcessorTask.FailedWorkItems">
+            <summary>
+                The list of work items that were eligible, but produced an error when run
+            </summary>
+        </member>
+        <member name="P:MS.Gamification.BusinessLogic.QueueProcessing.QueueProcessorTask.SkippedWorkItems">
+            <summary>
+                The list of items that were eligible, but had not suitable queue processor.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.BusinessLogic.QueueProcessing.UnitTestWorkItem">
+            <summary>
+                A degenerate work item used for unit testing.
+            </summary>
+            <seealso cref="T:MS.Gamification.Models.QueuedWorkItem" />
+            <remarks>
+                This class really belongs in the unit test project, but is here for subtle reasons related to how
+                Entity Framework discovers class hierarchies. Note that because this class inherits from
+                an abstract model class, any changes to this class will result in a change to the database schema.
+            </remarks>
+        </member>
         <member name="T:MS.Gamification.BusinessLogic.QueueProcessing.WorkItemDisposition">
             <summary>
                 The status of work items in the queue
