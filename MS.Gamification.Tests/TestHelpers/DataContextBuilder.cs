@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: DataContextBuilder.cs  Created: 2016-12-12@20:48
-// Last modified: 2016-12-30@08:49
+// File: DataContextBuilder.cs  Created: 2017-05-16@17:37
+// Last modified: 2017-05-19@22:39
 
 using System.Collections.Generic;
 using System.Data.Common;
@@ -75,7 +75,7 @@ namespace MS.Gamification.Tests.TestHelpers
         /// </returns>
         public DataContextBuilder WithStandardUser(string id, string username)
             {
-            CreateUserInRoles(id, username, new string[] {});
+            CreateUserInRoles(id, username, new string[] { });
             return this;
             }
 
@@ -143,6 +143,12 @@ namespace MS.Gamification.Tests.TestHelpers
             var dataLoader = new ObjectDataLoader(data);
             UnitOfWork = uowBuilder.WithData(dataLoader).Build();
             return UnitOfWork;
+            }
+
+        public DataContextBuilder WithQueuedWorkItem(QueuedWorkItem item)
+            {
+            data.Table<QueuedWorkItem>().Add(item);
+            return this;
             }
         }
     }

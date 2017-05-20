@@ -118,6 +118,9 @@
       <HintPath>..\packages\Ninject.3.2.3-unstable-012\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="NMemory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6a46696d54971e6d, processorArchitecture=MSIL">
       <HintPath>..\packages\NMemory.1.1.2\lib\net45\NMemory.dll</HintPath>
       <Private>True</Private>
@@ -220,6 +223,10 @@
     <Compile Include="QuerySpecifications\EligibleObservationsForChallengesSpecs.cs" />
     <Compile Include="QuerySpecifications\ObservationsAwaitingModerationSpecs.cs" />
     <Compile Include="QuerySpecifications\ObservationsForUserMissionSpecs.cs" />
+    <Compile Include="QueueProcessing\QueueProcessorSpecs.cs" />
+    <Compile Include="QueueProcessing\UnitTestTimeProvider.cs" />
+    <Compile Include="QueueProcessing\with_queue_context.cs" />
+    <Compile Include="ScheduledJobs\JobContext.cs" />
     <Compile Include="ScheduledJobs\ModeratorDailySummaryTaskSpecs.cs" />
     <Compile Include="ScheduledJobs\SchedulerContextBuilder.cs" />
     <Compile Include="ScheduledJobs\with_job_context.cs" />
@@ -245,6 +252,7 @@
     <Compile Include="TestHelpers\Fakes\FakeIdentity.cs" />
     <Compile Include="TestHelpers\Fakes\FakeNotificationService.cs" />
     <Compile Include="TestHelpers\Fakes\FakePrincipal.cs" />
+    <Compile Include="QueueProcessing\UnitTestWorkItemProcessor.cs" />
     <Compile Include="TestHelpers\GameLogicContext.cs" />
     <Compile Include="TestHelpers\GameLogicContextBuilder.cs" />
     <Compile Include="TestHelpers\MissionBuilder.ChallengeBuilder.cs" />

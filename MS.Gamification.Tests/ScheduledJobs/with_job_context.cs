@@ -1,9 +1,11 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: with_job_context.cs  Created: 2016-12-13@00:08
-// Last modified: 2016-12-13@01:06
+// File: with_job_context.cs  Created: 2017-05-16@17:41
+// Last modified: 2017-05-19@20:06
 
+using System.Data.Entity;
 using FluentScheduler;
+using JetBrains.Annotations;
 using Machine.Specifications;
 using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.Tests.TestHelpers;
@@ -14,16 +16,22 @@ namespace MS.Gamification.Tests.ScheduledJobs
         {
         Cleanup after = () =>
             {
-            Job = null;
             JobContextBuilder = null;
+            Context = null;
             };
         Establish context = () => JobContextBuilder = new ScheduledJobContextBuilder<TJob>()
             .WithData(TestData.CreateStandardMissionData);
 
-        protected static ScheduledJobContextBuilder<TJob> JobContextBuilder { get; set; }
+        protected static ScheduledJobContextBuilder<TJob> JobContextBuilder { get; private set; }
 
-        protected static TJob Job { get; set; }
+        protected static TJob Job => Context.Job;
 
-        public IGameNotificationService Notifier => JobContextBuilder.Notifier;
+        protected static JobContext<TJob> Context { get; set; }
+
+        [NotNull]
+        protected static IGameNotificationService Notifier => Context.Notifier;
+
+        [NotNull]
+        protected static DbContext DbContext => Context.DataContext;
         }
     }

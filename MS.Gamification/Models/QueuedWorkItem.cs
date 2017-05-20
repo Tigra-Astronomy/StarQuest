@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: QueuedWorkItem.cs  Created: 2017-05-18@22:31
-// Last modified: 2017-05-19@00:27
+// Last modified: 2017-05-20@00:14
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -29,7 +29,7 @@ namespace MS.Gamification.Models
         [Required]
         [MaxLength(8)]
         [MinLength(1)]
-        [RegularExpression("[A-Za-z]")]
+        [RegularExpression("[A-Za-z]+")]
         public string QueueName { get; set; }
 
         public WorkItemDisposition Disposition { get; set; }

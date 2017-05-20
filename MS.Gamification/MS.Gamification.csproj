@@ -363,6 +363,7 @@
     <Compile Include="BusinessLogic\QueueProcessing\IProcessWorkItems.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ITimeProvider.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminder.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\UnitTestWorkItem.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\WorkItemDisposition.cs" />
     <Compile Include="Models\QueuedWorkItem.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />

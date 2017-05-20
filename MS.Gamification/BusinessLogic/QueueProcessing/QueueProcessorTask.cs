@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: QueueProcessorTask.cs  Created: 2017-05-19@02:05
-// Last modified: 2017-05-19@02:12
+// Last modified: 2017-05-20@01:41
 
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentScheduler;
 using JetBrains.Annotations;
+using Microsoft.Ajax.Utilities;
 using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -25,10 +26,10 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
         [NotNull] private readonly ITimeProvider clock;
         [NotNull] private readonly ILogger log = LogManager.GetCurrentClassLogger();
         [NotNull] private readonly IUnitOfWork uow;
-        [NotNull] private readonly IDictionary<Type, IProcessWorkItems<QueuedWorkItem>> workItemProcessors;
+        [NotNull] private readonly IDictionary<Type, IProcessWorkItems> workItemProcessors;
 
         public QueueProcessorTask([NotNull] ITimeProvider clock, [NotNull] IUnitOfWork uow,
-            [NotNull] IDictionary<Type, IProcessWorkItems<QueuedWorkItem>> workItemProcessors)
+            [NotNull] IDictionary<Type, IProcessWorkItems> workItemProcessors)
             {
             Contract.Requires(clock != null);
             Contract.Requires(uow != null);
@@ -37,6 +38,26 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
             this.uow = uow;
             this.workItemProcessors = workItemProcessors;
             }
+
+        /// <summary>
+        ///     The list of all work items founf to be eligible for processing
+        /// </summary>
+        public List<QueuedWorkItem> EligibleWorkItems { get; } = new List<QueuedWorkItem>();
+
+        /// <summary>
+        ///     The list of work items that were eligible and completed successfully.
+        /// </summary>
+        public List<QueuedWorkItem> SuccessfulWorkItems { get; } = new List<QueuedWorkItem>();
+
+        /// <summary>
+        ///     The list of work items that were eligible, but produced an error when run
+        /// </summary>
+        public List<QueuedWorkItem> FailedWorkItems { get; } = new List<QueuedWorkItem>();
+
+        /// <summary>
+        ///     The list of items that were eligible, but had not suitable queue processor.
+        /// </summary>
+        public List<QueuedWorkItem> SkippedWorkItems { get; } = new List<QueuedWorkItem>();
 
         public void Execute()
             {
@@ -49,6 +70,8 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
             log.Info().Message($"Begin queue processing at {stamp}").Property("timestamp", stamp).Write();
             var specification = new EligibleWorkItemsSpecification(stamp);
             var eligibleWorkItems = uow.QueuedWorkItems.AllSatisfying(specification);
+            EligibleWorkItems.AddRange(eligibleWorkItems);
+            eligibleWorkItems.ForEach(item => item.Disposition = WorkItemDisposition.InProgress);
             await uow.CommitAsync().ConfigureAwait(false);
             await DispatchWorkItemsAsync(eligibleWorkItems).ConfigureAwait(false);
             log.Info().Message($"End queue processing begun at {stamp}").Property("timestamp", stamp).Write();
@@ -91,8 +114,12 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
             }
 
         [NotNull]
-        private Task MarkWorkItemCompletedAsync([NotNull] QueuedWorkItem workItem) =>
-            SetWorkItemDispositionAsync(workItem, WorkItemDisposition.Completed);
+        private async Task MarkWorkItemCompletedAsync([NotNull] QueuedWorkItem workItem)
+            {
+            Contract.Requires(workItem != null);
+            SuccessfulWorkItems.Add(workItem);
+            await SetWorkItemDispositionAsync(workItem, WorkItemDisposition.Completed).ConfigureAwait(false);
+            }
 
         private async Task MarkWorkItemFailedAsync([NotNull] QueuedWorkItem workItem, [NotNull] Exception exception)
             {
@@ -102,12 +129,16 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
                 .Property("item", workItem)
                 .Property("exception", exception)
                 .Write();
+            FailedWorkItems.Add(workItem);
             await SetWorkItemDispositionAsync(workItem, WorkItemDisposition.Failed).ConfigureAwait(false);
             }
 
         [NotNull]
-        private Task MarkWorkItemNotRunAsync([NotNull] QueuedWorkItem workItem) =>
-            SetWorkItemDispositionAsync(workItem, WorkItemDisposition.NotRun);
+        private Task MarkWorkItemNotRunAsync([NotNull] QueuedWorkItem workItem)
+            {
+            SkippedWorkItems.Add(workItem);
+            return SetWorkItemDispositionAsync(workItem, WorkItemDisposition.NotRun);
+            }
 
         private async Task SetWorkItemDispositionAsync([NotNull] QueuedWorkItem item, WorkItemDisposition disposition)
             {

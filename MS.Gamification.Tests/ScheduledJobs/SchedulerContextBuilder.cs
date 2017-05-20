@@ -1,21 +1,25 @@
 ﻿// This file is part of the MS.Gamification project
 // 
-// File: SchedulerContextBuilder.cs  Created: 2016-12-12@20:25
-// Last modified: 2016-12-30@04:32
+// File: SchedulerContextBuilder.cs  Created: 2017-05-16@17:41
+// Last modified: 2017-05-19@21:59
 
 using System;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Diagnostics.Contracts;
 using AutoMapper;
 using FluentScheduler;
+using JetBrains.Annotations;
 using Machine.Specifications;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MS.Gamification.App_Start;
 using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.BusinessLogic.Gamification.ScheduledTasks;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
+using MS.Gamification.Tests.QueueProcessing;
 using MS.Gamification.Tests.TestHelpers;
 using Ninject;
 
@@ -35,13 +39,13 @@ namespace MS.Gamification.Tests.ScheduledJobs
     /// </remarks>
     class ScheduledJobContextBuilder<TJob> where TJob : class, IJob
         {
-        readonly DataContextBuilder dataBuilder = new DataContextBuilder();
+        [NotNull] readonly JobContext<TJob> context = new JobContext<TJob>();
+        [NotNull] readonly DataContextBuilder dataBuilder = new DataContextBuilder();
 
+        [NotNull]
         public IJobFactory JobFactory { get; private set; }
 
-        IUnitOfWork UnitOfWork { get; set; }
-
-        public IGameNotificationService Notifier { get; private set; }
+        public UnitTestTimeProvider TimeProvider { get; } = new UnitTestTimeProvider();
 
         public ScheduledJobContextBuilder<TJob> WithData(Action<DataContextBuilder> builderMethod)
             {
@@ -49,27 +53,31 @@ namespace MS.Gamification.Tests.ScheduledJobs
             return this;
             }
 
-        public TJob Build()
+        [NotNull]
+        public JobContext<TJob> Build()
             {
-            UnitOfWork = dataBuilder.Build();
+            context.UnitOfWork = dataBuilder.Build();
+            context.DataContext = dataBuilder.DataContext;
             var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<ViewModelMappingProfile>(); });
             mapperConfiguration.AssertConfigurationIsValid();
-            var kernel = BuildNinjectKernel();
+            var kernel = BuildNinjectKernel(context);
             JobFactory = new NinjectScheduledTaskFactory(kernel);
             var job = JobFactory.GetJobInstance<TJob>();
             if (job == null)
                 throw new SpecificationException(
                     $"ScheduledJobContextBuilder: Unable to create instance of type {nameof(TJob)}");
-            return job as TJob;
+            context.Job = job as TJob;
+            return context;
             }
 
-        IKernel BuildNinjectKernel()
+        IKernel BuildNinjectKernel(JobContext<TJob> jobContext)
             {
-            IKernel kernel = new StandardKernel();
+            var kernel = jobContext.DependencyResolver;
+            kernel.Bind<ITimeProvider>().ToMethod(t => jobContext.TimeProvider).InTransientScope();
             kernel.Bind<DbConnection>().ToMethod(ctx => dataBuilder.DataConnection);
             kernel.Bind<DbContext>().ToMethod(ctx => dataBuilder.DataContext);
-            kernel.Bind<IUnitOfWork>().ToMethod(u => UnitOfWork);
-            kernel.Bind<IGameNotificationService>().ToMethod(u => Notifier).InTransientScope();
+            kernel.Bind<IUnitOfWork>().ToMethod(u => jobContext.UnitOfWork);
+            kernel.Bind<IGameNotificationService>().ToMethod(u => jobContext.Notifier).InTransientScope();
             kernel.Bind<IUserStore<ApplicationUser>>().To<ApplicationUserStore>().InTransientScope();
             kernel.Bind<IRoleStore<IdentityRole, string>>()
                 .To<RoleStore<IdentityRole, string, IdentityUserRole>>()
@@ -82,7 +90,22 @@ namespace MS.Gamification.Tests.ScheduledJobs
 
         public ScheduledJobContextBuilder<TJob> NotifyWith(IGameNotificationService notifier)
             {
-            Notifier = notifier;
+            context.Notifier = notifier;
+            return this;
+            }
+
+        public ScheduledJobContextBuilder<TJob> StartTime(DateTime startAt)
+            {
+            TimeProvider.UtcNow = startAt;
+            return this;
+            }
+
+        [NotNull]
+        public ScheduledJobContextBuilder<TJob> AddDependency([NotNull] Action<IKernel> binder)
+            {
+            Contract.Requires(binder != null);
+            Contract.Ensures(Contract.Result<ScheduledJobContextBuilder<TJob>>() != null);
+            binder(context.DependencyResolver);
             return this;
             }
         }
