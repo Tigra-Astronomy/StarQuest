@@ -1,13 +1,10 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: LevelUnlockingSpecs.cs  Created: 2016-11-01@19:37
-// Last modified: 2016-12-12@23:41
+// Last modified: 2017-05-30@18:50
 
-using System;
-using FakeItEasy;
 using Machine.Specifications;
 using MS.Gamification.BusinessLogic.Gamification;
-using MS.Gamification.DataAccess;
 using MS.Gamification.Tests.Controllers;
 using MS.Gamification.Tests.TestHelpers;
 using MS.Gamification.ViewModels.Mission;
@@ -80,11 +77,7 @@ namespace MS.Gamification.Tests.GameLogic
         {
         Establish context = () =>
             {
-            var fakeUow = A.Fake<IUnitOfWork>();
-            A.CallTo(() => fakeUow.Users).Throws(new Exception("You've been unit tested"));
-            ContextBuilder.UnitOfWork = fakeUow;
             ControllerUnderTest = ContextBuilder
-                .WithData(d => d.WithUserAwardedBadges("user", "Joe User", 1, 2, 4))
                 .Build();
 
             Level = new LevelProgressViewModel

@@ -1,7 +1,7 @@
 // This file is part of the MS.Gamification project
 // 
-// File: with_mvc_controller.cs  Created: 2016-05-26@03:51
-// Last modified: 2016-08-08@23:05
+// File: with_mvc_controller.cs  Created: 2016-11-01@19:37
+// Last modified: 2017-05-30@18:49
 
 using System;
 using System.Web.Mvc;
@@ -30,7 +30,9 @@ namespace MS.Gamification.Tests.Controllers
         Cleanup after = () =>
             {
             ContextBuilder.UnitOfWork.Dispose();
+            ContextBuilder = null; //[Sentinel]
             (ControllerUnderTest as IDisposable)?.Dispose();
+            ControllerUnderTest = null; //[Sentinel]
             };
         Establish context = () => ContextBuilder = new ControllerContextBuilder<TController>();
 
