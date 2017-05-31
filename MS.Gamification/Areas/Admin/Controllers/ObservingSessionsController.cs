@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionsController.cs  Created: 2017-05-16@20:38
-// Last modified: 2017-05-17@19:55
+// Last modified: 2017-05-30@23:06
 
 using System;
 using System.Diagnostics;
@@ -13,10 +13,10 @@ using System.Web.Mvc;
 using AutoMapper;
 using JetBrains.Annotations;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
+using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.Controllers;
 using MS.Gamification.DataAccess;
-using MS.Gamification.Models;
 using NLog;
 
 // ReSharper disable HollowTypeName
@@ -28,16 +28,20 @@ namespace MS.Gamification.Areas.Admin.Controllers
         {
         private readonly ILogger log;
         [NotNull] private readonly IMapper mapper;
+        [NotNull] private readonly IObservingSessionManager sessionManager;
         [NotNull] private readonly IUnitOfWork uow;
 
-        public ObservingSessionsController([NotNull] IUnitOfWork uow, [NotNull] IMapper mapper, [NotNull] ILogger logger)
+        public ObservingSessionsController([NotNull] IUnitOfWork uow, [NotNull] IMapper mapper, [NotNull] ILogger logger,
+            [NotNull] IObservingSessionManager sessionManager)
             {
             Contract.Requires(uow != null);
             Contract.Requires(mapper != null);
             Contract.Requires(logger != null);
+            Contract.Requires(sessionManager != null);
             this.uow = uow;
             this.mapper = mapper;
             log = logger;
+            this.sessionManager = sessionManager;
             }
 
         // GET: ObservingSession
@@ -49,10 +53,7 @@ namespace MS.Gamification.Areas.Admin.Controllers
             }
 
         // GET: ObservingSession/Details/5
-        public ActionResult Details(int id)
-            {
-            return View();
-            }
+        public ActionResult Details(int id) => View();
 
         // GET: ObservingSession/Create
         public ActionResult Create()
@@ -71,16 +72,16 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 return View(model);
             try
                 {
-                var newEntity = mapper.Map<ObservingSession>(model);
-                uow.ObservingSessions.Add(newEntity);
-                await uow.CommitAsync().ConfigureAwait(false);
-                log.Info(
-                    $"Successfully created observing session ID={newEntity.Id}: {newEntity.StartsAt} {newEntity.Title} at {newEntity.Venue}");
+                //var newEntity = mapper.Map<ObservingSession>(model);
+                //uow.ObservingSessions.Add(newEntity);
+                //await uow.CommitAsync().ConfigureAwait(false);
+                await sessionManager.CreateAsync(model);
+                log.Info($"Successfully created observing session: {model}");
                 return RedirectToAction("Index");
                 }
             catch (Exception e)
                 {
-                log.Error($"Error creating observing session '{model.Title}': {e.Message}");
+                log.Error($"Error creating observing session {model}");
                 }
             return View(model);
             }
@@ -92,21 +93,19 @@ namespace MS.Gamification.Areas.Admin.Controllers
             {
             Contract.Invariant(mapper != null);
             Contract.Invariant(uow != null);
+            Contract.Invariant(sessionManager != null);
             }
 
         // GET: ObservingSession/Edit/5
-        public ActionResult Edit(int id)
-            {
-            return View();
-            }
+        public ActionResult Edit(int id) => View();
 
-// POST: ObservingSession/Edit/5
+        // POST: ObservingSession/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
             {
             try
                 {
-// TODO: Add update logic here
+                // TODO: Add update logic here
                 return RedirectToAction("Index");
                 }
             catch
@@ -115,19 +114,16 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 }
             }
 
-// GET: ObservingSession/Delete/5
-        public ActionResult Delete(int id)
-            {
-            return View();
-            }
+        // GET: ObservingSession/Delete/5
+        public ActionResult Delete(int id) => View();
 
-// POST: ObservingSession/Delete/5
+        // POST: ObservingSession/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
             {
             try
                 {
-// TODO: Add delete logic here
+                // TODO: Add delete logic here
                 return RedirectToAction("Index");
                 }
             catch

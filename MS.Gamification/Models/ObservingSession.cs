@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSession.cs  Created: 2017-05-16@19:02
-// Last modified: 2017-05-18@17:17
+// Last modified: 2017-05-31@11:33
 
 using System;
 using System.Collections.Generic;
@@ -41,13 +41,15 @@ namespace MS.Gamification.Models
         [CanBeNull]
         public string Description { get; set; }
 
-        public bool SendNotifications { get; set; }
-
         [NotNull]
         [ItemNotNull]
         public List<ApplicationUser> Attendees { get; set; }
 
         public ScheduleState ScheduleState { get; set; }
+
+        public bool RemindOneWeekBefore { get; set; }
+
+        public bool RemindOneDayBefore { get; set; }
 
         public int Id { get; set; }
         }

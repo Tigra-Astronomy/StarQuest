@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-18@17:19
+// Last modified: 2017-05-31@11:40
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -80,7 +80,8 @@ namespace MS.Gamification.App_Start
             CreateMap<CreateObservingSessionViewModel, ObservingSession>()
                 .ForMember(m => m.Attendees, m => m.Ignore())
                 .ForMember(m => m.ScheduleState, m => m.UseValue(ScheduleState.Scheduled))
-                .ForMember(m => m.Id, m => m.Ignore());
+                .ForMember(m => m.Id, m => m.Ignore())
+                .ForSourceMember(m => m.SendAnnouncement, m => m.Ignore());
             CreateMap<ObservingSession, EditObservingSessionViewModel>();
             }
         }

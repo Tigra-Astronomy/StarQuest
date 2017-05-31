@@ -6,19 +6,19 @@
 
 <h2>Schedule an Observing Session</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
     {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Session</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Title, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
             </div>
         </div>
 
@@ -45,20 +45,28 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
             </div>
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SendNotifications, htmlAttributes: new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SendNotifications, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.SendNotifications, "", new {@class = "text-danger"})
+        <div class="panel panel-default col-md-offset-2" id="notifactionOptionsPanel">
+            <div class="panel-heading">Send Notifications to Members</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <span >
+                        @Html.CheckBoxFor(model => model.SendAnnouncement, new {@class = "checkbox-inline"})
+                        Immediately
+                    </span>
+                    <span >
+                        @Html.CheckBoxFor(model => model.RemindOneWeekBefore, new {@class = "checkbox-inline"})
+                        a week before
+                    </span>
+                    <span >
+                        @Html.CheckBoxFor(model => model.RemindOneDayBefore, new {@class = "checkbox-inline"})
+                        the day before
+                    </span>
+                </div>
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default"/>
             </div>
         </div>
     </div>

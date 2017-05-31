@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
     <ApplicationInsightsResourceId>/subscriptions/2c155733-1131-4a15-b5d6-1096766bf56b/resourcegroups/Monkton-Stargazers/providers/microsoft.insights/components/StarQuest Application Insights</ApplicationInsightsResourceId>
     <DontImportPostSharp>True</DontImportPostSharp>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/2c155733-1131-4a15-b5d6-1096766bf56b/resourcegroups/Monkton-Stargazers/providers/microsoft.insights/components/StarQuest Application Insights</ApplicationInsightsAnnotationResourceId>

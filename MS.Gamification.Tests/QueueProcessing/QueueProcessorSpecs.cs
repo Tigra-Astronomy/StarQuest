@@ -17,7 +17,7 @@ namespace Namespace
      *  + Calling the processor should not process anything
      * When the queue has one work item of type QueuedWorkItem
      *  + Calling the processor should not process anything
-     * When the queue has 1 eligible item and there is a matching queueu processor
+     * When the queue has 1 eligible item and there is a matching queue processor
      *  + It should process the item
      *  + The item should be marked as completed
      */

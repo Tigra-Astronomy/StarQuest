@@ -8,7 +8,7 @@ using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 
 namespace MS.Gamification.BusinessLogic.EventManagement
     {
-    internal interface IObservingSessionManager
+    public interface IObservingSessionManager
         {
         Task CreateAsync(CreateObservingSessionViewModel model);
         }

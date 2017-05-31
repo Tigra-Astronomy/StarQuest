@@ -16,8 +16,9 @@ namespace MS.Gamification.Migrations
                         Venue = c.String(nullable: false),
                         StartsAt = c.DateTime(nullable: false),
                         Description = c.String(),
-                        SendNotifications = c.Boolean(nullable: false),
                         ScheduleState = c.Int(nullable: false),
+                        RemindOneWeekBefore = c.Boolean(nullable: false),
+                        RemindOneDayBefore = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
