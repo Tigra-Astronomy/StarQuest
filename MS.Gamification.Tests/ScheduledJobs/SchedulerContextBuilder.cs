@@ -1,9 +1,10 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: SchedulerContextBuilder.cs  Created: 2017-05-16@17:41
-// Last modified: 2017-05-19@21:59
+// Last modified: 2017-06-04@00:54
 
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Diagnostics.Contracts;
@@ -85,8 +86,17 @@ namespace MS.Gamification.Tests.ScheduledJobs
             kernel.Bind<RoleManager<IdentityRole>>().ToSelf().InTransientScope();
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile<ViewModelMappingProfile>());
             kernel.Bind<IMapper>().ToMethod(m => mapperConfig.CreateMapper()).InTransientScope();
+            kernel.Bind<IQueueProcessorFactory>()
+                .ToMethod(ctx => new NinjectQueueProcessorFactory(kernel, CreateUnitTestWorkItemMappings()))
+                .InTransientScope();
             return kernel;
             }
+
+        IDictionary<Type, Type> CreateUnitTestWorkItemMappings() => new Dictionary<Type, Type>
+            {
+            [typeof(ObservingSessionReminder)] = typeof(UnitTestWorkItemProcessor),
+            [typeof(UnitTestWorkItem)] = typeof(UnitTestWorkItemProcessor)
+            };
 
         public ScheduledJobContextBuilder<TJob> NotifyWith(IGameNotificationService notifier)
             {

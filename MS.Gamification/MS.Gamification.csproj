@@ -346,18 +346,22 @@
   <ItemGroup>
     <Compile Include="App_Start\ApplicationUserStore.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ConfigureQueueProcessor.cs" />
     <Compile Include="App_Start\ConfigureScheduler.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\ObservingSessionReminderQueueProcessor.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CreateObservingSessionViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\ObservingSessionsController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\EditObservingSessionViewModel.cs" />
     <Compile Include="BusinessLogic\EventManagement\IObservingSessionManager.cs" />
     <Compile Include="BusinessLogic\EventManagement\ObservingSessionLogic.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\IQueueProcessorFactory.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\NinjectQueueProcessorFactory.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\QueueProcessorTask.cs" />
     <Compile Include="BusinessLogic\EventManagement\ScheduleState.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\IProcessWorkItems.cs" />

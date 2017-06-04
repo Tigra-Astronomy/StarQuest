@@ -12,6 +12,7 @@ using Microsoft.Owin.Security.DataProtection;
 using MS.Gamification.App_Start;
 using MS.Gamification.BusinessLogic.Gamification;
 using MS.Gamification.BusinessLogic.Gamification.ScheduledTasks;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
@@ -59,6 +60,9 @@ namespace MS.Gamification
             kernel.Bind<IMapper>().ToMethod(m => mapperConfiguration.CreateMapper()).InSingletonScope();
             kernel.Bind<IRazorEngineService>()
                 .ToMethod(ctx => NinjectWebCommon.CreateRazorEngineService(NinjectWebCommon.RazorEngineTemplatePath))
+                .InSingletonScope();
+            kernel.Bind<IQueueProcessorFactory>()
+                .ToMethod(ctx => new NinjectQueueProcessorFactory(kernel, ConfigureQueueProcessor.MapQueueProcessors()))
                 .InSingletonScope();
             return kernel;
             //ToDo: create a UrlHelper implementation that can be used outside of any HttpContext.
