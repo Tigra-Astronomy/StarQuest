@@ -58,7 +58,7 @@ namespace MS.Gamification.Controllers
             var observation = maybeObservation.Single();
             observation.Status = ModerationState.Approved;
             uow.Commit();
-            await notifier.ObservationApproved(observation);
+            await notifier.ObservationApprovedAsync(observation);
             await gameEngine.EvaluateBadges(observation);
             return RedirectToAction("Index");
             }

@@ -353,7 +353,8 @@
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="App_Start\ObservingSessionReminderQueueProcessor.cs" />
+    <Compile Include="BusinessLogic\Gamification\QuerySpecifications\UsersForNotifyAllSpecification.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminderQueueProcessor.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CreateObservingSessionViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\ObservingSessionsController.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminder.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\UnitTestWorkItem.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\WorkItemDisposition.cs" />
+    <Compile Include="EmailTemplates\ObservingSessionReminderEmailModel.cs" />
     <Compile Include="Models\QueuedWorkItem.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\QueuedWorkItemRepository.cs" />
@@ -901,6 +903,7 @@
     <Content Include="EmailTemplates\PendingObservations.cshtml" />
     <Content Include="Areas\Admin\Views\ObservingSessions\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ObservingSessions\Index.cshtml" />
+    <Content Include="EmailTemplates\ObservingSessionReminder.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

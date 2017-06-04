@@ -71,7 +71,7 @@ namespace MS.Gamification.BusinessLogic.Gamification.ScheduledTasks
                 return;
             foreach (var moderator in moderators)
                 {
-                notifier.PendingObservationSummary(moderator, pendingObservations).Wait();
+                notifier.PendingObservationSummaryAsync(moderator, pendingObservations).Wait();
                 }
             try
                 {

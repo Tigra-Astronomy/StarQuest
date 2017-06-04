@@ -27,7 +27,7 @@ namespace MS.Gamification.Tests.ScheduledJobs
         Because of = () => Job.Execute();
 
         It should_not_send_any_notifications = () =>
-            A.CallTo(() => Notifier.PendingObservationSummary(
+            A.CallTo(() => Notifier.PendingObservationSummaryAsync(
                     A<ApplicationUser>.Ignored,
                     A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustNotHaveHappened();
@@ -49,7 +49,7 @@ namespace MS.Gamification.Tests.ScheduledJobs
             };
         Because of = () => Job.Execute();
         It should_send_one_notification = () =>
-            A.CallTo(() => Notifier.PendingObservationSummary(
+            A.CallTo(() => Notifier.PendingObservationSummaryAsync(
                     A<ApplicationUser>.That.Matches(p => p.Id == "mod"),
                     A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
@@ -74,17 +74,17 @@ namespace MS.Gamification.Tests.ScheduledJobs
             };
         Because of = () => Job.Execute();
         It should_send_one_notification_to_joe = () =>
-            A.CallTo(() => Notifier.PendingObservationSummary(
+            A.CallTo(() => Notifier.PendingObservationSummaryAsync(
                     A<ApplicationUser>.That.Matches(p => p.Id == "mod1"),
                     A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         It should_send_one_notification_to_jim = () =>
-            A.CallTo(() => Notifier.PendingObservationSummary(
+            A.CallTo(() => Notifier.PendingObservationSummaryAsync(
                     A<ApplicationUser>.That.Matches(p => p.Id == "mod2"),
                     A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Once);
         It should_send_a_total_of_two_notifications = () =>
-            A.CallTo(() => Notifier.PendingObservationSummary(
+            A.CallTo(() => Notifier.PendingObservationSummaryAsync(
                     A<ApplicationUser>.Ignored,
                     A<IEnumerable<ModerationQueueItem>>.Ignored))
                 .MustHaveHappened(Repeated.Exactly.Twice);

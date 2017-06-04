@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MS.Gamification.BusinessLogic.Gamification;
+using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels.Moderation;
 
@@ -13,17 +14,22 @@ namespace MS.Gamification.Tests.TestHelpers.Fakes
     {
     class FakeNotificationService : IGameNotificationService
         {
-        public Task ObservationApproved(Observation observation)
+        public Task ObservationApprovedAsync(Observation observation)
             {
             return Task.FromResult(0);
             }
 
-        public Task BadgeAwarded(Badge badge, ApplicationUser user, MissionTrack track)
+        public Task BadgeAwardedAsync(Badge badge, ApplicationUser user, MissionTrack track)
             {
             return Task.FromResult(0);
             }
 
-        public Task PendingObservationSummary(ApplicationUser user, IEnumerable<ModerationQueueItem> observations)
+        public Task PendingObservationSummaryAsync(ApplicationUser user, IEnumerable<ModerationQueueItem> observations)
+            {
+            return Task.FromResult(0);
+            }
+
+        public Task NotifyUsersAsync<TModel>(TModel model, string subject, IEnumerable<string> userIds) where TModel : EmailModelBase
             {
             return Task.FromResult(0);
             }

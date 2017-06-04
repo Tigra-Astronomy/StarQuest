@@ -130,7 +130,7 @@ namespace MS.Gamification.BusinessLogic.Gamification
                 if (percentComplete < 100)
                     return;
                 AwardBadge(badgeForTrack.Id, userId);
-                await notifier.BadgeAwarded(badgeForTrack, observation.User, track);
+                await notifier.BadgeAwardedAsync(badgeForTrack, observation.User, track);
                 }
             finally
                 {

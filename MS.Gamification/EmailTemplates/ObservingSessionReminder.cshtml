@@ -1,0 +1,20 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<ObservingSessionReminderEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+
+<h2>Reminder: @Model.ObservingSessionTitle</h2>
+<p>
+    Venue: @Model.ObservingSessionVenue
+    Starts at: @Model.ObservingSessionStartsAt
+</p>
+<p>
+    @Model.ObservingSessionDescription
+</p>
+
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>
