@@ -64,6 +64,7 @@ namespace MS.Gamification
             kernel.Bind<IQueueProcessorFactory>()
                 .ToMethod(ctx => new NinjectQueueProcessorFactory(kernel, ConfigureQueueProcessor.MapQueueProcessors()))
                 .InSingletonScope();
+            kernel.Bind<ITimeProvider>().To<SystemClockTimeProvider>().InTransientScope();
             return kernel;
             //ToDo: create a UrlHelper implementation that can be used outside of any HttpContext.
             }

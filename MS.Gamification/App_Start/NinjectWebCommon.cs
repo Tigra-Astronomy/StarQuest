@@ -18,7 +18,9 @@ using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using MS.Gamification;
 using MS.Gamification.App_Start;
+using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.BusinessLogic.Gamification;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 using MS.Gamification.DataAccess;
 using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.Models;
@@ -151,6 +153,8 @@ namespace MS.Gamification
             kernel.Bind<ILogger>()
                 .ToMethod(context => LogManager.GetLogger(context.Request.Target.Name))
                 .InRequestScope();
+            kernel.Bind<IObservingSessionManager>().To<ObservingSessionLogic>().InRequestScope();
+            kernel.Bind<ITimeProvider>().To<SystemClockTimeProvider>().InTransientScope();
             }
 
         private static void ResolveRazorEngineTemplatePath(IKernel kernel)

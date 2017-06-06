@@ -34,9 +34,7 @@ namespace MS.Gamification.Migrations
                         Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ObservingSessions", t => t.ObservingSessionId)
-                .Index(t => t.ProcessAfter)
-                .Index(t => t.ObservingSessionId);
+                .Index(t => t.ProcessAfter);
             
             AddColumn("dbo.AspNetUsers", "ObservingSession_Id", c => c.Int());
             CreateIndex("dbo.AspNetUsers", "ObservingSession_Id");
@@ -45,9 +43,7 @@ namespace MS.Gamification.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.QueuedWorkItems", "ObservingSessionId", "dbo.ObservingSessions");
             DropForeignKey("dbo.AspNetUsers", "ObservingSession_Id", "dbo.ObservingSessions");
-            DropIndex("dbo.QueuedWorkItems", new[] { "ObservingSessionId" });
             DropIndex("dbo.QueuedWorkItems", new[] { "ProcessAfter" });
             DropIndex("dbo.AspNetUsers", new[] { "ObservingSession_Id" });
             DropColumn("dbo.AspNetUsers", "ObservingSession_Id");

@@ -21,9 +21,12 @@ namespace MS.Gamification.BusinessLogic.Gamification.ScheduledTasks
                 .ToRunEvery(1)
                 .Days()
                 .At(moderatorDailySummary.Hours, moderatorDailySummary.Minutes);
+            var queuedTaskIntervalSetting = ConfigurationManager.AppSettings["ProcessQueuedTasksEvery"];
+            var queuedTaskProcessingInterval = TimeSpan.Parse(queuedTaskIntervalSetting);
+            var intervalInSeconds = (int)queuedTaskProcessingInterval.TotalSeconds;
             Schedule<QueueProcessorTask>()
-                .ToRunEvery(15)
-                .Minutes();
+                .ToRunEvery(intervalInSeconds)
+                .Seconds();
             }
         }
     }

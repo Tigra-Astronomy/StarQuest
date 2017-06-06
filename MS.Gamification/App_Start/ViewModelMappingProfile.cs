@@ -11,6 +11,7 @@ using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.BusinessLogic.QueueProcessing;
+using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
@@ -88,7 +89,8 @@ namespace MS.Gamification.App_Start
             CreateMap<ObservingSessionReminderEmailModel, ObservingSessionReminderEmailModel>();
             CreateMap<ObservingSessionReminder, ObservingSessionReminderEmailModel>()
                 .ForMember(m => m.Recipient, m => m.Ignore())
-                .ForMember(m=>m.InformationUrl, m=>m.Ignore());
+                .ForMember(m => m.InformationUrl, m => m.Ignore())
+                .ForMember(m => m.Session, m => m.Ignore());
             }
         }
     }

@@ -15,7 +15,5 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
             }
 
         public int? ObservingSessionId { get; set; }
-
-        public ObservingSession ObservingSession { get; set; }
         }
     }

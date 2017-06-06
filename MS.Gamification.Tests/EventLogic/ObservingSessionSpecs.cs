@@ -77,7 +77,7 @@ namespace MS.Gamification.Tests.EventLogic
             .WithCurrentDateTime(CurrentDateTime)
             .Build();
         Because of = () => SessionManager.CreateAsync(model).Wait();
-        It should_queue_a_reminder_for_the_current_date_time = () =>
+        It should_queue_a_reminder_for_one_week_before_the_event = () =>
             Reminders.Single().ProcessAfter.ShouldEqual(model.StartsAt - TimeSpan.FromDays(7));
         static CreateObservingSessionViewModel model = new CreateObservingSessionViewModel
             {

@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MS.Gamification.Models;
 
 namespace MS.Gamification.EmailTemplates
 {
     public class ObservingSessionReminderEmailModel : EmailModelBase
     {
-    public string ObservingSessionTitle { get; private set; }
-
-    public DateTime ObservingSessionStartsAt { get; private set; }
-
-    public string ObservingSessionDescription { get; private set; }
-
-    public string ObservingSessionVenue { get; private set; }
+    public ObservingSession Session { get; set; }
     }
 }

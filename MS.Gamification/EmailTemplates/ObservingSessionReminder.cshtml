@@ -5,13 +5,13 @@
     Layout = "EmailLayout.cshtml";
 }
 
-<h2>Reminder: @Model.ObservingSessionTitle</h2>
+<h2>Reminder: @Model.Session.Title</h2>
 <p>
-    Venue: @Model.ObservingSessionVenue
-    Starts at: @Model.ObservingSessionStartsAt
+    Venue: @Model.Session.Venue
+    Starts at: @Model.Session.StartsAt
 </p>
 <p>
-    @Model.ObservingSessionDescription
+    @Model.Session.Description
 </p>
 
 <p>

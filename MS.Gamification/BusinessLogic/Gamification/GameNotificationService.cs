@@ -42,11 +42,19 @@ namespace MS.Gamification.BusinessLogic.Gamification
             {
             get
                 {
-                if (url == null) return string.Empty;
-                var requestUrl = url.RequestContext.HttpContext.Request.Url;
-                var fqUrl = url.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
-                //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
-                return fqUrl;
+                try
+                    {
+                    if (url == null) return string.Empty;
+                    var requestUrl = url.RequestContext.HttpContext.Request.Url;
+                    var fqUrl = url.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
+                    //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
+                    return fqUrl;
+                    }
+                catch (Exception e)
+                    {
+                    Log.Warn("Unable to determine web application home page address");
+                    return string.Empty;
+                    }
                 }
             }
 
