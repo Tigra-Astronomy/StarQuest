@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -25,28 +26,34 @@ namespace MS.Gamification.BusinessLogic.Gamification
         {
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
         private readonly IRazorEngineService razor;
-        private readonly UrlHelper url;
+        private readonly UrlHelper urlHelper;
         private readonly IMapper mapper;
         private readonly ApplicationUserManager userManager;
 
 
-        public GameNotificationService(IRazorEngineService razor, ApplicationUserManager userManager, UrlHelper url, IMapper mapper)
+        public GameNotificationService(IRazorEngineService razor, ApplicationUserManager userManager, UrlHelper urlHelper, IMapper mapper)
             {
             this.razor = razor;
             this.userManager = userManager;
-            this.url = url;
+            this.urlHelper = urlHelper;
             this.mapper = mapper;
             }
 
+        /// <summary>
+        /// Gets the URL of the home page. This is normally derived from the current request URL, 
+        /// but in cases where there is no current request (e.g. in a Scheduled Job), then the 
+        /// value of the "RootUrlWhenNoRequest" setting (from Web.config) is used.
+        /// </summary>
         public string HomePage
             {
             get
                 {
                 try
                     {
-                    if (url == null) return string.Empty;
-                    var requestUrl = url.RequestContext.HttpContext.Request.Url;
-                    var fqUrl = url.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
+                    if (urlHelper?.RequestContext?.HttpContext?.Request?.Url == null)
+                        return RootUrlFromSettings;
+                    var requestUrl = urlHelper.RequestContext.HttpContext.Request.Url;
+                    var fqUrl = urlHelper.Action("Index", "Home", new {area = string.Empty}, requestUrl.Scheme);
                     //var fqUrl = url.RouteUrl("default", null, requestUrl.Scheme, requestUrl.Authority);
                     return fqUrl;
                     }
@@ -58,12 +65,15 @@ namespace MS.Gamification.BusinessLogic.Gamification
                 }
             }
 
-        /// <summary>
-        ///     Notifies the user that an observation they submitted has been approved by a moderator.
-        /// </summary>
-        /// <param name="observation">The observation that has been approved.</param>
-        /// <returns>An awaitable Task.</returns>
-        public async Task ObservationApprovedAsync(Observation observation)
+        private string RootUrlFromSettings => ConfigurationManager.AppSettings["RootUrlWhenNoRequest"] ?? string.Empty;
+
+
+    /// <summary>
+    ///     Notifies the user that an observation they submitted has been approved by a moderator.
+    /// </summary>
+    /// <param name="observation">The observation that has been approved.</param>
+    /// <returns>An awaitable Task.</returns>
+    public async Task ObservationApprovedAsync(Observation observation)
             {
             Log.Info($"Notifying user {observation.UserId} of observation approval for observation ID {observation.Id}");
             var model = new ModerationEmailModel
