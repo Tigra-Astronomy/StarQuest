@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionSpecs.cs  Created: 2017-05-17@18:51
-// Last modified: 2017-05-31@13:02
+// Last modified: 2017-06-07@21:51
 
 using System;
 using System.Linq;
@@ -71,7 +71,7 @@ namespace MS.Gamification.Tests.EventLogic
 
     // Observing session with 1-week reminder should queue a reminder 1-week before the start date/time
     [Subject(typeof(ObservingSessionLogic), "reminders")]
-    internal class when_creating_a_session_with_a_1_week_reminder : with_event_logic_context
+    class when_creating_a_session_with_a_1_week_reminder : with_event_logic_context
         {
         Establish context = () => EventContext = EventContextBuilder
             .WithCurrentDateTime(CurrentDateTime)
@@ -94,7 +94,7 @@ namespace MS.Gamification.Tests.EventLogic
 
     // Observing session with 1-day reminder should queue a reminder 1-day before the start date/time
     [Subject(typeof(ObservingSessionLogic), "reminders")]
-    internal class when_creating_a_session_with_a_1_day_reminder : with_event_logic_context
+    class when_creating_a_session_with_a_1_day_reminder : with_event_logic_context
         {
         Establish context = () => EventContext = EventContextBuilder
             .WithCurrentDateTime(CurrentDateTime)
@@ -117,7 +117,7 @@ namespace MS.Gamification.Tests.EventLogic
 
     // start date closer than 1 week; week reminder should not be queued
     [Subject(typeof(ObservingSessionLogic), "reminders")]
-    internal class when_creating_a_session_with_a_1_week_reminder_that_starts_in_less_than_a_week
+    class when_creating_a_session_with_a_1_week_reminder_that_starts_in_less_than_a_week
         : with_event_logic_context
         {
         Establish context = () => EventContext = EventContextBuilder
@@ -141,7 +141,7 @@ namespace MS.Gamification.Tests.EventLogic
     // start date closer than 24 hours; day reminder should not be queued
     // start date closer than 24 hours; immediate reminder should be queued
     [Subject(typeof(ObservingSessionLogic), "reminders")]
-    internal class when_creating_a_session_with_a_1_day_reminder_that_starts_in_less_than_a_day
+    class when_creating_a_session_with_a_1_day_reminder_that_starts_in_less_than_a_day
         : with_event_logic_context
         {
         Establish context = () => EventContext = EventContextBuilder
@@ -162,4 +162,17 @@ namespace MS.Gamification.Tests.EventLogic
         static readonly DateTime CurrentDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         }
 
-}
+    [Subject(typeof(ObservingSessionLogic), "reminders")]
+    class when_deleting_a_scheduled_event : with_event_logic_context
+        {
+        Establish context = () => EventContext = EventContextBuilder
+            .WithCurrentDateTime(CurrentDateTime)
+            .WithScheduledObservingSession(SessionId, CurrentDateTime + TimeSpan.FromDays(30))
+            .Build();
+        Because of = () => SessionManager.DeleteAsync(SessionId).Wait();
+        It should_remove_the_session = () => UnitOfWork.ObservingSessions.GetAll().ShouldBeEmpty() ;
+        It should_remove_pending_reminders = () => Reminders.ShouldBeEmpty();
+        static readonly DateTime CurrentDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        const int SessionId = 1;
+        }
+    }

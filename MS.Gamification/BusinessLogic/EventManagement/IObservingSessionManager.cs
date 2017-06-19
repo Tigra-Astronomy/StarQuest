@@ -11,5 +11,9 @@ namespace MS.Gamification.BusinessLogic.EventManagement
     public interface IObservingSessionManager
         {
         Task CreateAsync(CreateObservingSessionViewModel model);
+
+        Task DeleteAsync(int sessionId);
+
+        Task CancelAsync(int sessionId, bool notifyMembers, string message);
         }
     }

@@ -107,6 +107,13 @@
             </summary>
             <seealso cref="T:MS.Gamification.BusinessLogic.Gamification.IGameNotificationService" />
         </member>
+        <member name="P:MS.Gamification.BusinessLogic.Gamification.GameNotificationService.HomePage">
+            <summary>
+            Gets the URL of the home page. This is normally derived from the current request URL, 
+            but in cases where there is no current request (e.g. in a Scheduled Job), then the 
+            value of the "RootUrlWhenNoRequest" setting (from Web.config) is used.
+            </summary>
+        </member>
         <member name="M:MS.Gamification.BusinessLogic.Gamification.GameNotificationService.ObservationApprovedAsync(MS.Gamification.Models.Observation)">
             <summary>
                 Notifies the user that an observation they submitted has been approved by a moderator.

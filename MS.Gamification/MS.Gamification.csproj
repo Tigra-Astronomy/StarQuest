@@ -353,7 +353,10 @@
     <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CancelObservingSessionViewModel.cs" />
+    <Compile Include="BusinessLogic\Gamification\QuerySpecifications\RemindersForObservingSession.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\UsersForNotifyAllSpecification.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionCancellation.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminderQueueProcessor.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CreateObservingSessionViewModel.cs" />
@@ -904,9 +907,11 @@
     <Content Include="Areas\Admin\Views\ObservingSessions\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ObservingSessions\Index.cshtml" />
     <Content Include="EmailTemplates\ObservingSessionReminder.cshtml" />
+    <Content Include="Areas\Admin\Views\ObservingSessions\Cancel.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\starquest-staging.monktonstargazers.org - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\starquest.monktonstargazers.org - Web Deploy.pubxml" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
@@ -1206,9 +1211,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="GameLogic\Preconditions\Rules\" />
-    <Folder Include="GameLogic\QuerySpecifications\" />
-    <Folder Include="GameLogic\ScheduledTasks\" />
     <Folder Include="IdentityHelpers\" />
     <Folder Include="Views\ObservingSession\" />
   </ItemGroup>

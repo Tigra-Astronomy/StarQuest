@@ -1,0 +1,71 @@
+﻿@model MS.Gamification.Areas.Admin.ViewModels.ObservingSessions.EditObservingSessionViewModel
+
+@{
+    ViewBag.Title = "Create New Observing Session";
+}
+
+<h2>Schedule an Observing Session</h2>
+
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Session</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Title, new {htmlAttributes = new {@class = "form-control col-md-10"}})
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Venue, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Venue, new {htmlAttributes = new {@class = "form-control col-md-10"}})
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartsAt, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.StartsAt, new {htmlAttributes = new {@class = "form-control col-md-10"}})
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Description, new {htmlAttributes = new {@class = "form-control col-md-10"}})
+        </div>
+        <div class="panel panel-default col-md-offset-2" id="notifactionOptionsPanel">
+            <div class="panel-heading">Notification Options</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <span>
+                        @Html.CheckBox("NotifyMembers", new {@class = "checkbox-inline"})
+                        Inform users of cancellation
+                    </span>
+                </div>
+                <div class="form-group">
+                    <div class="control-label col-md-2">Message to users</div>
+                    <div class="col-md-10">
+                        @Html.TextBox("Message", "The observing session has been cancelled due to an unfavourable weather forecast", new {@class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <p>
+                    Please remember to enter an explanation of why the event has been cancelled in the message box above.
+                    For example:
+                    <q>
+                        We're sorry but we have had to cancel this observing session due to an unfavourable
+                        weather forecast. We will try to schedule an impromptu session soon, so please watch
+                        your inbox for further announcements.
+                    </q>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirm Cancellation" class="btn btn-danger"/>
+                @Html.ActionLink("Don't Cancel", "Index", null, new {@class = "btn btn-success"})
+            </div>
+        </div>
+    </div>
+    }

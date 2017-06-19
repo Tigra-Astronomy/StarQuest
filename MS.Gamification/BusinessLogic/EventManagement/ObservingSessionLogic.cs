@@ -1,14 +1,16 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionLogic.cs  Created: 2017-05-17@19:37
-// Last modified: 2017-05-31@13:01
+// Last modified: 2017-06-19@01:57
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using JetBrains.Annotations;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
+using MS.Gamification.BusinessLogic.Gamification.QuerySpecifications;
 using MS.Gamification.BusinessLogic.QueueProcessing;
 using MS.Gamification.DataAccess;
 using MS.Gamification.Models;
@@ -37,7 +39,8 @@ namespace MS.Gamification.BusinessLogic.EventManagement
         public async Task CreateAsync([NotNull] CreateObservingSessionViewModel model)
             {
             Contract.Requires(model != null);
-            log.Info().Message("Creating observing session")
+            log.Info()
+                .Message("Creating observing session")
                 .Property(nameof(model), model)
                 .Write();
             var session = mapper.Map<ObservingSession>(model);
@@ -45,6 +48,50 @@ namespace MS.Gamification.BusinessLogic.EventManagement
             await uow.CommitAsync().ConfigureAwait(false);
             log.Debug().Message("Commit successful").Property("Entity", session);
             await SetRemindersAsync(session.Id, model.SendAnnouncement).ConfigureAwait(false);
+            }
+
+        public Task DeleteAsync(int sessionId)
+            {
+            var maybeSession = uow.ObservingSessions.GetMaybe(sessionId);
+            if (maybeSession.None)
+                throw new ArgumentException("No such session ID", nameof(sessionId));
+            var session = maybeSession.Single();
+            RemoveRemindersForSession(session.Id);
+            uow.ObservingSessions.Remove(session);
+            return uow.CommitAsync();
+            }
+
+        /// <summary>
+        ///     Cancels a scheduled observing session and optionally notifies users.
+        /// </summary>
+        /// <param name="sessionId">The identifier of the session to be cancelled.</param>
+        /// <param name="notifyMembers">if set to <c>true</c> then a notification message is sent to users.</param>
+        /// <param name="message">A message to users explaining the cancellation.</param>
+        public async Task CancelAsync(int sessionId, bool notifyMembers, string message)
+            {
+            var session = GetSessionByIdOrThrow(sessionId);
+            RemoveRemindersForSession(session.Id);
+            session.ScheduleState = ScheduleState.Cancelled;
+            await uow.CommitAsync();
+            if (notifyMembers)
+                await QueueCancellationNotificationAsync(session, message);
+            }
+
+        private void RemoveRemindersForSession(int sessionId)
+            {
+            var reminderSpecification = new RemindersForObservingSession(sessionId);
+            var reminders = uow.QueuedWorkItems.AllSatisfying(reminderSpecification);
+            uow.QueuedWorkItems.Remove(reminders);
+            log.Debug($"Removed {reminders.Count()} reminders");
+            }
+
+        private ObservingSession GetSessionByIdOrThrow(int sessionId)
+            {
+            var maybeSession = uow.ObservingSessions.GetMaybe(sessionId);
+            if (maybeSession.None)
+                throw new ArgumentException("No such session ID", nameof(sessionId));
+            var session = maybeSession.Single();
+            return session;
             }
 
         private async Task SetRemindersAsync(int sessionId, bool immediateAnnoucement)
@@ -72,6 +119,22 @@ namespace MS.Gamification.BusinessLogic.EventManagement
                 QueueName = "Events"
                 };
             uow.QueuedWorkItems.Add(reminder);
+            return uow.CommitAsync();
+            }
+
+        [NotNull]
+        private Task QueueCancellationNotificationAsync([NotNull] ObservingSession session, string message)
+            {
+            Contract.Requires(session != null);
+            Contract.Ensures(Contract.Result<Task>() != null);
+            var cancellation = new ObservingSessionCancellation
+                {
+                ObservingSessionId = session.Id,
+                ProcessAfter = DateTime.UtcNow,
+                QueueName = "Events",
+                Message = message
+                };
+            uow.QueuedWorkItems.Add(cancellation);
             return uow.CommitAsync();
             }
         }

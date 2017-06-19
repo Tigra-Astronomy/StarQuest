@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionsController.cs  Created: 2017-05-16@20:38
-// Last modified: 2017-05-30@23:06
+// Last modified: 2017-06-19@01:58
 
 using System;
 using System.Diagnostics;
@@ -114,21 +114,32 @@ namespace MS.Gamification.Areas.Admin.Controllers
                 }
             }
 
-        // GET: ObservingSession/Delete/5
-        public ActionResult Delete(int id) => View();
+        // GET: ObservingSession/Cancel/5
+        // Confirms cancellation of an observing session
+        public ActionResult Cancel(int id)
+            {
+            var maybeSession = uow.ObservingSessions.GetMaybe(id);
+            if (maybeSession.None)
+                return HttpNotFound($"There is no observing session with ID={id}");
+            var session = maybeSession.Single();
+            var model = mapper.Map<EditObservingSessionViewModel>(session);
+            return View(model);
+            }
 
-        // POST: ObservingSession/Delete/5
+        // POST: ObservingSession/Cancel/5
+        // Sets the status of a session to Cancelled and removes any pending reminders.
+        // Optionally, notifies users of the cancellation.
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Cancel(CancelObservingSessionViewModel model)
             {
             try
                 {
-                // TODO: Add delete logic here
+                await sessionManager.CancelAsync(model.SessionId, model.NotifyMembers, model.Message);
                 return RedirectToAction("Index");
                 }
             catch
                 {
-                return View();
+                return RedirectToAction("Cancel", new {id = model.SessionId});
                 }
             }
         }
