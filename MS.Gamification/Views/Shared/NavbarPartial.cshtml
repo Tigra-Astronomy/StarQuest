@@ -1,4 +1,5 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@using MS.Gamification.HtmlHelpers
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -10,19 +11,25 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home", new { area = string.Empty },new {})</li>
-                <li>@Html.ActionLink("My Profile", "Index", "UserProfile", new { area = string.Empty },new {})</li>
-                <li>@Html.ActionLink("My Missions", "Index", new {controller = "Mission", id = 1, area=string.Empty}, new {})</li>
-                <li>@Html.ActionLink("My Observations", "Index", "Observation", new { area = string.Empty }, new {})</li>
-                @if (User.IsInRole("Administrator"))
+                <li>@Html.ActionLink("Home", "Index", "Home", new {area = string.Empty}, new {})</li>
+                <li>@Html.ActionLink("My Profile", "Index", "UserProfile", new {area = string.Empty}, new {})</li>
+                <li>@Html.ActionLink("My Missions", "Index", new {controller = "Mission", id = 1, area = string.Empty}, new {})</li>
+                <li>@Html.ActionLink("My Observations", "Index", "Observation", new {area = string.Empty}, new {})</li>
+                @if (User.CanAdminister())
                     {
-                    <li>
-                        @Html.RouteLink("Admin Dashboard", "Admin", new {controller="UserAdministration", action="Index"})
+                    <li class="nav-admin">
+                        @Html.RouteLink("Admin Dashboard", "Admin", new {controller = "UserAdministration", action = "Index"})
+                    </li>
+                    }
+                @if (User.CanManageEvents())
+                    {
+                    <li class="nav-admin">
+                        @Html.RouteLink("Event Management", "Admin", new {controller = "ObservingSessions", action = "Index"})
                     </li>
                     }
             </ul>
             @{
-                Html.RenderAction("ModerationQueue", "Notification", new {area=string.Empty});
+                Html.RenderAction("ModerationQueue", "Notification", new {area = string.Empty});
             }
             @Html.Partial("_LoginPartial")
         </div>

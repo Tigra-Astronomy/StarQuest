@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// This file is part of the MS.Gamification project
+// 
+// File: ObservingSessionCancellationQueueProcessor.cs  Created: 2017-06-19@22:39
+// Last modified: 2017-06-20@13:01
+
+using System;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using AutoMapper;
 using JetBrains.Annotations;
 using MS.Gamification.BusinessLogic.Gamification;
@@ -14,7 +16,7 @@ using MS.Gamification.Models;
 using NLog;
 
 namespace MS.Gamification.BusinessLogic.QueueProcessing
-{
+    {
     public class ObservingSessionCancellationQueueProcessor : IProcessWorkItems
         {
         private readonly ILogger log = LogManager.GetCurrentClassLogger();
@@ -38,7 +40,8 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
             var cancellation = item as ObservingSessionCancellation;
             if (cancellation == null)
                 {
-                var message = $"Expected a work item with type {nameof(ObservingSessionCancellation)} but got {item.GetType().Name}";
+                var message =
+                    $"Expected a work item with type {nameof(ObservingSessionCancellation)} but got {item.GetType().Name}";
                 log.Error(message);
                 throw new ArgumentException(message, nameof(item));
                 }
@@ -51,4 +54,4 @@ namespace MS.Gamification.BusinessLogic.QueueProcessing
                 usersToNotify);
             }
         }
-}
+    }

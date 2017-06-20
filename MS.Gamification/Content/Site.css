@@ -221,3 +221,12 @@ textarea.form-control { min-height: 10em; }
     height: 245px;
     width: 245px;
 }
+
+/*
+    Navigation Bar custom styles
+*/
+
+.navbar-inverse .navbar-nav > li.nav-admin > a {
+    background-color: transparent;
+    color: indianred;
+}

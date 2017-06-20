@@ -1,24 +1,31 @@
 // This file is part of the MS.Gamification project
 // 
-// File: EditObservingSessionViewModel.cs  Created: 2017-05-17@02:24
-// Last modified: 2017-06-20@17:40
+// File: ObservingSessionIndexViewModel.cs  Created: 2017-06-20@17:34
+// Last modified: 2017-06-20@17:39
 
 using System;
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
+using MS.Gamification.BusinessLogic.EventManagement;
 
 namespace MS.Gamification.Areas.Admin.ViewModels.ObservingSessions
     {
-    public class EditObservingSessionViewModel
+    public class ObservingSessionIndexViewModel
         {
+        public ObservingSessionIndexViewModel()
+            {
+            Title = string.Empty;
+            }
+
         public int Id { get; set; }
 
-        [Required]
+        [Display(Name = "Status")]
+        public ScheduleState ScheduleState { get; set; }
+
         [NotNull]
         public string Title { get; set; }
 
-        [Required]
-        [NotNull]
+        [CanBeNull]
         public string Venue { get; set; }
 
         [Display(Name = "When", Description = "Start date and time of the session")]
@@ -34,6 +41,6 @@ namespace MS.Gamification.Areas.Admin.ViewModels.ObservingSessions
         public bool RemindOneDayBefore { get; set; } = false;
 
         public override string ToString() =>
-            $"{StartsAt} {Title} at {Venue}, {nameof(RemindOneWeekBefore)}: {RemindOneWeekBefore}, {nameof(RemindOneDayBefore)}: {RemindOneDayBefore}";
+            $"{StartsAt} {Title} at {Venue}, {ScheduleState}, {nameof(RemindOneWeekBefore)}: {RemindOneWeekBefore}, {nameof(RemindOneDayBefore)}: {RemindOneDayBefore}";
         }
     }

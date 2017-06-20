@@ -354,6 +354,7 @@
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CancelObservingSessionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ObservingSessions\ObservingSessionIndexViewModel.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\RemindersForObservingSession.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\UsersForNotifyAllSpecification.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionCancellation.cs" />
@@ -377,6 +378,7 @@
     <Compile Include="BusinessLogic\QueueProcessing\WorkItemDisposition.cs" />
     <Compile Include="EmailTemplates\ObservingSessionCancellationEmailModel.cs" />
     <Compile Include="EmailTemplates\ObservingSessionReminderEmailModel.cs" />
+    <Compile Include="HtmlHelpers\SecurityPrincipalExtensions.cs" />
     <Compile Include="Migrations\201706191921104_ObservingSessionCancellation.cs" />
     <Compile Include="Migrations\201706191921104_ObservingSessionCancellation.Designer.cs">
       <DependentUpon>201706191921104_ObservingSessionCancellation.cs</DependentUpon>

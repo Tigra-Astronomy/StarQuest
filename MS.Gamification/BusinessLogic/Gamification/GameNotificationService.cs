@@ -140,7 +140,8 @@ namespace MS.Gamification.BusinessLogic.Gamification
             
             foreach (var userId in userIds)
                 {
-                var emailModel = mapper.Map<TModel>(model);
+                // AutoMapper creates a clone so we avoid modifying the original.
+                var emailModel = mapper.Map<TModel>(model); 
                 emailModel.Recipient = await userManager.GetEmailAsync(userId).ConfigureAwait(false);
                 emailModel.InformationUrl = HomePage;
                 var emailBody = razor.RunCompile(razorViewName, model.GetType(), model);

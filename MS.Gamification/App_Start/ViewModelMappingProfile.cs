@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ViewModelMappingProfile.cs  Created: 2016-11-01@19:37
-// Last modified: 2017-05-31@11:40
+// Last modified: 2017-06-20@14:17
 
 using AutoMapper;
 using MS.Gamification.Areas.Admin.ViewModels;
@@ -11,7 +11,6 @@ using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.Areas.Admin.ViewModels.UserAdministration;
 using MS.Gamification.BusinessLogic.EventManagement;
 using MS.Gamification.BusinessLogic.QueueProcessing;
-using MS.Gamification.DataAccess.EntityFramework6;
 using MS.Gamification.EmailTemplates;
 using MS.Gamification.Models;
 using MS.Gamification.ViewModels;
@@ -86,8 +85,23 @@ namespace MS.Gamification.App_Start
                 .ForMember(m => m.Id, m => m.Ignore())
                 .ForSourceMember(m => m.SendAnnouncement, m => m.Ignore());
             CreateMap<ObservingSession, EditObservingSessionViewModel>();
+            CreateMap<ObservingSession, ObservingSessionIndexViewModel>();
+
+            #region Email Models
+            /*
+             * Email Models should be mappable to themselves if IGameNotificationService.NotifyUsersAsync<TModel>()
+             * is used. This allows clones to be created (one for each user notified) while preserving the 
+             * state of the original model.
+             */
             CreateMap<ObservingSessionReminderEmailModel, ObservingSessionReminderEmailModel>();
+            CreateMap<ObservingSessionCancellationEmailModel, ObservingSessionCancellationEmailModel>();
+            #endregion
+
             CreateMap<ObservingSessionReminder, ObservingSessionReminderEmailModel>()
+                .ForMember(m => m.Recipient, m => m.Ignore())
+                .ForMember(m => m.InformationUrl, m => m.Ignore())
+                .ForMember(m => m.Session, m => m.Ignore());
+            CreateMap<ObservingSessionCancellation, ObservingSessionCancellationEmailModel>()
                 .ForMember(m => m.Recipient, m => m.Ignore())
                 .ForMember(m => m.InformationUrl, m => m.Ignore())
                 .ForMember(m => m.Session, m => m.Ignore());

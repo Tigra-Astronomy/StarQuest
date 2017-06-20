@@ -7,6 +7,9 @@ namespace MS.Gamification.Areas.Admin.ViewModels.ObservingSessions
     {
     public class CancelObservingSessionViewModel
         {
+        /// <summary>
+        /// The ObservingSession ID being cancelled. It is simply called 'Id' here to simplify model binding.
+        /// </summary>
         public int Id { get; set; }
 
         public bool NotifyMembers { get; set; }

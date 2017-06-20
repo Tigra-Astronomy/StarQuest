@@ -34,6 +34,11 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="P:MS.Gamification.Areas.Admin.ViewModels.ObservingSessions.CancelObservingSessionViewModel.Id">
+            <summary>
+            The ObservingSession ID being cancelled. It is simply called 'Id' here to simplify model binding.
+            </summary>
+        </member>
         <member name="P:MS.Gamification.Areas.Admin.ViewModels.MissionTracks.MissionTrackViewModel.Number">
             <summary>
                 Track number determines the order in which tracks are displayed.
@@ -1300,6 +1305,97 @@
             <param name="notifyMembers">if set to <c>true</c> then a notification message is sent to users.</param>
             <param name="message">A message to users explaining the cancellation.</param>
         </member>
+        <member name="T:MS.Gamification.HtmlHelpers.SecurityPrincipalExtensions">
+            <summary>
+                Extension methods intended for use in Razor views for checking user capabilities.
+            </summary>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
+            <summary>
+                Globally Recognised Avatar - http://gravatar.com
+            </summary>
+            <remarks>
+                This implementation by Andrew Freemantle - http://www.fatlemon.co.uk/
+                <para>Source, Wiki and Issues: https://github.com/AndrewFreemantle/Gravatar-HtmlHelper </para>
+            </remarks>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage">
+            <summary>
+                In addition to allowing you to use your own image, Gravatar has a number of built in options which you can also use
+                as defaults. Most of these work by taking the requested email hash and using it to generate a themed image that is
+                unique to that email address
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Default">
+            <summary>Default Gravatar logo</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Http404">
+            <summary>
+                404 - do not load any image if none is associated with the email hash, instead return an HTTP 404 (File Not
+                Found) response
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MysteryMan">
+            <summary>Mystery-Man - a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Identicon">
+            <summary>Identicon - a geometric pattern based on an email hash</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MonsterId">
+            <summary>MonsterId - a generated 'monster' with different colors, faces, etc</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Wavatar">
+            <summary>Wavatar - generated faces with differing features and backgrounds</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Retro">
+            <summary>Retro - awesome generated, 8-bit arcade-style pixelated faces</summary>
+        </member>
+        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating">
+            <summary>
+                Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate for a certain
+                audience. By default, only 'G' rated images are displayed unless you indicate that you would like to see higher
+                ratings
+            </summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.G">
+            <summary>Suitable for display on all websites with any audience type</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.PG">
+            <summary>May contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.R">
+            <summary>May contain such things as harsh profanity, intense violence, nudity, or hard drug use</summary>
+        </member>
+        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.X">
+            <summary>May contain hardcore sexual imagery or extremely disturbing violence</summary>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GravatarImage(System.Web.Mvc.HtmlHelper,System.String,System.Int32,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage,System.String,System.Boolean,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating,System.Boolean)">
+            <summary>
+                Returns a Globally Recognised Avatar as an &lt;img /&gt; - http://gravatar.com
+            </summary>
+            <param name="htmlHelper">The HTML Helper object</param>
+            <param name="emailAddress">Email Address for the Gravatar</param>
+            <param name="defaultImage">Default image if user hasn't created a Gravatar</param>
+            <param name="size">Size in pixels (default: 80)</param>
+            <param name="defaultImageUrl">URL to a custom default image (e.g: 'Url.Content("~/images/no-grvatar.png")' )</param>
+            <param name="forceDefaultImage">Prefer the default image over the users own Gravatar</param>
+            <param name="rating">Gravatar content rating (note that Gravatars are self-rated)</param>
+            <param name="forceSecureRequest">Always do secure (https) requests</param>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetMd5Hash(System.String)">
+            <summary>
+                Generates an MD5 hash of the given string
+            </summary>
+            <remarks>Source: http://msdn.microsoft.com/en-us/library/system.security.cryptography.md5.aspx </remarks>
+        </member>
+        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetDescription(System.Enum)">
+            <summary>
+                Returns the value of a DescriptionAttribute for a given Enum value
+            </summary>
+            <remarks>Source: http://blogs.msdn.com/b/abhinaba/archive/2005/10/21/483337.aspx </remarks>
+            <param name="en"></param>
+            <returns></returns>
+        </member>
         <member name="T:MS.Gamification.Models.QueuedWorkItem">
             <summary>
                 Base class for queued work items
@@ -1897,92 +1993,6 @@
                 An object used as padding when there are not enough source elements to satisfy the
                 request.
             </param>
-            <returns></returns>
-        </member>
-        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper">
-            <summary>
-                Globally Recognised Avatar - http://gravatar.com
-            </summary>
-            <remarks>
-                This implementation by Andrew Freemantle - http://www.fatlemon.co.uk/
-                <para>Source, Wiki and Issues: https://github.com/AndrewFreemantle/Gravatar-HtmlHelper </para>
-            </remarks>
-        </member>
-        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage">
-            <summary>
-                In addition to allowing you to use your own image, Gravatar has a number of built in options which you can also use
-                as defaults. Most of these work by taking the requested email hash and using it to generate a themed image that is
-                unique to that email address
-            </summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Default">
-            <summary>Default Gravatar logo</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Http404">
-            <summary>
-                404 - do not load any image if none is associated with the email hash, instead return an HTTP 404 (File Not
-                Found) response
-            </summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MysteryMan">
-            <summary>Mystery-Man - a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Identicon">
-            <summary>Identicon - a geometric pattern based on an email hash</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.MonsterId">
-            <summary>MonsterId - a generated 'monster' with different colors, faces, etc</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Wavatar">
-            <summary>Wavatar - generated faces with differing features and backgrounds</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage.Retro">
-            <summary>Retro - awesome generated, 8-bit arcade-style pixelated faces</summary>
-        </member>
-        <member name="T:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating">
-            <summary>
-                Gravatar allows users to self-rate their images so that they can indicate if an image is appropriate for a certain
-                audience. By default, only 'G' rated images are displayed unless you indicate that you would like to see higher
-                ratings
-            </summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.G">
-            <summary>Suitable for display on all websites with any audience type</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.PG">
-            <summary>May contain rude gestures, provocatively dressed individuals, the lesser swear words, or mild violence</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.R">
-            <summary>May contain such things as harsh profanity, intense violence, nudity, or hard drug use</summary>
-        </member>
-        <member name="F:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating.X">
-            <summary>May contain hardcore sexual imagery or extremely disturbing violence</summary>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GravatarImage(System.Web.Mvc.HtmlHelper,System.String,System.Int32,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.DefaultImage,System.String,System.Boolean,MS.Gamification.HtmlHelpers.GravatarHtmlHelper.Rating,System.Boolean)">
-            <summary>
-                Returns a Globally Recognised Avatar as an &lt;img /&gt; - http://gravatar.com
-            </summary>
-            <param name="htmlHelper">The HTML Helper object</param>
-            <param name="emailAddress">Email Address for the Gravatar</param>
-            <param name="defaultImage">Default image if user hasn't created a Gravatar</param>
-            <param name="size">Size in pixels (default: 80)</param>
-            <param name="defaultImageUrl">URL to a custom default image (e.g: 'Url.Content("~/images/no-grvatar.png")' )</param>
-            <param name="forceDefaultImage">Prefer the default image over the users own Gravatar</param>
-            <param name="rating">Gravatar content rating (note that Gravatars are self-rated)</param>
-            <param name="forceSecureRequest">Always do secure (https) requests</param>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetMd5Hash(System.String)">
-            <summary>
-                Generates an MD5 hash of the given string
-            </summary>
-            <remarks>Source: http://msdn.microsoft.com/en-us/library/system.security.cryptography.md5.aspx </remarks>
-        </member>
-        <member name="M:MS.Gamification.HtmlHelpers.GravatarHtmlHelper.GetDescription(System.Enum)">
-            <summary>
-                Returns the value of a DescriptionAttribute for a given Enum value
-            </summary>
-            <remarks>Source: http://blogs.msdn.com/b/abhinaba/archive/2005/10/21/483337.aspx </remarks>
-            <param name="en"></param>
             <returns></returns>
         </member>
         <member name="T:MS.Gamification.Properties.Resources">
