@@ -357,6 +357,7 @@
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\RemindersForObservingSession.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\UsersForNotifyAllSpecification.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionCancellation.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionCancellationQueueProcessor.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminderQueueProcessor.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CreateObservingSessionViewModel.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="BusinessLogic\EventManagement\ObservingSessionLogic.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\IQueueProcessorFactory.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\NinjectQueueProcessorFactory.cs" />
+    <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionWorkItem.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\QueueProcessorTask.cs" />
     <Compile Include="BusinessLogic\EventManagement\ScheduleState.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\IProcessWorkItems.cs" />
@@ -373,7 +375,12 @@
     <Compile Include="BusinessLogic\QueueProcessing\ObservingSessionReminder.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\UnitTestWorkItem.cs" />
     <Compile Include="BusinessLogic\QueueProcessing\WorkItemDisposition.cs" />
+    <Compile Include="EmailTemplates\ObservingSessionCancellationEmailModel.cs" />
     <Compile Include="EmailTemplates\ObservingSessionReminderEmailModel.cs" />
+    <Compile Include="Migrations\201706191921104_ObservingSessionCancellation.cs" />
+    <Compile Include="Migrations\201706191921104_ObservingSessionCancellation.Designer.cs">
+      <DependentUpon>201706191921104_ObservingSessionCancellation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\QueuedWorkItem.cs" />
     <Compile Include="DataAccess\EntityFramework6\ObservingSessionRepository.cs" />
     <Compile Include="DataAccess\EntityFramework6\QueuedWorkItemRepository.cs" />
@@ -823,6 +830,9 @@
     <EmbeddedResource Include="Migrations\201705162030165_ObservingSessions.resx">
       <DependentUpon>201705162030165_ObservingSessions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706191921104_ObservingSessionCancellation.resx">
+      <DependentUpon>201706191921104_ObservingSessionCancellation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -908,6 +918,7 @@
     <Content Include="Areas\Admin\Views\ObservingSessions\Index.cshtml" />
     <Content Include="EmailTemplates\ObservingSessionReminder.cshtml" />
     <Content Include="Areas\Admin\Views\ObservingSessions\Cancel.cshtml" />
+    <Content Include="EmailTemplates\ObservingSessionCancellation.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

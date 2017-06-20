@@ -13,7 +13,8 @@ namespace MS.Gamification.App_Start
         {
         internal static IDictionary<Type, Type> MapQueueProcessors() => new Dictionary<Type, Type>
             {
-            [typeof(ObservingSessionReminder)] = typeof(ObservingSessionReminderQueueProcessor)
+            [typeof(ObservingSessionReminder)] = typeof(ObservingSessionReminderQueueProcessor),
+            [typeof(ObservingSessionCancellation)] = typeof(ObservingSessionCancellationQueueProcessor)
             };
         }
     }

@@ -1,0 +1,26 @@
+﻿@using RazorEngine
+@using MS.Gamification.EmailTemplates
+@inherits RazorEngine.Templating.TemplateBase<ObservingSessionCancellationEmailModel>
+@{
+    Layout = "EmailLayout.cshtml";
+}
+
+<h2>CANCELLED: @Model.Session.Title</h2>
+
+Event details:
+<p>
+    Venue: @Model.Session.Venue <br/>
+    Would have started at: @Model.Session.StartsAt
+</p>
+
+<p >
+    <b>This event has been <em>CANCELLED</em>.</b>
+</p>
+<p>
+    @Model.Message
+</p>
+
+<p>
+    For more information about @Model.ApplicationName, please see
+    <a href="@Model.InformationUrl">the @Model.ApplicationName web site</a>.
+</p>

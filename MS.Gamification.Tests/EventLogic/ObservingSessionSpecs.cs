@@ -8,6 +8,7 @@ using System.Linq;
 using Machine.Specifications;
 using MS.Gamification.Areas.Admin.ViewModels.ObservingSessions;
 using MS.Gamification.BusinessLogic.EventManagement;
+using MS.Gamification.BusinessLogic.QueueProcessing;
 
 namespace MS.Gamification.Tests.EventLogic
     {
@@ -175,4 +176,33 @@ namespace MS.Gamification.Tests.EventLogic
         static readonly DateTime CurrentDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         const int SessionId = 1;
         }
-    }
+
+    /*
+     * When cancelling an obsrving session:
+     * - The session should not be deleted
+     * - The session state should change to Cancelled
+     * - Any pending reminders shoul dbe deleted
+     * - A cancellation notice should be sent (if requested)
+     */
+
+    [Subject(typeof(ObservingSessionLogic), "cancellation")]
+    class when_cancelling_a_scheduled_event : with_event_logic_context
+        {
+        Establish context = () => EventContext = EventContextBuilder
+            .WithCurrentDateTime(CurrentDateTime)
+            .WithScheduledObservingSession(SessionId, CurrentDateTime + TimeSpan.FromDays(30))
+            .Build();
+        Because of = () => SessionManager.CancelAsync(SessionId, true, "Cancelled for test purposes").Wait();
+        It should_not_remove_the_session = () => UnitOfWork.ObservingSessions.GetAll().Count().ShouldEqual(1);
+        It should_remove_pending_reminders = () => Reminders.ShouldBeEmpty();
+        It should_queue_a_cancellation_notice = () =>
+            UnitOfWork.QueuedWorkItems.GetAll()
+                .OfType<ObservingSessionCancellation>()
+                .Count()
+                .ShouldEqual(1);
+        static readonly DateTime CurrentDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        const int SessionId = 1;
+        }
+
+
+}

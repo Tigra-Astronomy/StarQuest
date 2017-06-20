@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionLogic.cs  Created: 2017-05-17@19:37
-// Last modified: 2017-06-19@01:57
+// Last modified: 2017-06-19@02:01
 
 using System;
 using System.Diagnostics.Contracts;

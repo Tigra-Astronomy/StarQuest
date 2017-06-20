@@ -1,7 +1,7 @@
 ﻿// This file is part of the MS.Gamification project
 // 
 // File: ObservingSessionsController.cs  Created: 2017-05-16@20:38
-// Last modified: 2017-06-19@01:58
+// Last modified: 2017-06-20@00:36
 
 using System;
 using System.Diagnostics;
@@ -130,16 +130,17 @@ namespace MS.Gamification.Areas.Admin.Controllers
         // Sets the status of a session to Cancelled and removes any pending reminders.
         // Optionally, notifies users of the cancellation.
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Cancel(CancelObservingSessionViewModel model)
             {
             try
                 {
-                await sessionManager.CancelAsync(model.SessionId, model.NotifyMembers, model.Message);
+                await sessionManager.CancelAsync(model.Id, model.NotifyMembers, model.Message);
                 return RedirectToAction("Index");
                 }
             catch
                 {
-                return RedirectToAction("Cancel", new {id = model.SessionId});
+                return RedirectToAction("Cancel", new {id = model.Id});
                 }
             }
         }

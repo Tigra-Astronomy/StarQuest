@@ -37,9 +37,7 @@ namespace MS.Gamification.Tests.EventLogic
         protected static IUnitOfWork UnitOfWork => EventContext.UnitOfWork;
 
         protected static IEnumerable<ObservingSessionReminder> Reminders =>
-            UnitOfWork.QueuedWorkItems.GetAll()
-                .Where(p => p.GetType() == typeof(ObservingSessionReminder))
-                .Select(p => p as ObservingSessionReminder);
+            UnitOfWork.QueuedWorkItems.GetAll().OfType<ObservingSessionReminder>();
 
         protected static IEnumerable<ObservingSession> Sessions => EventContext.UnitOfWork.ObservingSessions.GetAll();
         #endregion Convenience Properties

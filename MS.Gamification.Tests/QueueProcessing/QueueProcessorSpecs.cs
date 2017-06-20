@@ -7,9 +7,8 @@ using System;
 using System.Linq;
 using Machine.Specifications;
 using MS.Gamification.BusinessLogic.QueueProcessing;
-using MS.Gamification.Tests.QueueProcessing;
 
-namespace Namespace
+namespace MS.Gamification.Tests.QueueProcessing
     {
     /*
      * Queue Processor:

@@ -222,6 +222,7 @@
     <Compile Include="QuerySpecifications\EligibleObservationsForChallengesSpecs.cs" />
     <Compile Include="QuerySpecifications\ObservationsAwaitingModerationSpecs.cs" />
     <Compile Include="QuerySpecifications\ObservationsForUserMissionSpecs.cs" />
+    <Compile Include="QueueProcessing\ObservingSessionCancellationSpecs.cs" />
     <Compile Include="QueueProcessing\QueueProcessorSpecs.cs" />
     <Compile Include="QueueProcessing\UnitTestTimeProvider.cs" />
     <Compile Include="QueueProcessing\with_queue_context.cs" />
