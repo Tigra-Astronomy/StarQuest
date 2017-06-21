@@ -354,6 +354,7 @@
     <Compile Include="App_Start\NinjectDependencyScope.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\CancelObservingSessionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\ObservingSessions\ObservingSessionDetailsViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ObservingSessions\ObservingSessionIndexViewModel.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\RemindersForObservingSession.cs" />
     <Compile Include="BusinessLogic\Gamification\QuerySpecifications\UsersForNotifyAllSpecification.cs" />
@@ -921,6 +922,7 @@
     <Content Include="EmailTemplates\ObservingSessionReminder.cshtml" />
     <Content Include="Areas\Admin\Views\ObservingSessions\Cancel.cshtml" />
     <Content Include="EmailTemplates\ObservingSessionCancellation.cshtml" />
+    <Content Include="Areas\Admin\Views\ObservingSessions\Details.cshtml" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

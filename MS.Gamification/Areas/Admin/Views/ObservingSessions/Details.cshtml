@@ -1,0 +1,51 @@
+﻿@model MS.Gamification.Areas.Admin.ViewModels.ObservingSessions.ObservingSessionDetailsViewModel
+
+@{
+    ViewBag.Title = "Observing Session Details";
+}
+
+<h2>Observing Session Details</h2>
+
+<div class="panel panel-info" id="scheduleDetails">
+    <div class="panel-heading">
+        <h4>Schedule Details</h4>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            @Html.LabelFor(model => model.Id, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Id, new {@class = "col-md-10 form-control"})
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.ScheduleState, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.ScheduleState, new {@class = "col-md-10 form-control"})
+        </div>
+
+        <div class="row">
+            @Html.LabelFor(model => model.Title, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Title, new {@class = "col-md-10 form-control"})
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.Venue, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Venue, new {@class = "col-md-10 form-control"})
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.StartsAt, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.StartsAt, new {@class = "col-md-10 form-control"})
+        </div>
+        <div class="row">
+            @Html.LabelFor(model => model.Description, new {@class = "control-label col-md-2"})
+            @Html.DisplayFor(model => model.Description, new {@class = "col-md-10 form-control"})
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default" id="notifactionOptionsPanel">
+    <div class="panel-heading">Notifications to Members</div>
+    <div class="panel-body">
+        Send reminders: @Model.Reminders
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-success"})
+</div>

@@ -86,6 +86,7 @@ namespace MS.Gamification.App_Start
                 .ForSourceMember(m => m.SendAnnouncement, m => m.Ignore());
             CreateMap<ObservingSession, EditObservingSessionViewModel>();
             CreateMap<ObservingSession, ObservingSessionIndexViewModel>();
+            CreateMap<ObservingSession, ObservingSessionDetailsViewModel>();
 
             #region Email Models
             /*
